@@ -1,0 +1,160 @@
+seven@sevenzx:~/ios-s9$ grep -RInE \
+'AppleCLCD|backlight-control|IOMobileFramebuffer|sweet,display|DCS|DSI' \
+xnu/patches | tail -200
+xnu/patches/0099-s9-battery-max77705-idle-l1-surface-map-dirty-stats.patch:899:@@ -271,6 +271,13 @@ class AppleCLCD : public IOMobileFramebuffer {
+xnu/patches/0099-s9-battery-max77705-idle-l1-surface-map-dirty-stats.patch:913:@@ -702,10 +709,22 @@ AppleCLCD::presentPending(void)
+xnu/patches/0099-s9-battery-max77705-idle-l1-surface-map-dirty-stats.patch:938:@@ -791,6 +810,35 @@ AppleCLCD::swap(const uint8_t *rec)
+xnu/patches/0099-s9-battery-max77705-idle-l1-surface-map-dirty-stats.patch:974:@@ -1372,7 +1420,7 @@ IOMobileFramebufferUserClient::notify(uint32_t type, const uint64_t *values, uin
+xnu/patches/0099-s9-battery-max77705-idle-l1-surface-map-dirty-stats.patch:982: IOMobileFramebufferUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *args,
+xnu/patches/0099-s9-battery-max77705-idle-l1-surface-map-dirty-stats.patch:983:@@ -1458,9 +1506,9 @@ IOMobileFramebufferUserClient::externalMethod(uint32_t selector, IOExternalMetho
+xnu/patches/0067-sweet-console-mute.patch:8:+ * Set by AppleCLCD (boot-arg sweetfb_noconsole=1) once the GUI presents:
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:127:+#define S9_INTR_INTF1_UNDERRUN  (1U << 26)      /* INTF_1 = DSI0, the panel */
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:163: 	void addClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:164: 	void removeClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:173:@@ -526,6 +545,7 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:174: 	AppleCLCD *fb = (AppleCLCD *)owner;
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:181:@@ -777,8 +797,11 @@ AppleCLCD::swap(const uint8_t *rec)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:194:@@ -1112,7 +1135,13 @@ AppleCLCD::flip(SweetSurface *s, uint32_t id)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:209:@@ -1144,19 +1173,24 @@ AppleCLCD::flip(SweetSurface *s, uint32_t id)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:229: AppleCLCD::swapWait(uint32_t id, uint64_t flags)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:241:@@ -1170,11 +1204,15 @@ AppleCLCD::swapWait(uint32_t id, uint64_t flags)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:258:@@ -1184,13 +1222,33 @@ AppleCLCD::swapWait(uint32_t id, uint64_t flags)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:279:+AppleCLCD::countUnderruns(void)
+xnu/patches/0097-s9-swapwait-poll-fullclean-underruns-gesture.patch:293:@@ -1370,7 +1428,7 @@ IOMobileFramebufferUserClient::externalMethod(uint32_t selector, IOExternalMetho
+xnu/patches/0084-s9-keys-and-clean-borders.patch:46:@@ -326,6 +326,16 @@ AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:17: 	void removeClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:24: OSDefineMetaClassAndStructors(AppleCLCD, IOMobileFramebuffer);
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:25:@@ -181,6 +187,33 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:59:@@ -374,6 +407,11 @@ AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:71:@@ -416,6 +454,57 @@ AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:81:+AppleCLCD::presentScaled(SweetSurface *s, uintptr_t src, uint32_t bpe, int32_t sx, int32_t sy,
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:127: IOMobileFramebufferUserClient::initWithTask(task_t owningTask, void *securityID, UInt32 type)
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:137:+	bool fScale;                    /* Galaxy S9: same fit-height scale as AppleCLCD */
+xnu/patches/0086-s9-scale-canvas-to-panel.patch:167:+	/* Panel -> canvas, inverse of AppleCLCD's scale; border touches stick to the edge. */
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:106: 	void addClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:107: 	void removeClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:115:@@ -223,6 +234,17 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:133:@@ -244,8 +266,9 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:137:-	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u\n",
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:139:+	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u, %s\n",
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:145:@@ -281,6 +304,8 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:154:@@ -297,6 +322,7 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:162:@@ -321,6 +347,43 @@ AppleCLCD::removeClient(IOMobileFramebufferUserClient *client)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:167:+AppleCLCD::markRows(int64_t y0, int64_t y1)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:188:+AppleCLCD::cleanRows(void)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:206:@@ -373,6 +436,7 @@ AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:214:@@ -449,6 +513,7 @@ AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0089-s9-cpu-clocks-and-cached-panel.patch:222:@@ -500,6 +565,7 @@ AppleCLCD::presentScaled(SweetSurface *s, uintptr_t src, uint32_t bpe, int32_t s
+xnu/patches/0100-s9-battery-watchdog-adapter-thread-names.patch:281:@@ -490,6 +491,9 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0100-s9-battery-watchdog-adapter-thread-names.patch:288: 	fVsync = IOTimerEventSource::timerEventSource(this, &AppleCLCD::vsyncFired);
+xnu/patches/0100-s9-battery-watchdog-adapter-thread-names.patch:291:@@ -512,6 +516,9 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0079-sweet-display-power.patch:33: 	void addClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0079-sweet-display-power.patch:35: 		    (IOMobileFramebufferUserClient *)fb->fClients->getObject(i);
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:137:+ *      if the byte at +0x260 is set: IOMobileFramebufferSwapDirtyRegion)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:248:@@ -136,10 +229,32 @@ class AppleCLCD : public IOMobileFramebuffer {
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:288: 	void addClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:289: 	void removeClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:301: OSDefineMetaClassAndStructors(IOMobileFramebufferUserClient, IOUserClient);
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:331: AppleCLCD::start(IOService *provider)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:333:@@ -288,6 +434,7 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:341:@@ -303,7 +450,7 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:350:@@ -342,13 +489,34 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:374: 	setProperty(kIOUserClientClassKey, "IOMobileFramebufferUserClient");
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:378:-	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u, %s, vsync %u us%s\n",
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:379:+	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u, %s, vsync %u us%s, zero-copy %s\n",
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:387:@@ -378,6 +546,7 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:395:@@ -386,6 +555,7 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:403:@@ -410,7 +580,7 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:412:@@ -433,33 +603,76 @@ AppleCLCD::presentPending(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:498:@@ -521,14 +734,6 @@ AppleCLCD::cleanRows(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:515: AppleCLCD::swap(const uint8_t *rec)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:560:-AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:561:+AppleCLCD::present(const uint8_t *rec, int32_t y0, int32_t y1)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:565:@@ -617,7 +852,11 @@ AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:578:@@ -730,6 +969,267 @@ AppleCLCD::presentScaled(SweetSurface *s, uintptr_t src, uint32_t bpe, int32_t s
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:587:+AppleCLCD::zeroCopyInit(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:634:+AppleCLCD::zeroCopyStart(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:673:+AppleCLCD::zeroCopyStop(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:692:+AppleCLCD::zeroCopyLatched(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:699:+AppleCLCD::zeroCopySurface(const uint8_t *rec)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:717:+AppleCLCD::flip(SweetSurface *s, uint32_t id)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:764:+AppleCLCD::swapWait(uint32_t id, uint64_t flags)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:809:+AppleCLCD::setPower(bool off)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:828:+AppleCLCD::blank(void)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:844: IOMobileFramebufferUserClient::initWithTask(task_t owningTask, void *securityID, UInt32 type)
+xnu/patches/0096-s9-zero-copy-scanout-swapwait-dirty-rows.patch:846:@@ -864,17 +1364,16 @@ IOMobileFramebufferUserClient::externalMethod(uint32_t selector, IOExternalMetho
+xnu/patches/0087-s9-stretch-canvas-by-default.patch:5:@@ -188,15 +188,20 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0095-s9-panel-60hz-autorefresh-every-te.patch:36:@@ -292,6 +316,9 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0098-s9-parallelism-fastmap-memvote-knobs-fb-threads-a55.patch:111:@@ -545,6 +553,9 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0098-s9-parallelism-fastmap-memvote-knobs-fb-threads-a55.patch:112: 	AppleCLCD *fb = (AppleCLCD *)owner;
+xnu/patches/0098-s9-parallelism-fastmap-memvote-knobs-fb-threads-a55.patch:121:@@ -610,6 +621,11 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0098-s9-parallelism-fastmap-memvote-knobs-fb-threads-a55.patch:123: AppleCLCD::presentFired(OSObject *owner, __unused IOInterruptEventSource *sender, __unused int count)
+xnu/patches/0098-s9-parallelism-fastmap-memvote-knobs-fb-threads-a55.patch:130: 	((AppleCLCD *)owner)->presentPending();
+xnu/patches/0083-s9-iphone-x-canvas-on-larger-panel.patch:5:@@ -170,12 +170,17 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:23:@@ -96,8 +98,23 @@ class AppleCLCD : public IOMobileFramebuffer {
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:47:@@ -259,16 +276,36 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:58:+		fPresentSrc = IOInterruptEventSource::interruptEventSource(this, &AppleCLCD::presentFired);
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:76: 	setProperty(kIOUserClientClassKey, "IOMobileFramebufferUserClient");
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:80:-	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u, %s\n",
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:81:+	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u, %s, vsync %u us%s\n",
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:88:@@ -307,7 +344,16 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:106:@@ -325,7 +371,48 @@ AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:115:+AppleCLCD::presentFired(OSObject *owner, __unused IOInterruptEventSource *sender, __unused int count)
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:117:+	((AppleCLCD *)owner)->presentPending();
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:122:+AppleCLCD::presentPending(void)
+xnu/patches/0092-s9-perf-fast-cores-aks-wrap-vsync-rate.patch:156:@@ -409,6 +496,9 @@ AppleCLCD::swap(const uint8_t *rec)
+xnu/patches/0056-sweet-fb-throttled-present.patch:12: 	void addClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0056-sweet-fb-throttled-present.patch:13: 	void removeClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0056-sweet-fb-throttled-present.patch:18: OSDefineMetaClassAndStructors(AppleCLCD, IOMobileFramebuffer);
+xnu/patches/0056-sweet-fb-throttled-present.patch:28: 	setProperty(kIOUserClientClassKey, "IOMobileFramebufferUserClient");
+xnu/patches/0056-sweet-fb-throttled-present.patch:30: 		    (IOMobileFramebufferUserClient *)fb->fClients->getObject(i);
+xnu/patches/0056-sweet-fb-throttled-present.patch:61: AppleCLCD::swap(const uint8_t *rec)
+xnu/patches/0056-sweet-fb-throttled-present.patch:76:+AppleCLCD::present(const uint8_t *rec)
+xnu/patches/0061-sweet-iphone-x-display-size.patch:21: class IOMobileFramebuffer : public IOService {
+xnu/patches/0061-sweet-iphone-x-display-size.patch:52:-	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u\n",
+xnu/patches/0061-sweet-iphone-x-display-size.patch:54:+	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u, presented as %ux%u\n",
+xnu/patches/0058-sweet-hid-event-services.patch:15:     "     'IONameMatch'     = 'sweet,display';"
+xnu/patches/0046-sweet-iosurface-iomfb.patch:21:+    "     'IOClass'         = AppleCLCD;"
+xnu/patches/0046-sweet-iosurface-iomfb.patch:23:+    "     'IONameMatch'     = 'sweet,display';"
+xnu/patches/0046-sweet-iosurface-iomfb.patch:37:+	 * built-in drivers (the display, AppleCLCD) can match them. The GIC is
+xnu/patches/0046-sweet-iosurface-iomfb.patch:996:+ * Built-in IOMobileFramebuffer for SWEET: the ABL's continuous-splash
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1000:+ * IOMobileFramebuffer.framework (iOS 16.7) counts /arm-io children with
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1002:+ * IOServiceMatching("IOMobileFramebuffer"), opens each with type 0 and
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1004:+ * here (AppleCLCD, an IOMobileFramebuffer) matches the /arm-io/disp0 nub.
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1061:+class IOMobileFramebuffer : public IOService {
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1062:+	OSDeclareDefaultStructors(IOMobileFramebuffer);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1065:+OSDefineMetaClassAndStructors(IOMobileFramebuffer, IOService);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1067:+class IOMobileFramebufferUserClient;
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1069:+class AppleCLCD : public IOMobileFramebuffer {
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1070:+	OSDeclareDefaultStructors(AppleCLCD);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1090:+	void addClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1091:+	void removeClient(IOMobileFramebufferUserClient *client);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1095:+OSDefineMetaClassAndStructors(AppleCLCD, IOMobileFramebuffer);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1097:+class IOMobileFramebufferUserClient : public IOUserClient {
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1098:+	OSDeclareDefaultStructors(IOMobileFramebufferUserClient);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1101:+	AppleCLCD          *fFB;
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1118:+OSDefineMetaClassAndStructors(IOMobileFramebufferUserClient, IOUserClient);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1121:+AppleCLCD::start(IOService *provider)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1148:+	fVsync = IOTimerEventSource::timerEventSource(this, &AppleCLCD::vsyncFired);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1155:+	setProperty(kIOUserClientClassKey, "IOMobileFramebufferUserClient");
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1159:+	IOLog("SWEET FB: AppleCLCD %ux%u stride %u at 0x%llx, default surface %u\n",
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1165:+AppleCLCD::vsyncFired(OSObject *owner, IOTimerEventSource *sender)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1167:+	AppleCLCD *fb = (AppleCLCD *)owner;
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1178:+		IOMobileFramebufferUserClient *client =
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1179:+		    (IOMobileFramebufferUserClient *)fb->fClients->getObject(i);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1187:+AppleCLCD::addClient(IOMobileFramebufferUserClient *client)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1195:+AppleCLCD::removeClient(IOMobileFramebufferUserClient *client)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1217:+AppleCLCD::swap(const uint8_t *rec)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1296:+IOMobileFramebufferUserClient::initWithTask(task_t owningTask, void *securityID, UInt32 type)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1306:+IOMobileFramebufferUserClient::start(IOService *provider)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1308:+	fFB = OSDynamicCast(AppleCLCD, provider);
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1317:+IOMobileFramebufferUserClient::clientClose(void)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1334:+IOMobileFramebufferUserClient::registerNotificationPort(mach_port_t port, __unused UInt32 type,
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1350:+IOMobileFramebufferUserClient::notify(uint32_t type, const uint64_t *values, uint32_t count)
+xnu/patches/0046-sweet-iosurface-iomfb.patch:1366:+IOMobileFramebufferUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *args,
+xnu/patches/0093-s9-canvas-from-adt-fast-row-dup-fps.patch:5:@@ -111,6 +111,7 @@ class AppleCLCD : public IOMobileFramebuffer {
+xnu/patches/0093-s9-canvas-from-adt-fast-row-dup-fps.patch:13:@@ -212,6 +213,21 @@ AppleCLCD::start(IOService *provider)
+xnu/patches/0093-s9-canvas-from-adt-fast-row-dup-fps.patch:19:+		 * height, the same numbers IOMobileFramebuffer.framework reads), so
+xnu/patches/0093-s9-canvas-from-adt-fast-row-dup-fps.patch:35:@@ -405,9 +421,16 @@ AppleCLCD::presentPending(void)
+xnu/patches/0093-s9-canvas-from-adt-fast-row-dup-fps.patch:54:@@ -656,11 +679,25 @@ AppleCLCD::presentScaled(SweetSurface *s, uintptr_t src, uint32_t bpe, int32_t s
+seven@sevenzx:~/ios-s9$ 
