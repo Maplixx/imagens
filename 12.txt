@@ -1,0 +1,179 @@
+seven@sevenzx:~/ios-s9/s9$ adb shell '
+P=/sys/devices/virtual/lcd/panel/panel
+B=/sys/class/backlight/panel0-backlight
+
+echo "=== PANEL VALUES ==="
+for f in brightness max_brightness actual_brightness type brightness_step bl_power weakness_ccb; do
+  printf "%s=" "$f"
+  cat "$P/$f" 2>/dev/null || cat "$B/$f" 2>/dev/null || echo "(ausente)"
+done
+
+echo "=== PANEL UEVENT ==="
+cat "$P/uevent"
+
+echo "=== KERNEL LOG ==="
+dmesg | grep -iE "panel0-backlight|backlight|brightness|mdss_mdp|mdss-dsi|s6e3|AMB577PX01|lcd_id" | tail -200 
+'
+=== PANEL VALUES ===
+brightness=0
+max_brightness=0
+actual_brightness=0
+type=raw
+brightness_step=74
+bl_power=0
+weakness_ccb=0 0
+=== PANEL UEVENT ===
+=== KERNEL LOG ===
+<5>[    0.000000]  [0:        swapper:    0] Kernel command line: rcupdate.rcu_expedited=1 console=null androidboot.hardware=qcom video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=20488 androidboot.selinux=permissive buildvariant=eng root=/dev/sda23 androidboot.bootdevice=1d84000.ufshc androidboot.serialno=24e4b799241c7ece androidboot.baseband=sdm msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD: lcd_id=0x910443 androidboot.sec_atd.tty=/dev/ttyHS8 androidboot.revision=14 androidboot.ap_serial=0xE08D217D ccic_info=1 fg_reset=0 batt_temp=350 sec_log=0x200000@0xA1600000 sec_dbg=0x1FF000@0xA1400000 sec_dbg_ex_info=0xFC0@0xA15FF000 androidboot.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 androidboot.cp_debug_level=0x55FF sec_debug.enable_cp_debug=0 softdog.soft_margin=100 softdog.soft_panic=1 watchdog_v2.ipi_en=1 androidboot.cp_reserved_mem=off androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.carrierid.param.offset=9437644 androidboot.carrierid=ZVV androidboot.sales.param.offset=9437648 androidboot.sales_code=TTT androidboot.prototype.param.offset=9437660 androidboot.verifiedbootstate=orange androidboot.warranty_bit=1 androidboot.wb.hs=30C androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.em.did=20208BE08D217D11 androidboot.em.model=SM-G9600 androidboot.em.status=0x0 androidboot.sb.debug0=0x0 androidboot.bootloader=G9600ZHU9FVF2 charging_mode=0x00 afc_disable=0x00 androidboot.security_mode=1526595585 androidboot.kap.param.offset=100 androidboot.ddr_start_type=1 androidboot.dram_info=FF,04,10,4G androidboot.usrf=9438192 sec_dqa=0418
+<3>[    0.000000]  [0:        swapper:    0] [SDE] get_lcd_attached : LCD_ID = 0x910443
+<4>[    0.255944]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<4>[    0.256040]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<4>[    0.256124]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<4>[    0.256370]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<6>[    0.969493]  [2:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp to group 0
+<3>[    1.839431]  [7:      swapper/0:    1] sec_ts 30-0048: [sec_input] sec_ts_parse_dt: i2c buffer limit: 64, lcd_id:910443, bringup:0, FW:tsp_sec/y761_star1.fw(2), id:-2,-2, mis_cal:1 dex:1, gesture:0 pressure:Y
+<6>[    2.256972]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_r = 2bc
+<6>[    2.257243]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_g = 3c
+<6>[    2.257542]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_b = 78
+<6>[    2.257878]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_r_low = 64
+<6>[    2.258222]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_g_low = a
+<6>[    2.258829]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_b_low = a
+<6>[    2.844515]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound af20000.qcom,sde_rscc (ops sde_rsc_comp_ops)
+<6>[    2.844580]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound soc:qcom,wb-display@0 (ops sde_wb_comp_ops)
+<6>[    2.847177]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound ae90000.qcom,dp_display (ops dp_display_comp_ops)
+<3>[    2.848320]  [4:      swapper/0:    1] [SDE] samsung_panel_init : ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD
+<6>[    2.849710]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : backlight_gpio_config disabled
+<3>[    2.849765]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio1 not specified
+<3>[    2.849825]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio2 not specified
+<3>[    2.849885]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio3 not specified
+<3>[    2.849944]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio4 not specified
+<6>[    2.867022]  [4:      swapper/0:    1] msm-dsi-display:[dsi_display_bind] Successfully bind display panel 'ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD'
+<6>[    2.877528]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound soc:qcom,dsi-display@15 (ops dsi_display_comp_ops)
+<3>[    2.877653]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: failed to get memory resource: vbif_nrt_phys
+<6>[    3.130896]  [0:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp:qcom,smmu_sde_sec_cb to group 41
+<6>[    4.742551]  [2:crtc_commit:117:  441] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<6>[    4.863449]  [2:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[    4.863528]  [2:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[   10.147902]  [1:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[   10.147970]  [1:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[   70.365390]  [0:       recovery:  604] [SDE] ss_brightness_dcs : level : 5  candela : 3CD hbm : 0 (0)
+<3>[   70.365503]  [0:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[   72.378276]  [0:       recovery:  604] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<3>[   72.378387]  [0:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  173.889807]  [2:crtc_commit:117:  441] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<6>[  173.902118]  [2:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  173.902184]  [2:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  182.312301]  [2:             sh:  764] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  182.312360]  [2:             sh:  764] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  184.383425]  [0:             sh:  764] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  184.387267]  [0:             sh:  764] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  184.389878]  [0:             sh:  764] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  186.452338]  [2:             sh:  764] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  186.452398]  [2:             sh:  764] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  234.267199]  [5:       recovery:  604] [SDE] ss_brightness_dcs : level : 5  candela : 3CD hbm : 0 (0)
+<3>[  234.267250]  [5:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  235.493665]  [5:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  235.493724]  [5:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  250.593322]  [3:             sh:  790] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  250.593381]  [3:             sh:  790] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  252.649416]  [2:             sh:  790] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  252.652382]  [2:             sh:  790] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  252.654264]  [2:             sh:  790] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  254.712998]  [0:             sh:  790] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  254.713116]  [0:             sh:  790] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  268.112058]  [1:             sh:  805] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  268.112118]  [1:             sh:  805] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  270.168824]  [1:             sh:  805] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  270.171792]  [1:             sh:  805] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  270.173709]  [1:             sh:  805] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  272.231616]  [0:             sh:  805] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  272.231676]  [0:             sh:  805] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  284.134594]  [2:             sh:  820] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  284.134653]  [2:             sh:  820] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  286.190888]  [3:             sh:  820] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  286.193848]  [3:             sh:  820] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  286.195720]  [3:             sh:  820] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  288.252752]  [2:             sh:  820] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  288.252812]  [2:             sh:  820] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  296.629483]  [5:       recovery:  604] [SDE] ss_brightness_dcs : level : 5  candela : 3CD hbm : 0 (0)
+<3>[  296.629546]  [5:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  298.827622]  [4:       recovery:  604] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<3>[  298.827674]  [4:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  456.336751]  [0:            cat:  898] [SDE] ss_disp_brightness_step : brightness_step : 74
+seven@sevenzx:~/ios-s9/s9$ cat ~/ios-s9/s9/logs/android-backlight-driver.txt
+<5>[    0.000000]  [0:        swapper:    0] Kernel command line: rcupdate.rcu_expedited=1 console=null androidboot.hardware=qcom video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=20488 androidboot.selinux=permissive buildvariant=eng root=/dev/sda23 androidboot.bootdevice=1d84000.ufshc androidboot.serialno=24e4b799241c7ece androidboot.baseband=sdm msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD: lcd_id=0x910443 androidboot.sec_atd.tty=/dev/ttyHS8 androidboot.revision=14 androidboot.ap_serial=0xE08D217D ccic_info=1 fg_reset=0 batt_temp=350 sec_log=0x200000@0xA1600000 sec_dbg=0x1FF000@0xA1400000 sec_dbg_ex_info=0xFC0@0xA15FF000 androidboot.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 androidboot.cp_debug_level=0x55FF sec_debug.enable_cp_debug=0 softdog.soft_margin=100 softdog.soft_panic=1 watchdog_v2.ipi_en=1 androidboot.cp_reserved_mem=off androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.carrierid.param.offset=9437644 androidboot.carrierid=ZVV androidboot.sales.param.offset=9437648 androidboot.sales_code=TTT androidboot.prototype.param.offset=9437660 androidboot.verifiedbootstate=orange androidboot.warranty_bit=1 androidboot.wb.hs=30C androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.em.did=20208BE08D217D11 androidboot.em.model=SM-G9600 androidboot.em.status=0x0 androidboot.sb.debug0=0x0 androidboot.bootloader=G9600ZHU9FVF2 charging_mode=0x00 afc_disable=0x00 androidboot.security_mode=1526595585 androidboot.kap.param.offset=100 androidboot.ddr_start_type=1 androidboot.dram_info=FF,04,10,4G androidboot.usrf=9438192 sec_dqa=0418
+<3>[    0.000000]  [0:        swapper:    0] [SDE] get_lcd_attached : LCD_ID = 0x910443
+<4>[    0.255944]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<4>[    0.256040]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<4>[    0.256124]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<4>[    0.256370]  [2:      swapper/0:    1] irq: no irq domain found for /soc/qcom,mdss_mdp@ae00000 !
+<6>[    0.969493]  [2:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp to group 0
+<3>[    1.839431]  [7:      swapper/0:    1] sec_ts 30-0048: [sec_input] sec_ts_parse_dt: i2c buffer limit: 64, lcd_id:910443, bringup:0, FW:tsp_sec/y761_star1.fw(2), id:-2,-2, mis_cal:1 dex:1, gesture:0 pressure:Y
+<6>[    2.256972]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_r = 2bc
+<6>[    2.257243]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_g = 3c
+<6>[    2.257542]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_b = 78
+<6>[    2.257878]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_r_low = 64
+<6>[    2.258222]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_g_low = a
+<6>[    2.258829]  [3:      swapper/0:    1] leds-max77705-rgb: leds-max77705-rgb: max77705_rgb_parse_dt, brightness_ratio_b_low = a
+<6>[    2.844515]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound af20000.qcom,sde_rscc (ops sde_rsc_comp_ops)
+<6>[    2.844580]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound soc:qcom,wb-display@0 (ops sde_wb_comp_ops)
+<6>[    2.847177]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound ae90000.qcom,dp_display (ops dp_display_comp_ops)
+<3>[    2.848320]  [4:      swapper/0:    1] [SDE] samsung_panel_init : ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD
+<6>[    2.849710]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : backlight_gpio_config disabled
+<3>[    2.849765]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio1 not specified
+<3>[    2.849825]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio2 not specified
+<3>[    2.849885]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio3 not specified
+<3>[    2.849944]  [4:      swapper/0:    1] [SDE] ss_panel_parse_dt : 2631, backlight_tft_gpio gpio4 not specified
+<6>[    2.867022]  [4:      swapper/0:    1] msm-dsi-display:[dsi_display_bind] Successfully bind display panel 'ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD'
+<6>[    2.877528]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: bound soc:qcom,dsi-display@15 (ops dsi_display_comp_ops)
+<3>[    2.877653]  [4:      swapper/0:    1] msm_drm ae00000.qcom,mdss_mdp: failed to get memory resource: vbif_nrt_phys
+<6>[    3.130896]  [0:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp:qcom,smmu_sde_sec_cb to group 41
+<6>[    4.742551]  [2:crtc_commit:117:  441] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<6>[    4.863449]  [2:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[    4.863528]  [2:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[   10.147902]  [1:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[   10.147970]  [1:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[   70.365390]  [0:       recovery:  604] [SDE] ss_brightness_dcs : level : 5  candela : 3CD hbm : 0 (0)
+<3>[   70.365503]  [0:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[   72.378276]  [0:       recovery:  604] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<3>[   72.378387]  [0:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  173.889807]  [2:crtc_commit:117:  441] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<6>[  173.902118]  [2:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  173.902184]  [2:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  182.312301]  [2:             sh:  764] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  182.312360]  [2:             sh:  764] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  184.383425]  [0:             sh:  764] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  184.387267]  [0:             sh:  764] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  184.389878]  [0:             sh:  764] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  186.452338]  [2:             sh:  764] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  186.452398]  [2:             sh:  764] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  234.267199]  [5:       recovery:  604] [SDE] ss_brightness_dcs : level : 5  candela : 3CD hbm : 0 (0)
+<3>[  234.267250]  [5:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  235.493665]  [5:       recovery:  604] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  235.493724]  [5:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  250.593322]  [3:             sh:  790] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  250.593381]  [3:             sh:  790] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  252.649416]  [2:             sh:  790] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  252.652382]  [2:             sh:  790] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  252.654264]  [2:             sh:  790] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  254.712998]  [0:             sh:  790] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  254.713116]  [0:             sh:  790] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  268.112058]  [1:             sh:  805] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  268.112118]  [1:             sh:  805] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  270.168824]  [1:             sh:  805] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  270.171792]  [1:             sh:  805] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  270.173709]  [1:             sh:  805] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  272.231616]  [0:             sh:  805] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  272.231676]  [0:             sh:  805] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  284.134594]  [2:             sh:  820] [SDE] ss_brightness_dcs : level : 5000  candela : 15CD hbm : 0 (0)
+<3>[  284.134653]  [2:             sh:  820] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  286.190888]  [3:             sh:  820] [SDE] set_hbm_br_values : [13] candela_level (470) auto_brightness (19) 
+<6>[  286.193848]  [3:             sh:  820] [SDE] ss_brightness_dcs : level : 30000  candela : 470CD hbm : 1 (19)
+<3>[  286.195720]  [3:             sh:  820] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  288.252752]  [2:             sh:  820] [SDE] ss_brightness_dcs : level : 15000  candela : 223CD hbm : 0 (0)
+<3>[  288.252812]  [2:             sh:  820] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  296.629483]  [5:       recovery:  604] [SDE] ss_brightness_dcs : level : 5  candela : 3CD hbm : 0 (0)
+<3>[  296.629546]  [5:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+<6>[  298.827622]  [4:       recovery:  604] [SDE] ss_brightness_dcs : level : 0  candela : 2CD hbm : 0 (0)
+<3>[  298.827674]  [4:       recovery:  604] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+seven@sevenzx:~/ios-s9/s9$
