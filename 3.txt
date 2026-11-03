@@ -1,0 +1,162 @@
+seven@sevenzx:~$ adb shell 'find /dev/block -type l -name boot -o -name userdata -o -name efs -o -name persist -o -name modemst1 -o -name modemst2 -o -name fsg -o -name fsc 2>/dev/null'
+/dev/block/platform/soc/1d84000.ufshc/by-name/efs
+/dev/block/platform/soc/1d84000.ufshc/by-name/boot
+/dev/block/platform/soc/1d84000.ufshc/by-name/modemst2
+/dev/block/platform/soc/1d84000.ufshc/by-name/modemst1
+/dev/block/platform/soc/1d84000.ufshc/by-name/persist
+/dev/block/platform/soc/1d84000.ufshc/by-name/fsc
+/dev/block/platform/soc/1d84000.ufshc/by-name/userdata
+/dev/block/platform/soc/1d84000.ufshc/by-name/fsg
+seven@sevenzx:~$ adb shell 'find /dev/block -type l -path "*/by-name/*" -printf "%p -> %l\n" 2>/dev/null'
+seven@sevenzx:~$ adb shell 'for d in /dev/block/by-name /dev/block/platform/*/by-name /dev/block/platform/*/*/by-name; do [ -d "$d" ] && { echo "== $d =="; ls -l "$d"; }; done'
+== /dev/block/platform/soc/1d84000.ufshc/by-name ==
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 abl -> /dev/block/sdd8
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 aop -> /dev/block/sdd5
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 apdp -> /dev/block/sdd15
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 apnhlos -> /dev/block/sda16
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 bksecapp -> /dev/block/sdd11
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 bluetooth -> /dev/block/sdd10
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 boot -> /dev/block/sda20
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 bota -> /dev/block/sda10
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 btd -> /dev/block/sdd25
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 cache -> /dev/block/sda25
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 cmnlib -> /dev/block/sdd13
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 cmnlib64 -> /dev/block/sdd14
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 ddr -> /dev/block/sdd1
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 debug -> /dev/block/sda28
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 devcfg -> /dev/block/sdd19
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 devinfo -> /dev/block/sdd9
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 dpo -> /dev/block/sdd17
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 dqmdbg -> /dev/block/sda14
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 dsp -> /dev/block/sda18
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 dtbo -> /dev/block/sda19
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 efs -> /dev/block/sda6
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 em -> /dev/block/sdd23
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 fota -> /dev/block/sda11
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 fsc -> /dev/block/sda3
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 fsg -> /dev/block/sdd3
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 hidden -> /dev/block/sda26
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 hyp -> /dev/block/sdd4
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 keymaster -> /dev/block/sdd12
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 keystore -> /dev/block/sda9
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 limits -> /dev/block/sdd18
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 misc -> /dev/block/sda8
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 modem -> /dev/block/sda17
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 modemst1 -> /dev/block/sda1
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 modemst2 -> /dev/block/sda2
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 msadp -> /dev/block/sdd16
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 nad_refer -> /dev/block/sda15
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 odm -> /dev/block/sda24
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 omr -> /dev/block/sda27
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 pad -> /dev/block/sdd26
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 param -> /dev/block/sda7
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 persist -> /dev/block/sda5
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 persistent -> /dev/block/sda12
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 pmic -> /dev/block/sdd7
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 qupfw -> /dev/block/sdd22
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 recovery -> /dev/block/sda21
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 sec -> /dev/block/sdd6
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 ssd -> /dev/block/sda4
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 steady -> /dev/block/sda13
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 storsec -> /dev/block/sdd20
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 system -> /dev/block/sda22
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 tz -> /dev/block/sdd2
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 userdata -> /dev/block/sda29
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 vbmeta -> /dev/block/sdd21
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 vendor -> /dev/block/sda23
+lrwxrwxrwx    1 root     root            16 Aug 28  2018 vk -> /dev/block/sdd24
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 xbl -> /dev/block/sdb1
+lrwxrwxrwx    1 root     root            15 Aug 28  2018 xbl_config -> /dev/block/sdb2
+seven@sevenzx:~$ adb shell 'ls -l /dev/block; ls -l /dev/block/platform 2>/dev/null'
+brw-------    1 root     root        7,   0 Aug 28  2018 loop0
+brw-------    1 root     root        7,   1 Aug 28  2018 loop1
+brw-------    1 root     root        7,   2 Aug 28  2018 loop2
+brw-------    1 root     root        7,   3 Aug 28  2018 loop3
+brw-------    1 root     root        7,   4 Aug 28  2018 loop4
+brw-------    1 root     root        7,   5 Aug 28  2018 loop5
+brw-------    1 root     root        7,   6 Aug 28  2018 loop6
+brw-------    1 root     root        7,   7 Aug 28  2018 loop7
+drwxr-xr-x    3 root     root            60 Aug 28  2018 platform
+brw-------    1 root     root        1,   0 Aug 28  2018 ram0
+brw-------    1 root     root        1,   1 Aug 28  2018 ram1
+brw-------    1 root     root        1,  10 Aug 28  2018 ram10
+brw-------    1 root     root        1,  11 Aug 28  2018 ram11
+brw-------    1 root     root        1,  12 Aug 28  2018 ram12
+brw-------    1 root     root        1,  13 Aug 28  2018 ram13
+brw-------    1 root     root        1,  14 Aug 28  2018 ram14
+brw-------    1 root     root        1,  15 Aug 28  2018 ram15
+brw-------    1 root     root        1,   2 Aug 28  2018 ram2
+brw-------    1 root     root        1,   3 Aug 28  2018 ram3
+brw-------    1 root     root        1,   4 Aug 28  2018 ram4
+brw-------    1 root     root        1,   5 Aug 28  2018 ram5
+brw-------    1 root     root        1,   6 Aug 28  2018 ram6
+brw-------    1 root     root        1,   7 Aug 28  2018 ram7
+brw-------    1 root     root        1,   8 Aug 28  2018 ram8
+brw-------    1 root     root        1,   9 Aug 28  2018 ram9
+brw-------    1 root     root        8,   0 Aug 28  2018 sda
+brw-------    1 root     root        8,   1 Aug 28  2018 sda1
+brw-------    1 root     root        8,  10 Aug 28  2018 sda10
+brw-------    1 root     root        8,  11 Aug 28  2018 sda11
+brw-------    1 root     root        8,  12 Aug 28  2018 sda12
+brw-------    1 root     root        8,  13 Aug 28  2018 sda13
+brw-------    1 root     root        8,  14 Aug 28  2018 sda14
+brw-------    1 root     root        8,  15 Aug 28  2018 sda15
+brw-------    1 root     root      259,   0 Aug 28  2018 sda16
+brw-------    1 root     root      259,   1 Aug 28  2018 sda17
+brw-------    1 root     root      259,   2 Aug 28  2018 sda18
+brw-------    1 root     root      259,   3 Aug 28  2018 sda19
+brw-------    1 root     root        8,   2 Aug 28  2018 sda2
+brw-------    1 root     root      259,   4 Aug 28  2018 sda20
+brw-------    1 root     root      259,   5 Aug 28  2018 sda21
+brw-------    1 root     root      259,   6 Aug 28  2018 sda22
+brw-------    1 root     root      259,   7 Aug 28  2018 sda23
+brw-------    1 root     root      259,   9 Aug 28  2018 sda24
+brw-------    1 root     root      259,  11 Aug 28  2018 sda25
+brw-------    1 root     root      259,  13 Aug 28  2018 sda26
+brw-------    1 root     root      259,  15 Aug 28  2018 sda27
+brw-------    1 root     root      259,  17 Aug 28  2018 sda28
+brw-------    1 root     root      259,  19 Aug 28  2018 sda29
+brw-------    1 root     root        8,   3 Aug 28  2018 sda3
+brw-------    1 root     root        8,   4 Aug 28  2018 sda4
+brw-------    1 root     root        8,   5 Aug 28  2018 sda5
+brw-------    1 root     root        8,   6 Aug 28  2018 sda6
+brw-------    1 root     root        8,   7 Aug 28  2018 sda7
+brw-------    1 root     root        8,   8 Nov  3 03:42 sda8
+brw-------    1 root     root        8,   9 Aug 28  2018 sda9
+brw-------    1 root     root        8,  16 Aug 28  2018 sdb
+brw-------    1 root     root        8,  17 Aug 28  2018 sdb1
+brw-------    1 root     root        8,  18 Aug 28  2018 sdb2
+brw-------    1 root     root        8,  32 Aug 28  2018 sdc
+brw-------    1 root     root        8,  33 Aug 28  2018 sdc1
+brw-------    1 root     root        8,  34 Aug 28  2018 sdc2
+brw-------    1 root     root        8,  48 Aug 28  2018 sdd
+brw-------    1 root     root        8,  49 Aug 28  2018 sdd1
+brw-------    1 root     root        8,  58 Aug 28  2018 sdd10
+brw-------    1 root     root        8,  59 Aug 28  2018 sdd11
+brw-------    1 root     root        8,  60 Aug 28  2018 sdd12
+brw-------    1 root     root        8,  61 Aug 28  2018 sdd13
+brw-------    1 root     root        8,  62 Aug 28  2018 sdd14
+brw-------    1 root     root        8,  63 Aug 28  2018 sdd15
+brw-------    1 root     root      259,   8 Aug 28  2018 sdd16
+brw-------    1 root     root      259,  10 Aug 28  2018 sdd17
+brw-------    1 root     root      259,  12 Aug 28  2018 sdd18
+brw-------    1 root     root      259,  14 Aug 28  2018 sdd19
+brw-------    1 root     root        8,  50 Aug 28  2018 sdd2
+brw-------    1 root     root      259,  16 Aug 28  2018 sdd20
+brw-------    1 root     root      259,  18 Aug 28  2018 sdd21
+brw-------    1 root     root      259,  20 Aug 28  2018 sdd22
+brw-------    1 root     root      259,  21 Aug 28  2018 sdd23
+brw-------    1 root     root      259,  22 Aug 28  2018 sdd24
+brw-------    1 root     root      259,  23 Aug 28  2018 sdd25
+brw-------    1 root     root      259,  24 Aug 28  2018 sdd26
+brw-------    1 root     root        8,  51 Aug 28  2018 sdd3
+brw-------    1 root     root        8,  52 Aug 28  2018 sdd4
+brw-------    1 root     root        8,  53 Aug 28  2018 sdd5
+brw-------    1 root     root        8,  54 Aug 28  2018 sdd6
+brw-------    1 root     root        8,  55 Aug 28  2018 sdd7
+brw-------    1 root     root        8,  56 Aug 28  2018 sdd8
+brw-------    1 root     root        8,  57 Aug 28  2018 sdd9
+brw-------    1 root     root      252,   0 Aug 28  2018 vnswap0
+brw-------    1 root     root      254,   0 Aug 28  2018 zram0
+drwxr-xr-x    3 root     root            60 Aug 28  2018 soc
+seven@sevenzx:~$
