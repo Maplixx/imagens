@@ -1,0 +1,151 @@
+seven@sevenzx:~$ cd ~/ios-s9/s9
+./tools/twrp-check.sh out/boot.img
+== boot (/dev/block/platform/soc/1d84000.ufshc/by-name/boot): igual a out/boot.img
+   primeiros bytes: ANDROID!
+== pstore (caixa-preta do shim)
+-r--r--r--    1 root     root        262132 Aug 28  2018 console-ramoops-0
+-r--r--r--    1 root     root          1847 Aug 28  2018 pmsg-ramoops-0
+   salvo em logs/pstore-20261103-022647.txt (262132 bytes); fim:
+<6>[    0.251596]  [2:      swapper/0:    1] pstore: using zlib compression
+<6>[    0.252537]  [2:      swapper/0:    1] console [pstore-1] enabled
+<6>[    0.252613]  [2:      swapper/0:    1] pstore: Registered ramoops as persistent store backend
+<6>[    0.252622]  [2:      swapper/0:    1] ramoops: attached 0x100000@0xa1300000, ecc: 0/0
+CONFIG_PSTORE_CONSOLE=y
+CONFIG_PSTORE_RAM=y
+== o que o ABL passou
+msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD:
+lcd_id=0x910443
+androidboot.revision=14
+androidboot.debug_level=0x4f4c
+androidboot.bootloader=G9600ZHU9FVF2
+Samsung STARQLTE CHN PROJECT Rev14
+   DTB vivo em dtb/live-twrp-20261103-022647.dtb
+seven@sevenzx:~/ios-s9/s9$ grep -iE 'usb|gadget|network|s9net|ssh|gpu|display|framebuffer|backlight|panic|error' \
+  logs/pstore-*.txt | tail -120
+logs/pstore-20261103-022647.txt:[ 2580.458221]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2590.488960]  [0:  kworker/u16:2: 1156] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4304mV),Inow(395mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(339), Tusb(328), Tchg(347),Twpc(339)
+logs/pstore-20261103-022647.txt:[ 2590.506040]  [0:  kworker/u16:2: 1156] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2593.764150]  [1:    kworker/1:1: 1276] muic-max77705:max77705_muic_print_reg_log USBC1:0x2f, USBC2:0x05, BC:0x81, UICINTM:0x4, attached_dev:1
+logs/pstore-20261103-022647.txt:[ 2600.536840]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4302mV),Inow(407mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(338), Tusb(328), Tchg(347),Twpc(338)
+logs/pstore-20261103-022647.txt:[ 2600.551654]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2610.582070]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4303mV),Inow(380mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(338), Tusb(328), Tchg(347),Twpc(338)
+logs/pstore-20261103-022647.txt:[ 2610.596680]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2620.628025]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4305mV),Inow(386mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(338), Tusb(328), Tchg(346),Twpc(338)
+logs/pstore-20261103-022647.txt:[ 2620.647209]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2630.677410]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4307mV),Inow(392mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(337), Tusb(327), Tchg(346),Twpc(337)
+logs/pstore-20261103-022647.txt:[ 2630.692577]  [0:  kworker/u16:1:  924] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2640.722733]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4307mV),Inow(388mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(337), Tusb(327), Tchg(345),Twpc(337)
+logs/pstore-20261103-022647.txt:[ 2640.737671]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2641.280385]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_prepare] ++
+logs/pstore-20261103-022647.txt:[ 2641.309700]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_prepare] --
+logs/pstore-20261103-022647.txt:[ 2641.309756]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_enable] ++
+logs/pstore-20261103-022647.txt:[ 2641.337337]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_enable] --
+logs/pstore-20261103-022647.txt:[ 2641.338533]  [0:       recovery:  605] msm-dsi-display:[dsi_display_set_backlight] unable to set backlight
+logs/pstore-20261103-022647.txt:[ 2641.504433]  [3:crtc_commit:117:  441] [SDE] ss_event_frame_update : DISPLAY_ON
+logs/pstore-20261103-022647.txt:[ 2642.144931]  [0:  kworker/u16:0: 1367] [SDE] ss_copr_read : ACTUAL_DISPLAY_ON
+logs/pstore-20261103-022647.txt:[ 2650.767996]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4297mV),Inow(309mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(337), Tusb(328), Tchg(346),Twpc(337)
+logs/pstore-20261103-022647.txt:[ 2650.785015]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2655.204365]  [1:    kworker/1:1: 1276] muic-max77705:max77705_muic_print_reg_log USBC1:0x2f, USBC2:0x05, BC:0x81, UICINTM:0x4, attached_dev:1
+logs/pstore-20261103-022647.txt:[ 2660.815470]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_get_battery_info:Vnow(4294mV),Inow(307mA),Imax(475mA),Ichg(550mA),SOC(100%),Tbat(336), Tusb(329), Tchg(345),Twpc(336)
+logs/pstore-20261103-022647.txt:[ 2660.830262]  [0:  kworker/u16:0: 1367] sec-battery soc:battery: sec_bat_monitor_work: Status(Charging), mode(Normal), Health(Good), Cable(USB, USB, 1, 0), level(100%), slate_mode(0), store_mode(0), HV(NONE), sleep_mode(0), Cycle(-1)
+logs/pstore-20261103-022647.txt:[ 2664.009666]  [6:           init:    1] As EXT4-fs error, printing data in hex
+logs/pstore-20261103-022647.txt:[ 2664.010925]  [6:           init:    1] EXT4-fs error (device sda29): ext4_map_blocks:574: inode #2: block 29557766: comm init: lblock 0 mapped to illegal pblock (length 1)
+logs/pstore-20261103-022647.txt:[ 2664.011065]  [6:           init:    1] As EXT4-fs error, printing data in hex
+logs/pstore-20261103-022647.txt:[ 2664.028853]  [6:           init:    1] [<ffffff8008395834>] ext4_handle_error.part.190+0x3c/0xd4
+logs/pstore-20261103-022647.txt:[ 2664.028901]  [6:           init:    1] [<ffffff8008398274>] __ext4_error_inode+0x208/0x20c
+logs/pstore-20261103-022647.txt:[ 2664.100877]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_disable] ++
+logs/pstore-20261103-022647.txt:[ 2664.251537]  [0:    ->transport:  736] usb: dwc3_gadget_pullup is_on: 0
+logs/pstore-20261103-022647.txt:[ 2664.251656]  [0:    ->transport:  736] msm-dwc3 a600000.ssusb: DWC3_CONTROLLER_NOTIFY_OTG_EVENT received
+logs/pstore-20261103-022647.txt:[ 2664.251769]  [0:    ->transport:  736] usb: dwc3_gadget_run_stop is_on: 0
+logs/pstore-20261103-022647.txt:[ 2664.251964]  [0:    ->transport:  736] usb: android_disconnect schedule_work con(0) sw(1)
+logs/pstore-20261103-022647.txt:[ 2664.252815]  [0:    kworker/0:1: 1311] usb: android_work sent uevent USB_STATE=DISCONNECTED
+logs/pstore-20261103-022647.txt:[ 2664.253198]  [0:    ->transport:  736] usb: dwc3_gadget_stop Release gadget driver
+logs/pstore-20261103-022647.txt:[ 2664.281831]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_disable] --
+logs/pstore-20261103-022647.txt:[ 2664.281925]  [3:crtc_commit:117:  441] msm-dsi-display:[dsi_display_unprepare] ++
+logs/pstore-20261103-022647.txt:[ 2664.293912]  [1:crtc_commit:117:  441] msm-dsi-display:[dsi_display_unprepare] --
+logs/pstore-20261103-022647.txt:[ 2664.498315]  [0:           init:    1] max77705: max77705_usbc_shutdown: max77705 usbc driver shutdown++++
+logs/pstore-20261103-022647.txt:[ 2664.498789]  [0:           init:    1] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.498897]  [0:           init:    1] max77705: max77705_usbc_opcode_write: W->W opcode[0x06] write_length[1] read_length[0]
+logs/pstore-20261103-022647.txt:[ 2664.499014]  [0:           init:    1] max77705: front_usbc_cmd: Opcode(0x06)
+logs/pstore-20261103-022647.txt:[ 2664.499109]  [0:           init:    1] max77705: dequeue_usbc_cmd: Opcode(0x06) Response(0xff)
+logs/pstore-20261103-022647.txt:[ 2664.499209]  [0:           init:    1] max77705: max77705_usbc_cmd_run: No ISR
+logs/pstore-20261103-022647.txt:[ 2664.506448]  [0:           init:    1] max77705_shutdown_reg_log USBC1:0x27, USBC2:0x05, BC:0x81, CC0:0xb1, CC1:0x8, PD0:0x19, PD1:0x7 attached_dev:1
+logs/pstore-20261103-022647.txt:[ 2664.511525]  [3:irq/26-max77705:  325] max77705: dequeue_usbc_cmd: Opcode(0xff) Response(0x06)
+logs/pstore-20261103-022647.txt:[ 2664.511624]  [3:irq/26-max77705:  325] max77705: dequeue_usbc_cmd: front->next = NULL
+logs/pstore-20261103-022647.txt:[ 2664.511719]  [3:irq/26-max77705:  325] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.511823]  [3:irq/26-max77705:  325] max77705: max77705_usbc_cmd_run: Apcmdres ISR !!!
+logs/pstore-20261103-022647.txt:[ 2664.512328]  [3:irq/26-max77705:  325] max77705: max77705_i2c_opcode_read: opcode 0xff, read_length 1, ret_error 0
+logs/pstore-20261103-022647.txt:[ 2664.512539]  [3:irq/26-max77705:  325] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.512638]  [3:irq/26-max77705:  325] max77705: max77705_usbc_cmd_run: Queue, Empty
+logs/pstore-20261103-022647.txt:[ 2664.512829]  [3:irq/26-max77705:  325] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.512933]  [3:irq/26-max77705:  325] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+logs/pstore-20261103-022647.txt:[ 2664.520441]  [3:           init:    1] usb: [M] manager_notifier_unregister: listener=21 unregister
+logs/pstore-20261103-022647.txt:[ 2664.520645]  [3:           init:    1] muic-max77705:muic_unregister_usb_notifier
+logs/pstore-20261103-022647.txt:[ 2664.520741]  [3:           init:    1] usb_notify: usb_external_notify_unregister: listener=(muic)0 unregister
+logs/pstore-20261103-022647.txt:[ 2664.520852]  [3:           init:    1] muic-max77705:muic_unregister_usb_notifier: done.
+logs/pstore-20261103-022647.txt:[ 2664.533723]  [3:irq/26-max77705:  325] max77705: max77705_ccic_event_work: usb: DIAES 4-1-0-0-0
+logs/pstore-20261103-022647.txt:[ 2664.533925]  [3:irq/26-max77705:  325] max77705: max77705_ccic_event_work: usb: DIAES 1-3-0-0-0
+logs/pstore-20261103-022647.txt:[ 2664.534030]  [3:irq/26-max77705:  325] max77705: max77705_ccic_event_work: usb: dest=1, event=0
+logs/pstore-20261103-022647.txt:[ 2664.534133]  [3:irq/26-max77705:  325] max77705: max77705_ccic_event_work: usb: pd->data_role=2, pd->try_state_change=0
+logs/pstore-20261103-022647.txt:[ 2664.534398]  [3:irq/26-max77705:  325] max77705: max77705_usbc_clear_queue: IN
+logs/pstore-20261103-022647.txt:[ 2664.534489]  [3:irq/26-max77705:  325] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.534590]  [3:irq/26-max77705:  325] max77705: max77705_usbc_clear_queue: OUT
+logs/pstore-20261103-022647.txt:[ 2664.534687]  [3:irq/26-max77705:  325] usb_notify: send_otg_notify event=power_role_source(24) enable=0
+logs/pstore-20261103-022647.txt:[ 2664.534797]  [3:irq/26-max77705:  325] usb_notify: extra_notifier_callback event=power_role_source(24)
+logs/pstore-20261103-022647.txt:[ 2664.534905]  [3:irq/26-max77705:  325] usb_notify: extra_notify_state+ event=power_role_source(24), enable=off
+logs/pstore-20261103-022647.txt:[ 2664.535019]  [3:irq/26-max77705:  325] usb_notify: send_external_notify: cmd=power_role_notify(7), data=0
+logs/pstore-20261103-022647.txt:[ 2664.535129]  [3:irq/26-max77705:  325] pdic_handle_usb_external_notifier_notification : action=7 , enable=0
+logs/pstore-20261103-022647.txt:[ 2664.535238]  [3:irq/26-max77705:  325] usb_notify: send_external_notify: notify done(0x0)
+logs/pstore-20261103-022647.txt:[ 2664.535339]  [3:irq/26-max77705:  325] usb_notify: extra_notify_state- event=power_role_source(24), cable=vbus
+logs/pstore-20261103-022647.txt:[ 2664.535541]  [3:irq/26-max77705:  325] max77705: max77705_ccic_event_work: usb: DIAES 2-4-0-0-0
+logs/pstore-20261103-022647.txt:[ 2664.535647]  [3:irq/26-max77705:  325] usb_notify: is_blocked type=1, disable_state=0
+logs/pstore-20261103-022647.txt:[ 2664.536244]  [3:  kworker/u16:4:  322] max77705: max77705_ccic_event_notifier: usb: dest=MUIC, id=ID_ATTACH, attach=0, event=0
+logs/pstore-20261103-022647.txt:[ 2664.536489]  [3:  kworker/u16:4:  322] usb: [M] manager_handle_ccic_notification: src:CCIC dest:MUIC id:ID_ATTACH attach/rid:0
+logs/pstore-20261103-022647.txt:[ 2664.536611]  [3:  kworker/u16:4:  322] usb: [M] manager_handle_ccic_notification: CCIC_NOTIFY_DETACH (pd=0, cable_type=3)
+logs/pstore-20261103-022647.txt:[ 2664.536733]  [3:  kworker/u16:4:  322] usb: [M] manager_notifier_notify: src:CCIC dest:MUIC id:ID_ATTACH sub1:00 sub2:00 sub3:00
+logs/pstore-20261103-022647.txt:[ 2664.536856]  [3:  kworker/u16:4:  322] usb: [M] manager_notifier_notify: notify done(0x0)
+logs/pstore-20261103-022647.txt:[ 2664.537064]  [3:  kworker/u16:4:  322] max77705: max77705_ccic_event_notifier: usb: dest=USB, id=ID_USB, attach=Detached, drp=USB_DETACH
+logs/pstore-20261103-022647.txt:[ 2664.537426]  [0:irq/26-max77705:  325] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.537536]  [0:irq/26-max77705:  325] max77705: max77705_usbc_check_sysmsg: IGNORE SYSTEM_MSG IN SHUTDOWN MODE!!
+logs/pstore-20261103-022647.txt:[ 2664.537733]  [0:irq/26-max77705:  325] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+logs/pstore-20261103-022647.txt:[ 2664.537829]  [0:irq/26-max77705:  325] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+logs/pstore-20261103-022647.txt:[ 2664.537947]  [3:  kworker/u16:4:  322] usb: [M] manager_handle_ccic_notification: src:CCIC dest:USB id:ID_USB attach/rid:0
+logs/pstore-20261103-022647.txt:[ 2664.538068]  [3:  kworker/u16:4:  322] usb: [M] manager_notifier_notify: src:CCIC dest:USB id:ID_USB sub1:00 sub2:00 sub3:00
+logs/pstore-20261103-022647.txt:[ 2664.538208]  [3:  kworker/u16:4:  322] sec-battery soc:battery: usb_typec_handle_notification: action (3) dump(0x5, 0x1, 0x03, 0x0000, 0x0000, 0x0000)
+logs/pstore-20261103-022647.txt:[ 2664.538347]  [3:  kworker/u16:4:  322] sec-battery soc:battery: usb_typec_handle_notification: skip handler dest(1)
+logs/pstore-20261103-022647.txt:[ 2664.540686]  [3:  kworker/u16:4:  322] usb_notifier: ccic_usb_handle_notification: Turn Off Device(UFP)
+logs/pstore-20261103-022647.txt:[ 2664.540802]  [3:  kworker/u16:4:  322] usb_notify: send_otg_notify event=vbus(1) enable=0
+logs/pstore-20261103-022647.txt:[ 2664.540903]  [3:  kworker/u16:4:  322] usb_notify: otg_notifier_callback event=vbus(1)
+logs/pstore-20261103-022647.txt:[ 2664.541007]  [3:  kworker/u16:4:  322] usb: [M] manager_notifier_notify: notify done(0x0)
+logs/pstore-20261103-022647.txt:[ 2664.541247]  [3:  kworker/u16:4:  322] usb_notify: otg_notify_state+ event=vbus(1), enable=off
+logs/pstore-20261103-022647.txt:[ 2664.541377]  [3:  kworker/u16:4:  322] usb: set_ncm_ready ready=false, terminal_mode_version=0
+logs/pstore-20261103-022647.txt:[ 2664.541482]  [3:  kworker/u16:4:  322] usb_notify: otg_notify_state- event=vbus, cable=none
+logs/pstore-20261103-022647.txt:[ 2664.541602]  [3:  kworker/u16:4:  322] max77705: max77705_ccic_event_notifier: usb: dest=BATTERY, id=ID_POWER_STATUS, attach=0, event=0
+logs/pstore-20261103-022647.txt:[ 2664.541847]  [3:  kworker/u16:4:  322] usb: [M] manager_handle_ccic_notification: src:CCIC dest:BATTERY id:ID_POWER_STATUS attach/rid:0
+logs/pstore-20261103-022647.txt:[ 2664.541977]  [3:  kworker/u16:4:  322] usb: [M] manager_notifier_notify: src:CCIC dest:BATTERY id:ID_POWER_STATUS sub1:00 sub2:00 sub3:00
+logs/pstore-20261103-022647.txt:[ 2664.542119]  [3:  kworker/u16:4:  322] sec-battery soc:battery: usb_typec_handle_notification: action (4) dump(0x5, 0x2, 0x04, 0x0000, 0x0000, 0x0000)
+logs/pstore-20261103-022647.txt:[ 2664.542264]  [3:  kworker/u16:4:  322] sec-battery soc:battery: usb_typec_handle_notification: skip pd operation - attach(0)
+logs/pstore-20261103-022647.txt:[ 2664.544302]  [3:  kworker/u16:4:  322] usb: [M] manager_notifier_notify: notify done(0x0)
+logs/pstore-20261103-022647.txt:[ 2664.544534]  [3:  kworker/u16:4:  322] msm-dwc3 a600000.ssusb: dwc3_resume_work : max_speed = 5, typec_orientation = 1
+logs/pstore-20261103-022647.txt:[ 2664.544660]  [3:  kworker/u16:4:  322] msm-dwc3 a600000.ssusb: XCVR: ID set
+logs/pstore-20261103-022647.txt:[ 2664.544754]  [3:  kworker/u16:4:  322] msm-dwc3 a600000.ssusb: XCVR: BSV clear
+logs/pstore-20261103-022647.txt:[ 2664.544850]  [3:  kworker/u16:4:  322] msm-dwc3 a600000.ssusb: XCVR: SUSP clear
+logs/pstore-20261103-022647.txt:[ 2664.545643]  [3:    kworker/3:0: 1346] msm-dwc3 a600000.ssusb: b_peripheral state
+logs/pstore-20261103-022647.txt:[ 2664.545754]  [3:    kworker/3:0: 1346] msm-dwc3 a600000.ssusb: !id || !bsv
+logs/pstore-20261103-022647.txt:[ 2664.545867]  [3:    kworker/3:0: 1346] msm-dwc3 a600000.ssusb: dwc3_otg_start_peripheral: turn off gadget dwc3-gadget
+logs/pstore-20261103-022647.txt:[ 2664.546020]  [3:    kworker/3:0: 1346] usb: dwc3_gadget_vbus_session is_active: 0
+logs/pstore-20261103-022647.txt:[ 2664.546126]  [3:    kworker/3:0: 1346] usb: dwc3_gadget_disconnect_interrupt
+logs/pstore-20261103-022647.txt:[ 2664.546230]  [3:    kworker/3:0: 1346] msm-dwc3 a600000.ssusb: DWC3_CONTROLLER_NOTIFY_OTG_EVENT received
+logs/pstore-20261103-022647.txt:[ 2664.546361]  [3:    kworker/3:0: 1346] msm-qusb-phy-v2 88e2000.qusb: QUSB PHY: connect notification cable_connected=0
+logs/pstore-20261103-022647.txt:[ 2664.546493]  [3:    kworker/3:0: 1346] msm-usb-ssphy-qmp 88e8000.ssphy: QMP phy disconnect notification
+logs/pstore-20261103-022647.txt:[ 2664.546603]  [3:    kworker/3:0: 1346] msm-usb-ssphy-qmp 88e8000.ssphy:  cable_connected=1
+logs/pstore-20261103-022647.txt:[ 2664.546778]  [3:    kworker/3:0: 1346] msm-dwc3 a600000.ssusb: b_idle state
+logs/pstore-20261103-022647.txt:[ 2664.546885]  [3:    kworker/3:0: 1346] msm-dwc3 a600000.ssusb: Cable disconnected
+logs/pstore-20261103-022647.txt:[ 2664.631858]  [0:           init:    1] max77705: max77705_usbc_shutdown: max77705 usbc driver shutdown----
+seven@sevenzx:~/ios-s9/s9$ ls -lt logs/ | head
+total 520
+-rw-rw-r-- 1 seven seven   1658 Nov  3 02:26 cmdline-20261103-022647.txt
+-rw-rw-r-- 1 seven seven 262132 Nov  3 02:26 pstore-20261103-022647.txt
+-rw-rw-r-- 1 seven seven   1658 Nov  3 01:03 cmdline-20261103-010304.txt
+-rw-rw-r-- 1 seven seven 262132 Nov  3 01:03 pstore-20261103-010304.txt
+seven@sevenzx:~/ios-s9/s9$
