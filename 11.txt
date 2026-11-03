@@ -1,0 +1,241 @@
+seven@sevenzx:~/ios-s9/s9$ adb devices -l
+List of devices attached
+24e4b799241c7ece       recovery usb:3-2 product:omni_starqltechn model:SM_G9600 device:starqltechn transport_id:5
+
+seven@sevenzx:~/ios-s9/s9$ adb shell '
+echo "=== BACKLIGHT ==="
+find /sys/class/backlight -maxdepth 2 -type f -print 2>/dev/null
+
+echo "=== VALORES ==="
+for d in /sys/class/backlight/*; do
+  [ -d "$d" ] || continue
+  echo "--- $d ---"
+  for f in brightness max_brightness actual_brightness type; do
+    [ -f "$d/$f" ] && printf "%s=" "$f" && cat "$d/$f"
+  done
+done
+
+echo "=== PAINEL/DISPLAY ==="
+find /sys/devices -iname "*backlight*" -o -iname "*panel*" 2>/dev/null | head -100
+'
+=== BACKLIGHT ===
+=== VALORES ===
+--- /sys/class/backlight/panel ---
+brightness=0
+max_brightness=0
+actual_brightness=0
+type=raw
+--- /sys/class/backlight/panel0-backlight ---
+brightness=15000
+max_brightness=50000
+actual_brightness=0
+type=raw
+=== PAINEL/DISPLAY ===
+/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/backlight
+/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/backlight/panel0-backlight
+/sys/devices/virtual/lcd/panel
+/sys/devices/virtual/lcd/panel/panel
+seven@sevenzx:~/ios-s9/s9$ adb shell '
+dmesg | grep -iE "backlight|brightness|panel|dsi|s6e3|display|max77705" | tail -200
+'
+<6>[   29.220109]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   29.220619]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   29.220714]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   29.220818]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   29.398642]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   29.399735]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   29.399831]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   29.399937]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   30.151729]  [2:  kworker/u16:1:  293] max77705_chgin_isr_work: irq(706), chgin(0x3), chg_dtls(0x8) prev 0x3
+<6>[   30.153894]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   30.155113]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   30.155227]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   30.156181]  [0:  kworker/u16:1:  293] max77705_aicl_isr_work : Not in AICL Mode : CHG_INT_OK(0xdf), prev_aicl(1)
+<6>[   30.156702]  [0:  kworker/u16:1:  293] max77705_get_input_current_type: reg:(0x67), charging_current:(2600)
+<6>[   30.754018]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   30.755150]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   30.755245]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   30.755350]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   30.786402]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   30.787494]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   30.787590]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   30.787695]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   30.944796]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   30.945298]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   30.945392]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   30.945497]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   30.977039]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   30.978123]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   30.978217]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   30.978322]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   31.361350]  [0:  kworker/u16:1:  293] max77705_chgin_isr_work: irq(706), chgin(0x3), chg_dtls(0x8) prev 0x3
+<6>[   31.364773]  [3:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x00 pmic_rev=0x03
+<6>[   31.364898]  [3:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   31.365003]  [3:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   31.483593]  [3:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   31.484776]  [3:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   31.484870]  [3:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   31.484974]  [3:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   31.513847]  [3:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   31.514933]  [3:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   31.515026]  [3:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   31.515129]  [3:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   32.038072]  [3:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   32.038799]  [1:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   32.038844]  [1:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   32.038897]  [1:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   32.081569]  [0:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   32.082375]  [0:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   32.082430]  [0:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   32.082493]  [0:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   32.242641]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   32.243082]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   32.243162]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   32.243250]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   32.571519]  [3:  kworker/u16:1:  293] max77705_chgin_isr_work: irq(706), chgin(0x3), chg_dtls(0x1) prev 0x3
+<6>[   32.574105]  [3:  kworker/u16:1:  293] max77705_aicl_isr_work : AICL Mode : CHG_INT_OK(0x5f), prev_aicl(0)
+<6>[   32.574667]  [3:  kworker/u16:1:  293] max77705_get_input_current_type: reg:(0x67), charging_current:(2600)
+<6>[   32.576046]  [3:  kworker/u16:1:  293] max77705_get_input_current_type: reg:(0x63), charging_current:(2500)
+<6>[   32.941321]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   32.942524]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   32.942621]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   32.942727]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   33.120370]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: is_first_booting  : 1
+<6>[   33.120432]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: alternate mode is ready!
+<6>[   33.120494]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: [ON BOOTING TIME] !!!alternate mode is started!
+<6>[   33.120568]  [4:    kworker/4:1:  120] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.120628]  [4:    kworker/4:1:  120] max77705: max77705_usbc_opcode_write: W->W opcode[0x55] write_length[1] read_length[1]
+<6>[   33.120698]  [4:    kworker/4:1:  120] max77705: front_usbc_cmd: Opcode(0x55)
+<6>[   33.120746]  [4:    kworker/4:1:  120] max77705: dequeue_usbc_cmd: Opcode(0x55) Response(0xff)
+<6>[   33.120801]  [4:    kworker/4:1:  120] max77705: max77705_usbc_cmd_run: No ISR
+<6>[   33.120851]  [4:    kworker/4:1:  120] max77705: max77705_i2c_opcode_write: opcode 0x55, write_length 2
+<6>[   33.120913]  [4:    kworker/4:1:  120] max77705: opcode_write: 00000000: 55 03
+<6>[   33.121973]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: !![ON BOOTING TIME] SEND THE PACKET REGARDING IN CASE OF VR/DP 
+<6>[   33.125500]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: USBC1:0x37, USBC2:0x05, BC:0x81
+<6>[   33.125567]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: CC_STATUS0:0x71, CC_STATUS1:0x8, PD_STATUS0:0x19, PD_STATUS1:0x7
+<6>[   33.125648]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: UIC_INT_M:0x4, CC_INT_M:0x20, PD_INT_M:0x0, VDM_INT_M:0xf0
+<6>[   33.125939]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x08 pmic_rev=0x03
+<6>[   33.126942]  [4:    kworker/4:1:  120] max77705: max77705_set_enable_alternate_mode: UIC_INT_M:0x4, CC_INT_M:0x20, PD_INT_M:0x0, VDM_INT_M:0xf0
+<6>[   33.128677]  [2:irq/26-max77705:  326] [MAX77705] irq_reg, complete [1], 84, 0, 0, 0, f0
+<6>[   33.128788]  [2:irq/26-max77705:  326] [MAX77705] dump_reg, 3f, 5, 81, 0, 71, 8, 19, 7
+<6>[   33.128891]  [2:irq/26-max77705:  326] max77705: max77705_apcmd_irq: IRQ(709)_IN
+<6>[   33.129362]  [2:irq/26-max77705:  326] max77705: max77705_apcmd_irq:  [IN] sysmsg : 5
+<6>[   33.129466]  [2:irq/26-max77705:  326] max77705: dequeue_usbc_cmd: Opcode(0xff) Response(0x55)
+<6>[   33.129568]  [2:irq/26-max77705:  326] max77705: dequeue_usbc_cmd: front->next = NULL
+<6>[   33.129663]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.129766]  [2:irq/26-max77705:  326] max77705: max77705_usbc_cmd_run: Apcmdres ISR !!!
+<6>[   33.130288]  [2:irq/26-max77705:  326] max77705: max77705_i2c_opcode_read: opcode 0xff, read_length 2, ret_error 0
+<6>[   33.130406]  [2:irq/26-max77705:  326] max77705: opcode_read: 00000000: 55 13
+<6>[   33.130501]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.130602]  [2:irq/26-max77705:  326] max77705: max77705_usbc_cmd_run: Queue, Empty
+<6>[   33.130697]  [2:irq/26-max77705:  326] max77705: max77705_apcmd_irq: IRQ(709)_OUT
+<6>[   33.130791]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.130893]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   33.446609]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   33.447705]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   33.447799]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.447902]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   33.495021]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   33.496117]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   33.496209]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.496313]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   33.654252]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   33.654748]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   33.654838]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.654943]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   33.781526]  [3:  kworker/u16:1:  293] max77705_chgin_isr_work: irq(706), chgin(0x3), chg_dtls(0x1) prev 0x3
+<6>[   33.784018]  [3:  kworker/u16:1:  293] max77705_aicl_isr_work : AICL Mode : CHG_INT_OK(0x5f), prev_aicl(1)
+<6>[   33.784574]  [3:  kworker/u16:1:  293] max77705_get_input_current_type: reg:(0x63), charging_current:(2500)
+<6>[   33.785946]  [3:  kworker/u16:1:  293] max77705_get_input_current_type: reg:(0x5f), charging_current:(2400)
+<6>[   33.883885]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   33.885069]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   33.885163]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   33.885267]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   34.043111]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   34.043611]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   34.043703]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   34.043808]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   34.090754]  [0:  kworker/u16:6:  324] max77705_fg_periodic_read: skip old(13) current(34)
+<7>[   34.093474]  [0:  kworker/u16:6:  324] max77705_fg_read_current: current=-373
+<7>[   34.094395]  [0:  kworker/u16:6:  324] max77705_fg_read_avg_current: avg_current=141
+<7>[   34.110290]  [0:  kworker/u16:6:  324] max77705_fg_write_temp: temperature to (348, 0x22cd)
+<7>[   34.111272]  [0:  kworker/u16:6:  324] max77705_fg_check_qrtable: QRTABLE20_REG(0x0a0c), QRTABLE30_REG(0x0889)
+<7>[   34.113134]  [0:  kworker/u16:6:  324] max77705_fg_read_avg_current: avg_current=141
+<7>[   34.113219]  [0:  kworker/u16:6:  324] max77705_get_fuelgauge_soc: soc(972)
+<6>[   34.113860]  [0:  kworker/u16:6:  324] max77705_get_input_current_type: reg:(0x5f), charging_current:(2400)
+<6>[   34.114408]  [0:  kworker/u16:6:  324] max77705_fg_get_scaled_capacity : current_standard(1000)
+<6>[   34.114523]  [0:  kworker/u16:6:  324] max77705_fg_get_scaled_capacity : CABLE TYPE(4) INPUT CURRENT(2400) CHARGING MODE(CC Mode)
+<7>[   34.114754]  [0:  kworker/u16:6:  324] max77705_fg_get_atomic_capacity : NOW(97), OLD(97)
+<6>[   34.115461]  [0:  kworker/u16:6:  324] max77705_get_input_current_type: reg:(0x5f), charging_current:(2400)
+<6>[   34.116013]  [0:  kworker/u16:6:  324] max77705_get_charge_current: reg:(0x2b), charging_current:(2150)
+<6>[   34.116633]  [0:  kworker/u16:6:  324] max77705_chg_set_wdtmr_kick: WDT Kick
+<6>[   34.117810]  [0:  kworker/u16:6:  324] max77705_get_charging_health: reg_data(0x3)
+<6>[   34.118340]  [0:  kworker/u16:6:  324] max77705_get_charging_health: details00 (0xe0)
+<6>[   34.118878]  [0:  kworker/u16:6:  324] max77705_get_vbus_state: VBUS is valid. CHGIN < CHGIN_OVLO
+<6>[   34.120729]  [0:  kworker/u16:6:  324] max77705_get_charging_health: vbus_state: 0x3, chg_dtls: 0x1, iin: 1143mA, vbyp: 4502mV
+<6>[   34.121286]  [0:  kworker/u16:6:  324] max77705_check_cnfg12_reg: valid_data = 0x60, reg_data = 0x60
+<7>[   34.121953]  [0:  kworker/u16:6:  324] max77705_get_float_voltage: battery cv reg : 0x13, float voltage val : 4350
+<6>[   34.124644]  [0:  kworker/u16:6:  324] [max77705_set_input_current] REG(0xc0) DATA(0x67), CURRENT(2600)
+<6>[   34.125844]  [0:  kworker/u16:6:  324] [max77705_set_charge_current] REG(0xb9) DATA(0x2b), CURRENT(2150)
+<6>[   34.135206]  [0:  kworker/u16:6:  324] max77705 : [0xb1]0x5e, [0xb2]0x5f, [0xb3]0xe0, [0xb4]0x31, [0xb5]0x00, [0xb6]0xff, [0xb7]0x15, [0xb8]0x38, [0xb9]0x6b, [0xba]0x9b, [0xbb]0x13, [0xbc]0x38, [0xbd]0x6c, [0xbe]0x34, [0xbf]0x02, [0xc0]0xe7, [0xc1]0x10, [0xc2]0x00, [0xc3]0x60, 
+<6>[   34.136172]  [0:  kworker/u16:6:  324] max77705_chg_monitor_work: [CHG] MODE(0x5), B2SOVRC(0x8), otg_on(0)
+<6>[   34.244726]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   34.245818]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   34.245910]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   34.246014]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   35.794756]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   35.795850]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   35.795943]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   35.796047]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   35.827126]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   35.828218]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   35.828311]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   35.828415]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   36.170982]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   36.172076]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   36.172170]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   36.172275]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   36.203354]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   36.204442]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   36.204535]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   36.204639]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   36.221629]  [0:  kworker/u16:1:  293] max77705_chgin_isr_work: irq(706), chgin(0x3), chg_dtls(0x8) prev 0x3
+<6>[   36.223860]  [0:  kworker/u16:1:  293] max77705_aicl_isr_work : Not in AICL Mode : CHG_INT_OK(0xdf), prev_aicl(1)
+<6>[   36.224378]  [0:  kworker/u16:1:  293] max77705_get_input_current_type: reg:(0x67), charging_current:(2600)
+<6>[   36.361587]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   36.362087]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   36.362179]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   36.362283]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   36.392961]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   36.394114]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   36.394206]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   36.394310]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   36.922581]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   36.923679]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   36.923773]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   36.923877]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   36.953804]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   36.954898]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   36.954988]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   36.955093]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   37.112036]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   37.112531]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   37.112622]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   37.112726]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   37.144410]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   37.145502]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   37.145594]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   37.145698]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   37.431346]  [0:  kworker/u16:1:  293] max77705_chgin_isr_work: irq(706), chgin(0x3), chg_dtls(0x8) prev 0x3
+<6>[   37.434628]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x00 pmic_rev=0x03
+<6>[   37.434749]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   37.434854]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   37.482378]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   37.483559]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   37.483652]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   37.483756]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+<6>[   37.513632]  [2:irq/26-max77705:  326] max77705:max77705_irq_thread: irq[26] 26/697/2037 irq_src=0x01 pmic_rev=0x03
+<6>[   37.514721]  [2:irq/26-max77705:  326] max77705_aicl_irq: irq(707)
+<6>[   37.514814]  [2:irq/26-max77705:  326] max77705: is_empty_usbc_cmd_queue: usbc_cmd_queue Empty(T)
+<6>[   37.514917]  [2:irq/26-max77705:  326] max77705_irq_thread doing_irq = 0, is_usbc_queue=0
+seven@sevenzx:~/ios-s9/s9$
