@@ -1,0 +1,147 @@
+iPhone:~ root# echo '=== BACKLIGHT ==='
+ioreg -p IODeviceTree -l -w 0 | grep -i -A12 -B8 'backlight'
+
+echo '=== DISPLAY ==='
+ioreg -p IOService -l -w 0 | grep -i -A8 -B8 \
+  'IOMobileFramebuffer\|sweet,display\|IOCoreSurface'
+
+echo '=== GPU/IOGPU ==='
+ioreg -p IOService -l -w 0 | grep -i -A8 -B8 \
+  'gpu\|adreno\|iogpu\|metal\|graphics'
+
+echo '=== PROCESSOS ==='
+ps ax | grep -iE 'backboardd|SpringBoard|s9net|sshd' | grep -v grep
+=== BACKLIGHT ===
+=== DISPLAY ===
++-o Root  <class IORegistryEntry, id 0x100000100, retain 6>
+  | {
+  |   "IOKitBuildVersion" = "Darwin Kernel Version 22.6.0: Mon Aug 14 05:06:07 UTC 2023; runner:xnu-8796.141.3"
+  |   "OS Build Version" = "20H392"
+  |   "OSKernelCPUSubtype" = 0
+  |   "OSKernelCPUType" = 16777228
+  |   "IORegistryPlanes" = {"IOPower"="IOPower","IOService"="IOService","IODeviceTree"="IODeviceTree"}
+  |   "IOConsoleLocked" = Yes
+  |   "IOKitDiagnostics" = {"Instance allocation"=83216,"Container allocation"=369321,"Pageable allocation"=49152,"Classes"={"IOMobileFramebufferUserClient"=2,"OSArraySubclass"=0,"IOCPUInterruptController"=0,"IOPMinformee"=0,"IOKitDiagnostics"=1,"OSValueObject<int>"=0,"IOReporter"=0,"TestIODeviceMemoryRosetta"=0,"IOSKArena"=4,"OSAction"=0,"IOMachPort"=281,"OSMetaClass"=0,"OSValueObject<TrivialAggregateTestType>"=0,"AppleKeyStore"=1,"IOInterruptController"=0,"IOInterruptEventSource"=1,"IOHIDEvent"=0,"IOUserResources"=1,"IOGeneralMemoryDescriptor"=10,"IOMemoryCursor"=0,"IOBigMemoryCursor"=0,"IOPolledInterface"=0,"IOStateNotificationItem"=4,"OSSymbol"=2450,"OSBoolean"=2,"OSAction_IOUserClient_KernelCompletion"=0,"PMHaltWorker"=0,"IOPlatformExpert"=1,"IOPolledFilePollers"=0,"OSIterator"=2,"PMAssertionsTracker"=1,"IOCommandGate"=9,"IOPlatformDevice"=16,"IOEventLink"=0,"OSCISubclass"=0,"IORootParent"=1,"OSKextSavedMutableSegment"=0,"IODataQueue"=1,"IOUserNotification"=2,"IOEventSource"=7,"IOPMServiceInterestNotifier"=32,"IOUserIterator"=2,"IOServiceNotificationDispatchSource"=0,"IORegistryPlane"=3,"IORegistryEntry"=2,"TestIODeviceMemoryRosettaUserClient"=0,"IOTimerEventSource"=3,"OSValueObject<NonTrivialConstructorAggregateTestType>"=0,"IONotifier"=3,"IOStateNotificationListener"=0,"_IOServiceInterestNotifier"=26,"SweetSurface"=7,"IOKitDiagnosticsClient"=0,"IODMAController"=0,"IODTNVRAM"=0,"TestIOServiceUserNotification"=0,"IOPMPowerStateQueue"=1,"IOSKRegionMapper"=2,"IOUserServerCheckInToken"=0,"_IOOpenServiceIterator"=0,"IOUserClient2022"=2,"AppleKeyStoreUserClient"=60,"IOServiceStateNotificationDispatchSource"=0,"IOPMPowerSource"=1,"IOWorkLoop"=5,"TestIOUserClient2022EntitlementsUserClient"=0,"IOService"=24,"IOCoreSurfaceRoot"=1,"IOWorkGroup"=0,"OSValueObject<OSKextRequestResourceCallback>"=0,"TestIOConnectMapMemoryPortLeak45265408"=0,"IOStateReporter"=0,"PassthruInterruptController"=0,"IOUserClient"=4,"IODTNVRAMVariables"=0,"OSData"=303,"IOSystemStateNotification"=1,"AppleCLCD"=1,"IOSKRegion"=11,"IOHIDEventServiceClient"=2,"IOPMinformeeList"=2,"IOPMGR"=0,"IOTestUserNotification"=0,"IOSubMemoryDescriptor"=0,"OSSerialize"=1,"IOFilterInterruptEventSource"=0,"SweetHIDButtons"=1,"SweetBattery"=1,"IOPanicPlatform"=0,"TestIOServiceHandle"=0,"IOSKMemoryBuffer"=3,"IONaturalMemoryCursor"=0,"OSArray"=1612,"IOMobileFramebuffer"=1,"IOPerfControlClient"=0,"IOSharedDataQueue"=1,"IOMultiMemoryDescriptor"=0,"IORegistryIterator"=0,"IOSKMemoryArray"=0,"IOMemoryDescriptor"=1,"IOCatalogue"=1,"IOConditionLock"=0,"IOSurfaceRootUserClient"=2,"IOPMRequest"=0,"_IOConfigThread"=0,"OSOrderedSet"=29,"IOSharedInterruptController"=0,"IOPMrootDomain"=1,"IOCommandPool"=0,"IOPMRequestQueue"=2,"IORTC"=0,"IOHistogramReporter"=0,"IOUserService"=0,"IOInterruptDispatchSource"=0,"OSCollection"=4,"IOServiceMessageUserNotification"=55,"OSNumber"=197,"IOResources"=1,"_IOUserServerCheckInCancellationHandler"=0,"IOGuardPageMemoryDescriptor"=0,"IODispatchQueue"=0,"IOPMCompletionQueue"=1,"IOPlatformExpertDevice"=1,"IOPMWorkQueue"=1,"_IOServiceStateNotification"=0,"IOServiceStateNotificationEventSource"=0,"IODMAEventSource"=0,"IOWatchdog"=1,"_IOServiceNotifier"=107,"IOMemoryMap"=31,"IOReportLegend"=0,"IOLittleMemoryCursor"=0,"IOInterleavedMemoryDescriptor"=0,"IOCommand"=9,"IOHIDEventServiceQueue"=2,"PMSettingObject"=0,"IODTPlatformExpert"=1,"OSString"=4546,"OSDictionary"=796,"OSDextStatistics"=0,"OSKext"=1,"IOServiceCompatibility"=0,"IODMACommand"=0,"IOUserServer"=0,"IODTNVRAMDiags"=0,"IODataQueueDispatchSource"=0,"IOMapper"=0,"SweetSurfaceRef"=10,"SweetPlatformExpert"=1,"_IOServiceNullNotifier"=1,"OSUserMetaClass"=0,"OSCollectionIterator"=2,"IORangeAllocator"=1,"IOServiceUserNotification"=107,"SweetCPU"=8,"IOPMPowerSourceList"=0,"SweetEntitlements"=195,"PMTraceWorker"=1,"IODispatchSource"=0,"IOPowerConnection"=1,"TestIOServiceUserNotificationUserClient"=0,"IOWatchDogTimer"=0,"PMSettingHandle"=0,"OSObject"=36,"OSSerializer"=2,"SweetHIDTouch"=1,"TestIOConnectMapMemoryPortLeak45265408UserClient"=0,"OSValueObject<PMAssertStruct>"=0,"IOUserUserClient"=0,"IOHIDEventService"=2,"IOSKMapper"=2,"OSValueObject<void*>"=0,"IOBufferMemoryDescriptor"=11,"IOPlatformIO"=0,"IOServicePM"=2,"RootDomainUserClient"=31,"_IOServiceJob"=0,"IONVRAMController"=0,"IOWatchdogUserClient"=0,"OSSet"=34,"OSDextCrash"=0,"IODTNVRAMPlatformNotifier"=0,"IOCPU"=1,"IOPerfControlWorkContext"=0,"IOHIDEventServiceUserClient"=2,"IOSimpleReporter"=0,"TestIOUserClient2022Entitlements"=0,"_IOMemoryDescriptorMixedData"=15},"IOMalloc allocation"=2033780}
+  | }
+  | 
+  +-o D22AP  <class IOPlatformExpertDevice, id 0x100000117, registered, matched, active, busy 1 (591034 ms), retain 19>
+    | {
+    |   "compatible" = <"D22AP","iPhone10,3","xiaomi,sweet","samsung,starqltechn","qcom,sdm845","AppleARM">
+    |   "AAPL,phandle" = <17000000>
+    |   "#size-cells" = <02000000>
+    |   "target-type" = <"D22">
+--
+    | |     "name" = <"wdt">
+    | |     "no-pmu" = <01000000>
+    | |     "AAPL,phandle" = <0f000000>
+    | |   }
+    | |   
+    | +-o disp0  <class IOPlatformDevice, id 0x100000111, registered, matched, active, busy 0 (17 ms), retain 7>
+    |   | {
+    |   |   "aot-power" = <01000000>
+    |   |   "compatible" = <"sweet,display">
+    |   |   "canvas-height" = <00070000>
+    |   |   "canvas-width" = <3c030000>
+    |   |   "device_type" = <"display-subsystem">
+    |   |   "name" = <"disp0">
+    |   |   "AAPL,phandle" = <10000000>
+    |   | }
+    |   | 
+    |   +-o AppleCLCD  <class AppleCLCD, id 0x10000012f, registered, matched, active, busy 0 (0 ms), retain 7>
+    |     | {
+    |     |   "IOClass" = "AppleCLCD"
+    |     |   "DisplayPipePlaneBaseAlignment" = 64
+    |     |   "IOProviderClass" = "IOPlatformDevice"
+    |     |   "IOUserClientClass" = "IOMobileFramebufferUserClient"
+    |     |   "external" = No
+    |     |   "IOProbeScore" = 0
+    |     |   "IONameMatch" = "sweet,display"
+    |     |   "IOMatchedAtBoot" = Yes
+    |     |   "IOMatchCategory" = "IODefaultMatchCategory"
+    |     |   "IOGeneralInterest" = "IOCommand is not serializable"
+    |     |   "KernelConfigTable" = Yes
+    |     |   "IONameMatched" = "sweet,display"
+    |     | }
+    |     | 
+    |     +-o IOMobileFramebufferUserClient  <class IOMobileFramebufferUserClient, id 0x10000016d, !registered, !matched, active, busy 0, retain 6>
+    |     |   {
+    |     |     "IOUserClientCreator" = "pid 50, backboardd"
+    |     |     "IOUserClientDefaultLocking" = Yes
+    |     |   }
+    |     |   
+    |     +-o IOMobileFramebufferUserClient  <class IOMobileFramebufferUserClient, id 0x100000198, !registered, !matched, active, busy 0, retain 6>
+    |         {
+    |           "IOUserClientCreator" = "pid 48, thermalmonitord"
+    |           "IOUserClientDefaultLocking" = Yes
+    |         }
+    |         
+    +-o IOResources  <class IOResources, id 0x10000011a, registered, matched, active, busy 0 (80 ms), retain 12>
+    | | {
+    | |   "IOBSD" = "IOService"
+--
+    | |     "IOClass" = "IOWatchdog"
+    | |     "IOMatchCategory" = "IOWatchdog"
+    | |     "KernelConfigTable" = Yes
+    | |     "IOMatchedAtBoot" = Yes
+    | |     "IOUserClientClass" = "IOWatchdogUserClient"
+    | |     "IOPMUPrimary" = 1
+    | |   }
+    | |   
+    | +-o IOCoreSurfaceRoot  <class IOCoreSurfaceRoot, id 0x100000123, registered, matched, active, busy 0 (20 ms), retain 7>
+    | | | {
+    | | |   "IOProbeScore" = 0
+    | | |   "IOProviderClass" = "IOResources"
+    | | |   "IOClass" = "IOCoreSurfaceRoot"
+    | | |   "IOMatchCategory" = "IOCoreSurfaceRoot"
+    | | |   "KernelConfigTable" = Yes
+    | | |   "IOMatchedAtBoot" = Yes
+    | | |   "IOUserClientClass" = "IOSurfaceRootUserClient"
+    | | | }
+    | | | 
+    | | +-o IOSurfaceRootUserClient  <class IOSurfaceRootUserClient, id 0x100000199, !registered, !matched, active, busy 0, retain 5>
+    | | |   {
+    | | |     "IOUserClientCreator" = "pid 50, backboardd"
+=== GPU/IOGPU ===
+    | |     "ui-background-quality" = <64000000>
+    | |     "supports-avatars" = <>
+    | |     "public-key-accelerator" = <01000000>
+    | |     "name" = <"product">
+    | |     "disable-globe-map" = <>
+    | |     "artwork-device-idiom" = <"phone">
+    | |     "AAPL,phandle" = <15000000>
+    | |     "device-color-policy" = <00000000>
+    | |     "graphics-featureset-class" = <"APPLE4">
+    | |     "siri-gesture" = <01000000>
+    | |     "supports-maps-optical-heading" = <>
+    | |     "compatible-app-variant" = <"0">
+    | |     "artwork-dynamic-displaymode" = <"0">
+    | |     "bluetooth-le" = <01000000>
+    | |     "watch-companion" = <01000000>
+    | |     "has-applelpm" = <00000000>
+    | |     "iap2-protocol-supported" = <01000000>
+    | |     "ephemeral-data-mode" = <00000000>
+    | |     "activation-protocol-version" = <02000000>
+    | |     "volume-up-button-location" = <78b00900ff96140030e00300ca9d010010270000>
+    | |     "ptp-large-files" = <01000000>
+    | |     "udid-version" = <01000000>
+    | |     "offline-dictation" = <01000000>
+    | |     "location-reminders" = <01000000>
+    | |     "ui-weather-quality" = <64000000>
+    | |     "graphics-featureset-fallbacks" = <"APPLE3:APPLE3v1:APPLE2:APPLE1:GLES2,0">
+    | |     "dictation" = <01000000>
+    | |     "itunes-min-ver" = <03070c00>
+    | |     "artwork-display-gamut" = <"P3">
+    | |     "ui-reachability" = <01000000>
+    | |     "front-cam-offset-from-center" = <d00101009e1d0000e803000000000000>
+    | |     "volume-down-button-location" = <78b00900ff96140048d00500ca9d010010270000>
+    | |     "personal-hotspot" = <01000000>
+    | |     "single-stage-boot" = <01000000>
+=== PROCESSOS ===
+   50   ??  Ss     0:20.95 /usr/libexec/backboardd
+   57   ??  Ss     0:00.02 /usr/libexec/s9net
+  161   ??  Ss     0:15.39 /System/Library/CoreServices/SpringBoard.app/SpringBoard
+  254   ??  Ss     0:00.19 sshd: root@ttys000 
+iPhone:~ root# ls -l /dev/fb* /dev/backlight* /dev/display* 2>/dev/null
+sysctl -a 2>/dev/null | grep -iE 'backlight|display|gpu|graphics|framebuffer'
+zsh: no matches found: /dev/backlight*
+iPhone:~ root# 
