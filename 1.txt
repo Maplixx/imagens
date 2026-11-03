@@ -1,0 +1,74 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+tools/mkiosroot.sh \
+  work/ipsw-x/OS.dmg \
+  work/ipsw-x/SystemOS.dmg \
+  work/ipsw-x/AppOS.dmg \
+  work/iosroot/ios16-root-v1.img
+[sudo: authenticate] Senha:  
+Initialized work/iosroot/ios16-root-v1.img as a 16 GB HFS Plus volume with a 8192k journal
+copying /tmp/tmp.9ZHOVRSGGj/os/root -> 
+copying /tmp/tmp.9ZHOVRSGGj/sysos/root -> /private/preboot/Cryptexes/OS
+copying /tmp/tmp.9ZHOVRSGGj/appos/root -> /private/preboot/Cryptexes/App
+linked OS:/System/DriverKit/System/Library/dyld/dyld_shared_cache_arm64
+linked OS:/System/DriverKit/System/Library/dyld/dyld_shared_cache_arm64.symbols
+linked OS:/System/Library/PrivateFrameworks/VisualTestKit.framework/VisualTestKit
+linked OS:/usr/lib/libffi-trampolines.dylib
+linked OS:/usr/lib/libobjc-trampolines.dylib
+linked OS:/usr/lib/libstdc++.6.0.9.dylib
+linked OS:/usr/lib/libstdc++.6.dylib
+linked OS:/usr/lib/libstdc++.dylib
+linked App:/System/Library/CoreServices/SafariSupport.bundle/Info.plist
+linked App:/System/Library/CoreServices/SafariSupport.bundle/SafariBookmarksSyncAgent
+linked App:/System/Library/CoreServices/SafariSupport.bundle/_CodeSignature/CodeResources
+linked App:/System/Library/CoreServices/SafariSupport.bundle/version.plist
+linked App:/usr/libexec/AuthenticationServicesAgent
+linked App:/usr/libexec/com.apple.Safari.History
+linked App:/usr/libexec/passwordbreachd
+linked App:/usr/libexec/safarifetcherd
+linked App:/usr/libexec/webbookmarksd
+linked App:/usr/libexec/webinspectord
+linked App:/usr/libexec/webpushd
+Sist. Arq.      Tam. Usado Disp. Uso% Montado em
+/dev/loop16      16G   12G  4,4G  73% /tmp/tmp.9ZHOVRSGGj/root
+** work/iosroot/ios16-root-v1.img
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking Journaled HFS Plus volume.
+** Detected a case-sensitive volume.
+   The volume name is iOSRoot
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** Repairing volume.
+** Rechecking volume.
+** Checking Journaled HFS Plus volume.
+** Detected a case-sensitive volume.
+   The volume name is iOSRoot
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume iOSRoot was repaired successfully.
+** work/iosroot/ios16-root-v1.img (NO WRITE)
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking Journaled HFS Plus volume.
+** Detected a case-sensitive volume.
+   The volume name is iOSRoot
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+   Volume header needs minor repair
+(1, 0)
+** The volume iOSRoot was found corrupt and needs to be repaired.
+seven@sevenzx:~/ios-s9$
