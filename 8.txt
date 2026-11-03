@@ -1,0 +1,419 @@
+seven@sevenzx:~/ios-s9/s9$ ssh -i ~/.ssh/id_ed25519 \
+  -o StrictHostKeyChecking=no \
+  -o ConnectTimeout=10 \
+  root@192.168.7.2
+Warning: Permanently added '192.168.7.2' (ED25519) to the list of known hosts.
+iPhone:~ root# id
+uname -a
+ifconfig
+uid=0(root) gid=0(wheel) groups=0(wheel)
+Darwin iPhone 22.6.0 Darwin Kernel Version 22.6.0: Mon Aug 14 05:06:07 UTC 2023; runner:xnu-8796.141.3 iPhone10,3 arm Darwin
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384 rtref 0 index 1
+	eflags=12000000<ECN_DISABLE,SENDLIST>
+	xflags=4<NOAUTONX>
+	options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
+	hwassist=29000ff<CSUM_IP,CSUM_TCP,CSUM_UDP,CSUM_IP_FRAGS,CSUM_FRAGMENT,CSUM_TCPIPV6,CSUM_UDPIPV6,CSUM_FRAGMENT_IPV6,MULTIPAGES,TXSTATUS,SW_TIMESTAMP>
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+	nd6 options=201<PERFORMNUD,DAD>
+	link quality: 100 (good)
+	state availability: 0 (true)
+	timestamp: disabled
+	qosmarking enabled: no mode: none
+	low power mode: disabled
+	multi layer packet logging (mpklog): disabled
+	routermode4: disabled
+	routermode6: disabled
+gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280 rtref 0 index 2
+	eflags=1000000<ECN_ENABLE>
+	state availability: 0 (true)
+	qosmarking enabled: no mode: none
+	low power mode: disabled
+	multi layer packet logging (mpklog): disabled
+	routermode4: disabled
+	routermode6: disabled
+stf0: flags=0<> mtu 1280 rtref 0 index 3
+	eflags=1000000<ECN_ENABLE>
+	state availability: 0 (true)
+	qosmarking enabled: no mode: none
+	low power mode: disabled
+	multi layer packet logging (mpklog): disabled
+	routermode4: disabled
+	routermode6: disabled
+ue0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500 rtref 8 index 4
+	eflags=1000000<ECN_ENABLE>
+	options=400<CHANNEL_IO>
+	ether 02:00:5e:77:ee:02
+	inet 192.168.7.2 netmask 0xffffff00 broadcast 192.168.7.255
+	netif: DCABCEE1-EE79-4E93-ADBE-D4957C58CF27
+	media: autoselect (1000baseT <full-duplex>)
+	status: active
+	type: Ethernet
+	agent domain:Skywalk type:NetIf flags:0xa443 desc:"Userspace Networking"
+	state availability: 0 (true)
+	link rate: 480.00 Mbps
+	unaligned pkts: 31741
+	qosmarking enabled: no mode: none
+	low power mode: disabled
+	multi layer packet logging (mpklog): disabled
+	routermode4: disabled
+	routermode6: disabled
+iPhone:~ root# ps ax | grep -E 's9net|sshd' | grep -v grep
+cat /var/ios-s9/s9net.log 2>/dev/null
+   57   ??  Ss     0:00.02 /usr/libexec/s9net
+  254   ??  Ss     0:00.12 sshd: root@ttys000 
+s9net: reachability before: ok flags=0x0 reachable=0 needs-connection=0
+s9net: published service S9-USB-Ethernet on ue0 via 192.168.7.1 (no forced primary)
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability before: ok flags=0x0 reachable=0 needs-connection=0
+s9net: published service S9-USB-Ethernet on ue0 via 192.168.7.1 (no forced primary)
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability before: ok flags=0x0 reachable=0 needs-connection=0
+s9net: published service S9-USB-Ethernet on ue0 via 192.168.7.1 (no forced primary)
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability before: ok flags=0x0 reachable=0 needs-connection=0
+s9net: published service S9-USB-Ethernet on ue0 via 192.168.7.1 (no forced primary)
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability before: ok flags=0x0 reachable=0 needs-connection=0
+s9net: published service S9-USB-Ethernet on ue0 via 192.168.7.1 (no forced primary)
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability after: ok flags=0x0 reachable=0 needs-connection=0
+s9net: reachability before: ok flags=0x0 reachable=0 needs-connection=0
+s9net: published service S9-USB-Ethernet on ue0 via 192.168.7.1 (no forced primary)
+s9net: reachability after: ok flags=0x2 reachable=1 needs-connection=0
+s9net: reachability after: ok flags=0x2 reachable=1 needs-connection=0
+s9net: reachability after: ok flags=0x2 reachable=1 needs-connection=0
+s9net: reachability after: ok flags=0x2 reachable=1 needs-connection=0
+s9net: reachability after: ok flags=0x2 reachable=1 needs-connection=0
+iPhone:~ root# dmesg | grep -iE 'SWEET FB|backlight|brightness|gpu|adreno|usb|network|ue0'
+3.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1399 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49281<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1397 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49282<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1398 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49283<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1399 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49281<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 38.625 ms rttvar: 33.187 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49281<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  182.598199]: tcp connect outgoing: [192.168.7.2:49284<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1409 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49284<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1409 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49282<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 57.125 ms rttvar: 38.250 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49282<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  182.674189]: tcp_connection_summary [192.168.7.2:49283<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 55.812 ms rttvar: 38.437 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49283<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  182.691390]: tcp_connection_summary [192.168.7.2:49223<->17.253.10.199:443] interface: ue0 (skipped: 0)
+rtt: 26.718 ms rttvar: 29.562 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49223<->17.253.10.199:443] interface: ue0 (skipped: 0)
+[  182.772171]: tcp connect outgoing: [192.168.7.2:49285<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1410 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49286<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1411 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49285<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1410 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49286<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1411 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49284<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 48.906 ms rttvar: 44.812 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49284<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  182.885653]: tcp connect outgoing: [192.168.7.2:49287<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1412 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49288<->17.253.10.199:443] interface: ue0 (skipped: 0)
+so_gencnt: 1413 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49288<->17.253.10.199:443] interface: ue0 (skipped: 0)
+so_gencnt: 1413 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49287<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 0.000 ms rttvar: 250.000 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49287<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  183.375438]: tcp_connection_summary [192.168.7.2:49288<->17.253.10.199:443] interface: ue0 (skipped: 0)
+rtt: 34.031 ms rttvar: 29.500 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49288<->17.253.10.199:443] interface: ue0 (skipped: 0)
+[  183.383948]: tcp connect outgoing: [192.168.7.2:49289<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1414 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49289<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  187.928280]: tcp_connection_summary [192.168.7.2:49289<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 51.281 ms rttvar: 33.312 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49289<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  187.946706]: tcp connect outgoing: [192.168.7.2:49290<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  188.041642]: tcp connected: [192.168.7.2:49290<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1424 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49290<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 72.906 ms rttvar: 56.687 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49290<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  188.522841]: tcp connect outgoing: [192.168.7.2:49291<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1425 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49291<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1425 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49291<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 46.218 ms rttvar: 27.125 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49291<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  188.926720]: tcp connect outgoing: [192.168.7.2:49292<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1426 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49292<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1426 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49292<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 47.375 ms rttvar: 26.687 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49292<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  189.225354]: tcp connect outgoing: [192.168.7.2:49293<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1430 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49293<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  189.724263]: tcp_connection_summary [192.168.7.2:49293<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 42.593 ms rttvar: 26.500 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49293<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  189.735191]: tcp connect outgoing: [192.168.7.2:49294<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1431 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49294<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1431 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49294<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 49.312 ms rttvar: 40.750 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49294<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  190.097241]: tcp connect outgoing: [192.168.7.2:49295<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1432 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49295<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1432 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49295<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 52.062 ms rttvar: 41.937 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49295<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  190.402619]: tcp connect outgoing: [192.168.7.2:49296<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1433 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49296<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1433 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49296<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 54.312 ms rttvar: 39.875 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49296<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  190.776825]: tcp_connection_summary [192.168.7.2:49286<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 37.593 ms rttvar: 25.250 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49286<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  190.812630]: tcp connect outgoing: [192.168.7.2:49297<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1439 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49240<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 30.312 ms rttvar: 30.125 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49240<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  190.832622]: tcp connect outgoing: [192.168.7.2:49298<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1440 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 0 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49299<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1441 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 0 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49297<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1439 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49298<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1440 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 0 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49299<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1441 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 59 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49298<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 47.156 ms rttvar: 31.562 ms base rtt: 12 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49298<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.095615]: tcp connect outgoing: [192.168.7.2:49300<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1442 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 12 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49285<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 36.750 ms rttvar: 28.625 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49285<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  191.133622]: tcp connect outgoing: [192.168.7.2:49301<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1443 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 12 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49299<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 58.500 ms rttvar: 42.062 ms base rtt: 12 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49299<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.144378]: tcp connected: [192.168.7.2:49300<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1442 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 12 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49302<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1444 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 12 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49301<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1443 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 12 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49302<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1444 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 12 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49300<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 39.718 ms rttvar: 27.125 ms base rtt: 7 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49300<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.382938]: tcp connect outgoing: [192.168.7.2:49303<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1445 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 7 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49301<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 38.125 ms rttvar: 26.750 ms base rtt: 7 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49301<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.391031]: tcp connect outgoing: [192.168.7.2:49304<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1446 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 7 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49297<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 41.031 ms rttvar: 21.687 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49297<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  191.408378]: tcp connect outgoing: [192.168.7.2:49305<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1447 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 7 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49302<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 36.500 ms rttvar: 33.250 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49302<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.424948]: tcp connected: [192.168.7.2:49303<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1445 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49306<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1448 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49304<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1446 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49305<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1447 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49306<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1448 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49303<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 28.437 ms rttvar: 26.062 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49303<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.683349]: tcp_connection_summary [192.168.7.2:49304<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 29.468 ms rttvar: 29.062 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49304<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.697447]: tcp connect outgoing: [192.168.7.2:49307<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1449 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49305<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 27.562 ms rttvar: 27.312 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49305<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.703146]: tcp connect outgoing: [192.168.7.2:49308<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1450 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49309<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  191.810922]: tcp connected: [192.168.7.2:49307<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1449 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49308<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1450 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49309<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1451 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49307<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 78.656 ms rttvar: 77.375 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49307<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.054609]: tcp_connection_summary [192.168.7.2:49309<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 75.187 ms rttvar: 72.312 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49309<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.065793]: tcp connect outgoing: [192.168.7.2:49310<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1465 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49311<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.159122]: tcp connected: [192.168.7.2:49310<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1465 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49311<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1466 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49308<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 77.531 ms rttvar: 75.687 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49308<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.179206]: tcp connect outgoing: [192.168.7.2:49312<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1467 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49312<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1467 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49306<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 67.593 ms rttvar: 64.937 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49306<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.372384]: tcp connect outgoing: [192.168.7.2:49313<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1468 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49310<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 67.218 ms rttvar: 58.687 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49310<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  192.421776]: tcp connected: [192.168.7.2:49313<->17.253.10.201:443] interface: ue0 (skipped: 0)
+so_gencnt: 1468 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49311<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 66.656 ms rttvar: 59.562 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49311<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.624761]: tcp_connection_summary [192.168.7.2:49313<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 41.343 ms rttvar: 23.187 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49313<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  192.924968]: tcp_connection_summary [192.168.7.2:49312<->17.253.10.201:443] interface: ue0 (skipped: 0)
+rtt: 38.937 ms rttvar: 26.625 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49312<->17.253.10.201:443] interface: ue0 (skipped: 0)
+[  193.555196]: tcp connect outgoing: [192.168.7.2:49314<->23.201.216.149:443] interface: ue0 (skipped: 0)
+so_gencnt: 1482 t_state: SYN_SENT process: amsengagementd:113 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 0 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49314<->23.201.216.149:443] interface: ue0 (skipped: 0)
+so_gencnt: 1482 t_state: ESTABLISHED process: amsengagementd:113 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 0 ms error: 0 so_error: 0 svc/tc: 0necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.821257]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  193.821263]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  193.825529]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.825553]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  193.825557]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  193.829532]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.829553]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  193.829556]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  193.833653]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.833671]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  193.833675]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  193.839172]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.839194]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  193.839198]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  193.842691]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.842717]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  193.842721]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  193.888707]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.890454]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.893439]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.896539]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.897847]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.899382]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  193.900579]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  194.032833]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  194.302281]: tcp connect outgoing: [192.168.7.2:49315<->17.253.10.199:443] interface: ue0 (skipped: 0)
+so_gencnt: 1496 t_state: SYN_SENT process: amsengagementd:113 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 200tcp connected: [192.168.7.2:49315<->17.253.10.199:443] interface: ue0 (skipped: 0)
+so_gencnt: 1496 t_state: ESTABLISHED process: amsengagementd:113 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 200tcp_connection_summary [192.168.7.2:49239<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 28.968 ms rttvar: 28.750 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49239<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  194.714385]: tcp_connection_summary [192.168.7.2:49315<->17.253.10.199:443] interface: ue0 (skipped: 0)
+rtt: 35.937 ms rttvar: 38.687 ms base rtt: 1 ms so_error: 0 svc/tc: 200tcp_connection_summary [192.168.7.2:49315<->17.253.10.199:443] interface: ue0 (skipped: 0)
+[  195.497137]: tcp_connection_summary [192.168.7.2:49226<->17.253.10.199:443] interface: ue0 (skipped: 0)
+rtt: 26.375 ms rttvar: 29.875 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49226<->17.253.10.199:443] interface: ue0 (skipped: 0)
+[  197.152392]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.154143]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.157215]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.160959]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.301089]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.304474]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.307618]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.323227]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.324729]: necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.324781]: tcp connect outgoing: [192.168.7.2:49316<->17.253.10.202:443] interface: ue0 (skipped: 0)
+so_gencnt: 1509 t_state: SYN_SENT process: nsurlsessiond:108 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 100necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.327030]: tcp connect outgoing: [192.168.7.2:49317<->17.253.10.202:443] interface: ue0 (skipped: 0)
+so_gencnt: 1510 t_state: SYN_SENT process: nsurlsessiond:108 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 100necp_application_find_policy_match_internal: nsurlsessiond(108) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  197.334090]: tcp connect outgoing: [192.168.7.2:49318<->17.253.10.202:443] interface: ue0 (skipped: 0)
+so_gencnt: 1512 t_state: SYN_SENT process: nsurlsessiond:108 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 100tcp_connection_summary [192.168.7.2:49316<->17.253.10.202:443] interface: ue0 (skipped: 0)
+rtt: 0.000 ms rttvar: 250.000 ms base rtt: 1 ms so_error: 0 svc/tc: 100tcp_connection_summary [192.168.7.2:49316<->17.253.10.202:443] interface: ue0 (skipped: 0)
+[  197.347806]: tcp_connection_summary [192.168.7.2:49317<->17.253.10.202:443] interface: ue0 (skipped: 0)
+rtt: 0.000 ms rttvar: 250.000 ms base rtt: 1 ms so_error: 0 svc/tc: 100tcp_connection_summary [192.168.7.2:49317<->17.253.10.202:443] interface: ue0 (skipped: 0)
+[  197.353876]: tcp_connection_summary [192.168.7.2:49318<->17.253.10.202:443] interface: ue0 (skipped: 0)
+rtt: 0.000 ms rttvar: 250.000 ms base rtt: 1 ms so_error: 0 svc/tc: 100tcp_connection_summary [192.168.7.2:49318<->17.253.10.202:443] interface: ue0 (skipped: 0)
+[  199.456975]: tcp_connection_summary [192.168.7.2:49245<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 43.656 ms rttvar: 34.750 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49245<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  199.735849]: tcp_connection_summary [192.168.7.2:49235<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 27.843 ms rttvar: 29.625 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49235<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  199.742024]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  199.742047]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  199.742053]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  199.742320]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  199.742326]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  199.742330]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  199.823991]: tcp connect outgoing: [192.168.7.2:49319<->17.253.10.203:443] interface: ue0 (skipped: 0)
+so_gencnt: 1529 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connect outgoing: [192.168.7.2:49320<->17.253.10.199:443] interface: ue0 (skipped: 0)
+so_gencnt: 1530 t_state: SYN_SENT process: geod:135 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49320<->17.253.10.199:443] interface: ue0 (skipped: 0)
+so_gencnt: 1530 t_state: ESTABLISHED process: geod:135 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49319<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  208.858374]: SWEET USB: ue0 rx 31347 tx 29209 frames
+[  224.304765]: tcp_connection_summary [192.168.7.2:49314<->23.201.216.149:443] interface: ue0 (skipped: 0)
+rtt: 40.375 ms rttvar: 25.312 ms base rtt: 7 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49314<->23.201.216.149:443] interface: ue0 (skipped: 0)
+[  230.338561]: tcp_connection_summary [192.168.7.2:49320<->17.253.10.199:443] interface: ue0 (skipped: 0)
+rtt: 28.812 ms rttvar: 28.687 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49320<->17.253.10.199:443] interface: ue0 (skipped: 0)
+[  230.833536]: SWEET USB: setup 21 43 000e 0000 len 0
+[  242.933188]: SWEET USB: ue0 rx 31411 tx 29271 frames
+[  259.776495]: tcp_connection_summary [192.168.7.2:49231<->17.157.64.66:443] interface: ue0 (skipped: 0)
+rtt: 24.375 ms rttvar: 41.250 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49231<->17.157.64.66:443] interface: ue0 (skipped: 0)
+[  262.331128]: tcp_connection_summary [192.168.7.2:49319<->17.253.10.203:443] interface: ue0 (skipped: 0)
+rtt: 20.500 ms rttvar: 27.125 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49319<->17.253.10.203:443] interface: ue0 (skipped: 0)
+[  263.350159]: tcp_connection_summary [192.168.7.2:49242<->17.253.10.202:443] interface: ue0 (skipped: 0)
+rtt: 18.687 ms rttvar: 21.000 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49242<->17.253.10.202:443] interface: ue0 (skipped: 0)
+[  276.999035]: SWEET USB: ue0 rx 31446 tx 29308 frames
+[  279.644297]: tcp_connection_summary [192.168.7.2:49232<->1.1.1.1:443] interface: ue0 (skipped: 0)
+rtt: 23.718 ms rttvar: 29.437 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49232<->1.1.1.1:443] interface: ue0 (skipped: 0)
+[  295.075744]: tcp_connection_summary [192.168.7.2:49233<->17.250.105.11:443] interface: ue0 (skipped: 0)
+so_gencnt: 1265 t_state: LAST_ACK process: networkservicepr:129 Duration: 135.753 sec Conn_Time: 0.44 sec bytes in/out: 6213/48948 pkts in/out: 15/46 pkt rxmit: 0 ooo pkts: 0 dup bytes in: 0 ACKs delayed: 0 delayed ACKs sent: 0
+rtt: 17.718 ms rttvar: 23.000 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49233<->17.250.105.11:443] interface: ue0 (skipped: 0)
+so_gencnt: 1265 t_state: LAST_ACK process: networkservicepr:129 flowctl: 0 suspnd: 0 SYN in/out: 1/1 FIN in/out: 1/0 RST in/out: 0/0
+[  301.371834]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  301.371875]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by uuid
+[  301.371885]: necp_application_find_policy_match_internal: dasd(58) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  305.650302]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  305.650325]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  305.650331]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  305.650659]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  305.650673]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  305.650677]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  305.744507]: tcp connect outgoing: [192.168.7.2:49321<->17.23.96.10:443] interface: ue0 (skipped: 0)
+so_gencnt: 1600 t_state: SYN_SENT process: akd:96 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 0 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49321<->17.23.96.10:443] interface: ue0 (skipped: 0)
+[  311.061119]: SWEET USB: ue0 rx 31486 tx 29349 frames
+[  317.696973]: tcp connect outgoing: [192.168.7.2:49322<->17.250.105.11:443] interface: ue0 (skipped: 0)
+so_gencnt: 1615 t_state: SYN_SENT process: networkservicepr:129 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49322<->17.250.105.11:443] interface: ue0 (skipped: 0)
+so_gencnt: 1615 t_state: ESTABLISHED process: networkservicepr:129 SYN in/out: 1/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0memorystatus_update(enter): pid 250, priority 210, dirty=0x0, Active(-1MB NF), Inactive(-1MB, NF)
+[  338.323444]: tcp connect incoming: [192.168.7.2:22<->192.168.7.1:35798] interface: ue0 (skipped: 0)
+so_qlimit: 128 so_qlen: 1 so_incqlen: 1 tcp connected: [192.168.7.2:22<->192.168.7.1:35798] interface: ue0 (skipped: 0)
+so_qlimit: 128 so_qlen: 1 so_incqlen: 1 tcp accept: [192.168.7.2:22<->192.168.7.1:35798] interface: ue0 (skipped: 0)
+[  342.511577]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.511600]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.511605]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.512052]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.512064]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.512068]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.512405]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.512414]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.512417]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.600806]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.600825]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.600830]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.601163]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.601173]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.601177]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.601568]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.601574]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.601594]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.644734]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.644756]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.644761]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.645167]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.645177]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.645181]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  342.645627]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  342.645634]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  342.645638]: necp_application_find_policy_match_internal: mDNSResponder(104) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  343.018824]: connectx() - failed necp_set_socket_domain_attributestcp connect outgoing: [192.168.7.2:49323<->17.253.10.202:443] interface: ue0 (skipped: 0)
+so_gencnt: 1662 t_state: SYN_SENT process: passwordbreachd:262 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49323<->17.253.10.202:443] interface: ue0 (skipped: 0)
+[  343.128245]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  343.128295]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  343.128307]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  343.129533]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  343.129553]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  343.129562]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  343.176493]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  343.176535]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  343.176546]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  343.179514]: connectx() - failed necp_set_socket_domain_attributesnecp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by euuid
+[  343.180040]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by pid
+[  343.180051]: necp_application_find_policy_match_internal: trustd(162) does not hold the necessary entitlement to delegate network traffic for other processes by uid
+[  343.180135]: tcp connect outgoing: [192.168.7.2:49324<->17.253.10.204:443] interface: ue0 (skipped: 0)
+so_gencnt: 1665 t_state: SYN_SENT process: trustd:162 SYN in/out: 0/1 bytes in/out: 0/0 pkts in/out: 0/0 rtt: 0.0 ms rttvar: 250.0 ms base_rtt: 1 ms error: 0 so_error: 0 svc/tc: 0tcp connected: [192.168.7.2:49324<->17.253.10.204:443] interface: ue0 (skipped: 0)
+[  345.143332]: SWEET USB: ue0 rx 31692 tx 29576 frames
+[  364.616712]: tcp_connection_summary [192.168.7.2:49321<->17.23.96.10:443] interface: ue0 (skipped: 0)
+rtt: 52.187 ms rttvar: 85.812 ms base rtt: 1 ms so_error: 0 svc/tc: 0tcp_connection_summary [192.168.7.2:49321<->17.23.96.10:443] interface: ue0 (skipped: 0)
+iPhone:~ root# ioreg -l -w 0 | grep -iE 'backlight|framebuffer|display|surface'
+  |   "IOKitDiagnostics" = {"Instance allocation"=82320,"Container allocation"=365065,"Pageable allocation"=49152,"Classes"={"IOMobileFramebufferUserClient"=2,"OSArraySubclass"=0,"IOCPUInterruptController"=0,"IOPMinformee"=0,"IOKitDiagnostics"=1,"OSValueObject<int>"=0,"IOReporter"=0,"TestIODeviceMemoryRosetta"=0,"IOSKArena"=3,"OSAction"=0,"IOMachPort"=279,"OSMetaClass"=0,"OSValueObject<TrivialAggregateTestType>"=0,"AppleKeyStore"=1,"IOInterruptController"=0,"IOInterruptEventSource"=1,"IOHIDEvent"=0,"IOUserResources"=1,"IOGeneralMemoryDescriptor"=10,"IOMemoryCursor"=0,"IOBigMemoryCursor"=0,"IOPolledInterface"=0,"IOStateNotificationItem"=4,"OSSymbol"=2446,"OSBoolean"=2,"OSAction_IOUserClient_KernelCompletion"=0,"PMHaltWorker"=0,"IOPlatformExpert"=1,"IOPolledFilePollers"=0,"OSIterator"=2,"PMAssertionsTracker"=1,"IOCommandGate"=9,"IOPlatformDevice"=16,"IOEventLink"=0,"OSCISubclass"=0,"IORootParent"=1,"OSKextSavedMutableSegment"=0,"IODataQueue"=1,"IOUserNotification"=2,"IOEventSource"=7,"IOPMServiceInterestNotifier"=32,"IOUserIterator"=2,"IOServiceNotificationDispatchSource"=0,"IORegistryPlane"=3,"IORegistryEntry"=2,"TestIODeviceMemoryRosettaUserClient"=0,"IOTimerEventSource"=3,"OSValueObject<NonTrivialConstructorAggregateTestType>"=0,"IONotifier"=3,"IOStateNotificationListener"=0,"_IOServiceInterestNotifier"=26,"SweetSurface"=7,"IOKitDiagnosticsClient"=0,"IODMAController"=0,"IODTNVRAM"=0,"TestIOServiceUserNotification"=0,"IOPMPowerStateQueue"=1,"IOSKRegionMapper"=1,"IOUserServerCheckInToken"=0,"_IOOpenServiceIterator"=0,"IOUserClient2022"=2,"AppleKeyStoreUserClient"=58,"IOServiceStateNotificationDispatchSource"=0,"IOPMPowerSource"=1,"IOWorkLoop"=5,"TestIOUserClient2022EntitlementsUserClient"=0,"IOService"=24,"IOCoreSurfaceRoot"=1,"IOWorkGroup"=0,"OSValueObject<OSKextRequestResourceCallback>"=0,"TestIOConnectMapMemoryPortLeak45265408"=0,"IOStateReporter"=0,"PassthruInterruptController"=0,"IOUserClient"=4,"IODTNVRAMVariables"=0,"OSData"=303,"IOSystemStateNotification"=1,"AppleCLCD"=1,"IOSKRegion"=9,"IOHIDEventServiceClient"=2,"IOPMinformeeList"=2,"IOPMGR"=0,"IOTestUserNotification"=0,"IOSubMemoryDescriptor"=0,"OSSerialize"=1,"IOFilterInterruptEventSource"=0,"SweetHIDButtons"=1,"SweetBattery"=1,"IOPanicPlatform"=0,"TestIOServiceHandle"=0,"IOSKMemoryBuffer"=3,"IONaturalMemoryCursor"=0,"OSArray"=1583,"IOMobileFramebuffer"=1,"IOPerfControlClient"=0,"IOSharedDataQueue"=1,"IOMultiMemoryDescriptor"=0,"IORegistryIterator"=0,"IOSKMemoryArray"=0,"IOMemoryDescriptor"=1,"IOCatalogue"=1,"IOConditionLock"=0,"IOSurfaceRootUserClient"=2,"IOPMRequest"=0,"_IOConfigThread"=0,"OSOrderedSet"=29,"IOSharedInterruptController"=0,"IOPMrootDomain"=1,"IOCommandPool"=0,"IOPMRequestQueue"=2,"IORTC"=0,"IOHistogramReporter"=0,"IOUserService"=0,"IOInterruptDispatchSource"=0,"OSCollection"=4,"IOServiceMessageUserNotification"=55,"OSNumber"=196,"IOResources"=1,"_IOUserServerCheckInCancellationHandler"=0,"IOGuardPageMemoryDescriptor"=0,"IODispatchQueue"=0,"IOPMCompletionQueue"=1,"IOPlatformExpertDevice"=1,"IOPMWorkQueue"=1,"_IOServiceStateNotification"=0,"IOServiceStateNotificationEventSource"=0,"IODMAEventSource"=0,"IOWatchdog"=1,"_IOServiceNotifier"=107,"IOMemoryMap"=31,"IOReportLegend"=0,"IOLittleMemoryCursor"=0,"IOInterleavedMemoryDescriptor"=0,"IOCommand"=9,"IOHIDEventServiceQueue"=2,"PMSettingObject"=0,"IODTPlatformExpert"=1,"OSString"=4474,"OSDictionary"=787,"OSDextStatistics"=0,"OSKext"=1,"IOServiceCompatibility"=0,"IODMACommand"=0,"IOUserServer"=0,"IODTNVRAMDiags"=0,"IODataQueueDispatchSource"=0,"IOMapper"=0,"SweetSurfaceRef"=10,"SweetPlatformExpert"=1,"_IOServiceNullNotifier"=1,"OSUserMetaClass"=0,"OSCollectionIterator"=2,"IORangeAllocator"=1,"IOServiceUserNotification"=107,"SweetCPU"=8,"IOPMPowerSourceList"=0,"SweetEntitlements"=190,"PMTraceWorker"=1,"IODispatchSource"=0,"IOPowerConnection"=1,"TestIOServiceUserNotificationUserClient"=0,"IOWatchDogTimer"=0,"PMSettingHandle"=0,"OSObject"=36,"OSSerializer"=2,"SweetHIDTouch"=1,"TestIOConnectMapMemoryPortLeak45265408UserClient"=0,"OSValueObject<PMAssertStruct>"=0,"IOUserUserClient"=0,"IOHIDEventService"=2,"IOSKMapper"=1,"OSValueObject<void*>"=0,"IOBufferMemoryDescriptor"=11,"IOPlatformIO"=0,"IOServicePM"=2,"RootDomainUserClient"=31,"_IOServiceJob"=0,"IONVRAMController"=0,"IOWatchdogUserClient"=0,"OSSet"=33,"OSDextCrash"=0,"IODTNVRAMPlatformNotifier"=0,"IOCPU"=1,"IOPerfControlWorkContext"=0,"IOHIDEventServiceUserClient"=2,"IOSimpleReporter"=0,"TestIOUserClient2022Entitlements"=0,"_IOMemoryDescriptorMixedData"=15},"IOMalloc allocation"=2033780}
+    | |     "display-mirroring" = <01000000>
+    | |     "artwork-dynamic-displaymode" = <"0">
+    | |     "artwork-display-gamut" = <"P3">
+    | |     "oled-display" = <01000000>
+    |   |   "compatible" = <"sweet,display">
+    |   |   "device_type" = <"display-subsystem">
+    |     |   "DisplayPipePlaneBaseAlignment" = 64
+    |     |   "IOUserClientClass" = "IOMobileFramebufferUserClient"
+    |     |   "IONameMatch" = "sweet,display"
+    |     |   "IONameMatched" = "sweet,display"
+    |     +-o IOMobileFramebufferUserClient  <class IOMobileFramebufferUserClient, id 0x10000016d, !registered, !matched, active, busy 0, retain 6>
+    |     +-o IOMobileFramebufferUserClient  <class IOMobileFramebufferUserClient, id 0x100000198, !registered, !matched, active, busy 0, retain 6>
+    | +-o IOCoreSurfaceRoot  <class IOCoreSurfaceRoot, id 0x100000123, registered, matched, active, busy 0 (16 ms), retain 7>
+    | | |   "IOClass" = "IOCoreSurfaceRoot"
+    | | |   "IOMatchCategory" = "IOCoreSurfaceRoot"
+    | | |   "IOUserClientClass" = "IOSurfaceRootUserClient"
+    | | +-o IOSurfaceRootUserClient  <class IOSurfaceRootUserClient, id 0x100000199, !registered, !matched, active, busy 0, retain 5>
+    | | +-o IOSurfaceRootUserClient  <class IOSurfaceRootUserClient, id 0x1000001a5, !registered, !matched, active, busy 0, retain 5>
+    | | |   "DisplayIntegrated" = Yes
+    | | |   "SurfaceWidth" = 4456448
+    | | |   "SurfaceHeight" = 9895936
+iPhone:~ root#
