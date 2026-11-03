@@ -1,0 +1,102 @@
+seven@sevenzx:~/ios-s9$ sudo s9/tools/prep-ios6.sh
+== 1. PC: share the connection with the phone over USB
+profile s9-usb + dispatcher hook installed
+== 2. root image v2
+job com.ios-s9.jbsetup
+job com.ios-s9.s9net
+job com.ios-s9.ellekit
+job com.ios-s9.respring
+job com.openssh.sshd
+SpringBoard: DYLD_INSERT_LIBRARIES = /usr/lib/TweakInject.dylib
+REMOVER 86 daemons (de 537):
+   com.apple.CommCenter
+   com.apple.CommCenter
+   com.apple.CommCenterMobileHelper
+   com.apple.CommCenterRootHelper
+   com.apple.Maps.mapspushd
+   com.apple.MobileInternetSharing
+   com.apple.accessoryupdaterd
+   com.apple.ap.adprivacyd
+   com.apple.ap.promotedcontentd
+   com.apple.appstorecomponentsd
+   com.apple.appstored
+   com.apple.assistant_cdmd
+   com.apple.assistant_service
+   com.apple.assistantd
+   com.apple.avconferenced
+   com.apple.bluetoothd
+   com.apple.bluetoothuserd
+   com.apple.cloudd
+   com.apple.cloudpaird
+   com.apple.cloudphotod
+   com.apple.cloudsettingssyncagent
+   com.apple.coreduetd
+   com.apple.coreidvd
+   com.apple.corespeechd
+   com.apple.corespotlightservice
+   com.apple.driverkitd
+   com.apple.dt.remotepairingdeviced
+   com.apple.duetexpertd
+   com.apple.fairplayd.H2
+   com.apple.fairplaydeviceidentityd
+   com.apple.familycircled
+   com.apple.familynotification
+   com.apple.followupd
+   com.apple.gamed
+   com.apple.healthappd
+   com.apple.healthd
+   com.apple.healthrecordsd
+   com.apple.homed
+   com.apple.icloud.findmydeviced
+   com.apple.icloud.fmfd
+   com.apple.icloud.fmflocatord
+   com.apple.icloud.searchpartyd
+   com.apple.icloudsubscriptionoptimizerd
+   com.apple.identityservicesd
+   com.apple.imagent
+   com.apple.imcore.imtransferagent
+   com.apple.itunescloudd
+   com.apple.itunesstored
+   com.apple.keychainsharingmessagingd
+   com.apple.locationd
+   com.apple.mediaanalysisd
+   com.apple.mediaanalysisd.service
+   com.apple.mobile.softwareupdated
+   com.apple.mobileassetd
+   com.apple.navd
+   com.apple.newsd
+   com.apple.nfcd
+   com.apple.parsec-fbf
+   com.apple.parsecd
+   com.apple.passd
+   com.apple.photoanalysisd
+   com.apple.proactiveeventtrackerd
+   com.apple.protectedcloudstorage.protectedcloudkeysyncing
+   com.apple.rapportd
+   com.apple.remindd
+   com.apple.screensharingserver
+   com.apple.searchd
+   com.apple.security.cloudkeychainproxy3
+   com.apple.sharing.airdropui
+   com.apple.sharingd
+   com.apple.siriactionsd
+   com.apple.siriinferenced
+   com.apple.siriknowledged
+   com.apple.sirittsd
+   com.apple.softwareupdateservicesd
+   com.apple.spotlight.IndexAgent
+   com.apple.spotlightknowledged
+   com.apple.suggestd
+   com.apple.telephonyutilities.callservicesd
+   com.apple.tipsd
+   com.apple.triald
+   com.apple.videosubscriptionsd
+   com.apple.voicemail.vmd
+   com.apple.weatherd
+   com.apple.wifianalyticsd
+   com.apple.wifivelocityd
+
+APLICADO. LaunchDaemons agora = 451
+image: ../work/iosroot/ios16-root-v2.img
+next (normal user, phone in TWRP): tools/flash-userdata.sh ../work/iosroot/ios16-root-v2.img
+seven@sevenzx:~/ios-s9$
