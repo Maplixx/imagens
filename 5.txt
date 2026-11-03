@@ -1,0 +1,328 @@
+seven@sevenzx:~/ios-s9/s9$ ls -lh logs/ios-boot-20261103.txt*
+sed -n '1,120p' logs/ios-boot-20261103.txt
+-rw-rw-r-- 1 seven seven 193K Nov  3 02:31 logs/ios-boot-20261103.txt
+-rw-rw-r-- 1 seven seven 4.1M Nov  3 02:31 logs/ios-boot-20261103.txt.bin
+Darwin Kernel Version 22.6.0: Mon Aug 14 05:06:07 UTC 2023; runner:xnu-8796.141.3
+pmap_startup() init/release time: 27153 microsec
+pmap_startup() delayed init/release of 0 pages
+vm_page_bootstrap: 196478 free pages, 24754 wired pages, (up to 0 of which are delayed free)
+VM boostrap: 97 maps, 204 entries and 512 holes available
+Maximum number of VM swap files: 100
+gIOKitPageableFixed3    : 0xfffffe10001cc000 - 0xfffffe10061cc000 (96M)
+zones                   : 0xfffffe10061cc000 - 0xfffffe30061cc000 (128G)
+kmem_ptr_range          : 0xfffffe30061cc000 - 0xfffffe4499ccc000 (82G)
+bufferhdr               : 0xfffffe4499ccc000 - 0xfffffe4499f3c000 (2496K)
+io_submap               : 0xfffffe4499f3c000 - 0xfffffe449a73c000 (8M)
+bsd_pageable            : 0xfffffe449a73c000 - 0xfffffe449ea44000 (67M)
+ipc_kernel_copy_map     : 0xfffffe449ea44000 - 0xfffffe449f244000 (8M)
+mb                      : 0xfffffe449f244000 - 0xfffffe44a3244000 (64M)
+zone_meta               : 0xfffffe44a3244000 - 0xfffffe44abc6c000 (138M)
+gIOKitPageableFixed0    : 0xfffffe44abc6c000 - 0xfffffe44b1c6c000 (96M)
+compressor              : 0xfffffe44b1c6c000 - 0xfffffe5232ddc000 (54G)
+kmem_sprayqtn_range     : 0xfffffe5232ddc000 - 0xfffffe529dbbc000 (1709M)
+ipc_kernel_map          : 0xfffffe529dbbc000 - 0xfffffe52a1bbc000 (64M)
+gIOKitPageableFixed2    : 0xfffffe52a1bbc000 - 0xfffffe52a7bbc000 (96M)
+kmem_data_range         : 0xfffffe52a7bbc000 - 0xfffffe8ff9644000 (245G)
+gIOKitPageableFixed1    : 0xfffffe8ff9644000 - 0xfffffe8fff644000 (96M)
+kmem_ptr_range_meta     : 0xfffffe8fff644000 - 0xfffffe8fffdfc000 (7M)
+kmem_large_ranges[1]    : 0 - 0 (0B)
+kmem_large_ranges[2]    : 0 - 0 (0B)
+kmem_large_ranges[3]    : 0 - 0 (0B)
+kmem_large_ranges[4]    : 0xfffffe5240398000 - 0xfffffe529dbbc000 (1496M)
+kmem_large_ranges[5]    : 0xfffffe5a51f0d000 - 0xfffffe8ff9644000 (214G)
+"vm_compressor_mode" is 4
+zone_init: pgzalloc  0xfffffe10061cc000:0xfffffe1007c80000 (26M) [854 slots]
+zone_init: map VM    0xfffffe1007c80000:0xfffffe14d4548000 (19G)
+zone_init: map RO    0xfffffe14d4548000:0xfffffe166dd8c000 (6G)
+zone_init: map GEN0  0xfffffe166dd8c000:0xfffffe1b3a658000 (19G)
+zone_init: map GEN1  0xfffffe1b3a658000:0xfffffe2006f24000 (19G)
+zone_init: map GEN2  0xfffffe2006f24000:0xfffffe24d37f0000 (19G)
+zone_init: map GEN3  0xfffffe24d37f0000:0xfffffe29a00bc000 (19G)
+zone_init: map DATA  0xfffffe29a00bc000:0xfffffe30061cc000 (25G)
+zone_init: metadata  0xfffffe44a3254000:0xfffffe44ab254000 (128M)
+zone_init: metabits  0xfffffe44ab254000:0xfffffe44abc5c000 (10M)
+zone_init: extra     0:0 (0B)
+VM bootstrap done: 85 maps, 165 entries and 501 holes left
+Long logs support configured: size: 16384
+OSLog stream configured: stream: 8192 bytes, cache: 2112 bytes
+OSLog stream verification: 0
+Firehose configured: 16 chunks, 8 io pages
+Log queues configured: slot count: 64, per-slot size: 32768, total size: 2097152
+standard timeslicing quantum is 10000 us
+standard background quantum is 2500 us
+mig_table_max_displ = 54 mach_kobj_count = 374
+kdp_core zlib memory 0x8000
+Serial requested, consistent debug disabled or debug boot arg not present, configuring debugging over serial
+iBoot version: sweet-shim
+"name" not a kext
+"AAPL,phandle" not a kext
+SWEET AMFI: built-in interface registered (XML entitlements)
+calling mpo_policy_init for vnguard
+Security policy loaded: Guarded vnode policy (vnguard)
+SWEET: trust caches unavailable (Image4/AMFI not installed)
+keepsyms boot arg specified; keeping linkedit segment for symbols.
+No POST boot-arg set.
+SWEET: starting device-tree platform expert
+SWEET: platform expert registered
+SWEET AKS: AppleKeyStore registered (no passcode, unlocked)
+SWEET WDT: IOWatchdog registered (accepts check-ins, never fires)
+SWEET SURF: IOCoreSurfaceRoot registered
+SWEET HID: buttons registered (test every 0 s)
+SWEET HID: touch registered
+SWEET CPU: L3 OSM row 7 -> 13 (1478 MHz)
+SWEET CPU: silver OSM row 15 -> 16 (1689 MHz)
+SWEET CPU: gold OSM row 0 -> 22 (2649 MHz)
+SWEET CPU: requested=8 selected=8 (limit=8)
+SWEET CPU: cpu=0 mpidr=0x0 came alive; SGI1 OK
+SWEET CPU: cpu=1 CPU_ON target=0x100 entry_pa=0xa748e000 context=1
+SWEET CPU: cpu=1 PSCI CPU_ON rc=0
+SWEET CPU: cpu=1 mpidr=0x100 came alive; SGI1 OK
+SWEET CPU: cpu=2 CPU_ON target=0x200 entry_pa=0xa748e000 context=2
+SWEET CPU: cpu=2 PSCI CPU_ON rc=0
+SWEET FB: zero-copy ready: VIG0 src 0xb9002d0 xy 0x0 out 0xb9002d0 addr 0x9d400000 op 0x80000000, VIG1 src 0xb9002d0 xy 0x2d0 addr 0x9d400000, qseed 0x1003/0x1003, ctl0 flush 0x20000000
+SWEET SURF: 3 display slots of 5963776 bytes at 0x9e500000 for 828x1792 0x42475241
+SWEET FB: AppleCLCD 1440x2960 stride 5760 at 0x9d400000, default surface 1, presented as 828x1792, cached, vsync 33333 us, present on swap, zero-copy on
+SWEET CPU: cpu=2 mpidr=0x200 came alive; SGI1 OK
+SWEET BATTERY: MAX77705 fuel gauge answers (status 0x0080)
+SWEET CPU: cpu=3 CPU_ON target=0x300 entry_pa=0xa748e000 context=3
+SWEET CPU: cpu=3 PSCI CPU_ON rc=0
+SWEET CPU: cpu=3 mpidr=0x300 came alive; SGI1 OK
+SWEET CPU: cpu=4 CPU_ON target=0x400 entry_pa=0xa748e000 context=4
+SWEET CPU: cpu=4 PSCI CPU_ON rc=0
+SWEET CPU: cpu=4 mpidr=0x400 came alive; SGI1 OK
+SWEET CPU: cpu=5 CPU_ON target=0x500 entry_pa=0xa748e000 context=5
+SWEET CPU: cpu=5 PSCI CPU_ON rc=0
+SWEET CPU: cpu=5 mpidr=0x500 came alive; SGI1 OK
+SWEET CPU: cpu=6 CPU_ON target=0x600 entry_pa=0xa748e000 context=6
+SWEET CPU: cpu=6 PSCI CPU_ON rc=0
+SWEET CPU: cpu=6 mpidr=0x600 came alive; SGI1 OK
+SWEET CPU: cpu=7 CPU_ON target=0x700 entry_pa=0xa748e000 context=7
+SWEET CPU: cpu=7 PSCI CPU_ON rc=0
+SWEET CPU: cpu=7 mpidr=0x700 came alive; SGI1 OK
+SWEET CPU: 8/8 CPUs initialized, SGI1 verified
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+	The Regents of the University of California. All rights reserved.
+
+MAC Framework successfully initialized
+using 4377 buffer headers and 4236 cluster IO buffer headers
+SWEET BATTERY: MAX77705 fuel gauge, 90% 4044mV external=0 charging=0
+SWEET BATTERY: soc=89.6% vcell=4044mV avg=-489mA now=-337mA rep=2103/2347mAh design=2845mAh cycles=8.66 chgin=0 dtls=0x8 bat=7 cnfg00=0x15 cnfg09=0x13(in 500mA en 0) cc=100mA charge_mode=0
+SWEET FB: vsync thread on cpu 3
+SWEET BATTERY: polling on cpu 2
+ktriage_register_subsystem_strings: set subsystem 8 strings
+calling mpo_policy_init for SWEET AMFI
+Security policy loaded: SWEET built-in Mobile File Integrity (SWEET AMFI)
+SWEET AMFI: platform binary policy registered (0)
+calling mpo_policy_init for AMFI
+Security policy loaded: SWEET AMFI dyld policy (AMFI)
+SWEET AMFI: dyld policy (allow DYLD_INSERT_LIBRARIES) registered (0)
+calling mpo_policy_init for Sandbox
+Security policy loaded: SWEET permissive sandbox stand-in (Sandbox)
+SWEET Sandbox: permissive policy registered (0)
+SWEET HFS: hfs-627.100.6 registered
+mcache: 8 CPU(s), 64 bytes CPU cache line size
+mbinit: done [64 MB total pool size, (42/21) split]
+seven@sevenzx:~/ios-s9/s9$ grep -iE \
+'panic|error|fail|gpu|adreno|display|framebuffer|fb|dsi|panel|backlight|usb|gadget|s9net|ssh|ufs|root|launchd' \
+logs/ios-boot-20261103.txt | tail -200
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+|backboardd| objc[50]: Class _GCHapticEvent is implemented in both /System/Library/HIDPlugins/ServicePlugins/DualSenseHIDServicePlugin.plugin/DualSenseHIDServicePlugin (0x10466ee20) and /System/Library/HIDPlugins/ServicePlugins/LunaHIDServicePlugin.pluginhfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+hfs: set hardlink bit on vol=iOSRoot cnid=321331 inoid=670363292
+exec nanoregistrylaunchd
+IOK backboardd: IOServiceFirstPublish <dict ID="0"><key>IONameMatch</key><string ID="1">usb-drd,t8027</string><key>IOServiceNotificationUser</key><true/></dict> -> notify
+SWEET FB: MobileGestaltHelper sel 8 in 0/0 out 2/0 -> 0x0
+SWEET FB: MobileGestaltHelper sel 28 in 0/0 out 1/0 -> 0x0
+IOK backboardd: IOServiceFirstMatch <dict ID="0"><key>IOProviderClass</key><string ID="1">IOMobileFramebuffer</string><key>IOServiceNotificationUser</key><true/></dict> -> notify
+SWEET FB: backboardd sel 57 in 0/0 out 1/0 -> 0x0
+SWEET FB: backboardd sel 15 in 2/0 out 1/0 -> 0x0
+SWEET FB: backboardd sel 22 in 1/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 29 in 0/0 out 0/8 -> 0x0
+SWEET FB: backboardd sel 33 in 1/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 79 in 2/0 out 0/1580 -> 0x0
+IOK backboardd: matching1 <dict ID="0"><key>IOPropertyMatch</key><dict ID="1"><key>backlight-control</key><true/></dict><key>IOServiceNotificationUser</key><true/></dict> -> none
+SWEET FB: backboardd sel 74 in 1/0 out 1/64 -> 0x0
+IOK backboardd: path IODeviceTree:/backlight -> none
+IOK backboardd: matching <dict ID="0"><key>IOPropertyMatch</key><dict ID="1"><key>backlight-control</key><true/></dict><key>IOServiceNotificationUser</key><true/></dict> -> 0 found
+IOK backboardd: IOServiceFirstMatch <dict ID="0"><key>IOProviderClass</key><string ID="1">IOHIDDevice</string><key>PrimaryUsage</key><integer size="32" ID="2">0xf</integer><key>PrimaryUsagePage</key><integer size="32" ID="3">0xff00</integer><key>IOServiceIOK backboardd: IOServiceFirstMatch <dict ID="0"><key>IOProviderClass</key><string ID="1">IOHIDDevice</string><key>DeviceUsagePairs</key><array ID="2"><dict ID="3"><key>DeviceUsage</key><integer size="32" ID="4">0xf</integer><key>DeviceUsagePage</key><intIOK backboardd: path IOPower:/IOPowerConnection/IOPMrootDomain -> IOPMrootDomain
+IOK backboardd: open IOPMrootDomain type 0 -> 0x0
+SWEET FB: thermalmonitord sel 78 in 2/1788 out 0/0 -> 0x0
+SWEET FB: display on
+SWEET FB: backboardd sel 12 in 1/0 out 0/0 -> 0x0
+IOK backboardd: matching1 <dict ID="0"><key>IONameMatch</key><string ID="1">IOCoreSurfaceRoot</string><key>IOServiceNotificationUser</key><true/></dict> -> IOCoreSurfaceRoot
+SWEET FB: SwapWait 0 flags 0x80000003: ended 0 presented 0 pending 0, 0 us
+IOK backboardd: open IOCoreSurfaceRoot type 0 -> 0x0
+SWEET FB: backboardd sel 6 in 3/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 27 in 0/0 out 0/3084 -> 0x0
+SWEET FB: backboardd sel 17 in 0/3084 out 0/0 -> 0x0
+SWEET FB: backboardd sel 84 in 0/4 out 0/0 -> 0x0
+SWEET FB: backboardd sel 50 in 2/0 out 0/0 -> 0x0
+IOK backboardd: path IOPower:/IOPowerConnection/IOPMrootDomain -> IOPMrootDomain
+IOK backboardd: open IOPMrootDomain type 0 -> 0x0
+SWEET FB: backboardd sel 68 in 1/8 out 0/0 -> 0x0
+SWEET FB: backboardd sel 4 in 0/0 out 1/0 -> 0x0
+SWEET FB: swap 1 dirty region 0,0 828x1792 -> rows 0-1792
+SWEET FB: present thread on cpu 3
+SWEET FB: backboardd sel 5 in 0/1132 out 0/0 -> 0x0
+SWEET FB: backboardd sel 3 in 2/0 out 1/0 -> 0x0
+SWEET FB: swap 1 layer 0 surface 10 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: SwapWait 1 flags 0x1: ended 1 presented 1 pending 0, 13757 us
+SWEET FB: backboardd sel 55 in 1/72 out 0/0 -> 0x0
+SWEET FB: SwapWait 1 flags 0x80000000: ended 1 presented 1 pending 0, 0 us
+SWEET FB: swap 2 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: flip 2 slot 0 at 0x9e500000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 2363 us
+SWEET FB: SwapWait 1 flags 0x80000000: ended 2 presented 2 pending 0, 4 us
+SWEET FB: swap 3 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 2 flags 0x80000000: ended 3 presented 2 pending 3, 4 us
+SWEET FB: flip 3 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 14384 us
+SWEET FB: SwapWait 3 flags 0x80000001: ended 3 presented 3 pending 0, 5 us
+SWEET FB: SwapWait 3 flags 0x80000000: ended 3 presented 3 pending 0, 1 us
+SWEET FB: swap 4 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 3 flags 0x80000000: ended 4 presented 3 pending 4, 5 us
+SWEET FB: flip 4 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 17665 us
+SWEET FB: SwapWait 4 flags 0x80000001: ended 4 presented 4 pending 0, 4 us
+SWEET FB: swap 5 dirty region 0,0 828x1792 -> rows 0-1792
+SWEET FB: flip 5 slot 0 at 0x9e500000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 1179 us
+SWEET FB: SwapWait 4 flags 0x80000000: ended 5 presented 5 pending 0, 4 us
+SWEET FB: SwapWait 5 flags 0x80000000: ended 5 presented 5 pending 0, 1 us
+SWEET FB: swap 6 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: SwapWait 0 flags 0x2: ended 6 presented 6 pending 0, 0 us
+SWEET FB: swap 7 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 0 flags 0x2: ended 7 presented 6 pending 0, 0 us
+SWEET FB: display off
+|SpringBoard| ### Failed to Soft Linked: /System/Library/Frameworks/CarKit.framework/CarKit
+SWEET FB: display on
+SWEET FB: SwapWait 0 flags 0x80000003: ended 7 presented 7 pending 0, 0 us
+SWEET FB: swap 8 dirty region 0,0 828x1792 -> rows 0-1792
+SWEET FB: swap 8 layer 0 surface 11 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: SwapWait 8 flags 0x80000001: ended 8 presented 8 pending 0, 1 us
+SWEET FB: SwapWait 8 flags 0x80000000: ended 8 presented 8 pending 0, 1 us
+SWEET FB: swap 9 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: flip 9 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 4448 us
+SWEET FB: SwapWait 8 flags 0x80000000: ended 9 presented 9 pending 0, 4 us
+SWEET FB: SwapWait 9 flags 0x80000001: ended 9 presented 9 pending 0, 1 us
+SWEET FB: swap 10 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: flip 10 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 4492 us
+SWEET FB: SwapWait 9 flags 0x80000000: ended 10 presented 10 pending 0, 4 us
+SWEET FB: SwapWait 10 flags 0x80000001: ended 10 presented 10 pending 0, 1 us
+SWEET FB: swap 11 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 10 flags 0x80000000: ended 11 presented 10 pending 11, 5 us
+SWEET FB: SwapWait 11 flags 0x80000001: ended 11 presented 11 pending 0, 4 us
+SWEET FB: swap 12 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 11 flags 0x80000000: ended 12 presented 11 pending 12, 5 us
+SWEET FB: SwapWait 12 flags 0x80000001: ended 12 presented 12 pending 0, 4 us
+SWEET FB: swap 13 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: swap 14 dirty none 0,0 0x0 -> rows 0-1792
+SMP SpringBoard t0 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f30cf30 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7c602e8 0x1b7c940d8 0x1b7aa3708 0x1b7a9f8bc 0x1b7a91864 0x1b7a916f0 0x1c9e94388 0x1c9e94SMP SpringBoard t1 pc 0x1e4899ad0 lr 0x1afdf0128 sp 0x16f4253d0 bt 0x1afdeff10 0x1afe02cfc 0x1afe028fc 0x1e7f39df8 0x21719f9b0 0x2171a8fd8 0x1a3494af4 0x1a3948f20 0x1a394a584 0x1a394a084 0x1f3e77788 0x1f3e77b68 0x1afe20834 0x1afdf365c 0x1afdfb5d4 0x1afdf4SMP SpringBoard t2 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f396180 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c95a08 0x1b7c8a9e0 0x1b7c9ca48 0x1b7a9a6e4 0x1b7e2153c 0x1afe20780 0x1afdf7d48 0x1afe09780 0x1afdfbSMP SpringBoard t3 pc 0x1e4899ad0 lr 0x1afdf0128 sp 0x16f4b2360 bt 0x1afdeff10 0x1afe02cfc 0x1afe028fc 0x1b379f7e8 0x1b37a18f8 0x1afdf51a0 0x1b379d3e8 0x1afe20834 0x1afdf365c 0x1afdfb5d4 0x1afdf41f8 0x1afdfd304 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t6 pc 0x1e4899ad0 lr 0x1afdf0128 sp 0x16f76e690 bt 0x1afdeff10 0x1afe02cfc 0x1afe028fc 0x1bec4c980 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t8 pc 0x1e4899f3c lr 0x1f3e2d620 sp 0x16f7fa7c0 bt 0x1f3e24304 0x1a343f220 0x1b7d0c7d4 0x1be1f3b58 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t9 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f99dde0 bt 0x1e48aadb8 0x1e4899524 0x1b37a1230 0x1b379e338 0x1afe20780 0x1afe02a50 0x1b37a0a6c 0x1b379bb38 0x2166234e4 0x216621b90 0x1afe20780 0x1afdf7d48 0x1afe09780 0x1afdfb5d4 0x1afdfc1e4 0x1afe05SMP SpringBoard t10 pc 0x1e48994f0 lr 0x1f3e22c1c sp 0x16f656b30 bt 0x1f3e22720
+SMP SpringBoard t11 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fa259c0 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1a3494224 0x1a342dcb0 0x1a908e640 0x1a90f08fc 0x1c141000c 0x1c14112dc 0x1c1401888 0x1c1404364 0x1c9e54108 0x1afe1f7a8 0x1afe2SMP SpringBoard t12 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fb3d660 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1bdc37128 0x1bdc39e78 0x1bdc39554 0x1b379d5cc 0x1c59c2e84 0x1c59c2c08 0x1c59c1c20 0x1c5982be4 0x1e7f8c3a8 0x1e7566634 0x1e759SMP SpringBoard t13 pc 0x1e48994f0 lr 0x1f3e22c1c sp 0x16fc5ab40 bt 0x1f3e22720
+SMP SpringBoard t14 pc 0x1e4899f3c lr 0x1f3e2d620 sp 0x16fce6620 bt 0x1f3e24304 0x1a343f220 0x1b7d0c7d4 0x1e7cba474 0x1e7cbac30 0x1afe02630 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t18 pc 0x1e489987c lr 0x1f3e2360c sp 0x16ffa27d0 bt 0x216628d5c 0x21662744c 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t19 pc 0x1e4899030 lr 0x1e48aab18 sp 0x1700b4bb0 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b7e29cb4 0x1b7df1d40 0x1b7df1c4c 0x1b7eb1aa8 0x1a90a47d8 0x1a91410c0 0x1a91258a8 0x1a90b7eec 0x1a3451fd4 0x1b7b3b780 0x1b7b9SMP SpringBoard t20 pc 0x1e4898fac lr 0x1afdefd24 sp 0x170146670 bt 0x1afdf0360 0x1b7ff6dfc 0x1f338c220 0x1f338cbb8 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1b0 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t24 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f8823a0 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c7abfc 0x1b7d0c9e0 0x1b7d0c7ec 0x1e7b8cce8 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe0SMP SpringBoard t25 pc 0x1e48994f0 lr 0x1f3e22c1c sp 0x16fab6b30 bt 0x1f3e22720
+SMP backboardd t5 pc 0x1e4899ad0 lr 0x1afdf0128 sp 0x16d7fa860 bt 0x1afdf04a0 0x102b84a78 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP backboardd t13 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16d65e450 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7484248 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1b0 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SWEET FB: swap 15 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: swap 16 dirty none 0,0 0x0 -> rows 0-1792
+|SpringBoard| The relevant UICollectionViewFlowLayout instance is <UICollectionViewFlowLayout: 0x104682030>, and it is attached to <UICollectionView: 0x10483c800; frame = (0 0; 166 166); clipsToBounds = YES; alpha = 0; gestureRecognizers = <NSArray: 0x280|SpringBoard| oundColor = UIExtendedGrayColorSpace 0 0; layer = <CALayer: 0x28096a620>; contentOffset: {0, -83}; contentSize: {166, 0}; adjustedContentInset: {83, 0, 83, 0}; layout: <UICollectionViewFlowLayout: 0x104682030>; dataSource: <__UIDiffableDataS|SpringBoard| d0: sectionCounts=[_UIDataSourceSnapshotter - 0x280945640:(0:1)]; sections=[0x28091fb00]; identifiers=[0x28091ede0]>>.
+|SpringBoard| Make a symbolic breakpoint at UICollectionViewFlowLayoutBreakForInvalidSizes to catch this in the debugger.
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: display off
+|SpringBoard| Make a symbolic breakpoint at UICollectionViewFlowLayoutBreakForInvalidSizes to catch this in the debugger.
+SWEET FB: display on
+SWEET FB: swap 57 layer 0 surface 10 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: swap 73 dirty region 266,1684 296x92 -> rows 1684-1776
+SWEET FB: swap 74 dirty region 266,1682 296x86 -> rows 1682-1768
+SWEET FB: swap 75 dirty region 266,1680 296x87 -> rows 1680-1767
+SWEET FB: swap 76 dirty region 56,182 716x1584 -> rows 182-1766
+SWEET FB: swap 77 dirty region 60,31 502x1736 -> rows 31-1767
+SWEET FB: swap 78 dirty region 60,31 502x1736 -> rows 31-1767
+SWEET FB: swap 79 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 80 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 81 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 82 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 83 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 84 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 85 dirty region 60,31 86x39 -> rows 31-70
+SWEET FB: swap 107 dirty region 164,1611 500x41 -> rows 1611-1652
+SWEET FB: swap 127 dirty region 56,31 716x1745 -> rows 31-1776
+SWEET FB: swap 128 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 129 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 130 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 131 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 132 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 133 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 134 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 135 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 136 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 137 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 138 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 139 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 140 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: swap 141 dirty region 266,1766 296x10 -> rows 1766-1776
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: display off
+SWEET FB: display on
+SWEET FB: swap 148 layer 0 surface 11 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: swap 187 dirty region 24,146 785x1634 -> rows 146-1780
+SWEET FB: swap 188 dirty region 24,151 780x1625 -> rows 151-1776
+SWEET FB: swap 189 dirty region 24,154 780x1618 -> rows 154-1772
+SWEET FB: present avg 690 us max 18122 us, 300 frames in 93755 ms (3.1 fps), 287 flips 13 copies, SwapWait 947 x 17 us; swaps: 165 full, 24 no region, top 54,158 743x413 x32
+|SpringBoard| IOServiceMatchingfailed for: AppleM2ScalerCSCDriver
+SWEET FB: present avg 374 us max 484 us, 300 frames in 17702 ms (16.9 fps), 300 flips 0 copies, SwapWait 805 x 3 us; swaps: 166 full, 4 no region, top 360,1477 109x29 x13
+SWEET FB: present avg 365 us max 465 us, 300 frames in 36158 ms (8.2 fps), 300 flips 0 copies, SwapWait 1083 x 3 us; swaps: 121 full, 67 no region, top 816,190 6x1182 x51
+SWEET FB: 1000 swaps
+SMP SpringBoard t3 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f7f6390 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7d298b4 0x1b7d29840 0x1b7c6ca6c 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05SMP SpringBoard t4 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fd71c80 bt 0x1e48aadb8 0x1e4899524 0x1a90e4148 0x1a90e52e0 0x1a90e9d20 0x1a3438ef8 0x1a3438da4 0x1e7c185b8 0x1a3450a5c 0x1f3e240ec 0x1f3e2272c
+SMP SpringBoard t7 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fbcdc80 bt 0x1e48aadb8 0x1e4899524 0x1a90e4148 0x1a90e52e0 0x1a90e9d20 0x1a3438ef8 0x1a3438da4 0x217a220d4 0x1a3450a5c 0x1f3e240ec 0x1f3e2272c
+SMP SpringBoard t9 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f882390 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7d298b4 0x1b7d29840 0x1b7c6ca6c 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05SMP SpringBoard t10 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fc556f0 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7cb7340 0x1b7a9865c 0x1b7a98600 0x1b7aa1648 0x1b7b8a468 0x1b7b8a0f0 0x1a90a47c4 0x1a91410c0 0x1a912SMP SpringBoard t11 pc 0x1e48994f0 lr 0x1f3e22c1c sp 0x16f53eb40 bt 0x1f3e22720
+SMP SpringBoard t12 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f5c6390 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7d298b4 0x1b7d29840 0x1b7c6ca6c 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe0SMP SpringBoard t13 pc 0x1e48994f0 lr 0x1f3e22c1c sp 0x16f76eb30 bt 0x1f3e22720
+SMP SpringBoard t14 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fce2390 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7d298b4 0x1b7d29840 0x1b7c6ca6c 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe0SMP SpringBoard t15 pc 0x1e4899030 lr 0x1e48aab18 sp 0x1700b4bb0 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b7e29cb4 0x1b7df1d40 0x1b7df1c4c 0x1b7eb1aa8 0x1a90a47d8 0x1a91410c0 0x1a91258a8 0x1a90b7eec 0x1a3451fd4 0x1b7b3b780 0x1b7b9SMP SpringBoard t16 pc 0x1e4899030 lr 0x1e48aab18 sp 0x17002a330 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b7e29cb4 0x1b7df1d40 0x1b7e13d78 0x1b7e145cc 0x1b7e210e0 0x1b7e1a540 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe0SMP SpringBoard t17 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f4ae330 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b7e29cb4 0x1b7df1d40 0x1b7e13d78 0x1b7e145cc 0x1b7e210e0 0x1b7e1a540 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe0SMP SpringBoard t18 pc 0x1e4898fac lr 0x1afdefd24 sp 0x16f656670 bt 0x1afdf0360 0x1b7ff6dfc 0x1f338c220 0x1f338cbb8 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1b0 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP SpringBoard t20 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16fa260e0 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7d298b4 0x1b7c8aa54 0x1b7c9ca48 0x1b7a9a6e4 0x1b7e2153c 0x1afe20780 0x1afdf7d48 0x1afe0SMP SpringBoard t21 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16f99a390 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7c8ca10 0x1b7d298b4 0x1b7d29840 0x1b7c6ca6c 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe0SMP SpringBoard t22 pc 0x1e48994f0 lr 0x1f3e22c1c sp 0x16fb42b30 bt 0x1f3e22720
+SMP backboardd t4 pc 0x1e4899ad0 lr 0x1afdf0128 sp 0x16d7fa860 bt 0x1afdf04a0 0x102b84a78 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1e4 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SMP backboardd t12 pc 0x1e4899030 lr 0x1e48aab18 sp 0x16d5d2450 bt 0x1e48aadb8 0x1e4899524 0x1afdf2308 0x1afdf2694 0x1f3e760ec 0x1b3930934 0x1b39304f8 0x1b7484248 0x1afe1f7a8 0x1afe20780 0x1afdfb6fc 0x1afdfc1b0 0x1afe05f14 0x1f3e22bd0 0x1f3e22720
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: display off
+SWEET FB: display on
+SWEET FB: swap 1178 layer 0 surface 10 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: present avg 409 us max 12697 us, 300 frames in 42960 ms (6.9 fps), 296 flips 4 copies, SwapWait 964 x 3 us; swaps: 85 full, 64 no region, top 816,190 6x1182 x20
+SWEET FB: present avg 362 us max 466 us, 300 frames in 15017 ms (19.9 fps), 300 flips 0 copies, SwapWait 870 x 3 us; swaps: 52 full, 28 no region, top 290,241 370x68 x138
+[System Event] [5604904951] [INFO] [Subsystem: launchd] [Event: system] System shutdown initiated by: SpringBoard[157]
+com.apple.xpc.launchd|1969-12-31 16:04:51.922108 (shutdown) <Notice>: shutdown UNINITIALIZED -> COMMITTED
+[System Event] [5604913657] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown UNINITIALIZED -> COMMITTED
+com.apple.xpc.launchd|1969-12-31 16:04:51.922336 (shutdown) <Notice>: shutdown COMMITTED -> COMMITTED
+[System Event] [5606399521] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown COMMITTED -> COMMITTED
+com.apple.xpc.launchd|1969-12-31 16:04:51.922338 (shutdown) <Notice>: shutdown COMMITTED -> WAITING_ON_SERVICES
+[System Event] [5606576042] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown COMMITTED -> WAITING_ON_SERVICES
+com.apple.xpc.launchd|1969-12-31 16:04:54.951404 (shutdown) <Notice>: shutdown WAITING_ON_SERVICES -> WRITE_DISABLED
+[System Event] [5663073441] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown WAITING_ON_SERVICES -> WRITE_DISABLED
+com.apple.xpc.launchd|1969-12-31 16:04:54.951411 (shutdown) <Notice>: shutdown WRITE_DISABLED -> WAITING_ON_COALITIONS
+[System Event] [5663075726] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown WRITE_DISABLED -> WAITING_ON_COALITIONS
+com.apple.xpc.launchd|1969-12-31 16:04:54.951503 (shutdown) <Notice>: shutdown WAITING_ON_COALITIONS -> WAITING_ON_SHUTDOWN_STALL_REPORT
+[System Event] [5663078961] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown WAITING_ON_COALITIONS -> WAITING_ON_SHUTDOWN_STALL_REPORT
+com.apple.xpc.launchd|1969-12-31 16:04:54.951512 (shutdown) <Notice>: shutdown WAITING_ON_SHUTDOWN_STALL_REPORT -> LAUNCH_SHUTDOWN_TEARDOWN
+[System Event] [5663079632] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown WAITING_ON_SHUTDOWN_STALL_REPORT -> LAUNCH_SHUTDOWN_TEARDOWN
+com.apple.xpc.launchd|1969-12-31 16:04:54.951553 (system) <Notice>: Userspace teardown took: 3029 ms
+[System Event] [5663080387] [INFO] [Subsystem: launchd] [Event: system] Userspace teardown took: 3029 ms
+com.apple.xpc.launchd|1969-12-31 16:04:54.951556 (system) <Notice>: Will be calling reboot(2) with flags: 0x8
+[System Event] [5663080888] [INFO] [Subsystem: launchd] [Event: system] Will be calling reboot(2) with flags: 0x8
+com.apple.xpc.launchd|1969-12-31 16:04:54.951556 <Notice>: Quiescing queues
+[System Event] [5663081380] [INFO] [Subsystem: launchd] [Event: launchd] Quiescing queues
+com.apple.xpc.launchd|1969-12-31 16:04:54.951558 (shutdown) <Notice>: shutdown LAUNCH_SHUTDOWN_TEARDOWN -> WAITING_ON_QUIESCE
+[System Event] [5663082963] [INFO] [Subsystem: launchd] [Event: shutdown] shutdown LAUNCH_SHUTDOWN_TEARDOWN -> WAITING_ON_QUIESCE
+launchd quiesce complete
+hfs: unmount initiated on iOSRoot on device b(1, 0)
+seven@sevenzx:~/ios-s9/s9$
