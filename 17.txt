@@ -1,0 +1,152 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+./tools/s9ssh.sh '
+echo "=== SYSCTLS DE CPU ==="
+sysctl -a 2>/dev/null |
+  grep -iE "cpu|freq|clock|perf|cluster|power" |
+  head -200
+
+echo "=== CPU HARDWARE ==="
+sysctl hw.ncpu
+sysctl hw.cpufrequency
+sysctl hw.cpufrequency_min 2>/dev/null
+sysctl hw.cpufrequency_max 2>/dev/null
+
+echo "=== SYSCTLS SWEET ==="
+sysctl -a 2>/dev/null |
+  grep -i sweet |
+  sort
+'
+=== SYSCTLS DE CPU ===
+kern.clockrate: { hz = 100, tick = 10000, tickadj = 0, profhz = 100, stathz = 100 }
+kern.ipc.nmbclusters: 32768
+0/336 mbuf 2KB clusters in use
+0/168 mbuf 4KB clusters in use
+0/0 mbuf 16KB clusters in use
+kern.perfcontrol_callout.stats_enabled: 0
+kern.perfcontrol_callout.oncore_instr: 0
+kern.perfcontrol_callout.oncore_cycles: 0
+kern.perfcontrol_callout.offcore_instr: 0
+kern.perfcontrol_callout.offcore_cycles: 0
+kern.perfcontrol_callout.context_instr: 0
+kern.perfcontrol_callout.context_cycles: 0
+kern.perfcontrol_callout.update_instr: 0
+kern.perfcontrol_callout.update_cycles: 0
+kern.sweet_cpu_freq: l3 1478 MHz (row 13), silver 1689 MHz (row 16), gold 2649 MHz (row 22)
+kern.bootargs: debug=0xc serial=3 cpus=8 keepsyms=1 -enable_kprintf_spam -noprogress rd=ufsroot0 unentitled_ios_sim_launch=1 ignition_level=1 wdt_test=no_user_checkin ufsrw=1 rootrw=1 ufswait=1 launchd_unsecure_cache=1 wdt=-1 sweetfb_noconsole=1 sweetfb_hz=30 sweettouch=1 sweettouchdelay=20 sweetusb=2
+kern.sched_rt_avoid_cpu0: 0
+kern.sched_backup_cpu_timeout_count: 5
+kern.sched_idle_delay_cpuid: -1
+kern.sched_powered_cores: -1
+kern.suspend_cluster_powerdown: 0
+kern.cpu_checkin_interval: 4000
+kern.log_clock_adjustments: 0
+net.inet.ip.input_perf: 0
+net.inet.ip.input_perf_bins: 0
+net.inet.ip.output_perf: 0
+net.inet.ip.output_perf_bins: 0
+net.link.generic.system.low_power.verbose: 0
+net.link.generic.system.low_power.restricted: 1
+net.link.fake.switch_mode_frequency: 10
+net.inet6.ip6.input_perf: 0
+net.inet6.ip6.input_perf_bins: 0
+net.inet6.ip6.output_perf: 0
+net.inet6.ip6.output_perf_bins: 0
+hw.ncpu: 8
+hw.activecpu: 8
+hw.perflevel0.physicalcpu: 8
+hw.perflevel0.physicalcpu_max: 8
+hw.perflevel0.logicalcpu: 8
+hw.perflevel0.logicalcpu_max: 8
+hw.perflevel0.l1icachesize: 32768
+hw.perflevel0.l1dcachesize: 32768
+hw.perflevel0.l2cachesize: 2097152
+hw.perflevel0.cpusperl2: 8
+hw.perflevel0.name: Standard
+hw.physicalcpu: 8
+hw.physicalcpu_max: 8
+hw.logicalcpu: 8
+hw.logicalcpu_max: 8
+hw.cputype: 16777228
+hw.cpusubtype: 1
+hw.cpu64bit_capable: 1
+hw.cpufamily: 0
+hw.cpusubfamily: 0
+hw.busfrequency: 100000000
+hw.busfrequency_min: 100000000
+hw.busfrequency_max: 100000000
+hw.cpufrequency: 1766400000
+hw.cpufrequency_min: 1766400000
+hw.cpufrequency_max: 1766400000
+hw.memfrequency: 1866000000
+hw.memfrequency_min: 1866000000
+hw.memfrequency_max: 1866000000
+hw.prffrequency: 19200000
+hw.prffrequency_min: 19200000
+hw.prffrequency_max: 19200000
+hw.fixfrequency: 19200000
+hw.tbfrequency: 19200000
+hw.nperflevels: 1
+machdep.cpu.cores_per_package: 8
+machdep.cpu.core_count: 8
+machdep.cpu.logical_per_package: 8
+machdep.cpu.thread_count: 8
+machdep.cpu.brand_string: ARM architecture processor
+machdep.cpu.sysreg_VBAR_EL1: -2198901063680
+machdep.cpu.sysreg_MAIR_EL1: 866947665630020863
+machdep.cpu.sysreg_TTBR1_EL1: 2823667712
+machdep.cpu.sysreg_SCTLR_EL1: 877943101
+machdep.cpu.sysreg_TCR_EL1: 147724543249
+machdep.cpu.sysreg_ID_AA64MMFR0_EL1: 1052964
+machdep.cpu.sysreg_ID_AA64ISAR1_EL1: 1048577
+kperf.limits.timer_min_period_ns: 50000
+kperf.limits.timer_min_bg_period_ns: 1000000
+kperf.limits.timer_min_pet_period_ns: 2000000
+kperf.limits.timer_min_bg_pet_period_ns: 10000000
+kperf.limits.max_action_count: 32
+kperf.debug_level: 0
+kperf.already_pending_ipis: 0
+=== CPU HARDWARE ===
+hw.ncpu: 8
+hw.cpufrequency: 1766400000
+hw.cpufrequency_min: 1766400000
+hw.cpufrequency_max: 1766400000
+=== SYSCTLS SWEET ===
+kern.bootargs: debug=0xc serial=3 cpus=8 keepsyms=1 -enable_kprintf_spam -noprogress rd=ufsroot0 unentitled_ios_sim_launch=1 ignition_level=1 wdt_test=no_user_checkin ufsrw=1 rootrw=1 ufswait=1 launchd_unsecure_cache=1 wdt=-1 sweetfb_noconsole=1 sweetfb_hz=30 sweettouch=1 sweettouchdelay=20 sweetusb=2
+kern.sweet_battery: soc=97.6% vcell=4210mV avg=-2mA now=0mA rep=2285/2341mAh design=2845mAh cycles=8.73 chgin=1 dtls=0xb bat=3 cnfg00=0x15 cnfg09=0x23(in 900mA en 0) cc=900mA charge_mode=0
+kern.sweet_charge: 0
+kern.sweet_cpu_freq: l3 1478 MHz (row 13), silver 1689 MHz (row 16), gold 2649 MHz (row 22)
+kern.sweet_gesture: 
+kern.sweet_idle_flush: 0
+kern.sweet_mem_vote: 0
+kern.sweet_next_boot: 0
+kern.sweet_parallelism: 0
+kern.sweet_surface_create_bytes: 214319104
+kern.sweet_surface_creates: 130
+kern.sweet_surface_locks: 38926
+kern.sweet_swipe: 0
+kern.sweetfast: 240
+kern.sweetfb_copies: 2430
+kern.sweetfb_flips: 7015
+kern.sweetfb_fullclean: 1
+kern.sweetfb_present_ns: 9088669365
+kern.sweetfb_swaps: 9446
+kern.sweetfb_underruns: 0
+kern.sweetfb_wait: 1
+kern.sweetfb_wait_busy: 3220
+kern.sweetfb_wait_ns: 38356458
+kern.sweetfb_wait_timeouts: 0
+kern.sweetfb_waits: 21756
+kern.sweetfb_zerocopy: 1
+seven@sevenzx:~/ios-s9/s9$ ./tools/s9ssh.sh '
+echo "=== PROCESSOS ==="
+ps -axo pid,pcpu,pmem,state,comm |
+  grep -E "backboardd|SpringBoard|kernel_task|ReportCrash|PosterBoard" |
+  grep -v grep
+'
+=== PROCESSOS ===
+   50   0.0  1.5 Ss   /usr/libexec/backboardd
+  141   0.0  1.0 Ss   /System/Library/CoreServices/ReportCrash
+  174   0.2  2.3 Ss   /System/Library/CoreServices/SpringBoard.app/SpringBoard
+ 2460   0.0  0.5 Ss   /Applications/PosterBoard.app/PosterBoard
+seven@sevenzx:~/ios-s9/s9$
