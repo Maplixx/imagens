@@ -1,0 +1,1417 @@
+C:\Windows\system32>pnputil /enum-devices /connected
+Utilitário PnP da Microsoft
+
+ID da Instância:                ACPI\PNP0C02\0
+Descrição do Dispositivo:         Recursos da placa-mãe
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\PNP0100\4&24015488&0
+Descrição do Dispositivo:         Timer do sistema
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1444&SUBSYS_00000000&REV_00\3&11583659&0&C4
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_43EA&SUBSYS_33081B21&REV_00\5&302d1e64&0&00020A
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1486&SUBSYS_88081043&REV_00\4&231a312e&0&0141
+Descrição do Dispositivo:         Controlador de criptografia/descriptografia PCI
+Nome da Classe:                 Desconhecido
+GUID de Classe:                 Desconhecido
+Nome do Fabricante:          Desconhecido
+Status:                     Problema
+Código do Problema:               28 (0x1C) [CM_PROB_FAILED_INSTALL]
+Status do Problema:             0xC0000490
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_01&Col01\8&1eaf20e9&0&0000
+Descrição do Dispositivo:         Dispositivo de teclado HID
+Nome da Classe:                 Keyboard
+GUID de Classe:                 {4d36e96b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (teclados padrões)
+Status:                     Iniciado
+Nome do Driver:                keyboard.inf
+
+ID da Instância:                ACPI\PNP0C02\4&231a312e&0
+Descrição do Dispositivo:         Recursos da placa-mãe
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_01&Col06\8&1eaf20e9&0&0005
+Descrição do Dispositivo:         Dispositivo definido pelo fornecedor compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                SCSI\Disk&Ven_SSD&Prod_\5&3955aa6&0&000000
+Descrição do Dispositivo:         SSD
+Nome da Classe:                 DiskDrive
+GUID de Classe:                 {4d36e967-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Unidades de disco padrão)
+Status:                     Iniciado
+Nome do Driver:                disk.inf
+
+ID da Instância:                SWD\PRINTENUM\PrintQueues
+Descrição do Dispositivo:         Fila de Impressão da Raiz
+Nome da Classe:                 PrintQueue
+GUID de Classe:                 {1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                printqueue.inf
+
+ID da Instância:                ACPI\AMDIF030\0
+Descrição do Dispositivo:         AMD GPIO Controller
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices, Inc.
+Status:                     Iniciado
+Nome do Driver:                oem58.inf
+
+ID da Instância:                SCSI\Disk&Ven_WDC&Prod_WD5000AAKX-003CA\5&3955aa6&0&010000
+Descrição do Dispositivo:         WDC WD5000AAKX-003CA0
+Nome da Classe:                 DiskDrive
+GUID de Classe:                 {4d36e967-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Unidades de disco padrão)
+Status:                     Iniciado
+Nome do Driver:                disk.inf
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_03\8&1e4a969f&0&0000
+Descrição do Dispositivo:         Dispositivo de teclado HID
+Nome da Classe:                 Keyboard
+GUID de Classe:                 {4d36e96b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (teclados padrões)
+Status:                     Iniciado
+Nome do Driver:                keyboard.inf
+
+ID da Instância:                ROOT\volmgr\0000
+Descrição do Dispositivo:         Gerenciador de Volumes
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volmgr.inf
+
+ID da Instância:                ACPI\PNP0103\2&daba3ff&0
+Descrição do Dispositivo:         High Precision Event Timer
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Intel
+Status:                     Parado
+Nome do Driver:                oem20.inf
+
+ID da Instância:                STORAGE\Volume\{3891321d-c2bf-11f1-8f67-806e6f6e6963}#0000000000100000
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                SWD\MSRRAS\MS_PPPOEMINIPORT
+Descrição do Dispositivo:         WAN Miniport (PPPOE)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+ID da Instância:                SCSI\Disk&Ven_SAMSUNG&Prod_HD502HJ\5&3955aa6&0&020000
+Descrição do Dispositivo:         SAMSUNG HD502HJ
+Nome da Classe:                 DiskDrive
+GUID de Classe:                 {4d36e967-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Unidades de disco padrão)
+Status:                     Iniciado
+Nome do Driver:                disk.inf
+
+ID da Instância:                DISPLAY\AOCB501\5&344a8882&0&UID264
+Descrição do Dispositivo:         Monitor Genérico PnP
+Nome da Classe:                 Monitor
+GUID de Classe:                 {4d36e96e-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Tipos de monitor padrão)
+Status:                     Iniciado
+Nome do Driver:                monitor.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1441&SUBSYS_00000000&REV_00\3&11583659&0&C1
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ROOT\BasicDisplay\0000
+Descrição do Dispositivo:         Driver de Vídeo Básico da Microsoft
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Tipos padrão de vídeo)
+Status:                     Iniciado
+Nome do Driver:                basicdisplay.inf
+
+ID da Instância:                ACPI\PNP0C14\ASUSCONTROLCENTER
+Descrição do Dispositivo:         Interface de Gerenciamento do Microsoft Windows para ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                wmiacpi.inf
+
+ID da Instância:                ROOT\AMDXE\0000
+Descrição do Dispositivo:         AMD Link Controller Emulation
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          AMD
+Status:                     Iniciado
+Nome do Driver:                oem52.inf
+
+ID da Instância:                SWD\MMDEVAPI\{0.0.1.00000000}.{cfda0208-5afb-410f-89c4-228e77f33b1b}
+Descrição do Dispositivo:         Microfone (WO Mic Device)
+Nome da Classe:                 AudioEndpoint
+GUID de Classe:                 {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                audioendpoint.inf
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_02&Col01\8&317ab2dd&0&0000
+Descrição do Dispositivo:         Controlador de sistema compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                ACPI\AMDI0030\0
+Descrição do Dispositivo:         AMD GPIO Controller
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices, Inc
+Status:                     Iniciado
+Nome do Driver:                oem100.inf
+
+ID da Instância:                USB\VID_1D57&PID_FA60\LXD-001
+Descrição do Dispositivo:         USB Composite Device
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          (Standard USB Host Controller)
+Status:                     Iniciado
+Nome do Driver:                usb.inf
+
+ID da Instância:                ROOT\NET\0000
+Descrição do Dispositivo:         VirtualBox Host-Only Ethernet Adapter
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Oracle Corporation
+Status:                     Iniciado
+Nome do Driver:                oem63.inf
+
+ID da Instância:                ROOT\NET\0001
+Descrição do Dispositivo:         VirtualBox Host-Only Ethernet Adapter
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Oracle Corporation
+Status:                     Iniciado
+Nome do Driver:                oem63.inf
+
+ID da Instância:                ROOT\NET\0002
+Descrição do Dispositivo:         VirtualBox Host-Only Ethernet Adapter #2
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Oracle Corporation
+Status:                     Iniciado
+Nome do Driver:                oem63.inf
+
+ID da Instância:                ROOT\NET\0003
+Descrição do Dispositivo:         Famatech Radmin VPN Ethernet Adapter
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Famatech
+Status:                     Iniciado
+Nome do Driver:                oem15.inf
+
+ID da Instância:                USB\ROOT_HUB30\5&2bce96aa&0&0
+Descrição do Dispositivo:         USB Root Hub (USB 3.0)
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          (Standard USB HUBs)
+Status:                     Iniciado
+Nome do Driver:                usbhub3.inf
+
+ID da Instância:                SWD\MSRRAS\{5e259276-bc7e-40e3-b93b-8f89b5f3abc0}
+Descrição do Dispositivo:         Microsoft RRAS Root Enumerator
+Nome da Classe:                 SoftwareDevice
+GUID de Classe:                 {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                c_swdevice.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_790E&SUBSYS_87C01043&REV_51\3&11583659&0&A3
+Descrição do Dispositivo:         PCI standard ISA bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\ACPI0010\1
+Descrição do Dispositivo:         Dispositivo de Contêiner do Processador ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\PNP0C14\ASUSWMI
+Descrição do Dispositivo:         Interface de Gerenciamento do Microsoft Windows para ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                wmiacpi.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_43EE&SUBSYS_11421B21&REV_00\4&20e120c7&0&000A
+Descrição do Dispositivo:         AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          Controlador Host USB xHCI Genérico
+Status:                     Iniciado
+Nome do Driver:                usbxhci.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1484&SUBSYS_88081043&REV_00\3&11583659&0&39
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1484&SUBSYS_88081043&REV_00\3&11583659&0&41
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                ROOT\VMWARE\0000
+Descrição do Dispositivo:         VMware Virtual Ethernet Adapter for VMnet1
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Broadcom Inc.
+Status:                     Iniciado
+Nome do Driver:                oem47.inf
+
+ID da Instância:                ROOT\VMWARE\0001
+Descrição do Dispositivo:         VMware Virtual Ethernet Adapter for VMnet8
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Broadcom Inc.
+Status:                     Iniciado
+Nome do Driver:                oem47.inf
+
+ID da Instância:                SWD\MSRRAS\MS_PPTPMINIPORT
+Descrição do Dispositivo:         WAN Miniport (PPTP)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_01&Col02\8&1eaf20e9&0&0001
+Descrição do Dispositivo:         Dispositivo de controle de consumidor compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                hidserv.inf
+
+ID da Instância:                ROOT\VID\0000
+Descrição do Dispositivo:         Driver de Infraestrutura de Virtualização Microsoft Hyper-V
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                wvid.inf
+
+ID da Instância:                SWD\MSRRAS\MS_AGILEVPNMINIPORT
+Descrição do Dispositivo:         WAN Miniport (IKEv2)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netavpna.inf
+
+ID da Instância:                ROOT\CompositeBus\0000
+Descrição do Dispositivo:         Enumerador de Barramento de Composição
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                compositebus.inf
+
+ID da Instância:                ROOT\vdrvroot\0000
+Descrição do Dispositivo:         Enumerador de Unidade Virtual Microsoft
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                vdrvroot.inf
+
+ID da Instância:                PCI\VEN_10EC&DEV_8125&SUBSYS_87D71043&REV_05\6&102e3adf&0&0048020A
+Descrição do Dispositivo:         Realtek Gaming 2.5GbE Family Controller
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Realtek
+Status:                     Iniciado
+Nome do Driver:                oem99.inf
+
+ID da Instância:                ROOT\spaceport\0000
+Descrição do Dispositivo:         Controlador de Espaços de Armazenamento da Microsoft
+Nome da Classe:                 SCSIAdapter
+GUID de Classe:                 {4d36e97b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                spaceport.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1446&SUBSYS_00000000&REV_00\3&11583659&0&C6
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_790B&SUBSYS_87C01043&REV_61\3&11583659&0&A0
+Descrição do Dispositivo:         AMD SMBus
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices, Inc
+Status:                     Parado
+Nome do Driver:                oem79.inf
+
+ID da Instância:                ACPI\PNP0501\0
+Descrição do Dispositivo:         Porta de comunicação (COM1)
+Nome da Classe:                 Ports
+GUID de Classe:                 {4d36e978-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Tipos de porta padrão)
+Status:                     Iniciado
+Nome do Driver:                msports.inf
+
+ID da Instância:                ROOT\KDNIC\0000
+Descrição do Dispositivo:         Microsoft Kernel Debug Network Adapter
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                kdnic.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1485&SUBSYS_88081043&REV_00\4&231a312e&0&0041
+Descrição do Dispositivo:         AMD PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                oem101.inf
+
+ID da Instância:                STORAGE\Volume\{3891321f-c2bf-11f1-8f67-806e6f6e6963}#0000000000004400
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                ROOT\AMDSAFD&FUN_01&REV_01\0000
+Descrição do Dispositivo:         AMD Streaming Audio Device
+Nome da Classe:                 MEDIA
+GUID de Classe:                 {4d36e96c-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          AMD
+Status:                     Iniciado
+Nome do Driver:                oem98.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1487&SUBSYS_87971043&REV_00\4&231a312e&0&0441
+Descrição do Dispositivo:         Controlador de High Definition Audio
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                hdaudbus.inf
+
+ID da Instância:                SWD\SyntheticGamepadEnum\SyntheticGamepad0
+Descrição do Dispositivo:         Synthetic Gamepad
+Nome da Classe:                 Desconhecido
+GUID de Classe:                 Desconhecido
+Nome do Fabricante:          Desconhecido
+Status:                     Problema
+Código do Problema:               28 (0x1C) [CM_PROB_FAILED_INSTALL]
+Status do Problema:             0xC0000490
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_02&Col02\8&317ab2dd&0&0001
+Descrição do Dispositivo:         Dispositivo de controle de consumidor compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                hidserv.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_43EA&SUBSYS_33081B21&REV_00\5&302d1e64&0&40020A
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1443&SUBSYS_00000000&REV_00\3&11583659&0&C3
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_43E9&SUBSYS_02011B21&REV_00\4&20e120c7&0&020A
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                USB\VID_28E9&PID_31C7\0123456789
+Descrição do Dispositivo:         USB Composite Device
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          (Standard USB Host Controller)
+Status:                     Iniciado
+Nome do Driver:                usb.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&08
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&10
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&18
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&20
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&28
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&38
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1482&SUBSYS_00000000&REV_00\3&11583659&0&40
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                STORAGE\Volume\{3891321f-c2bf-11f1-8f67-806e6f6e6963}#0000000001000000
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                ACPI\PNP0B00\4&24015488&0
+Descrição do Dispositivo:         CMOS do sistema/relógio em tempo real
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                STORAGE\Volume\{3891321d-c2bf-11f1-8f67-806e6f6e6963}#00000037DE300000
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_01&Col03\8&1eaf20e9&0&0002
+Descrição do Dispositivo:         Controlador de sistema compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                ROOT\UMBUS\0000
+Descrição do Dispositivo:         Enumerador de Barramento de Raiz UMBus
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                umbus.inf
+
+ID da Instância:                PCI\VEN_1002&DEV_6FDF&SUBSYS_0B311002&REV_EF\4&1d81e16&0&0019
+Descrição do Dispositivo:         AMD Radeon RX 580 2048SP
+Nome da Classe:                 Display
+GUID de Classe:                 {4d36e968-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices, Inc.
+Status:                     Iniciado
+Nome do Driver:                oem35.inf
+
+ID da Instância:                USB\VID_05E3&PID_0608\6&3365fbaf&0&11
+Descrição do Dispositivo:         Generic USB Hub
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          (Standard USB HUBs)
+Status:                     Iniciado
+Nome do Driver:                usbhub3.inf
+
+ID da Instância:                SWD\RADIO\{3DB5895D-CC28-44B3-AD3D-6F01A782B8D2}
+Descrição do Dispositivo:         Microsoft Radio Device Enumeration Bus
+Nome da Classe:                 SoftwareDevice
+GUID de Classe:                 {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                c_swdevice.inf
+
+ID da Instância:                ACPI\PNP0000\4&24015488&0
+Descrição do Dispositivo:         Controlador de interrupção programável
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\0
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\1
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\2
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\3
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\4
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\5
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\6
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\7
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\8
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\9
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\a
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\AuthenticAMD_-_AMD64_Family_25_Model_33_-_AMD_Ryzen_5_5600X_6-Core_Processor_____________\b
+Descrição do Dispositivo:         AMD Ryzen 5 5600X 6-Core Processor
+Nome da Classe:                 Processor
+GUID de Classe:                 {50127dc3-0f36-415e-a6cc-4cb3be910b65}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                cpu.inf
+
+ID da Instância:                ACPI\PNP0C01\c8
+Descrição do Dispositivo:         Placa do sistema
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                SWD\MSDAS\{ce958e9a-424f-4c88-86f4-11314821e75a}
+Descrição do Dispositivo:         Microsoft Device Association Root Enumerator
+Nome da Classe:                 SoftwareDevice
+GUID de Classe:                 {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                c_swdevice.inf
+
+ID da Instância:                SW\{eeab7790-c514-11d1-b42b-00805fc1270e}\asyncmac
+Descrição do Dispositivo:         RAS Async Adapter
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+ID da Instância:                ROOT\ACPI_HAL\0000
+Descrição do Dispositivo:         PC ACPI de base x64
+Nome da Classe:                 Computer
+GUID de Classe:                 {4d36e966-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Computadores padrão)
+Status:                     Iniciado
+Nome do Driver:                hal.inf
+
+ID da Instância:                SWD\MSRRAS\MS_NDISWANBH
+Descrição do Dispositivo:         WAN Miniport (Network Monitor)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+ID da Instância:                SWD\MSRRAS\MS_NDISWANIP
+Descrição do Dispositivo:         WAN Miniport (IP)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+ID da Instância:                ACPI\PNP0C14\AOD
+Descrição do Dispositivo:         Interface de Gerenciamento do Microsoft Windows para ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                wmiacpi.inf
+
+ID da Instância:                ACPI\PNP0C14\AWW
+Descrição do Dispositivo:         Interface de Gerenciamento do Microsoft Windows para ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                wmiacpi.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_43EA&SUBSYS_33081B21&REV_00\5&302d1e64&0&48020A
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                ACPI\PNP0A08\0
+Descrição do Dispositivo:         Complexo da Raiz de PCI Express
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1440&SUBSYS_00000000&REV_00\3&11583659&0&C0
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                STORAGE\Volume\{3891321e-c2bf-11f1-8f67-806e6f6e6963}#0000000000004400
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                ACPI_HAL\PNP0C08\0
+Descrição do Dispositivo:         Microsoft ACPI-Compliant System
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                acpi.inf
+
+ID da Instância:                HTREE\ROOT\0
+Descrição do Dispositivo:         Desconhecido
+Nome da Classe:                 Desconhecido
+GUID de Classe:                 Desconhecido
+Nome do Fabricante:          Desconhecido
+Status:                     Iniciado
+
+ID da Instância:                ROOT\BasicRender\0000
+Descrição do Dispositivo:         Driver de Renderização Básico da Microsoft
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                basicrender.inf
+
+ID da Instância:                PCI\VEN_1002&DEV_AAF0&SUBSYS_AAF01002&REV_00\4&1d81e16&0&0119
+Descrição do Dispositivo:         High Definition Audio Bus
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          AMD
+Status:                     Iniciado
+Nome do Driver:                oem91.inf
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_02&Col03\8&317ab2dd&0&0002
+Descrição do Dispositivo:         Dispositivo compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1483&SUBSYS_88081043&REV_00\3&11583659&0&0A
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1483&SUBSYS_88081043&REV_00\3&11583659&0&19
+Descrição do Dispositivo:         Ponte PCI para PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                pci.inf
+
+ID da Instância:                ACPI\PNP0200\4&24015488&0
+Descrição do Dispositivo:         Controlador de acesso direto à memória
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                SWD\MSRRAS\MS_SSTPMINIPORT
+Descrição do Dispositivo:         WAN Miniport (SSTP)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netsstpa.inf
+
+ID da Instância:                HDAUDIO\FUNC_01&VEN_1002&DEV_AA01&SUBSYS_00AA0100&REV_1007\5&21094cab&0&0001
+Descrição do Dispositivo:         AMD High Definition Audio Device
+Nome da Classe:                 MEDIA
+GUID de Classe:                 {4d36e96c-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                oem94.inf
+
+ID da Instância:                UEFI\RES_{e8b3657a-38da-5411-836a-636f576e6574}\0
+Descrição do Dispositivo:         Firmware do Sistema
+Nome da Classe:                 Firmware
+GUID de Classe:                 {f2e7dd72-6468-4e36-b6f1-6488f42c1b52}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                c_firmware.inf
+
+ID da Instância:                ACPI_HAL\UEFI\0
+Descrição do Dispositivo:         Sistema Microsoft Compatível com UEFI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                uefi.inf
+
+ID da Instância:                USB\VID_0B05&PID_1939&MI_02\7&40fe908&0&0002
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_148A&SUBSYS_88081043&REV_00\4&4112e7d&0&0039
+Descrição do Dispositivo:         AMD PCI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Advanced Micro Devices
+Status:                     Iniciado
+Nome do Driver:                oem101.inf
+
+ID da Instância:                USB\VID_0B05&PID_1939\9876543210
+Descrição do Dispositivo:         USB Composite Device
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          (Standard USB Host Controller)
+Status:                     Iniciado
+Nome do Driver:                usb.inf
+
+ID da Instância:                ACPI\MSFT0101\1
+Descrição do Dispositivo:         Trusted Platform Module 2.0
+Nome da Classe:                 SecurityDevices
+GUID de Classe:                 {d94ee5d8-d189-4994-83d2-f68d7d41b0e6}
+Nome do Fabricante:          (Padrão)
+Status:                     Iniciado
+Nome do Driver:                tpm.inf
+
+ID da Instância:                ACPI\FixedButton\2&daba3ff&0
+Descrição do Dispositivo:         Botão de Recurso fixo ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                USB\VID_0B05&PID_1939&MI_00\7&40fe908&0&0000
+Descrição do Dispositivo:         AURA LED Controller
+Nome da Classe:                 USBDevice
+GUID de Classe:                 {88bae032-5a81-49f0-bc3d-a4ff138216d6}
+Nome do Fabricante:          Dispositivo WinUsb
+Status:                     Iniciado
+Nome do Driver:                winusb.inf
+
+ID da Instância:                STORAGE\Volume\{3891321e-c2bf-11f1-8f67-806e6f6e6963}#0000000001000000
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_01&Col04\8&1eaf20e9&0&0003
+Descrição do Dispositivo:         Mouse compatível com HID
+Nome da Classe:                 Mouse
+GUID de Classe:                 {4d36e96f-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                msmouse.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1445&SUBSYS_00000000&REV_00\3&11583659&0&C5
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\PNP0C02\15
+Descrição do Dispositivo:         Recursos da placa-mãe
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\PNP0C02\90
+Descrição do Dispositivo:         Recursos da placa-mãe
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ACPI\PNP0C02\91
+Descrição do Dispositivo:         Recursos da placa-mãe
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1480&SUBSYS_88081043&REV_00\3&11583659&0&00
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                ROOT\SteamStreamingSpeakers\0000
+Descrição do Dispositivo:         Steam Streaming Speakers
+Nome da Classe:                 MEDIA
+GUID de Classe:                 {4d36e96c-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Valve Corporation Audio DDK
+Status:                     Iniciado
+Nome do Driver:                oem83.inf
+
+ID da Instância:                ROOT\VMWVMCIHOSTDEV\0000
+Descrição do Dispositivo:         VMware VMCI Host Device
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Broadcom Inc.
+Status:                     Iniciado
+Nome do Driver:                oem48.inf
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_00\8&30ef8099&0&0000
+Descrição do Dispositivo:         Dispositivo de teclado HID
+Nome da Classe:                 Keyboard
+GUID de Classe:                 {4d36e96b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (teclados padrões)
+Status:                     Iniciado
+Nome do Driver:                keyboard.inf
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_01\8&884d2d0&0&0000
+Descrição do Dispositivo:         Mouse compatível com HID
+Nome da Classe:                 Mouse
+GUID de Classe:                 {4d36e96f-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                msmouse.inf
+
+ID da Instância:                SWD\XvddEnum\XvddRootDevice_Instance
+Descrição do Dispositivo:         Xvdd SCSI Miniport
+Nome da Classe:                 SCSIAdapter
+GUID de Classe:                 {4d36e97b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Xbox
+Status:                     Iniciado
+Nome do Driver:                oem110.inf
+
+ID da Instância:                USB\VID_1D57&PID_FA60&MI_03\7&dbb195e&0&0003
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                SWD\MMDEVAPI\MicrosoftGSWavetableSynth
+Descrição do Dispositivo:         Microsoft GS Wavetable Synth
+Nome da Classe:                 SoftwareDevice
+GUID de Classe:                 {62f9c741-b25a-46ce-b54c-9bccce08b6f2}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                c_swdevice.inf
+
+ID da Instância:                ACPI\PNP0C0C\aa
+Descrição do Dispositivo:         desligar ACPI
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                USB\VID_1D57&PID_FA60&MI_02\7&dbb195e&0&0002
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1442&SUBSYS_00000000&REV_00\3&11583659&0&C2
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                SWD\DRIVERENUM\AMDOCL&5&344a8882&0
+Descrição do Dispositivo:         AMD-OpenCL User Mode Driver
+Nome da Classe:                 SoftwareComponent
+GUID de Classe:                 {5c4c3332-344d-483c-8739-259e934c9cc8}
+Nome do Fabricante:          Advanced Micro Devices, Inc.
+Status:                     Iniciado
+Nome do Driver:                oem92.inf
+
+ID da Instância:                HID\VID_1D57&PID_FA60&MI_02&Col04\8&317ab2dd&0&0003
+Descrição do Dispositivo:         Dispositivo compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                SWD\MMDEVAPI\{0.0.0.00000000}.{7f2c3801-e023-4266-9e5b-16d730eeafbc}
+Descrição do Dispositivo:         Áudio Digital (S/PDIF) (High Definition Audio Device)
+Nome da Classe:                 AudioEndpoint
+GUID de Classe:                 {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                audioendpoint.inf
+
+ID da Instância:                USB\VID_28E9&PID_31C7&MI_00\7&25e80455&0&0000
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                STORAGE\Volume\{3891321d-c2bf-11f1-8f67-806e6f6e6963}#0000000003300000
+Descrição do Dispositivo:         Volume
+Nome da Classe:                 Volume
+GUID de Classe:                 {71a27cdd-812a-11d0-bec7-08002be2092f}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                volume.inf
+
+ID da Instância:                USB\VID_1D57&PID_FA60&MI_01\7&dbb195e&0&0001
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                ROOT\AMDLOG\0000
+Descrição do Dispositivo:         AMD Crash Defender
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          AMD
+Status:                     Iniciado
+Nome do Driver:                oem90.inf
+
+ID da Instância:                ROOT\NdisVirtualBus\0000
+Descrição do Dispositivo:         Enumerador de Adaptador de Rede Virtual NDIS
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                ndisvirtualbus.inf
+
+ID da Instância:                USB\VID_1D57&PID_FA60&MI_00\7&dbb195e&0&0000
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                USB\ROOT_HUB30\5&2c35141&0&0
+Descrição do Dispositivo:         USB Root Hub (USB 3.0)
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          (Standard USB HUBs)
+Status:                     Iniciado
+Nome do Driver:                usbhub3.inf
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_01&Col05\8&1eaf20e9&0&0004
+Descrição do Dispositivo:         Dispositivo definido pelo fornecedor compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_43EB&SUBSYS_10621B21&REV_00\4&20e120c7&0&010A
+Descrição do Dispositivo:         Controlador AHCI SATA Padrão
+Nome da Classe:                 HDC
+GUID de Classe:                 {4d36e96a-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Controlador AHCI SATA Padrão
+Status:                     Iniciado
+Nome do Driver:                mshdc.inf
+
+ID da Instância:                ACPI\PNP0C02\700
+Descrição do Dispositivo:         Recursos da placa-mãe
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                HDAUDIO\FUNC_01&VEN_10EC&DEV_0B00&SUBSYS_10438797&REV_1000\5&28911aa7&0&0001
+Descrição do Dispositivo:         Dispositivo de High Definition Audio
+Nome da Classe:                 MEDIA
+GUID de Classe:                 {4d36e96c-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                hdaudio.inf
+
+ID da Instância:                ACPI\PNP0800\4&24015488&0
+Descrição do Dispositivo:         Alto-falante do sistema
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Parado
+Nome do Driver:                machine.inf
+
+ID da Instância:                HID\VID_0B05&PID_1939&MI_02\8&2765eff3&0&0000
+Descrição do Dispositivo:         Dispositivo definido pelo fornecedor compatível com HID
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                ROOT\mssmbios\0000
+Descrição do Dispositivo:         Microsoft System Management BIOS Driver
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                mssmbios.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_1447&SUBSYS_00000000&REV_00\3&11583659&0&C7
+Descrição do Dispositivo:         PCI standard host CPU bridge
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                machine.inf
+
+ID da Instância:                PCI\VEN_1022&DEV_149C&SUBSYS_87C01043&REV_00\4&231a312e&0&0341
+Descrição do Dispositivo:         AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)
+Nome da Classe:                 USB
+GUID de Classe:                 {36fc9e60-c465-11cf-8056-444553540000}
+Nome do Fabricante:          Controlador Host USB xHCI Genérico
+Status:                     Iniciado
+Nome do Driver:                usbxhci.inf
+
+ID da Instância:                ROOT\SYSTEM\0000
+Descrição do Dispositivo:         Enumerador de Dispositivos de Software Plug and Play
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                swenum.inf
+
+ID da Instância:                ROOT\SYSTEM\0003
+Descrição do Dispositivo:         IWD Bus Enumerator
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (Standard system devices)
+Status:                     Iniciado
+Nome do Driver:                oem10.inf
+
+ID da Instância:                ROOT\SCSIADAPTER\0000
+Descrição do Dispositivo:         WinCDEmu Virtual Bus
+Nome da Classe:                 SCSIAdapter
+GUID de Classe:                 {4d36e97b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          SysProgs.org
+Status:                     Iniciado
+Nome do Driver:                oem76.inf
+
+ID da Instância:                HID\VID_28E9&PID_31C7&MI_00\8&3672ad2e&0&0000
+Descrição do Dispositivo:         Dispositivo de teclado HID
+Nome da Classe:                 Keyboard
+GUID de Classe:                 {4d36e96b-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          (teclados padrões)
+Status:                     Iniciado
+Nome do Driver:                keyboard.inf
+
+ID da Instância:                ROOT\RDPBUS\0000
+Descrição do Dispositivo:         Barramento do Redirecionador de Dispositivos de Área de Trabalho Remota
+Nome da Classe:                 System
+GUID de Classe:                 {4d36e97d-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                rdpbus.inf
+
+ID da Instância:                SWD\MMDEVAPI\{0.0.0.00000000}.{ffbaf836-842f-43fa-a39a-5a86f805e526}
+Descrição do Dispositivo:         Alto-falantes (High Definition Audio Device)
+Nome da Classe:                 AudioEndpoint
+GUID de Classe:                 {c166523c-fe0c-4a94-a586-f1a80cfbbf3e}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                audioendpoint.inf
+
+ID da Instância:                SWD\MSRRAS\MS_NDISWANIPV6
+Descrição do Dispositivo:         WAN Miniport (IPv6)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+ID da Instância:                ROOT\MEDIA\0000
+Descrição do Dispositivo:         WO Mic Device
+Nome da Classe:                 MEDIA
+GUID de Classe:                 {4d36e96c-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Wolicheng Tech Ltd.
+Status:                     Iniciado
+Nome do Driver:                oem41.inf
+
+ID da Instância:                SWD\DRIVERENUM\AMDWIN&5&344a8882&0
+Descrição do Dispositivo:         AMD-Windows Support Components
+Nome da Classe:                 SoftwareComponent
+GUID de Classe:                 {5c4c3332-344d-483c-8739-259e934c9cc8}
+Nome do Fabricante:          Advanced Micro Devices, Inc.
+Status:                     Iniciado
+Nome do Driver:                oem93.inf
+
+ID da Instância:                USB\VID_28E9&PID_31C7&MI_01\7&25e80455&0&0001
+Descrição do Dispositivo:         Dispositivo de Entrada USB
+Nome da Classe:                 HIDClass
+GUID de Classe:                 {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Nome do Fabricante:          (Dispositivos padrão do sistema)
+Status:                     Iniciado
+Nome do Driver:                input.inf
+
+ID da Instância:                SWD\MSRRAS\MS_L2TPMINIPORT
+Descrição do Dispositivo:         WAN Miniport (L2TP)
+Nome da Classe:                 Net
+GUID de Classe:                 {4d36e972-e325-11ce-bfc1-08002be10318}
+Nome do Fabricante:          Microsoft
+Status:                     Iniciado
+Nome do Driver:                netrasa.inf
+
+
+C:\Windows\system32>pnputil /enum-devices /connected | findstr /i "USB Samsung Android Qualcomm RNDIS CDC ECM Ethernet"
+GUID de Classe:                 {1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc}
+ID da InstÔncia:                SCSI\Disk&Ven_SAMSUNG&Prod_HD502HJ\5&3955aa6&0&020000
+DescriþÒo do Dispositivo:         SAMSUNG HD502HJ
+ID da InstÔncia:                USB\VID_1D57&PID_FA60\LXD-001
+DescriþÒo do Dispositivo:         USB Composite Device
+Nome da Classe:                 USB
+Nome do Fabricante:          (Standard USB Host Controller)
+Nome do Driver:                usb.inf
+DescriþÒo do Dispositivo:         VirtualBox Host-Only Ethernet Adapter
+DescriþÒo do Dispositivo:         VirtualBox Host-Only Ethernet Adapter
+DescriþÒo do Dispositivo:         VirtualBox Host-Only Ethernet Adapter #2
+DescriþÒo do Dispositivo:         Famatech Radmin VPN Ethernet Adapter
+ID da InstÔncia:                USB\ROOT_HUB30\5&2bce96aa&0&0
+DescriþÒo do Dispositivo:         USB Root Hub (USB 3.0)
+Nome da Classe:                 USB
+Nome do Fabricante:          (Standard USB HUBs)
+Nome do Driver:                usbhub3.inf
+DescriþÒo do Dispositivo:         AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)
+Nome da Classe:                 USB
+Nome do Fabricante:          Controlador Host USB xHCI GenÚrico
+Nome do Driver:                usbxhci.inf
+DescriþÒo do Dispositivo:         VMware Virtual Ethernet Adapter for VMnet1
+DescriþÒo do Dispositivo:         VMware Virtual Ethernet Adapter for VMnet8
+ID da InstÔncia:                USB\VID_28E9&PID_31C7\0123456789
+DescriþÒo do Dispositivo:         USB Composite Device
+Nome da Classe:                 USB
+Nome do Fabricante:          (Standard USB Host Controller)
+Nome do Driver:                usb.inf
+ID da InstÔncia:                USB\VID_05E3&PID_0608\6&3365fbaf&0&11
+DescriþÒo do Dispositivo:         Generic USB Hub
+Nome da Classe:                 USB
+Nome do Fabricante:          (Standard USB HUBs)
+Nome do Driver:                usbhub3.inf
+ID da InstÔncia:                USB\VID_0B05&PID_1939&MI_02\7&40fe908&0&0002
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+ID da InstÔncia:                USB\VID_0B05&PID_1939\9876543210
+DescriþÒo do Dispositivo:         USB Composite Device
+Nome da Classe:                 USB
+Nome do Fabricante:          (Standard USB Host Controller)
+Nome do Driver:                usb.inf
+ID da InstÔncia:                USB\VID_0B05&PID_1939&MI_00\7&40fe908&0&0000
+Nome da Classe:                 USBDevice
+Nome do Fabricante:          Dispositivo WinUsb
+Nome do Driver:                winusb.inf
+ID da InstÔncia:                USB\VID_1D57&PID_FA60&MI_03\7&dbb195e&0&0003
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+ID da InstÔncia:                USB\VID_1D57&PID_FA60&MI_02\7&dbb195e&0&0002
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+ID da InstÔncia:                USB\VID_28E9&PID_31C7&MI_00\7&25e80455&0&0000
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+ID da InstÔncia:                USB\VID_1D57&PID_FA60&MI_01\7&dbb195e&0&0001
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+ID da InstÔncia:                USB\VID_1D57&PID_FA60&MI_00\7&dbb195e&0&0000
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+ID da InstÔncia:                USB\ROOT_HUB30\5&2c35141&0&0
+DescriþÒo do Dispositivo:         USB Root Hub (USB 3.0)
+Nome da Classe:                 USB
+Nome do Fabricante:          (Standard USB HUBs)
+Nome do Driver:                usbhub3.inf
+DescriþÒo do Dispositivo:         AMD USB 3.10 eXtensible Host Controller - 1.10 (Microsoft)
+Nome da Classe:                 USB
+Nome do Fabricante:          Controlador Host USB xHCI GenÚrico
+Nome do Driver:                usbxhci.inf
+ID da InstÔncia:                USB\VID_28E9&PID_31C7&MI_01\7&25e80455&0&0001
+DescriþÒo do Dispositivo:         Dispositivo de Entrada USB
+
+C:\Windows\system32>
