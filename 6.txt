@@ -1,0 +1,136 @@
+seven@sevenzx:~/ios-s9/s9$ grep -iE \
+'s9net|ssh|usb|gadget|network|backlight|brightness|SWEET FB|panic|shutdown' \
+logs/ios-boot-clean.txt | tail -200
+SWEET FB: zero-copy ready: VIG0 src 0xb9002d0 xy 0x0 out 0xb9002d0 addr 0x9d400000 op 0x80000000, VIG1 src 0xb9002d0 xy 0x2d0 addr 0x9d400000, qseed 0x1003/0x1003, ctl0 flush 0x20000000
+SWEET FB: AppleCLCD 1440x2960 stride 5760 at 0x9d400000, default surface 1, presented as 828x1792, cached, vsync 33333 us, present on swap, zero-copy on
+SWEET FB: vsync thread on cpu 3
+com.apple.xpc.launchd|1969-12-31 16:00:36.016209 <Notice>: boot-args = debug=0xc serial=3 cpus=8 keepsyms=1 -enable_kprintf_spam -noprogress rd=ufsroot0 unentitled_ios_sim_launch=1 ignition_level=1 wdt_test=no_user_checkin ufsrw=1 rootrw=1 ufswait=1 launchd_unsecure_cache=1 wdt=-1 sweetfb_noconsole=1 sweetfb_hz=30 sweettouch=1 sweettouchdelay=20 sweetusb=0
+exec DumpPanic
+exec s9net
+exec networkserviceproxy
+IOK backboardd: IOServiceFirstPublish <dict ID="0"><key>IONameMatch</key><string ID="1">usb-drd,t8027</string><key>IOServiceNotificationUser</key><true/></dict> -> notify
+SWEET FB: MobileGestaltHelper sel 8 in 0/0 out 2/0 -> 0x0
+SWEET FB: MobileGestaltHelper sel 28 in 0/0 out 1/0 -> 0x0
+SWEET FB: backboardd sel 57 in 0/0 out 1/0 -> 0x0
+SWEET FB: backboardd sel 15 in 2/0 out 1/0 -> 0x0
+SWEET FB: backboardd sel 22 in 1/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 29 in 0/0 out 0/8 -> 0x0
+SWEET FB: backboardd sel 33 in 1/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 79 in 2/0 out 0/1580 -> 0x0
+IOK backboardd: matching1 <dict ID="0"><key>IOPropertyMatch</key><dict ID="1"><key>backlight-control</key><true/></dict><key>IOServiceNotificationUser</key><true/></dict> -> none
+SWEET FB: backboardd sel 74 in 1/0 out 1/64 -> 0x0
+IOK backboardd: path IODeviceTree:/backlight -> none
+IOK backboardd: matching <dict ID="0"><key>IOPropertyMatch</key><dict ID="1"><key>backlight-control</key><true/></dict><key>IOServiceNotificationUser</key><true/></dict> -> 0 found
+SWEET FB: thermalmonitord sel 78 in 2/1788 out 0/0 -> 0x0
+SWEET FB: display on
+SWEET FB: backboardd sel 12 in 1/0 out 0/0 -> 0x0
+SWEET FB: SwapWait 0 flags 0x80000003: ended 0 presented 0 pending 0, 0 us
+SWEET FB: backboardd sel 6 in 3/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 27 in 0/0 out 0/3084 -> 0x0
+SWEET FB: backboardd sel 17 in 0/3084 out 0/0 -> 0x0
+SWEET FB: backboardd sel 84 in 0/4 out 0/0 -> 0x0
+SWEET FB: backboardd sel 50 in 2/0 out 0/0 -> 0x0
+SWEET FB: backboardd sel 68 in 1/8 out 0/0 -> 0x0
+SWEET FB: backboardd sel 4 in 0/0 out 1/0 -> 0x0
+SWEET FB: swap 1 dirty region 0,0 828x1792 -> rows 0-1792
+SWEET FB: present thread on cpu 3
+SWEET FB: backboardd sel 5 in 0/1132 out 0/0 -> 0x0
+SWEET FB: backboardd sel 3 in 2/0 out 1/0 -> 0x0
+SWEET FB: swap 1 layer 0 surface 10 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: SwapWait 1 flags 0x1: ended 1 presented 1 pending 0, 14242 us
+SWEET FB: backboardd sel 55 in 1/72 out 0/0 -> 0x0
+SWEET FB: SwapWait 1 flags 0x80000000: ended 1 presented 1 pending 0, 0 us
+SWEET FB: swap 2 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: flip 2 slot 0 at 0x9e500000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 28248 us
+SWEET FB: SwapWait 1 flags 0x80000000: ended 2 presented 2 pending 0, 4 us
+SWEET FB: swap 3 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 2 flags 0x80000000: ended 3 presented 2 pending 3, 5 us
+SWEET FB: flip 3 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 25994 us
+SWEET FB: SwapWait 3 flags 0x80000001: ended 3 presented 3 pending 0, 4 us
+SWEET FB: SwapWait 3 flags 0x80000000: ended 3 presented 3 pending 0, 1 us
+SWEET FB: swap 4 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 3 flags 0x80000000: ended 4 presented 3 pending 4, 3 us
+SWEET FB: flip 4 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 28470 us
+SWEET FB: SwapWait 4 flags 0x80000001: ended 4 presented 4 pending 0, 2 us
+SWEET FB: swap 5 dirty region 0,0 828x1792 -> rows 0-1792
+SWEET FB: SwapWait 4 flags 0x80000000: ended 5 presented 4 pending 5, 2 us
+SWEET FB: SwapWait 5 flags 0x80000000: ended 5 presented 4 pending 5, 4 us busy
+SWEET FB: swap 6 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 0 flags 0x2: ended 6 presented 4 pending 5, 2 us
+SWEET FB: swap 7 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 0 flags 0x2: ended 7 presented 4 pending 5, 2 us
+SWEET FB: flip 5 slot 0 at 0x9e500000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 25772 us
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: display off
+SWEET FB: display on
+SWEET FB: SwapWait 0 flags 0x80000003: ended 7 presented 7 pending 0, 1 us
+SWEET FB: swap 8 dirty region 0,0 828x1792 -> rows 0-1792
+SWEET FB: swap 8 layer 0 surface 11 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: SwapWait 8 flags 0x80000001: ended 8 presented 8 pending 0, 1 us
+SWEET FB: SwapWait 8 flags 0x80000000: ended 8 presented 8 pending 0, 1 us
+SWEET FB: swap 9 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: flip 9 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 3554 us
+SWEET FB: SwapWait 8 flags 0x80000000: ended 9 presented 9 pending 0, 4 us
+SWEET FB: SwapWait 9 flags 0x80000001: ended 9 presented 9 pending 0, 2 us
+SWEET FB: swap 10 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: flip 10 slot 1 at 0x9eab0000, rows 0-1792 cleaned, flush 0x20020003 -> 0x20000000 after 1312 us
+SWEET FB: SwapWait 9 flags 0x80000000: ended 10 presented 10 pending 0, 4 us
+SWEET FB: SwapWait 10 flags 0x80000001: ended 10 presented 10 pending 0, 1 us
+SWEET FB: swap 11 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 10 flags 0x80000000: ended 11 presented 10 pending 11, 4 us
+SWEET FB: SwapWait 11 flags 0x80000001: ended 11 presented 11 pending 0, 4 us
+SWEET FB: swap 12 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: SwapWait 11 flags 0x80000000: ended 12 presented 11 pending 12, 3 us
+SWEET FB: SwapWait 12 flags 0x80000001: ended 12 presented 12 pending 0, 4 us
+SWEET FB: swap 13 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: swap 14 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: swap 15 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: swap 16 dirty none 0,0 0x0 -> rows 0-1792
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: display off
+SWEET FB: display on
+SWEET FB: swap 66 layer 0 surface 10 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: swap 82 dirty region 154,192 521x1582 -> rows 192-1774
+SWEET FB: swap 83 dirty region 154,192 521x1581 -> rows 192-1773
+SWEET FB: swap 84 dirty region 154,192 521x1579 -> rows 192-1771
+SWEET FB: swap 85 dirty region 154,192 521x1578 -> rows 192-1770
+SWEET FB: swap 86 dirty region 154,192 521x1577 -> rows 192-1769
+SWEET FB: swap 87 dirty region 154,192 521x1576 -> rows 192-1768
+SWEET FB: swap 88 dirty region 154,192 521x1574 -> rows 192-1766
+SWEET FB: swap 89 dirty region 154,192 521x1573 -> rows 192-1765
+SWEET FB: swap 90 dirty region 154,192 521x1572 -> rows 192-1764
+SWEET FB: swap 91 dirty region 154,192 521x1571 -> rows 192-1763
+SWEET FB: swap 92 dirty region 266,1665 296x95 -> rows 1665-1760
+SWEET FB: swap 93 dirty region 266,1663 296x96 -> rows 1663-1759
+SWEET FB: swap 94 dirty region 266,1661 296x97 -> rows 1661-1758
+SWEET FB: swap 95 dirty region 266,1660 296x97 -> rows 1660-1757
+SWEET FB: swap 96 dirty region 266,1658 296x98 -> rows 1658-1756
+SWEET FB: swap 97 dirty region 266,1657 296x98 -> rows 1657-1755
+SWEET FB: swap 98 dirty region 266,1655 296x99 -> rows 1655-1754
+SWEET FB: swap 99 dirty region 266,1654 296x99 -> rows 1654-1753
+SWEET FB: swap 100 dirty region 266,1652 296x101 -> rows 1652-1753
+SWEET FB: swap 101 dirty region 266,1651 296x101 -> rows 1651-1752
+SWEET FB: swap 102 dirty region 266,1649 296x102 -> rows 1649-1751
+SWEET FB: swap 103 dirty region 266,1648 296x102 -> rows 1648-1750
+SWEET FB: swap 104 dirty region 266,1647 296x103 -> rows 1647-1750
+SWEET FB: swap 105 dirty region 266,1646 296x103 -> rows 1646-1749
+SWEET FB: swap 106 dirty region 266,1645 296x103 -> rows 1645-1748
+SWEET FB: swap 107 dirty region 266,1644 296x104 -> rows 1644-1748
+SWEET FB: swap 108 dirty region 266,1643 296x105 -> rows 1643-1748
+SWEET FB: swap 109 dirty region 266,1642 296x105 -> rows 1642-1747
+SWEET FB: swap 110 dirty region 266,1642 296x105 -> rows 1642-1747
+SWEET FB: swap 111 dirty region 266,1641 296x106 -> rows 1641-1747
+SWEET FB: swap 112 dirty region 266,1641 296x106 -> rows 1641-1747
+SWEET FB: swap 113 dirty region 266,1640 296x107 -> rows 1640-1747
+SWEET FB: zero-copy off: pipes back on the panel memory
+SWEET FB: display off
+SWEET FB: display on
+SWEET FB: swap 252 layer 0 surface 11 828x1792 fmt 0x42475241 bpr 3328 a 0,0 828x1792 b 0,0 828x1792
+SWEET FB: zero-copy on: canvas halves 414x1792 -> 720x2960, step 0x126666/0x135f7b
+SWEET FB: present avg 917 us max 28953 us, 300 frames in 144950 ms (2.0 fps), 288 flips 12 copies, SwapWait 1009 x 17 us; swaps: 123 full, 23 no region, top 54,158 743x413 x40
+seven@sevenzx:~/ios-s9/s9$
