@@ -1,0 +1,252 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+sed -n '60,145p' s9/ESTUDO-2026-10-25-gpu.md
+
+## 3. Hardware do S9 (device tree ao vivo + kernel Android do próprio S9) [C]
+
+Igual ao Poco F1 (mesmo SoC): GPU `0x5000000` (chipid `0x06030001` = A630 v2), GMU `0x506a000` (+0x30000), PDC
+`0xb200000` (cfg em +0x80000, sequência em +0x280000), gpucc `0x5090000` (GDSC CX `0x509106c`, GX `0x509100c`, este do
+GMU), SMMU da GPU `0x5040000` "qcom,smmu-v2" **sem** `qcom,skip-init` (é nossa, não do hipervisor; a dos apps é que é
+emulada), SIDs 0 (3D), 1/2 (seguro), 4 (gmu_user), 5 (gmu_kernel), `attach-impl-defs` (12 pares) no DT. Zap:
+`qcom,kgsl-hyp` PAS 13, região `0x8c415000` +0x2000 (fora da RAM do nosso XNU, que começa em 0xa6000000). cmd-db em
+`0x861e0000`. Frequências 257/342/414/520/596/675/710 MHz (nível inicial 6 = 257). GCC: `cfg_ahb 0x71004`,
+`memnoc_gfx 0x7100c`, `snoc_dvm 0x71018`, `ddrss_gpu_axi 0x44038`, votos GPLL0 `0x52004` bits 15/16 (iguais ao F1).
+
+**Firmware:** o zap da Samsung está no `NON-HLOS.bin` do BL oficial: `image/a630_zap.mdt` (6.684 B = cabeçalho ELF
++ hashes), `.b00` 148, `.b01` 6.536 (hashes/assinatura), `.b02` 1.968 (o código, PT_LOAD relocável em 0x5000).
+Extraído para `s9port/research/gpu-fw/` (fora do git). GMU e SQE: linux-firmware (`a630_gmu.bin` 32 KB, o kernel do
+S9 espera versão 1.3+; `a630_sqe.fw`).
+
+**Sequência do driver do próprio S9 (kgsl msm-4.9), só fatos:** CX GDSC + relógios → micro-código do RSC/PDC (o do
+S9 usa endereços fixos 0x30010/0x30000/0x30080 nos TCS do PDC; o Bergamota usou o `gfx.lvl` do cmd-db, 0x30050 no F1:
+os dois ligaram a GPU, então fica como chave ao vivo) → firmware do GMU pelo AHB direto no ITCM (até 32 KB) →
+BOOT_CONFIG, tabela HFI, faixa do "fence" AHB, chip id → SYSRESET 0 → `0xbabeface` → **voto da GX por registrador**
+(`BOOT_SLUMBER_OPTION` + `GX_VOTE_IDX`/`MX_VOTE_IDX` + OOB bit 22, ack bit 30; a peculiaridade "hfi-use-reg" do DT) →
+SPTPRAC → `HFI_CTRL_INIT` → mensagens HFI v1 (INIT, FW_VER, PERF_TBL, BW_TBL, TEST) → OOB GPU (bit 16, ack 24) →
+init do CP (UCHE, VBIF, endereçamento 64 bits, proteção, SQE, anel) → zap pelo TrustZone (PAS 13; o Linux do S9
+vota antes a banda do motor de cripto) → `CP_ME_INIT` → sai do modo seguro. Chamada SMC: `0x42000000 | svc<<8 | cmd`,
+repetindo enquanto x0 == 1 (interrompida) com x6 de volta.
+
+## 4. Decisões (com o porquê)
+
+1. **Bring-up no kernel do iOS com etapas ao vivo por `sysctl`, não no shim.** Hoje o iOS dá SSH em 37 s e o log do
+   kernel chega ao PC pelo cabo: cada etapa diz o que vai tocar antes de tocar, e a última linha mostra onde parou. O
+   shim só mostra foto e exigiria regravar a partição a cada teste. Rede de segurança: o watchdog do APSS armado
+   durante as etapas (se o aparelho congelar inteiro, ele reinicia sozinho e volta ao iOS).
+2. **Código:** nosso, escrito a partir dos fatos acima; do HackiOS (APSL/MIT) aproveitamos a camada IOKit/usuário e o
+   lado do iOS (Mesa, libdrm, EAGL), com crédito; do Bergamota nada além de fatos.
+3. **Caminho do CoreAnimation: GLES primeiro** (nativo no iOS 16, item 2); Metal (Chlorophyll) depois.
+
+## 5. Plano por etapas (confirmado pelos dois projetos + o kernel do próprio S9)
+
+O caminho crítico é ligar a GPU; o resto (GLES/Metal) é software que já existe e que os dois projetos provaram
+rodar no mesmo chip. Ordem, cada etapa provada antes da seguinte:
+
+| # | o que | onde | risco | resultado esperado |
+|---|---|---|---|---|
+| **A** | **GMU: energia + relógios + firmware do GMU → `0xBABEFACE`** | shim M10 (feito) | baixo: sem GX/zap/CP; hang = watchdog | o processador de energia da GPU roda |
+| B | SMMU da GPU (contexto, tabelas), HFI, **GX ligado** pelo GMU, SPTPRAC, slumber | shim M11 | médio: 1ª vez que a GX liga | `RBBM_STATUS` legível, GX liga e desliga |
+| C | zap pelo TrustZone (PAS 13, o `a630_zap` **da Samsung** já extraído), CP (SQE, anel, `CP_ME_INIT`), sai do modo seguro, NOP+MEM_WRITE | shim M12 | médio: TrustZone/modo seguro | CP executa um comando e escreve na RAM |
+| D | o mesmo no XNU: driver `SweetAdreno` com os ioctls do msm (como o HackiOS), GPU mantida ligada, IOService p/ o Mesa | kernel | — | `ioreg` mostra o serviço; teste por SSH roda |
+| E | OpenGL ES: Mesa freedreno (a630) + libdrm de mentira sobre o nosso ioctl + EAGL nosso no backboardd | iOS | baixo (iOS 16 usa GLES nativo) | CoreAnimation desenha pela GPU, blur inclusive |
+| F | medir com `tools/s9-measure.sh`; Metal (Chlorophyll) se valer a pena | iOS | — | 60 fps é plausível (HackiOS/Bergamota mostram UI fluida) |
+
+**Etapas A-C no shim** (não no iOS): hardware arriscado primeiro, boot de 10 s, watchdog, resultado na foto —
+exatamente a regra do projeto. D-F no iOS, onde o GLES do iOS 16 nos poupa o gancho de vtable que o Bergamota
+precisou no iOS 18.
+
+## 6. O que foi feito nesta sessão (sem aparelho)
+
+- Estudo acima (os dois projetos + HackiOS + o kernel Android do S9), com os registradores conferidos contra o DT.
+- **Zap da Samsung extraído** do `BL/NON-HLOS.bin` → `s9port/research/gpu-fw/a630_zap.{mdt,b00,b01,b02}` (fora do git):
+  o maior risco dos dois projetos, resolvido com o arquivo assinado do próprio aparelho.
+- `a630_gmu.bin` (32768 B, sha `da8d9b1b…`) e `a630_sqe.fw` (34188 B, sha `1c21b527…`) do linux-firmware em
+  `research/gpu-fw/` (fora do git; redistribuíveis mas não comitados).
+- **Etapa M10 do shim escrita e compilada** (`s9port/shim/m10.c`, ~460 linhas; `build.sh m10`;
+  `tools/gpu-fw-embed.py` embute o `a630_gmu.bin` no cabeçalho git-ignored `shim/fw_a630_gmu.h`). Imagem pronta:
+  `out/boot-m10.img` (sha `f66a548e…`, com o firmware embutido). Compila sem avisos, 0 relocações absolutas.
+  Etapa 1 (leitura), 2 (liga CX + relógios do GMU a 200 MHz + testa a memória do GMU), 3 (firmware do GMU → `0xBABEFACE`).
+
+## 7. Próxima ida ao aparelho (uma gravação, uma foto)
+
+1. Celular no TWRP no cabo. `tools/flash-twrp.sh out/boot-m10.img` (dd + leitura de volta; o shim M10 vai para a
+   partição boot). **Isto substitui o `boot-ios17` (0101) na boot**; para voltar ao iOS depois, gravar `out/boot-ios17.img`.
+2. O shim mostra na tela as etapas 1→3 e para na primeira que falhar; fica 60 s e reinicia. **Tirar uma foto da tela.**
+   O que esperar na foto: "gmu fw_init_result 0xBABEFACE" e "O FIRMWARE DO GMU RODA" = fundação pronta → escrevo a M11
+   (SMMU/GX). Se parar antes, a última linha "PASSO" diz onde (ex.: "CX GDSC não liga", "ITCM não guarda o firmware").
+3. Depois da foto: `tools/flash-twrp.sh out/boot-ios17.img` volta ao iOS.
+seven@sevenzx:~/ios-s9$ grep -RInE \
+  'M12|PAS 13|pas.*13|SCM|TrustZone|zap|CP_ME_INIT|SQE|H2F_MSG_CORE_FW_START' \
+  s9 xnu 2>/dev/null | head -250
+s9/ESTUDO-2026-10-24.md:427:| **B. Alto-falante pelo ADSP** | ligar o ADSP (carga autenticada pelo TrustZone, chamadas PAS), SMEM + GLINK, QRTR + QMI (pd-mapper), APR + AFE/ADM/ASM mínimos, SMMU para o ADSP ler nossos buffers, MAX98512 por I²C, um driver no kernel e o plug-in do caminho A apontando para ele | 8-15 mil linhas novas (no Linux, esses pedaços somam ~66 mil: `q6afe.c` 7,6 mil, `q6asm.c` 9,9 mil, `glink.c` 6,4 mil, `arm-smmu.c` 5,9 mil, `max98512.c` 3 mil...); 20-40 idas ao aparelho | médio: falha do ADSP derruba o celular (watchdog), não estraga nada; sem a proteção do alto-falante (o DSM da Maxim roda **dentro** do ADSP, com calibração da fábrica) o volume tem que ficar baixo | som de verdade no alto-falante; base para microfone e fone depois |
+s9/PROMPT-sessao-2026-10-25-gpu.md:23:  no ADT (`/sweet-gpu`, `tools/adt-gpufw.py`, `tools/zap-split.py`, boot-arg `sweetgpu=8`), payload GL no branch
+s9/PROMPT-sessao-2026-10-25-gpu.md:91:   `ipsw`). **Zap shader:** o TrustZone do S9 é da Samsung, então use o `a630_zap` do próprio S9 (está no
+s9/PROMPT-sessao-2026-10-25-gpu.md:92:   `NON-HLOS.bin` do BL do firmware oficial: `image/a630_zap.mdt` + `.bNN`), não o da Xiaomi. `a630_sqe.fw` e
+s9/PROMPT-sessao-2026-10-25-gpu.md:95:1. Estudar no Bergamota: os patches de kernel da GPU (bring-up do GMU, SQE, zap via SCM/PAS, SMMU da GPU, a
+s9/PROMPT-sessao-2026-10-25-gpu.md:99:   SQE carregado, zap aceito pelo TZ, um comando simples executado.
+s9/shim/m10-post-gmu-working.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+s9/shim/m10-post-gmu-working.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+s9/shim/m11-before-ack-fallback.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11-before-smmu-probe.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11-hfi-response-before.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11-before-reorder.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11-hfi-before-instrumentation.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m10.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+s9/shim/m10.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+s9/shim/m11-before-v1-hfi-fix.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11-before-hfi-layout-fix.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11-m11a.c:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m11.c.before-pa-fix:22: * (M12), isolated because powering GX is the step that can reset the SoC.
+s9/shim/m10-before-post-gmu-smmu.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+s9/shim/m10-before-post-gmu-smmu.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+s9/NOTES.md:267:1. **Zap da Samsung extraído** do `BL/NON-HLOS.bin` oficial (`image/a630_zap.mdt`+`.b00/.b01/.b02`, ELF32, 1 segmento
+s9/NOTES.md:268:   de código relocável) → `research/gpu-fw/` (fora do git). O zap assinado por aparelho era o maior desconhecido dos
+s9/NOTES.md:276:0x5090000, GCC 0x100000, PDC 0xb200000, SMMU da GPU 0x5040000 (nossa, não emulada pelo hyp), zap PAS 13 região
+s9/NOTES.md:280:A GMU (energia+relógios+firmware → `0xBABEFACE`) · B SMMU+GX+HFI · C zap+CP (NOP) — **tudo no shim** (hardware
+s9/NOTES.md:305:do GMU2HOST_INTR, sem IRQ) → versão do firmware. GX/CP ficam para a etapa C (M12), isoladas porque ligar a GX é o
+s9/NOTES.md:308:Depois: etapa C (zap da Samsung já extraído + CP).
+s9/ESTUDO-2026-10-25-gpu.md:30:**Bergamota, xnu-11215 / iOS 18** [H]: etapa 8 passou (zap aceito pelo TrustZone, CP executou NOP + MEM_WRITE pela SMMU,
+s9/ESTUDO-2026-10-25-gpu.md:67:`qcom,kgsl-hyp` PAS 13, região `0x8c415000` +0x2000 (fora da RAM do nosso XNU, que começa em 0xa6000000). cmd-db em
+s9/ESTUDO-2026-10-25-gpu.md:71:**Firmware:** o zap da Samsung está no `NON-HLOS.bin` do BL oficial: `image/a630_zap.mdt` (6.684 B = cabeçalho ELF
+s9/ESTUDO-2026-10-25-gpu.md:73:Extraído para `s9port/research/gpu-fw/` (fora do git). GMU e SQE: linux-firmware (`a630_gmu.bin` 32 KB, o kernel do
+s9/ESTUDO-2026-10-25-gpu.md:82:init do CP (UCHE, VBIF, endereçamento 64 bits, proteção, SQE, anel) → zap pelo TrustZone (PAS 13; o Linux do S9
+s9/ESTUDO-2026-10-25-gpu.md:83:vota antes a banda do motor de cripto) → `CP_ME_INIT` → sai do modo seguro. Chamada SMC: `0x42000000 | svc<<8 | cmd`,
+s9/ESTUDO-2026-10-25-gpu.md:103:| **A** | **GMU: energia + relógios + firmware do GMU → `0xBABEFACE`** | shim M10 (feito) | baixo: sem GX/zap/CP; hang = watchdog | o processador de energia da GPU roda |
+s9/ESTUDO-2026-10-25-gpu.md:105:| C | zap pelo TrustZone (PAS 13, o `a630_zap` **da Samsung** já extraído), CP (SQE, anel, `CP_ME_INIT`), sai do modo seguro, NOP+MEM_WRITE | shim M12 | médio: TrustZone/modo seguro | CP executa um comando e escreve na RAM |
+s9/ESTUDO-2026-10-25-gpu.md:117:- **Zap da Samsung extraído** do `BL/NON-HLOS.bin` → `s9port/research/gpu-fw/a630_zap.{mdt,b00,b01,b02}` (fora do git):
+xnu/patches/0004-sweet-machine-config.patch:71:+	 * sweet: TrustZone owns GIC Group 0, so the timer and IPIs that other
+xnu/patches/0004-sweet-machine-config.patch:144:+	 * Real hardware with two security states: Group 0 is TrustZone's and
+xnu/patches/0004-sweet-machine-config.patch:229:+ * SecurityExtn=1): Group 0 belongs to TrustZone, so every interrupt,
+seven@sevenzx:~/ios-s9$ grep -nE \
+  'GMU_HFI|GMU_MEM|GMU_DUMP|H2F_MSG|CORE_FW|SQE|ZAP|SMMU|GPU_BASE' \
+  s9/shim/m11.c | head -200
+3: * GPU's own SMMU and get it talking to us over its message channel (HFI).
+5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+8: * GPU's SMMU (a memory translator, like a CPU's MMU but for the GPU block). So
+9: * the SMMU must be programmed and the queue table told to the GMU (HFI_QTBL_ADDR)
+11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+15: * both reference projects programmed this SMMU directly. The S9's hypervisor may
+17: * 3 READS the SMMU first (layout, and what the boot loader/hyp left) and stage 4
+27: * live device tree; the SMMU programming follows the smmu-v2 order of Linux
+50:#define SMMU_BASE		0x05040000UL
+51:#define SMMU_SIZE		0x10000UL
+87:#define GMU_HFI_SFR_ADDR	0x1F982
+88:#define GMU_HFI_MMAP_ADDR	0x1F983
+89:#define GMU_HFI_QTBL_INFO	0x1F984
+90:#define GMU_HFI_QTBL_ADDR	0x1F985
+91:#define GMU_HFI_CTRL_INIT	0x1F986
+92:#define GMU_HFI_CTRL_STATUS	0x1F980
+93:#define GMU_HFI_VERSION_INFO	0x1F981
+137:/* ---- GPU SMMU (arm,smmu-kgsl@5040000, qcom,smmu-v2) ------------------------------------------------- */
+139:#define SMMU_SCR0		0x000
+140:#define SMMU_IDR0		0x020		/* [7:0] stream match registers */
+141:#define SMMU_IDR1		0x024		/* bit31 64K pages, [30:28] log2(pages)-1, [7:0] contexts */
+142:#define SMMU_IDR2		0x028
+143:#define SMMU_SGFSR		0x048
+144:#define SMMU_SMR(n)		(0x800 + 4 * (n))	/* bit31 valid, [30:16] mask, [14:0] stream */
+145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+146:#define SMMU_CBAR(n)		(4 * (n))		/* second page */
+147:#define SMMU_CBA2R(n)		(0x800 + 4 * (n))	/* second page */
+148:#define SMMU_CB_SCTLR		0x00
+149:#define SMMU_CB_TCR2		0x10
+150:#define SMMU_CB_TTBR0		0x20
+151:#define SMMU_CB_TTBR1		0x28
+152:#define SMMU_CB_TCR		0x30
+153:#define SMMU_CB_MAIR0		0x38
+154:#define SMMU_CB_MAIR1		0x3c
+155:#define SMMU_CB_FSR		0x58
+156:#define SMMU_CB_FAR		0x60
+157:#define SMMU_CB_FSYNR0		0x68
+158:#define SMMU_CB_TLBIALL		0x618
+159:#define SMMU_CB_TLBSYNC		0x7f0
+160:#define SMMU_CB_TLBSTATUS	0x7f4
+162:#define SMMU_SMR_VALID		(1u << 31)
+163:#define SMMU_S2CR_FAULT		(2u << 16)
+164:#define SMMU_CBAR_STAGE_1	((1u << 16) | (3u << 8) | (0xfu << 12))	/* type S1, weakest defaults */
+165:#define SMMU_CBA2R_64BIT	1u
+166:#define SMMU_CB_SCTLR_ON	((1u << 0) | (1u << 1) | (1u << 2) | (1u << 5) | (1u << 12)) /* on, faults recorded, no irq */
+167:#define SMMU_TCR_39BITS		(25u | (1u << 8) | (1u << 10) | (3u << 12) | (1u << 23))
+168:#define SMMU_TCR2_VAL		(1u | (1u << 4) | (7u << 15))	/* 36-bit PA, 16-bit ASID */
+169:#define SMMU_MAIR0_VAL		0xf404ff44u	/* 0 uncached, 1 cached, 2 device */
+170:#define SMMU_FSR_ALL		0xc00001feu
+172:/* Page tables for the GMU's SMMU context (3-level, 4K pages, MMU off so PA = address). */
+182:#define GMU_HFI_ADDR		0x60000000u
+183:#define GMU_DUMP_ADDR		0x60100000u
+184:#define GMU_MEM_SIZE		0x4000u		/* 16 KiB each */
+193:#define H2F_MSG_INIT		0
+194:#define H2F_MSG_FW_VER		1
+204:static uint8_t gmu_hfi_mem[GMU_MEM_SIZE] __attribute__((aligned(4096)));
+205:static uint8_t gmu_dump_mem[GMU_MEM_SIZE] __attribute__((aligned(4096)));
+303:/* ---- stage 2: read the SMMU as the boot loader / hypervisor left it --------------------------------- */
+310:	step("2 le a SMMU da GPU (0x5040000)");
+312:	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+316:	idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+324:	step("2c antes SCR0"); showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+325:	step("2d antes SGFSR"); showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+333:	if (2 * smmu_pages * smmu_page != SMMU_SIZE) {
+338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+339:	step("2e antes SMR0"); showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+340:	step("2f antes S2CR0"); showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+341:	step("2g antes CB0 SCTLR"); showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+344:/* ---- stage 3: page tables + the GMU's SMMU context -------------------------------------------------- */
+395:	for (uint32_t off = 0; off < GMU_MEM_SIZE; off += 4096)
+396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+401:	dsb();	/* the SMMU reads the tables from memory (Device: no cache to flush) */
+403:	step("3b programa o contexto da SMMU (SID 4/5 -> CB0)");
+407:	wr32(SMMU_BASE + SMMU_SCR0, rd32(SMMU_BASE + SMMU_SCR0) & ~(1u << 0));	/* CLIENTPD=0 */
+409:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, 0);
+410:	wr32(SMMU_BASE + smmu_page + SMMU_CBA2R(cb), SMMU_CBA2R_64BIT);
+411:	wr32(SMMU_BASE + smmu_page + SMMU_CBAR(cb), SMMU_CBAR_STAGE_1);
+412:	wr32(SMMU_BASE + SMMU_CB_TCR2 + ctx, SMMU_TCR2_VAL);
+413:	wr32(SMMU_BASE + SMMU_CB_TCR + ctx, SMMU_TCR_39BITS);
+414:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + ctx, (uint32_t)ttbr);
+415:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + 4 + ctx, (uint32_t)(ttbr >> 32));
+416:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + ctx, 0);
+417:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + 4 + ctx, 0);
+418:	wr32(SMMU_BASE + SMMU_CB_MAIR0 + ctx, SMMU_MAIR0_VAL);
+419:	wr32(SMMU_BASE + SMMU_CB_MAIR1 + ctx, 0);
+420:	wr32(SMMU_BASE + SMMU_CB_FSR + ctx, SMMU_FSR_ALL);
+421:	wr32(SMMU_BASE + SMMU_CB_TLBIALL + ctx, 0);
+422:	wr32(SMMU_BASE + SMMU_CB_TLBSYNC + ctx, 0);
+423:	for (int i = 0; i < 100 && (rd32(SMMU_BASE + SMMU_CB_TLBSTATUS + ctx) & 1); i++)
+425:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, SMMU_CB_SCTLR_ON);
+427:	wr32(SMMU_BASE + SMMU_S2CR(0), cb);
+428:	wr32(SMMU_BASE + SMMU_SMR(0), SMMU_SMR_VALID | GMU_STREAM_KERNEL);
+429:	wr32(SMMU_BASE + SMMU_S2CR(1), cb);
+430:	wr32(SMMU_BASE + SMMU_SMR(1), SMMU_SMR_VALID | GMU_STREAM_USER);
+434:	showhex("cb0 sctlr<-", rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx));
+435:	showhex("cb0 ttbr0 lo", rd32(SMMU_BASE + SMMU_CB_TTBR0 + ctx));
+436:	showhex("cbar0<-", rd32(SMMU_BASE + smmu_page + SMMU_CBAR(cb)));
+437:	showhex("smr0<-", rd32(SMMU_BASE + SMMU_SMR(0)));
+438:	showhex("s2cr0<-", rd32(SMMU_BASE + SMMU_S2CR(0)));
+439:	if (!(rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx) & 1) ||
+440:	    (rd32(SMMU_BASE + SMMU_SMR(0)) != (SMMU_SMR_VALID | GMU_STREAM_KERNEL))) {
+441:		con_str("3", "o hypervisor NAO deixou programar a SMMU (ver <- acima)");
+444:	con_str("3", "SMMU programada e confirmada (o hyp deixou)");
+451:	uint32_t fsr = rd32(SMMU_BASE + SMMU_CB_FSR + ctx);
+453:	if ((fsr & SMMU_FSR_ALL) == 0)
+455:	showhex("SMMU RECUSOU fsr", fsr);
+456:	showhex("  far lo", rd32(SMMU_BASE + SMMU_CB_FAR + ctx));
+495:	zero(gmu_hfi_mem, GMU_MEM_SIZE);
+509:			h[QH_START] = GMU_HFI_ADDR + HFI_QUEUE_OFFSET(i);
+688:	wr32(GMU(GMU_HFI_QTBL_ADDR), 0);
+689:	wr32(GMU(GMU_HFI_QTBL_INFO), 0);
+691:	wr32(GMU(GMU_HFI_SFR_ADDR), GMU_CHIPID);
+711:	con_str("3", "GMU rodando (0xBABEFACE), pronto para a SMMU");
+742:	wr32(GMU(GMU_HFI_QTBL_ADDR), GMU_HFI_ADDR);
+743:	wr32(GMU(GMU_HFI_QTBL_INFO), 1);
+745:	wr32(GMU(GMU_HFI_SFR_ADDR), GMU_CHIPID);
+765:	con_str("4", "GMU rodando (0xBABEFACE), agora com a SMMU");
+777:	wr32(GMU(GMU_HFI_CTRL_INIT), 1);
+782:			if (rd32(GMU(GMU_HFI_CTRL_STATUS)) & 1)
+787:		showhex("hfi_ctrl_status", rd32(GMU(GMU_HFI_CTRL_STATUS)));
+788:		showhex("hfi version_info", rd32(GMU(GMU_HFI_VERSION_INFO)));
+796:	step("5b manda H2F_MSG_INIT");
+800:	msg[2] = GMU_DUMP_ADDR;
+801:	msg[3] = GMU_MEM_SIZE;
+803:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+809:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+820:	con_title("SHIM M11: SMMU + HFI DA ADRENO 630");
+seven@sevenzx:~/ios-s9$ 
