@@ -1,0 +1,302 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+zstd -d -f \
+  /usr/lib/firmware/qcom/a630_sqe.fw.zst \
+  -o research/gpu-fw/a630_sqe.fw
+/usr/lib/firmware/qcom/a630_sqe.fw.zst: 34188 bytes                            
+seven@sevenzx:~/ios-s9$ ls -lh research/gpu-fw/a630_sqe.fw
+file research/gpu-fw/a630_sqe.fw
+sha256sum research/gpu-fw/a630_sqe.fw
+xxd -l 64 research/gpu-fw/a630_sqe.fw
+-rw-r--r-- 1 seven seven 34K Jun 25 09:48 research/gpu-fw/a630_sqe.fw
+research/gpu-fw/a630_sqe.fw: data
+1c21b527d9183487cc550dabbb3f43e555df5a977a461934fc61f0635a9aa90c  research/gpu-fw/a630_sqe.fw
+00000000: 0000 0000 07e2 6e01 e220 0001 0000 0001  ......n.. ......
+00000010: 0100 0288 8000 02a8 c108 0388 0200 0288  ................
+00000020: 2600 02a8 2700 03a8 0650 1e98 0650 5e99  &...'....P...P^.
+00000030: 0a00 40c1 2c00 058a 2c00 a530 c208 0488  ..@.,...,..0....
+seven@sevenzx:~/ios-s9$ readelf -h research/gpu-fw/a630_zap.mbn 2>&1 || true
+readelf -S research/gpu-fw/a630_zap.mbn 2>&1 || true
+
+strings -a research/gpu-fw/a630_zap.mbn | head -30
+strings -a research/gpu-fw/a630_sqe.fw | head -30
+Cabeçalho ELF:
+  Mágico:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Classe: ELF32
+  Dados: complemento de 2, little endian
+  Versão:                            1 (actual)
+  OS/ABI:                            UNIX - System V
+  Versão ABI: 0
+  Tipo: EXEC (Arquivo executável)
+  Máquina: QUALCOMM DSP6 Processor
+  Versão: 0x1
+  Endereço do ponto de entrada:               0x5000
+  Início dos cabeçalhos de programa:          52 (bytes dentro do arquivo)
+  Princípio do cabeçalho da seção:          0 (bytes dentro do arquivo)
+  Sinalizações: 0x3
+  Tamanho deste cabeçalho:           52 (bytes)
+  Tamanho dos cabeçalhos do programa:32 (bytes)
+  Nº de cabeçalhos do programa:      3
+  Tamanho dos cabeçalhos de secção:  0 (bytes)
+  Nº dos cabeçalhos de secção:       0
+  Índice de tabela de cadeias da secção: 0
+
+Não existem seções neste arquivo.
+_jL(
+Npy[
+e{,:
+)HdBn
+	San Diego1
+CDMA Technologies1
+QUALCOMM1
+QPSA F4 TEST CA0
+201209124121Z
+401204124121Z0
+SecTools Test User1
+	San Diego1
+SecTools1
+California1"0 
+01 0000000000000014 SW_ID1"0 
+02 0000000000000000 HW_ID1
+04 0000 OEM_ID1
+05 00000088 SW_SIZE1
+06 0000 MODEL_ID1
+07 0001 SHA2561"0 
+03 0000000000000002 DEBUG0
+WQN 
+kyAQ
+s"PC
+,'b?[
+>0<0
+EkfA&
+tzi4
+2SAI 
+w*m\3
+J($	
+cE)1
+B0E<
+=B(%
+=c(e
+UUB0
+UUB0
+0c0%
+UUB0+
+1JU	
+UUB0
+	c0P
+	c0`
+	c0(
+9))$
+QUc0
+	c0P
+	c0`
+pwJ1
+pw)1pw)9$
+pw)1pw)9$
+@c0%
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+grep -RInE \
+  'CORE_FW_START|sqe|zap|shader|CP_INIT|microcode|firmware' \
+  s9 xnu 2>/dev/null | head -200
+s9/ESTUDO-2026-10-24.md:400:O firmware do ADSP está à mão **[C]**: `image/adsp.mdt` + `adsp.b00`-`b16` (~16 MB) na imagem **modem**
+s9/ESTUDO-2026-10-24.md:401:(`modem.bin` do CP do firmware oficial; no aparelho, a partição modem). É relocável (bit 27 nas flags dos segmentos)
+s9/ESTUDO-2026-10-24.md:430:| **E. Bluetooth** | chip WCN3990 (firmware pelo modem) + o bluetoothd do iOS espera chip Apple/Broadcom | muito grande | alto | fones Bluetooth |
+s9/PROMPT-sessao-2026-10-25-gpu.md:22:  arm64e → arm64). No README: GPU "working on" (OpenGL ES sobre Mesa freedreno, depois Metal), firmware da GPU entra
+s9/PROMPT-sessao-2026-10-25-gpu.md:23:  no ADT (`/sweet-gpu`, `tools/adt-gpufw.py`, `tools/zap-split.py`, boot-arg `sweetgpu=8`), payload GL no branch
+s9/PROMPT-sessao-2026-10-25-gpu.md:91:   `ipsw`). **Zap shader:** o TrustZone do S9 é da Samsung, então use o `a630_zap` do próprio S9 (está no
+s9/PROMPT-sessao-2026-10-25-gpu.md:92:   `NON-HLOS.bin` do BL do firmware oficial: `image/a630_zap.mdt` + `.bNN`), não o da Xiaomi. `a630_sqe.fw` e
+s9/PROMPT-sessao-2026-10-25-gpu.md:93:   `a630_gmu.bin` vêm do linux-firmware. Reguladores/clocks da GPU: conferir no DT do nosso aparelho
+s9/PROMPT-sessao-2026-10-25-gpu.md:95:1. Estudar no Bergamota: os patches de kernel da GPU (bring-up do GMU, SQE, zap via SCM/PAS, SMMU da GPU, a
+s9/PROMPT-sessao-2026-10-25-gpu.md:99:   SQE carregado, zap aceito pelo TZ, um comando simples executado.
+s9/shim/m10-post-gmu-working.c:3: * point where its own firmware runs (0xBABEFACE). This is the FOUNDATION of
+s9/shim/m10-post-gmu-working.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+s9/shim/m10-post-gmu-working.c:23: *   3  load the GMU's firmware (fw/a630_gmu.bin) into its code memory through
+s9/shim/m10-post-gmu-working.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+s9/shim/m10-post-gmu-working.c:50:#define ADRENO_MAX_STAGE	3	/* this milestone: through "the GMU's firmware runs" */
+s9/shim/m10-post-gmu-working.c:299:		con_str("2", "o firmware do GMU ja roda: nao mexo na memoria");
+s9/shim/m10-post-gmu-working.c:317:	    "A MEMORIA DO GMU ACEITA O QUE SE ESCREVE: pronto p/ firmware" :
+s9/shim/m10-post-gmu-working.c:321:/* ---- stage 3: the RSC/PDC power sequencer and the GMU firmware --------------------------------------- */
+s9/shim/m10-post-gmu-working.c:391:	stage = "3 firmware";
+s9/shim/m10-post-gmu-working.c:392:	step("3 firmware do GMU");
+s9/shim/m10-post-gmu-working.c:399:	stage = "3 firmware";
+s9/shim/m10-post-gmu-working.c:402:		con_str("3", "o firmware do GMU ja roda");
+s9/shim/m10-post-gmu-working.c:407:	step("3b carrega o firmware no ITCM");
+s9/shim/m10-post-gmu-working.c:420:		con_str("3", "o ITCM nao guarda o firmware: parando");
+s9/shim/m10-post-gmu-working.c:451:	    "o firmware do GMU nao subiu (ver fw_init_result acima)");
+s9/shim/m11-before-ack-fallback.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-before-ack-fallback.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-before-ack-fallback.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-before-ack-fallback.c:486:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-before-ack-fallback.c:659:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-before-ack-fallback.c:666:	stage = "3 firmware GMU";
+s9/shim/m11-before-ack-fallback.c:667:	step("3a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-ack-fallback.c:680:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-ack-fallback.c:720:	stage = "4 firmware+boot";
+s9/shim/m11-before-ack-fallback.c:721:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-ack-fallback.c:734:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-ack-fallback.c:806:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-before-ack-fallback.c:839:		stage = "firmware";
+s9/shim/m11-before-ack-fallback.c:840:		step("firmware do GMU");
+s9/shim/m11-before-smmu-probe.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-before-smmu-probe.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-before-smmu-probe.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-before-smmu-probe.c:475:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-before-smmu-probe.c:529:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-before-smmu-probe.c:621:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-before-smmu-probe.c:628:	stage = "4 firmware+boot";
+s9/shim/m11-before-smmu-probe.c:629:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-smmu-probe.c:642:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-smmu-probe.c:714:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-before-smmu-probe.c:744:		stage = "firmware";
+s9/shim/m11-before-smmu-probe.c:745:		step("firmware do GMU");
+s9/shim/m11-hfi-response-before.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-hfi-response-before.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-hfi-response-before.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-hfi-response-before.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-hfi-response-before.c:534:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-hfi-response-before.c:634:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-hfi-response-before.c:641:	stage = "3 firmware GMU";
+s9/shim/m11-hfi-response-before.c:642:	step("3a RSC/PDC + firmware no ITCM");
+s9/shim/m11-hfi-response-before.c:655:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-hfi-response-before.c:695:	stage = "4 firmware+boot";
+s9/shim/m11-hfi-response-before.c:696:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-hfi-response-before.c:709:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-hfi-response-before.c:781:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-hfi-response-before.c:814:		stage = "firmware";
+s9/shim/m11-hfi-response-before.c:815:		step("firmware do GMU");
+s9/shim/m11-before-reorder.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-before-reorder.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-before-reorder.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-before-reorder.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-before-reorder.c:534:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-before-reorder.c:626:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-before-reorder.c:633:	stage = "4 firmware+boot";
+s9/shim/m11-before-reorder.c:634:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-reorder.c:647:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-reorder.c:719:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-before-reorder.c:749:		stage = "firmware";
+s9/shim/m11-before-reorder.c:750:		step("firmware do GMU");
+s9/shim/m11-hfi-before-instrumentation.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-hfi-before-instrumentation.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-hfi-before-instrumentation.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-hfi-before-instrumentation.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-hfi-before-instrumentation.c:534:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-hfi-before-instrumentation.c:626:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-hfi-before-instrumentation.c:633:	stage = "3 firmware GMU";
+s9/shim/m11-hfi-before-instrumentation.c:634:	step("3a RSC/PDC + firmware no ITCM");
+s9/shim/m11-hfi-before-instrumentation.c:647:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-hfi-before-instrumentation.c:687:	stage = "4 firmware+boot";
+s9/shim/m11-hfi-before-instrumentation.c:688:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-hfi-before-instrumentation.c:701:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-hfi-before-instrumentation.c:773:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-hfi-before-instrumentation.c:806:		stage = "firmware";
+s9/shim/m11-hfi-before-instrumentation.c:807:		step("firmware do GMU");
+s9/shim/m5.c:8: *   2. Bus: SE11 runs its I2C firmware GSI-only, and GSI DMA needs the apps
+s9/shim/m10.c:3: * point where its own firmware runs (0xBABEFACE). This is the FOUNDATION of
+s9/shim/m10.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+s9/shim/m10.c:23: *   3  load the GMU's firmware (fw/a630_gmu.bin) into its code memory through
+s9/shim/m10.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+s9/shim/m10.c:50:#define ADRENO_MAX_STAGE	3	/* this milestone: through "the GMU's firmware runs" */
+s9/shim/m10.c:299:		con_str("2", "o firmware do GMU ja roda: nao mexo na memoria");
+s9/shim/m10.c:317:	    "A MEMORIA DO GMU ACEITA O QUE SE ESCREVE: pronto p/ firmware" :
+s9/shim/m10.c:321:/* ---- stage 3: the RSC/PDC power sequencer and the GMU firmware --------------------------------------- */
+s9/shim/m10.c:391:	stage = "3 firmware";
+s9/shim/m10.c:392:	step("3 firmware do GMU");
+s9/shim/m10.c:399:	stage = "3 firmware";
+s9/shim/m10.c:402:		con_str("3", "o firmware do GMU ja roda");
+s9/shim/m10.c:407:	step("3b carrega o firmware no ITCM");
+s9/shim/m10.c:420:		con_str("3", "o ITCM nao guarda o firmware: parando");
+s9/shim/m10.c:451:	    "o firmware do GMU nao subiu (ver fw_init_result acima)");
+s9/shim/m11-before-v1-hfi-fix.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-before-v1-hfi-fix.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-before-v1-hfi-fix.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-before-v1-hfi-fix.c:483:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-before-v1-hfi-fix.c:545:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-before-v1-hfi-fix.c:645:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-before-v1-hfi-fix.c:652:	stage = "3 firmware GMU";
+s9/shim/m11-before-v1-hfi-fix.c:653:	step("3a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-v1-hfi-fix.c:666:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-v1-hfi-fix.c:706:	stage = "4 firmware+boot";
+s9/shim/m11-before-v1-hfi-fix.c:707:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-v1-hfi-fix.c:720:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-v1-hfi-fix.c:792:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-before-v1-hfi-fix.c:825:		stage = "firmware";
+s9/shim/m11-before-v1-hfi-fix.c:826:		step("firmware do GMU");
+s9/shim/m6.c:8: *     frequency table (FREQ_REG, 40 rows of 32 bytes) and the OSM firmware
+s9/shim/plat.c:47:	return f ? f : 19200000;	/* Qualcomm's 19.2 MHz if firmware left it 0 */
+s9/shim/m11-before-hfi-layout-fix.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-before-hfi-layout-fix.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-before-hfi-layout-fix.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-before-hfi-layout-fix.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-before-hfi-layout-fix.c:542:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-before-hfi-layout-fix.c:642:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-before-hfi-layout-fix.c:649:	stage = "3 firmware GMU";
+s9/shim/m11-before-hfi-layout-fix.c:650:	step("3a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-hfi-layout-fix.c:663:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-hfi-layout-fix.c:703:	stage = "4 firmware+boot";
+s9/shim/m11-before-hfi-layout-fix.c:704:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-before-hfi-layout-fix.c:717:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-before-hfi-layout-fix.c:789:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-before-hfi-layout-fix.c:822:		stage = "firmware";
+s9/shim/m11-before-hfi-layout-fix.c:823:		step("firmware do GMU");
+s9/shim/m11.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11.c:486:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11.c:659:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11.c:666:	stage = "3 firmware GMU";
+s9/shim/m11.c:667:	step("3a RSC/PDC + firmware no ITCM");
+s9/shim/m11.c:680:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11.c:720:	stage = "4 firmware+boot";
+s9/shim/m11.c:721:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11.c:734:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11.c:806:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11.c:839:		stage = "firmware";
+s9/shim/m11.c:840:		step("firmware do GMU");
+s9/shim/m1.c:69:	return f ? f : 19200000;	/* Qualcomm's 19.2 MHz if firmware left it 0 */
+s9/shim/m11-m11a.c:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11-m11a.c:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11-m11a.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11-m11a.c:475:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11-m11a.c:529:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11-m11a.c:621:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11-m11a.c:628:	stage = "4 firmware+boot";
+s9/shim/m11-m11a.c:629:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11-m11a.c:642:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11-m11a.c:714:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11-m11a.c:744:		stage = "firmware";
+s9/shim/m11-m11a.c:745:		step("firmware do GMU");
+s9/shim/m11.c.before-pa-fix:5: * M10 proved the GMU's firmware boots (0xBABEFACE) with no SMMU: the boot does
+s9/shim/m11.c.before-pa-fix:11: * firmware + boot, now with the SMMU in place, and then sends the GMU two
+s9/shim/m11.c.before-pa-fix:12: * messages (INIT, FW_VER) and reads back its firmware version.
+s9/shim/m11.c.before-pa-fix:475:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+s9/shim/m11.c.before-pa-fix:529:			hfi_payload0 = m[3];	/* payload[0], e.g. the firmware version */
+s9/shim/m11.c.before-pa-fix:621:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+s9/shim/m11.c.before-pa-fix:628:	stage = "4 firmware+boot";
+s9/shim/m11.c.before-pa-fix:629:	step("4a RSC/PDC + firmware no ITCM");
+s9/shim/m11.c.before-pa-fix:642:		con_str("4", "ITCM nao guarda o firmware");
+s9/shim/m11.c.before-pa-fix:714:	step("5c pede a versao do firmware (FW_VER)");
+s9/shim/m11.c.before-pa-fix:744:		stage = "firmware";
+s9/shim/m11.c.before-pa-fix:745:		step("firmware do GMU");
+s9/shim/m10-before-post-gmu-smmu.c:3: * point where its own firmware runs (0xBABEFACE). This is the FOUNDATION of
+s9/shim/m10-before-post-gmu-smmu.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+s9/shim/m10-before-post-gmu-smmu.c:23: *   3  load the GMU's firmware (fw/a630_gmu.bin) into its code memory through
+s9/shim/m10-before-post-gmu-smmu.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+s9/shim/m10-before-post-gmu-smmu.c:50:#define ADRENO_MAX_STAGE	3	/* this milestone: through "the GMU's firmware runs" */
+s9/shim/m10-before-post-gmu-smmu.c:297:		con_str("2", "o firmware do GMU ja roda: nao mexo na memoria");
+s9/shim/m10-before-post-gmu-smmu.c:315:	    "A MEMORIA DO GMU ACEITA O QUE SE ESCREVE: pronto p/ firmware" :
+s9/shim/m10-before-post-gmu-smmu.c:319:/* ---- stage 3: the RSC/PDC power sequencer and the GMU firmware --------------------------------------- */
+s9/shim/m10-before-post-gmu-smmu.c:389:	stage = "3 firmware";
+s9/shim/m10-before-post-gmu-smmu.c:390:	step("3 firmware do GMU");
+s9/shim/m10-before-post-gmu-smmu.c:397:	stage = "3 firmware";
+s9/shim/m10-before-post-gmu-smmu.c:400:		con_str("3", "o firmware do GMU ja roda");
+s9/shim/m10-before-post-gmu-smmu.c:405:	step("3b carrega o firmware no ITCM");
+s9/shim/m10-before-post-gmu-smmu.c:418:		con_str("3", "o ITCM nao guarda o firmware: parando");
+s9/shim/m10-before-post-gmu-smmu.c:449:	    "o firmware do GMU nao subiu (ver fw_init_result acima)");
+s9/shim/m8.c:5: * carveouts (modem, hyp, IPA firmware, SPSS, the framebuffer, debug), BUT the
+s9/tools/twrp-check.sh:33:adb pull /sys/firmware/fdt "dtb/live-twrp-$stamp.dtb" >/dev/null && echo "   DTB vivo em dtb/live-twrp-$stamp.dtb"
+s9/tools/mkadt.py:4:Every S9 address comes from its live FDT (TWRP /sys/firmware/fdt) and the shim
+s9/tools/mkadt.py:110:        ('firmware-version', cstr('sweet-shim')),
+s9/tools/mkadt.py:111:        ('system-firmware-version', cstr('sweet-shim')),
+seven@sevenzx:~/ios-s9$
