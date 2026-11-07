@@ -1,0 +1,91 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+grep -RInE \
+  'gmu_major|gmu_minor|GMU_VERSION|FW_VERSION|H2F_MSG_FW_VER|supported_ver' \
+  shim research | head -160
+shim/m11-before-ack-fallback.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-ack-fallback.c:808:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-ack-fallback.c:809:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-smmu-probe.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-smmu-probe.c:716:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-smmu-probe.c:717:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-hfi-response-before.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-hfi-response-before.c:783:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-hfi-response-before.c:784:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-reorder.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-reorder.c:721:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-reorder.c:722:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-hfi-before-instrumentation.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-hfi-before-instrumentation.c:775:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-hfi-before-instrumentation.c:776:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-pas-metadata-stage.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-pas-metadata-stage.c:815:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-pas-metadata-stage.c:816:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-v1-hfi-fix.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-v1-hfi-fix.c:794:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-v1-hfi-fix.c:795:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-fwver-ack-type2.c:195:#define H2F_MSG_FW_VER		1
+shim/m11-before-fwver-ack-type2.c:869:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-fwver-ack-type2.c:870:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-hfi-layout-fix.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-hfi-layout-fix.c:791:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-hfi-layout-fix.c:792:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11.c:196:#define H2F_MSG_FW_VER		1
+shim/m11.c:860:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11.c:861:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-fwver-fix.c:195:#define H2F_MSG_FW_VER		1
+shim/m11-before-fwver-fix.c:862:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-fwver-fix.c:863:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-m12.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-m12.c:808:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-m12.c:809:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-compact-hfi.c:195:#define H2F_MSG_FW_VER		1
+shim/m11-before-compact-hfi.c:873:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-compact-hfi.c:874:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-pas-metadata-stage-2.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-pas-metadata-stage-2.c:815:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-pas-metadata-stage-2.c:816:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-m11a.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-m11a.c:716:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-m11a.c:717:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-pas-buffers.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-pas-buffers.c:808:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-pas-buffers.c:809:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11.c.before-pa-fix:194:#define H2F_MSG_FW_VER		1
+shim/m11.c.before-pa-fix:716:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11.c.before-pa-fix:717:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+seven@sevenzx:~/ios-s9/s9$ sed -n '800,825p' shim/m11.c
+	wr32(GMU(GMU_RPMH_CTRL), 0);
+	wr32(GMU(GMU_GMU2HOST_INTR_CLR), 0xFFFFFFFFu);
+	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+	wr32(GMU(GMU_CX_GMU_WFI_CONFIG), 0);
+	dsb();
+	wr32(GMU(GMU_CM3_SYSRESET), 0);
+	dsb();
+	for (int i = 0; i < 1000 && result != GMU_BABEFACE; i++) {
+		result = rd32(GMU(GMU_CM3_FW_INIT_RESULT));
+		wdog_pet();
+		delay_ms(1);
+	}
+	showhex("gmu fw_init_result", result);
+	if (result != GMU_BABEFACE) {
+		con_str("4", "o GMU nao subiu");
+		return 0;
+	}
+	con_str("4", "GMU rodando (0xBABEFACE), agora com a SMMU");
+	return 1;
+}
+
+/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+
+static void hfi_talk(void)
+{
+	uint32_t msg[16], verdict = 0;
+seven@sevenzx:~/ios-s9/s9$ sha256sum \
+  out/boot-ios-usb2-functional.img \
+  out/boot-m11-hfi-compact.img \
+  out/boot-m11-fwver-ack-type2.img
+7606f1c2dbb218f042462252db64a0fa8024298f9735f452b0b58ee6b298ade6  out/boot-ios-usb2-functional.img
+fec8243847b30621aabe6d45187dff4a0b3e2470374fa8b1219c80e78cf98457  out/boot-m11-hfi-compact.img
+49ffdf9206737256095d313bd88c70f7e73f049a67fbfb2b13d3a4af78f9d3cf  out/boot-m11-fwver-ack-type2.img
+seven@sevenzx:~/ios-s9/s9$
