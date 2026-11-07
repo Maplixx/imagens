@@ -1,0 +1,269 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+echo '===== GPUCC ====='
+sed -n '5835,5960p' work/dt/live-twrp.dts
+
+echo '===== KGSL-IOMMU + GMU ====='
+sed -n '23230,23325p' work/dt/live-twrp.dts
+===== GPUCC =====
+			#clock-cells = <0x01>;
+			#reset-cells = <0x01>;
+			linux,phandle = <0x1f>;
+			phandle = <0x1f>;
+		};
+
+		qcom,gpucc@5090000 {
+			compatible = "qcom,gpucc-sdm845-v2", "syscon";
+			reg = <0x5090000 0x9000>;
+			reg-names = "cc_base";
+			vdd_cx-supply = <0xc5>;
+			vdd_mx-supply = <0xc7>;
+			qcom,gpu_cc_gmu_clk_src-opp-handle = <0xd7>;
+			#clock-cells = <0x01>;
+			#reset-cells = <0x01>;
+			linux,phandle = <0xe0>;
+			phandle = <0xe0>;
+		};
+
+		qcom,gfxcc@5090000 {
+			compatible = "qcom,gfxcc-sdm845-v2";
+			reg = <0x5090000 0x9000>;
+			reg-names = "cc_base";
+			vdd_gfx-supply = <0x1c>;
+			qcom,gpu_cc_gx_gfx3d_clk_src-opp-handle = <0xd8>;
+			#clock-cells = <0x01>;
+			#reset-cells = <0x01>;
+			linux,phandle = <0x1b>;
+			phandle = <0x1b>;
+		};
+
+		syscon@17970018 {
+			compatible = "syscon";
+			reg = <0x17970018 0x04>;
+			linux,phandle = <0xe1>;
+			phandle = <0xe1>;
+		};
+
+		qcom,cpucc@0x17d41000 {
+			compatible = "qcom,clk-cpu-osm-v2";
+			reg = <0x17d41000 0x1400 0x17d43000 0x1400 0x17d45800 0x1400>;
+			reg-names = "osm_l3_base", "osm_pwrcl_base", "osm_perfcl_base";
+			vdd_l3_mx_ao-supply = <0xd9>;
+			vdd_pwrcl_mx_ao-supply = <0xd9>;
+			qcom,mx-turbo-freq = <0x581e9800 0x64b54000 0xc4b20101>;
+			l3-devs = <0xc1 0xc2 0xda>;
+			clock-names = "xo_ao";
+			clocks = <0x20 0x01>;
+			#clock-cells = <0x01>;
+			linux,phandle = <0xc0>;
+			phandle = <0xc0>;
+
+			qcom,limits-dcvs@0 {
+				compatible = "qcom,msm-hw-limits";
+				interrupts = <0x00 0x20 0x04>;
+				qcom,affinity = <0x00>;
+				#thermal-sensor-cells = <0x00>;
+				linux,phandle = <0x02>;
+				phandle = <0x02>;
+			};
+
+			qcom,limits-dcvs@1 {
+				compatible = "qcom,msm-hw-limits";
+				interrupts = <0x00 0x21 0x04>;
+				qcom,affinity = <0x01>;
+				#thermal-sensor-cells = <0x00>;
+				isens_vref-supply = <0xdb>;
+				isens-vref-settings = <0xd6d80 0xd6d80 0x4e20>;
+				linux,phandle = <0x0a>;
+				phandle = <0x0a>;
+			};
+
+			qcom,wil6210 {
+				compatible = "qcom,wil6210";
+				qcom,pcie-parent = <0xdc>;
+				qcom,wigig-en = <0x2e 0x27 0x00>;
+				qcom,msm-bus,name = "wil6210";
+				qcom,msm-bus,num-cases = <0x02>;
+				qcom,msm-bus,num-paths = <0x01>;
+				qcom,msm-bus,vectors-KBps = <0x2d 0x200 0x00 0x00 0x2d 0x200 0x927c0 0xc3500>;
+				qcom,use-ext-supply;
+				vdd-supply = <0xdd>;
+				vddio-supply = <0xde>;
+				qcom,use-ext-clocks;
+				clocks = <0x20 0x0a 0x20 0x0b>;
+				clock-names = "rf_clk3_clk", "rf_clk3_pin_clk";
+				qcom,smmu-support;
+				qcom,smmu-mapping = <0x20000000 0xe0000000>;
+				qcom,smmu-s1-en;
+				qcom,smmu-fast-map;
+				qcom,smmu-coherent;
+				qcom,keep-radio-on-during-sleep;
+				status = "ok";
+				linux,phandle = <0x3c4>;
+				phandle = <0x3c4>;
+			};
+		};
+
+		qcom,cc-debug@100000 {
+			compatible = "qcom,debugcc-sdm845";
+			qcom,cc-count = <0x05>;
+			qcom,gcc = <0x21>;
+			qcom,videocc = <0xdf>;
+			qcom,camcc = <0x63>;
+			qcom,dispcc = <0x1f>;
+			qcom,gpucc = <0xe0>;
+			qcom,cpucc = <0xe1>;
+			clock-names = "xo_clk_src";
+			clocks = <0x20 0x00>;
+			#clock-cells = <0x01>;
+			linux,phandle = <0x3c5>;
+			phandle = <0x3c5>;
+		};
+
+		qcom,aopclk {
+			compatible = "qcom,aop-qmp-clk-v1";
+			#clock-cells = <0x01>;
+			mboxes = <0xb9 0x00>;
+			mbox-names = "qdss_clk";
+			linux,phandle = <0xbb>;
+			phandle = <0xbb>;
+		};
+
+		ufsice@1d90000 {
+			compatible = "qcom,ice";
+			reg = <0x1d90000 0x8000>;
+===== KGSL-IOMMU + GMU =====
+					reg = <0x07>;
+					qcom,gpu-freq = <0x00>;
+					qcom,bus-freq = <0x00>;
+					qcom,bus-min = <0x00>;
+					qcom,bus-max = <0x00>;
+				};
+			};
+		};
+
+		qcom,kgsl-iommu {
+			compatible = "qcom,kgsl-smmu-v2";
+			reg = <0x5040000 0x10000>;
+			qcom,protect = <0x40000 0xc000>;
+			qcom,micro-mmu-control = <0x6000>;
+			clocks = <0x21 0x20 0x21 0x14 0x21 0x23>;
+			clock-names = "iface_clk", "mem_clk", "mem_iface_clk";
+			qcom,secure_align_mask = <0xfff>;
+			qcom,retention;
+			qcom,hyp_secure_alloc;
+			linux,phandle = <0x51b>;
+			phandle = <0x51b>;
+
+			gfx3d_user {
+				compatible = "qcom,smmu-kgsl-cb";
+				label = "gfx3d_user";
+				iommus = <0x1f6 0x00>;
+				qcom,gpu-offset = <0x48000>;
+				linux,phandle = <0x51c>;
+				phandle = <0x51c>;
+			};
+
+			gfx3d_secure {
+				compatible = "qcom,smmu-kgsl-cb";
+				iommus = <0x1f6 0x02 0x1f6 0x01>;
+				linux,phandle = <0x51d>;
+				phandle = <0x51d>;
+			};
+		};
+
+		qcom,gmu {
+			label = "kgsl-gmu";
+			compatible = "qcom,gpu-gmu";
+			reg = <0x506a000 0x30000 0xb200000 0x300000>;
+			reg-names = "kgsl_gmu_reg", "kgsl_gmu_pdc_reg";
+			interrupts = <0x00 0x130 0x00 0x00 0x131 0x00>;
+			interrupt-names = "kgsl_hfi_irq", "kgsl_gmu_irq";
+			qcom,msm-bus,name = "cnoc";
+			qcom,msm-bus,num-cases = <0x02>;
+			qcom,msm-bus,num-paths = <0x01>;
+			qcom,msm-bus,vectors-KBps = <0x1a 0x2734 0x00 0x00 0x1a 0x2734 0x00 0x64>;
+			regulator-names = "vddcx", "vdd";
+			vddcx-supply = <0x1ee>;
+			vdd-supply = <0x320>;
+			clocks = <0xe0 0x04 0xe0 0x0a 0x21 0x14 0x21 0x23>;
+			clock-names = "gmu_clk", "cxo_clk", "axi_clk", "memnoc_clk";
+			linux,phandle = <0xd7>;
+			phandle = <0xd7>;
+
+			qcom,gmu-pwrlevels {
+				#address-cells = <0x01>;
+				#size-cells = <0x00>;
+				compatible = "qcom,gmu-pwrlevels";
+
+				qcom,gmu-pwrlevel@0 {
+					reg = <0x00>;
+					qcom,gmu-freq = <0x00>;
+				};
+
+				qcom,gmu-pwrlevel@1 {
+					reg = <0x01>;
+					qcom,gmu-freq = <0xbebc200>;
+				};
+
+				qcom,gmu-pwrlevel@2 {
+					reg = <0x02>;
+					qcom,gmu-freq = <0x1dcd6500>;
+				};
+			};
+
+			gmu_user {
+				compatible = "qcom,smmu-gmu-user-cb";
+				iommus = <0x1f6 0x04>;
+				linux,phandle = <0x51e>;
+				phandle = <0x51e>;
+			};
+
+			gmu_kernel {
+				compatible = "qcom,smmu-gmu-kernel-cb";
+				iommus = <0x1f6 0x05>;
+				linux,phandle = <0x51f>;
+				phandle = <0x51f>;
+			};
+		};
+
+		ssusb@a600000 {
+			compatible = "qcom,dwc-usb3-msm";
+seven@sevenzx:~/ios-s9$ grep -nE \
+  'gpu_cc|gpucc|kgsl-iommu|qcom,gmu|clock-names|clocks|reset-names|resets|power-domains|iommus' \
+  work/dt/live-twrp.dts | \
+  grep -E '^(584[0-9]|585[0-9]|586[0-9]|587[0-9]|588[0-9]|589[0-9]|590[0-9]|591[0-9]|592[0-9]|593[0-9]|594[0-9]|595[0-9]|596[0-9]|232[3-9][0-9]|233[0-2][0-9]):'
+5841:		qcom,gpucc@5090000 {
+5842:			compatible = "qcom,gpucc-sdm845-v2", "syscon";
+5847:			qcom,gpu_cc_gmu_clk_src-opp-handle = <0xd7>;
+5859:			qcom,gpu_cc_gx_gfx3d_clk_src-opp-handle = <0xd8>;
+5881:			clock-names = "xo_ao";
+5882:			clocks = <0x20 0x01>;
+5918:				qcom,use-ext-clocks;
+5919:				clocks = <0x20 0x0a 0x20 0x0b>;
+5920:				clock-names = "rf_clk3_clk", "rf_clk3_pin_clk";
+5940:			qcom,gpucc = <0xe0>;
+5942:			clock-names = "xo_clk_src";
+5943:			clocks = <0x20 0x00>;
+5962:			clock-names = "ufs_core_clk", "bus_clk", "iface_clk", "ice_core_clk";
+5963:			clocks = <0x21 0x84 0x21 0x82 0x21 0x83 0x21 0x86>;
+23239:		qcom,kgsl-iommu {
+23244:			clocks = <0x21 0x20 0x21 0x14 0x21 0x23>;
+23245:			clock-names = "iface_clk", "mem_clk", "mem_iface_clk";
+23255:				iommus = <0x1f6 0x00>;
+23263:				iommus = <0x1f6 0x02 0x1f6 0x01>;
+23269:		qcom,gmu {
+23283:			clocks = <0xe0 0x04 0xe0 0x0a 0x21 0x14 0x21 0x23>;
+23284:			clock-names = "gmu_clk", "cxo_clk", "axi_clk", "memnoc_clk";
+23288:			qcom,gmu-pwrlevels {
+23291:				compatible = "qcom,gmu-pwrlevels";
+23293:				qcom,gmu-pwrlevel@0 {
+23295:					qcom,gmu-freq = <0x00>;
+23298:				qcom,gmu-pwrlevel@1 {
+23300:					qcom,gmu-freq = <0xbebc200>;
+23303:				qcom,gmu-pwrlevel@2 {
+23305:					qcom,gmu-freq = <0x1dcd6500>;
+23311:				iommus = <0x1f6 0x04>;
+23318:				iommus = <0x1f6 0x05>;
+23328:			iommus = <0x28 0x740 0x00>;
+seven@sevenzx:~/ios-s9$ 
