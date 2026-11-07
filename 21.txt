@@ -1,0 +1,1896 @@
+seven@sevenzx:~/ios-s9$ mkdir -p work/dt
+
+dtc -I dtb -O dts \
+  -o work/dt/live-twrp.dts \
+  s9/dtb/live-twrp-20261103-022647.dtb
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sim_video/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sim_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sim_cmd/qcom,mdss-dsi-display-timings/timing@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sim_cmd/qcom,mdss-dsi-display-timings/timing@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sim_dsc_375_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sim_dsc_375_cmd/qcom,mdss-dsi-display-timings/timing@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_dual_sim_video/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_dual_sim_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_dual_sim_cmd/qcom,mdss-dsi-display-timings/timing@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_dual_sim_cmd/qcom,mdss-dsi-display-timings/timing@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_dual_sim_dsc_375_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_dual_sim_dsc_375_cmd/qcom,mdss-dsi-display-timings/timing@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sharp_4k_dsc_video/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sharp_4k_dsc_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt35597_wqxga_video_truly/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt35597_truly_wqxga_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt35597_dsc_cmd_truly/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt35597_dsc_video_truly/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_sharp_1080p_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dual_sharp_1080p_120hz_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt35597_wqxga_video/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt35597_wqxga_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mdss_mdp@ae00000/qcom,mdss_dsi_nt36850_truly_wqhd_cmd/qcom,mdss-dsi-display-timings/timing@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,spmi@c440000/qcom,pm8998@0/pinctrl@c000/gpio@d400: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,spmi@c440000/qcom,pm8998@0/pinctrl@c000/gpio@d000: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,spmi@c440000/qcom,pm8998@0/pinctrl@c000/gpio@c900: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,spmi@c440000/qcom,pm8998@0/pinctrl@c000/gpio@cb00: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,cpu-bwmon: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,llcc-bwmon: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,cpucc@0x17d41000/qcom,limits-dcvs@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,cpucc@0x17d41000/qcom,limits-dcvs@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,cc-debug@100000: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,mss@4080000/qcom,mba-mem@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/slim@171c0000/tavil_codec/wcd_pinctrl@5: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/ad-hoc-bus: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,lpm-levels/qcom,pm-cluster@0/qcom,pm-cpu@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,lpm-levels/qcom,pm-cluster@0/qcom,pm-cpu@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/sound-tavil: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,kgsl-iommu: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,gmu: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@3: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@4: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@5: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@6: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@7: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@8: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@9: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@10: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@11: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@12: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@13: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@14: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@15: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,dsi-display@16: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/qcom,wb-display@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/sec_smem@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/sec_thermistor@0: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/sec_thermistor@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/sec_thermistor@3: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@21: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/msm_cdc_pinctrl@64: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@20: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@18: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@22: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@17: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/cpufreq-boot-limit@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /soc/i2c@14: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /vendor: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /reserved-memory/wlan_fw_region@8df00000: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /reserved-memory/qseecom_ta_region: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /reserved-memory/pil_adsp_region: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /reserved-memory/qseecom_region: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /reserved-memory/removed_region: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /reserved-memory/camera_mem_region: node has a reg or ranges property, but no unit name
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@3: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@4: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@5: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@6: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /argos/boot_device@7: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@1: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@2: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@3: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@4: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@5: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@6: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@7: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@8: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@9: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_vs_reg): /input_booster/booster_key@10: node has a unit name, but no reg or ranges property
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/timer@0x17C90000/frame@0x17CA0000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/anoc_1_tbu@0x150c5000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/anoc_2_tbu@0x150c9000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/mnoc_hf_0_tbu@0x150cd000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/mnoc_hf_1_tbu@0x150d1000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/mnoc_sf_0_tbu@0x150d5000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/compute_dsp_tbu@0x150d9000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/adsp_tbu@0x150dd000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /soc/apps-smmu@0x15000000/anoc_1_pcie_tbu@0x150e1000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (unit_address_format): /reserved-memory/pil_mba_region@0x96500000: unit name should not have leading "0x"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_hw_param: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x16b004: simple-bus unit address format error, expected "16b004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x18d004: simple-bus unit address format error, expected "18d004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x175004: simple-bus unit address format error, expected "175004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x177004: simple-bus unit address format error, expected "177004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x10f004: simple-bus unit address format error, expected "10f004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x110004: simple-bus unit address format error, expected "110004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d030: simple-bus unit address format error, expected "17d030"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d03c: simple-bus unit address format error, expected "17d03c"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d034: simple-bus unit address format error, expected "17d034"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d038: simple-bus unit address format error, expected "17d038"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d040: simple-bus unit address format error, expected "17d040"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d048: simple-bus unit address format error, expected "17d048"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x17d044: simple-bus unit address format error, expected "17d044"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xad06004: simple-bus unit address format error, expected "ad06004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xad09004: simple-bus unit address format error, expected "ad09004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xad0a004: simple-bus unit address format error, expected "ad0a004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xad07004: simple-bus unit address format error, expected "ad07004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xad08004: simple-bus unit address format error, expected "ad08004"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xad0b134: simple-bus unit address format error, expected "ad0b134"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xaf03000: simple-bus unit address format error, expected "af03000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/syscon@0x5091540: simple-bus unit address format error, expected "5091540"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x509106c: simple-bus unit address format error, expected "509106c"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0x509100c: simple-bus unit address format error, expected "509100c"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xab00874: simple-bus unit address format error, expected "ab00874"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xab008b4: simple-bus unit address format error, expected "ab008b4"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gdsc@0xab00814: simple-bus unit address format error, expected "ab00814"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,mdss_dp_pll@c011000: simple-bus unit address format error, expected "88ea000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-rdbg-2-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_client_rdbg_2_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-rdbg-2-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_client_rdbg_2_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-rdbg-1-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_client_rdbg_1_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-rdbg-1-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_client_rdbg_1_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-rdbg-5-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_client_rdbg_5_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-rdbg-5-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_client_rdbg_5_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dp_display@0: simple-bus unit address format error, expected "ae90000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qup_uart@0x898000: simple-bus unit address format error, expected "898000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qup_uart@0x89c000: simple-bus unit address format error, expected "89c000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qup_uart@0xa84000: simple-bus unit address format error, expected "a84000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qup_uart@0xa88000: simple-bus unit address format error, expected "a88000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qup_uart@0xa90000: simple-bus unit address format error, expected "a90000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/pil_mdata_buf_dev: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/interrupt-controller@0xb220000: simple-bus unit address format error, expected "b220000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/timer: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/timer@0x17C90000: simple-bus unit address format error, expected "17c90000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/restart@10ac000: simple-bus unit address format error, expected "c264000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/aop-msg-client: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpubw: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpu-bwmon: simple-bus unit address format error, expected "1436400"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,llccbw: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,llcc-bwmon: simple-bus unit address format error, expected "114a000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,memlat-cpu0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,memlat-cpu4: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,snoc_cnoc_keepalive: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpu0-memlat-mon: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpu4-memlat-mon: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,l3-cpu0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,l3-cpu4: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpu0-l3lat-mon: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpu4-l3lat-mon: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,l3-cdsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/cpu-pmu: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,mincpubw: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/devfreq-cpufreq: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,devfreq-compute: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,rpmhclk: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cpucc@0x17d41000: simple-bus unit address format error, expected "17d41000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cc-debug@100000: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,aopclk: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,spss@1880000: simple-bus unit address format error, expected "188101c"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-rtb: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,mpm2-sleep-counter@0x0c221000: simple-bus unit address format error, expected "c221000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-cdsp-loader: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-adsprpc-mem: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm_fastrpc: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-ssc-sensors: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/cpuss_dump: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/kryo3xx-erp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/system_pm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-qos-config-adsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-spi-xprt-wdsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-fifo-config-wdsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-qos-config-wdsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-ssr-modem: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-ssr-adsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-ssr-dsps: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-ssr-cdsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink-ssr-spss: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipc_router: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipc_router_modem_xprt: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipc_router_q6_xprt: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipc_router_dsps_xprt: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipc_router_cdsp_xprt: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qsee_ipc_irq_bridge: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,spcom: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,spss_utils: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,glink_pkt: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,sps: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qbt1000: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm_hdcp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm_gsi: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,rmnet-ipa: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipa@01e00000: simple-bus unit address format error, expected "1e00000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipa_fws: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,chd_sliver: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,chd_gold: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ghd: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cmd-db@861e0000: simple-bus unit address format error, expected "c3f000c"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qmi-tmd-devices: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/thermal-zones: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/mem_dump: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gpi-dma@0x800000: simple-bus unit address format error, expected "800000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gpi-dma@0xa00000: simple-bus unit address format error, expected "a00000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/msm_tspp@0x8880000: simple-bus unit address format error, expected "88a7000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ebilvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-smpa2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-smpa3: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-smpa5: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-mxlvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-smpa7: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-cxlvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa1: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa3: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-lmxlvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa5: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa6: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa7: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa8: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa9: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa10: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa11: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa12: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa13: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa14: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa15: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa16: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa17: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa18: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa19: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa20: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa21: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa22: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa23: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa24: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa25: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa26: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-lcxlvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-ldoa28: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-vsa1: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-vsa2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-gfxlvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-msslvl: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rpmh-regulator-smpc3: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/funnel@0x6b08000: simple-bus unit address format error, expected "6b08000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/hwevent@0x014066f0: simple-bus unit address format error, expected "14066f0"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/funnel@0x6041000: simple-bus unit address format error, expected "6041000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/funnel@0x6043000: simple-bus unit address format error, expected "6043000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/funnel@0x6943000: simple-bus unit address format error, expected "6943000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/funnel_1@6845000: simple-bus unit address format error, expected "6867010"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/funnel_1@6861000: simple-bus unit address format error, expected "6867000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/turing_etm0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/dummy_sink: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/modem_etm0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/audio_etm0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/spss_etm0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/apps-smmu@0x15000000: simple-bus unit address format error, expected "15000000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/kgsl_iommu_test_device: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/apps_iommu_test_device: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/apps_iommu_coherent_test_device: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ion: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-15-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_15_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-15-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_15_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-1-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_1_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-1-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_1_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-2-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_2_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-2-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_2_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-3-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_3_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-3-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_3_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-5-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_5_in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-smp2p-5-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio_test_smp2p_5_out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-sleepstate-gpio-3-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-sleepstate-3-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-1-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-1-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-2-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-2-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-3-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-3-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-5-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ssr-smp2p-5-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ipa-1-out: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,smp2pgpio-ipa-1-in: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-req-mgr: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam_smmu: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-cdm-intf: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-isp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-icp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipe0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,ipe1: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,bps: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-jpeg: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,jpegdma@0xac52000: simple-bus unit address format error, expected "ac52000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-fd: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/ad-hoc-bus: simple-bus unit address format error, expected "16e0000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,lpm-levels: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/pinctrl@03400000: simple-bus unit address format error, expected "3400000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,pcie@0x1c00000: simple-bus unit address format error, expected "1c00000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,pcie@0x1c08000: simple-bus unit address format error, expected "1c08000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-routing: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-compr-dsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-low-latency: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-ultra-low-latency: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-dsp-noirq: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-compress-dsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-voip-dsp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-voice: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-stub-codec: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-fe: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-afe: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-q6-hdmi: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-q6-dp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-loopback: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-mi2s: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-lsm-client: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-q6: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pcm-hostless: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-pri-auxpcm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-sec-auxpcm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-tert-auxpcm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-quat-auxpcm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-quin-auxpcm: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-hdmi-dba-codec-rx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-audio-ion: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-adsp-loader: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-pri-rx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-pri-tx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-sec-rx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-sec-tx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-tert-rx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-tert-tx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-quat-rx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-quat-tx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-quin-rx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-dai-tdm-quin-tx: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,avtimer@170f7000: simple-bus unit address format error, expected "170f700c"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sound-tavil: simple-bus unit address format error, expected "1711a000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,kgsl-hyp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,kgsl-busmon: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gpubw: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,kgsl-iommu: simple-bus unit address format error, expected "5040000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,gmu: simple-bus unit address format error, expected "506a000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/usb_audio_qmi_dev: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/usb_nop_phy: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,cam-lrme: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/syscon@0x5091508: simple-bus unit address format error, expected "5091508"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/syscon@0x5091008: simple-bus unit address format error, expected "5091008"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/dsi_panel_pwr_supply: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/dsi_panel_pwr_supply_no_labibb: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/dsi_panel_pwr_supply_vdd_no_labibb: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@1: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@3: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@4: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@5: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@6: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@7: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@8: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@9: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@10: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@11: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@12: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@13: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@14: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@15: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,dsi-display@16: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,wb-display@0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,msm-ext-disp: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/gpio_keys: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,qup_hsuart@0xa84000: simple-bus unit address format error, expected "a84000"
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/mcd: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_smem@0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@1: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_thermistor@0: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_thermistor@2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_thermistor@3: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@21: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/wcd9xxx-irq: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/audio_ext_clk_lnbb: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/msm_cdc_pinctrl@64: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qocm,wcd-dsp-glink: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/qcom,wcd-dsp-mgr: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/det_zones: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@20: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/samsung,q6audio-adaptation: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@18: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/samsung,vibrator: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/rgb: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@22: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@17: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/usb-notifier: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/bcmdhd_wlan: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/bt_driver: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/bt_bluesleep: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/cpufreq-boot-limit@2: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_abc: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/abc_hub: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/hall: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/certify_hall: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec_detect_conn: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/i2c@14: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/battery: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/max77705-fuelgauge: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/cable-info: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/self_display_dtsi: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/sec-mst: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /soc/muic: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (simple_bus_reg): /vendor/bt_wcn3990: missing or empty reg/ranges property
+work/dt/live-twrp.dts: Warning (i2c_bus_reg): /soc/i2c@88c000/qcom,cam-sensor@3: I2C bus unit address format error, expected "20"
+work/dt/live-twrp.dts: Warning (i2c_bus_reg): /soc/i2c@890000/qcom,aperture@4C: I2C bus unit address format error, expected "4c"
+work/dt/live-twrp.dts: Warning (avoid_unnecessary_addr_size): /soc/qcom,mdss_mdp@ae00000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" property
+work/dt/live-twrp.dts: Warning (avoid_unnecessary_addr_size): /input_booster: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" property
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,mdss_mdp@ae00000: duplicate unit-address (also used in node /soc/qcom,mdss_rotator@ae00000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@880000: duplicate unit-address (also used in node /soc/spi@880000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@884000: duplicate unit-address (also used in node /soc/spi@884000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@888000: duplicate unit-address (also used in node /soc/spi@888000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@88c000: duplicate unit-address (also used in node /soc/spi@88c000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@890000: duplicate unit-address (also used in node /soc/spi@890000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@894000: duplicate unit-address (also used in node /soc/spi@894000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@898000: duplicate unit-address (also used in node /soc/spi@898000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@89c000: duplicate unit-address (also used in node /soc/spi@89c000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a80000: duplicate unit-address (also used in node /soc/spi@a80000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a84000: duplicate unit-address (also used in node /soc/spi@a84000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a88000: duplicate unit-address (also used in node /soc/spi@a88000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a8c000: duplicate unit-address (also used in node /soc/spi@a8c000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a90000: duplicate unit-address (also used in node /soc/spi@a90000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a94000: duplicate unit-address (also used in node /soc/spi@a94000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a98000: duplicate unit-address (also used in node /soc/spi@a98000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@a9c000: duplicate unit-address (also used in node /soc/spi@a9c000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,gpucc@5090000: duplicate unit-address (also used in node /soc/qcom,gfxcc@5090000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,gcc@100000: duplicate unit-address (also used in node /soc/qcom,cc-debug@100000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,sde_rscc@af20000: duplicate unit-address (also used in node /soc/mailbox@af20000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-modem@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-adsp@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,glink-smem-native-xprt-modem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-adsp@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-dsps@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,glink-smem-native-xprt-modem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-dsps@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,glink-smem-native-xprt-adsp@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-dsps@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-cdsp@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,glink-smem-native-xprt-modem@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-cdsp@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,glink-smem-native-xprt-adsp@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-cdsp@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,glink-smem-native-xprt-dsps@86000000: duplicate unit-address (also used in node /soc/qcom,glink-smem-native-xprt-cdsp@86000000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcedev@1de0000: duplicate unit-address (also used in node /soc/qcrypto@1de0000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dp_display@0: duplicate unit-address (also used in node /soc/qcom,rmtfs_sharedmem@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/funnel@6845000: duplicate unit-address (also used in node /soc/funnel_1@6845000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/funnel@6861000: duplicate unit-address (also used in node /soc/funnel_1@6861000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smp2p-modem@1799000c: duplicate unit-address (also used in node /soc/qcom,smp2p-adsp@1799000c)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smp2p-modem@1799000c: duplicate unit-address (also used in node /soc/qcom,smp2p-dsps@1799000c)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smp2p-adsp@1799000c: duplicate unit-address (also used in node /soc/qcom,smp2p-dsps@1799000c)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smp2p-modem@1799000c: duplicate unit-address (also used in node /soc/qcom,smp2p-cdsp@1799000c)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smp2p-adsp@1799000c: duplicate unit-address (also used in node /soc/qcom,smp2p-cdsp@1799000c)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,smp2p-dsps@1799000c: duplicate unit-address (also used in node /soc/qcom,smp2p-cdsp@1799000c)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,qmp-aop@c300000: duplicate unit-address (also used in node /soc/qcom,rpm-stats@c300000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dp_display@0: duplicate unit-address (also used in node /soc/qcom,dsi-display@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,rmtfs_sharedmem@0: duplicate unit-address (also used in node /soc/qcom,dsi-display@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dp_display@0: duplicate unit-address (also used in node /soc/qcom,wb-display@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,rmtfs_sharedmem@0: duplicate unit-address (also used in node /soc/qcom,wb-display@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@0: duplicate unit-address (also used in node /soc/qcom,wb-display@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,qup_uart@0xa84000: duplicate unit-address (also used in node /soc/qcom,qup_hsuart@0xa84000)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dp_display@0: duplicate unit-address (also used in node /soc/sec_smem@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,rmtfs_sharedmem@0: duplicate unit-address (also used in node /soc/sec_smem@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@0: duplicate unit-address (also used in node /soc/sec_smem@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,wb-display@0: duplicate unit-address (also used in node /soc/sec_smem@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@1: duplicate unit-address (also used in node /soc/i2c@1)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dp_display@0: duplicate unit-address (also used in node /soc/sec_thermistor@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,rmtfs_sharedmem@0: duplicate unit-address (also used in node /soc/sec_thermistor@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@0: duplicate unit-address (also used in node /soc/sec_thermistor@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,wb-display@0: duplicate unit-address (also used in node /soc/sec_thermistor@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/sec_smem@0: duplicate unit-address (also used in node /soc/sec_thermistor@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@2: duplicate unit-address (also used in node /soc/sec_thermistor@2)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@3: duplicate unit-address (also used in node /soc/sec_thermistor@3)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@2: duplicate unit-address (also used in node /soc/i2c@2)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/sec_thermistor@2: duplicate unit-address (also used in node /soc/i2c@2)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@2: duplicate unit-address (also used in node /soc/cpufreq-boot-limit@2)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/sec_thermistor@2: duplicate unit-address (also used in node /soc/cpufreq-boot-limit@2)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@2: duplicate unit-address (also used in node /soc/cpufreq-boot-limit@2)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@14: duplicate unit-address (also used in node /soc/i2c@14)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dp_display@0: duplicate unit-address (also used in node /soc/qcom,camera-flash@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,rmtfs_sharedmem@0: duplicate unit-address (also used in node /soc/qcom,camera-flash@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@0: duplicate unit-address (also used in node /soc/qcom,camera-flash@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,wb-display@0: duplicate unit-address (also used in node /soc/qcom,camera-flash@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/sec_smem@0: duplicate unit-address (also used in node /soc/qcom,camera-flash@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/sec_thermistor@0: duplicate unit-address (also used in node /soc/qcom,camera-flash@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,dsi-display@1: duplicate unit-address (also used in node /soc/qcom,camera-flash@1)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/i2c@1: duplicate unit-address (also used in node /soc/qcom,camera-flash@1)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,lpm-levels/qcom,pm-cluster@0/qcom,pm-cluster-level@0: duplicate unit-address (also used in node /soc/qcom,lpm-levels/qcom,pm-cluster@0/qcom,pm-cpu@0)
+work/dt/live-twrp.dts: Warning (unique_unit_address): /soc/qcom,lpm-levels/qcom,pm-cluster@0/qcom,pm-cluster-level@1: duplicate unit-address (also used in node /soc/qcom,lpm-levels/qcom,pm-cluster@0/qcom,pm-cpu@1)
+work/dt/live-twrp.dts: Warning (gpios_property): /soc/slim@171c0000/tavil_codec/wcd_pinctrl@5: Missing property '#gpio-cells' in node /energy-costs/cluster-cost0 or bad phandle (referred from qcom,num-gpios[0])
+work/dt/live-twrp.dts: Warning (gpios_property): /soc/qcom,cci@ac4a000/qcom,cam-res-mgr: Missing property '#gpio-cells' in node /energy-costs/cluster-cost1 or bad phandle (referred from shared-gpios[0])
+work/dt/live-twrp.dts: Warning (interrupt_provider): /soc/i2c@a98000/sm5720@66: Missing '#interrupt-cells' in interrupt provider
+work/dt/live-twrp.dts: Warning (interrupt_provider): /soc/i2c@14/mfc-charger@3b: Missing '#interrupt-cells' in interrupt provider
+work/dt/live-twrp.dts: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
+work/dt/live-twrp.dts: Warning (graph_port): /soc/replicator@6046000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/replicator@6b0a000/ports/port@2: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tmc@6b09000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6b08000/ports/port@1: graph node unit address error, expected "7"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6b01000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6b01000/ports/port@2: graph node unit address error, expected "1"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6045000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6041000/ports/port@1: graph node unit address error, expected "3"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6041000/ports/port@2: graph node unit address error, expected "6"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6041000/ports/port@3: graph node unit address error, expected "7"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6043000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6043000/ports/port@2: graph node unit address error, expected "1"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6043000/ports/port@3: graph node unit address error, expected "2"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6043000/ports/port@4: graph node unit address error, expected "5"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6043000/ports/port@5: graph node unit address error, expected "6"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6943000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@0x6943000/ports/port@2: graph node unit address error, expected "1"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@4: graph node unit address error, expected "5"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@5: graph node unit address error, expected "6"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@6: graph node unit address error, expected "7"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@7: graph node unit address error, expected "9"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@8: graph node unit address error, expected "a"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@9: graph node unit address error, expected "b"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6004000/ports/port@10: graph node unit address error, expected "d"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6832000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6831000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6845000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@7862000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@78c0000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@78d0000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6861000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@69e2000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@7832000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/tpda@6882000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6883000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6883000/ports/port@2: graph node unit address error, expected "1"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6005000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6005000/ports/port@2: graph node unit address error, expected "6"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@6005000/ports/port@3: graph node unit address error, expected "7"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7810000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7810000/ports/port@3: graph node unit address error, expected "4"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7810000/ports/port@4: graph node unit address error, expected "5"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7810000/ports/port@5: graph node unit address error, expected "6"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@1: graph node unit address error, expected "0"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@2: graph node unit address error, expected "1"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@3: graph node unit address error, expected "2"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@4: graph node unit address error, expected "3"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@5: graph node unit address error, expected "4"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@6: graph node unit address error, expected "5"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@7: graph node unit address error, expected "6"
+work/dt/live-twrp.dts: Warning (graph_port): /soc/funnel@7800000/ports/port@8: graph node unit address error, expected "7"
+work/dt/live-twrp.dts: Warning (graph_child_address): Failed prerequisite 'graph_port'
+seven@sevenzx:~/ios-s9$ grep -nEi \
+  '5040000|kgsl|gpu|adreno|smmu|iommu|clock-names|reset-names|reg-names' \
+  work/dt/live-twrp.dts | head -300
+660:			regulator-name = "gpu_cx_gdsc";
+673:			regulator-name = "gpu_gx_gdsc";
+677:			clock-names = "core_root_clk";
+726:			reg-names = "pll_base", "phy_base", "gdsc_base";
+728:			clock-names = "iface_clk";
+757:			reg-names = "pll_base", "phy_base", "gdsc_base";
+759:			clock-names = "iface_clk";
+788:			reg-names = "pll_base", "phy_base", "ln_tx0_base", "ln_tx1_base", "gdsc_base";
+791:			clock-names = "iface_clk", "ref_clk_src", "ref_clk", "cfg_ahb_clk", "pipe_clk";
+919:			reg-names = "mdp_phys", "vbif_phys", "regdma_phys";
+921:			clock-names = "gcc_iface", "gcc_bus", "iface_clk", "bus_clk", "core_clk", "vsync_clk";
+929:			iommus = <0x28 0x880 0x08 0x28 0xc80 0x08>;
+1069:			qcom,smmu_sde_sec_cb {
+1070:				compatible = "qcom,smmu_sde_sec";
+1071:				iommus = <0x28 0x881 0x08 0x28 0xc81 0x08>;
+3308:			reg-names = "drv", "wrapper", "dispcc", "pdc", "pdc_seq_mem";
+3312:			clock-names = "vsync_clk", "iface_clk";
+3348:			reg-names = "mdp_phys", "rot_vbif_phys";
+3359:			clock-names = "gcc_iface", "gcc_bus", "iface_clk", "rot_clk", "axi_clk";
+3390:			qcom,smmu_rot_unsec_cb {
+3391:				compatible = "qcom,smmu_sde_rot_unsec";
+3392:				iommus = <0x28 0x1090 0x00>;
+3397:			qcom,smmu_rot_sec_cb {
+3398:				compatible = "qcom,smmu_sde_rot_sec";
+3399:				iommus = <0x28 0x1091 0x00>;
+3410:			reg-names = "dsi_ctrl", "disp_cc_base";
+3415:			clock-names = "byte_clk", "byte_clk_rcg", "byte_intf_clk", "pixel_clk", "pixel_clk_rcg", "esc_clk";
+3454:			reg-names = "dsi_ctrl", "disp_cc_base";
+3459:			clock-names = "byte_clk", "byte_clk_rcg", "byte_intf_clk", "pixel_clk", "pixel_clk_rcg", "esc_clk";
+3498:			reg-names = "dsi_phy";
+3527:			reg-names = "dsi_phy";
+3558:			reg-names = "dp_ahb", "dp_aux", "dp_link", "dp_p0", "dp_phy", "dp_ln_tx0", "dp_ln_tx1", "dp_mmss_cc", "qfprom_physical", "dp_pll", "usb3_dp_com", "hdcp_physical";
+3562:			clock-names = "core_aux_clk", "core_usb_ref_clk_src", "core_usb_ref_clk", "core_usb_cfg_ahb_clk", "core_usb_pipe_clk", "ctrl_link_clk", "ctrl_link_iface_clk", "ctrl_pixel_clk", "crypto_clk", "pixel_clk_rcg", "pixel_parent";
+3634:			qcom,iommu-s1-bypass;
+3638:			qcom,iommu_qupv3_0_geni_se_cb {
+3640:				iommus = <0x28 0x03 0x00>;
+3649:			reg-names = "se_phys";
+3650:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3667:			reg-names = "se_phys";
+3668:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3686:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3705:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3724:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3743:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3771:				clock-names = "ref_clk";
+3805:				clock-names = "cam_clk";
+3828:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3898:				clock-names = "cam_clk";
+3913:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3932:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3951:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4042:			reg-names = "se_phys";
+4043:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4187:			reg-names = "se_phys";
+4188:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4208:			reg-names = "se_phys";
+4209:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4237:			reg-names = "se_phys";
+4238:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4258:			reg-names = "se_phys";
+4259:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4279:			reg-names = "se_phys";
+4280:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4316:			reg-names = "se_phys";
+4317:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4337:			reg-names = "se_phys";
+4338:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4358:			qcom,iommu-s1-bypass;
+4362:			qcom,iommu_qupv3_1_geni_se_cb {
+4364:				iommus = <0x28 0x6c3 0x00>;
+4373:			reg-names = "se_phys";
+4374:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4389:			reg-names = "se_phys";
+4390:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4405:			reg-names = "se_phys";
+4406:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4424:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4443:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4462:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4501:				clock-names = "rf_clk";
+4514:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4558:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4577:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4596:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4634:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4652:			reg-names = "se_phys";
+4653:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4673:			reg-names = "se_phys";
+4674:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4694:			reg-names = "se_phys";
+4695:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4715:			reg-names = "se_phys";
+4716:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4736:			reg-names = "se_phys";
+4737:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4757:			reg-names = "se_phys";
+4758:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4778:			reg-names = "se_phys";
+4779:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4799:			reg-names = "se_phys";
+4800:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4917:			reg-names = "pshold-base", "tcsr-boot-misc-detect";
+4929:			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+5545:			reg-names = "core", "fuse";
+5547:			clock-names = "core_clk";
+5600:			reg-names = "base", "global_base";
+5623:			reg-names = "base";
+5688:			clock-names = "devfreq_clk";
+5697:			clock-names = "devfreq_clk";
+5726:			clock-names = "devfreq_clk";
+5783:			reg-names = "cc_base";
+5795:			reg-names = "cc_base";
+5806:			reg-names = "cc_base";
+5833:			reg-names = "cc_base";
+5841:		qcom,gpucc@5090000 {
+5842:			compatible = "qcom,gpucc-sdm845-v2", "syscon";
+5844:			reg-names = "cc_base";
+5847:			qcom,gpu_cc_gmu_clk_src-opp-handle = <0xd7>;
+5857:			reg-names = "cc_base";
+5859:			qcom,gpu_cc_gx_gfx3d_clk_src-opp-handle = <0xd8>;
+5876:			reg-names = "osm_l3_base", "osm_pwrcl_base", "osm_perfcl_base";
+5881:			clock-names = "xo_ao";
+5920:				clock-names = "rf_clk3_clk", "rf_clk3_pin_clk";
+5921:				qcom,smmu-support;
+5922:				qcom,smmu-mapping = <0x20000000 0xe0000000>;
+5923:				qcom,smmu-s1-en;
+5924:				qcom,smmu-fast-map;
+5925:				qcom,smmu-coherent;
+5940:			qcom,gpucc = <0xe0>;
+5942:			clock-names = "xo_clk_src";
+5962:			clock-names = "ufs_core_clk", "bus_clk", "iface_clk", "ice_core_clk";
+5978:			reg-names = "phy_mem";
+5981:			clock-names = "ref_clk_src", "ref_clk", "ref_aux_clk";
+6002:			clock-names = "core_clk", "bus_aggr_clk", "iface_clk", "core_clk_unipro", "core_clk_ice", "ref_clk", "tx_lane0_sync_clk", "rx_lane0_sync_clk", "rx_lane1_sync_clk";
+6018:			reset-names = "core_reset";
+6036:			reg-names = "hc_mem";
+6051:			clock-names = "iface_clk", "core_clk";
+6079:			reg-names = "qdsp6_base", "halt_q6", "halt_modem", "halt_nc", "rmb_base", "restart_reg", "pdc_sync", "alt_reset";
+6081:			clock-names = "xo", "iface_clk", "bus_clk", "mem_clk", "gpll0_mss_clk", "snoc_axi_clk", "mnoc_axi_clk", "prng_clk";
+6082:			qcom,proxy-clock-names = "xo", "prng_clk";
+6083:			qcom,active-clock-names = "iface_clk", "bus_clk", "mem_clk", "gpll0_mss_clk", "snoc_axi_clk", "mnoc_axi_clk";
+6126:			qcom,proxy-reg-names = "vdd_cx";
+6129:			clock-names = "xo";
+6130:			qcom,proxy-clock-names = "xo";
+6157:			qcom,proxy-reg-names = "vdd_cx", "vdd_mx";
+6160:			clock-names = "xo";
+6161:			qcom,proxy-clock-names = "xo";
+6189:			reg-names = "slimbus_physical", "slimbus_bam_physical";
+6194:			qcom,iommu-s1-bypass;
+6198:			qcom,iommu_slim_ctrl_cb {
+6199:				compatible = "qcom,iommu-slim-ctrl-cb";
+6200:				iommus = <0x28 0x1806 0x00 0x28 0x180d 0x00 0x28 0x180e 0x01 0x28 0x1810 0x01>;
+6216:				clock-names = "wcd_clk";
+6421:			reg-names = "eud_base";
+6423:			clock-names = "cfg_ahb_clk";
+6433:			reg-names = "sp2soc_irq_status", "sp2soc_irq_clr", "sp2soc_irq_mask", "rmb_err", "rmb_err_spare2";
+6436:			qcom,proxy-reg-names = "vdd_cx";
+6441:			clock-names = "xo";
+6442:			qcom,proxy-clock-names = "xo";
+6458:			reg-names = "wdt-base";
+6473:			qcom,proxy-reg-names = "vdd_cx";
+6476:			clock-names = "xo";
+6477:			qcom,proxy-clock-names = "xo";
+6524:				iommus = <0x28 0x1401 0x30>;
+6531:				iommus = <0x28 0x1402 0x30>;
+6538:				iommus = <0x28 0x1403 0x30>;
+6545:				iommus = <0x28 0x1404 0x30>;
+6552:				iommus = <0x28 0x1405 0x30>;
+6559:				iommus = <0x28 0x1406 0x30>;
+6566:				iommus = <0x28 0x1407 0x30>;
+6573:				iommus = <0x28 0x1408 0x30>;
+6581:				iommus = <0x28 0x1409 0x30>;
+6589:				iommus = <0x28 0x140a 0x30>;
+6596:				iommus = <0x28 0x1823 0x00>;
+6603:				iommus = <0x28 0x1824 0x00>;
+6660:			qcom,proxy-reg-names = "vdd";
+6662:			clock-names = "core_clk", "iface_clk", "bus_clk";
+6663:			qcom,proxy-clock-names = "core_clk", "iface_clk", "bus_clk";
+6836:			reg-names = "llcc_base";
+6896:			reg-names = "smem", "irq-reg-base", "aux-mem1", "smem_targ_info_reg";
+6903:			reg-names = "mbox-loc-addr", "mbox-loc-size", "irq-reg-base", "irq-rx-reset";
+6915:			reg-names = "msgram", "irq-reg-base";
+6957:			reg-names = "smem", "irq-reg-base";
+6966:			reg-names = "smem", "irq-reg-base";
+6987:			reg-names = "smem", "irq-reg-base";
+7025:			reg-names = "smem", "irq-reg-base";
+7234:			clock-names = "core", "iface";
+7243:			reg-names = "secapp-region";
+7255:			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7272:			clock-names = "iface_clk";
+7290:			reg-names = "crypto-base", "crypto-bam-base";
+7301:			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7305:			qcom,smmu-s1-enable;
+7306:			iommus = <0x28 0x706 0x01 0x28 0x716 0x01>;
+7320:			reg-names = "crypto-base", "crypto-bam-base";
+7332:			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7342:			qcom,smmu-s1-enable;
+7343:			iommus = <0x28 0x704 0x01 0x28 0x714 0x01>;
+7355:			reg-names = "rmtfs";
+7371:			reg-names = "ipa-base", "gsi-base";
+7381:			qcom,arm-smmu;
+7402:			ipa_smmu_ap {
+7403:				compatible = "qcom,ipa-smmu-ap-cb";
+7404:				qcom,smmu-s1-bypass;
+7405:				iommus = <0x28 0x720 0x00>;
+7412:			ipa_smmu_wlan {
+7413:				compatible = "qcom,ipa-smmu-wlan-cb";
+7414:				qcom,smmu-s1-bypass;
+7415:				iommus = <0x28 0x721 0x00>;
+7421:			ipa_smmu_uc {
+7422:				compatible = "qcom,ipa-smmu-uc-cb";
+7423:				qcom,smmu-s1-bypass;
+7424:				iommus = <0x28 0x722 0x00>;
+7462:			reg-names = "gladiator_base";
+7476:			reg-names = "dcc-base", "dcc-ram-base";
+7492:			reg-names = "membase", "smmu_iova_base", "smmu_iova_ipa";
+7493:			iommus = <0x28 0x40 0x01>;
+7502:			qcom,smmu-s1-bypass;
+7761:			gpu0-usr {
+7777:			gpu1-usr {
+7921:			gpu-virt-max-step {
+7928:					gpu-trip0 {
+7939:					gpu_cdev0 {
+8287:					gpu_vdd_cdev {
+8359:					gpu_vdd_cdev {
+8431:					gpu_vdd_cdev {
+8503:					gpu_vdd_cdev {
+8575:					gpu_vdd_cdev {
+8647:					gpu_vdd_cdev {
+8719:					gpu_vdd_cdev {
+8791:					gpu_vdd_cdev {
+8863:					gpu_vdd_cdev {
+8935:					gpu_vdd_cdev {
+9007:					gpu_vdd_cdev {
+9049:			gpu0-lowf {
+9058:					gpu0-trip {
+9079:					gpu_vdd_cdev {
+9121:			gpu1-lowf {
+9130:					gpu1-trip_l {
+9151:					gpu_vdd_cdev {
+9223:					gpu_vdd_cdev {
+9295:					gpu_vdd_cdev {
+9367:					gpu_vdd_cdev {
+9439:					gpu_vdd_cdev {
+9511:					gpu_vdd_cdev {
+9583:					gpu_vdd_cdev {
+9655:					gpu_vdd_cdev {
+9727:					gpu_vdd_cdev {
+9837:			reg-names = "tsens_srot_physical", "tsens_tm_physical";
+9848:			reg-names = "tsens_srot_physical", "tsens_tm_physical";
+9920:			reg-names = "gpi-top";
+9925:			iommus = <0x28 0x16 0x00>;
+9926:			qcom,smmu-cfg = <0x01>;
+9937:			reg-names = "gpi-top";
+9942:			iommus = <0x28 0x6d6 0x00>;
+9943:			qcom,smmu-cfg = <0x01>;
+9953:			reg-names = "MSM_TSIF0_PHYS", "MSM_TSIF1_PHYS", "MSM_TSPP_PHYS", "MSM_TSPP_BAM_PHYS";
+9956:			clock-names = "iface_clk", "ref_clk";
+9970:			qcom,smmu-s1-bypass;
+9971:			iommus = <0x28 0x20 0x0f>;
+10784:			reg-names = "csr-base";
+10795:			reg-names = "replicator-base";
+10798:			clock-names = "apb_pclk";
+10833:			reg-names = "replicator-base";
+10836:			clock-names = "apb_pclk";
+10881:			reg-names = "tmc-base";
+10884:			clock-names = "apb_pclk";
+10919:			reg-names = "funnel-base";
+10922:			clock-names = "apb_pclk";
+10957:			reg-names = "tpda-base";
+10963:			clock-names = "apb_pclk";
+11009:			reg-names = "tpdm-base";
+11012:			clock-names = "apb_pclk";
+11030:			reg-names = "tpdm-base";
+11033:			clock-names = "apb_pclk";
+11052:			reg-names = "tmc-base", "bam-base";
+11058:			clock-names = "apb_pclk";
+11079:			reg-names = "tmc-base";
+11084:			clock-names = "apb_pclk";
+11119:			reg-names = "funnel-base";
+11122:			clock-names = "apb_pclk";
+11168:			reg-names = "stm-base", "stm-stimulus-base";
+11171:			clock-names = "apb_pclk";
+11188:			reg-names = "ddr-ch0-cfg", "ddr-ch23-cfg", "ddr-ch0-ctrl", "ddr-ch23-ctrl";
+11191:			clock-names = "apb_pclk";
+11200:			reg-names = "funnel-base";
+11203:			clock-names = "apb_pclk";
+11260:			reg-names = "funnel-base";
+11263:			clock-names = "apb_pclk";
+11342:			reg-names = "funnel-base";
+11345:			clock-names = "apb_pclk";
+11391:			reg-names = "tpda-base";
+11399:			clock-names = "apb_pclk";
+11533:			reg-names = "funnel-base";
+11536:			clock-names = "apb_pclk";
+11571:			reg-names = "tpda-base";
+11577:			clock-names = "apb_pclk";
+11612:			reg-names = "tpdm-base";
+11615:			clock-names = "apb_pclk";
+11633:			reg-names = "funnel-base";
+seven@sevenzx:~/ios-s9$ grep -n -B12 -A35 \
+  -Ei '5040000|kgsl|adreno|gpucc|gpu_cc' \
+  work/dt/live-twrp.dts | head -500
+5829-
+5830-		qcom,dispcc@af00000 {
+5831-			compatible = "qcom,dispcc-sdm845-v2", "syscon";
+5832-			reg = <0xaf00000 0x10000>;
+5833-			reg-names = "cc_base";
+5834-			vdd_cx-supply = <0xc5>;
+5835-			#clock-cells = <0x01>;
+5836-			#reset-cells = <0x01>;
+5837-			linux,phandle = <0x1f>;
+5838-			phandle = <0x1f>;
+5839-		};
+5840-
+5841:		qcom,gpucc@5090000 {
+5842:			compatible = "qcom,gpucc-sdm845-v2", "syscon";
+5843-			reg = <0x5090000 0x9000>;
+5844-			reg-names = "cc_base";
+5845-			vdd_cx-supply = <0xc5>;
+5846-			vdd_mx-supply = <0xc7>;
+5847:			qcom,gpu_cc_gmu_clk_src-opp-handle = <0xd7>;
+5848-			#clock-cells = <0x01>;
+5849-			#reset-cells = <0x01>;
+5850-			linux,phandle = <0xe0>;
+5851-			phandle = <0xe0>;
+5852-		};
+5853-
+5854-		qcom,gfxcc@5090000 {
+5855-			compatible = "qcom,gfxcc-sdm845-v2";
+5856-			reg = <0x5090000 0x9000>;
+5857-			reg-names = "cc_base";
+5858-			vdd_gfx-supply = <0x1c>;
+5859:			qcom,gpu_cc_gx_gfx3d_clk_src-opp-handle = <0xd8>;
+5860-			#clock-cells = <0x01>;
+5861-			#reset-cells = <0x01>;
+5862-			linux,phandle = <0x1b>;
+5863-			phandle = <0x1b>;
+5864-		};
+5865-
+5866-		syscon@17970018 {
+5867-			compatible = "syscon";
+5868-			reg = <0x17970018 0x04>;
+5869-			linux,phandle = <0xe1>;
+5870-			phandle = <0xe1>;
+5871-		};
+5872-
+5873-		qcom,cpucc@0x17d41000 {
+5874-			compatible = "qcom,clk-cpu-osm-v2";
+5875-			reg = <0x17d41000 0x1400 0x17d43000 0x1400 0x17d45800 0x1400>;
+5876-			reg-names = "osm_l3_base", "osm_pwrcl_base", "osm_perfcl_base";
+5877-			vdd_l3_mx_ao-supply = <0xd9>;
+5878-			vdd_pwrcl_mx_ao-supply = <0xd9>;
+5879-			qcom,mx-turbo-freq = <0x581e9800 0x64b54000 0xc4b20101>;
+5880-			l3-devs = <0xc1 0xc2 0xda>;
+5881-			clock-names = "xo_ao";
+5882-			clocks = <0x20 0x01>;
+5883-			#clock-cells = <0x01>;
+5884-			linux,phandle = <0xc0>;
+5885-			phandle = <0xc0>;
+5886-
+5887-			qcom,limits-dcvs@0 {
+5888-				compatible = "qcom,msm-hw-limits";
+5889-				interrupts = <0x00 0x20 0x04>;
+5890-				qcom,affinity = <0x00>;
+5891-				#thermal-sensor-cells = <0x00>;
+5892-				linux,phandle = <0x02>;
+5893-				phandle = <0x02>;
+5894-			};
+--
+5928-				linux,phandle = <0x3c4>;
+5929-				phandle = <0x3c4>;
+5930-			};
+5931-		};
+5932-
+5933-		qcom,cc-debug@100000 {
+5934-			compatible = "qcom,debugcc-sdm845";
+5935-			qcom,cc-count = <0x05>;
+5936-			qcom,gcc = <0x21>;
+5937-			qcom,videocc = <0xdf>;
+5938-			qcom,camcc = <0x63>;
+5939-			qcom,dispcc = <0x1f>;
+5940:			qcom,gpucc = <0xe0>;
+5941-			qcom,cpucc = <0xe1>;
+5942-			clock-names = "xo_clk_src";
+5943-			clocks = <0x20 0x00>;
+5944-			#clock-cells = <0x01>;
+5945-			linux,phandle = <0x3c5>;
+5946-			phandle = <0x3c5>;
+5947-		};
+5948-
+5949-		qcom,aopclk {
+5950-			compatible = "qcom,aop-qmp-clk-v1";
+5951-			#clock-cells = <0x01>;
+5952-			mboxes = <0xb9 0x00>;
+5953-			mbox-names = "qdss_clk";
+5954-			linux,phandle = <0xbb>;
+5955-			phandle = <0xbb>;
+5956-		};
+5957-
+5958-		ufsice@1d90000 {
+5959-			compatible = "qcom,ice";
+5960-			reg = <0x1d90000 0x8000>;
+5961-			qcom,enable-ice-clk;
+5962-			clock-names = "ufs_core_clk", "bus_clk", "iface_clk", "ice_core_clk";
+5963-			clocks = <0x21 0x84 0x21 0x82 0x21 0x83 0x21 0x86>;
+5964-			qcom,op-freq-hz = <0x00 0x00 0x00 0x11e1a300>;
+5965-			vdd-hba-supply = <0xe2>;
+5966-			qcom,msm-bus,name = "ufs_ice_noc";
+5967-			qcom,msm-bus,num-cases = <0x02>;
+5968-			qcom,msm-bus,num-paths = <0x01>;
+5969-			qcom,msm-bus,vectors-KBps = <0x01 0x28a 0x00 0x00 0x01 0x28a 0x3e8 0x00>;
+5970-			qcom,bus-vector-names = "MIN", "MAX";
+5971-			qcom,instance-type = "ufs";
+5972-			linux,phandle = <0xe4>;
+5973-			phandle = <0xe4>;
+5974-		};
+5975-
+--
+13343-					reg = <0x07>;
+13344-
+13345-					endpoint {
+13346-						slave-mode;
+13347-						remote-endpoint = <0x1ed>;
+13348-						linux,phandle = <0x1e4>;
+13349-						phandle = <0x1e4>;
+13350-					};
+13351-				};
+13352-			};
+13353-		};
+13354-
+13355:		arm,smmu-kgsl@5040000 {
+13356-			status = "ok";
+13357-			compatible = "qcom,smmu-v2";
+13358:			reg = <0x5040000 0x10000>;
+13359-			#iommu-cells = <0x01>;
+13360-			qcom,dynamic;
+13361-			qcom,use-3-lvl-tables;
+13362-			qcom,disable-atos;
+13363-			#global-interrupts = <0x02>;
+13364-			qcom,regulator-names = "vdd";
+13365-			vdd-supply = <0x1ee>;
+13366-			interrupts = <0x00 0xe5 0x04 0x00 0xe7 0x04 0x00 0x16c 0x01 0x00 0x16d 0x01 0x00 0x16e 0x01 0x00 0x16f 0x01 0x00 0x170 0x01 0x00 0x171 0x01 0x00 0x172 0x01 0x00 0x173 0x01>;
+13367-			clock-names = "gcc_gpu_memnoc_gfx_clk";
+13368-			clocks = <0x21 0x23>;
+13369-			attach-impl-defs = <0x6000 0x2378 0x6060 0x1055 0x678c 0x08 0x6794 0x28 0x6800 0x06 0x6900 0x3ff 0x6924 0x204 0x6928 0x11000 0x6930 0x800 0x6960 0xffffffff 0x6b64 0x1a5551 0x6b68 0x9a82a382>;
+13370-			linux,phandle = <0x1f6>;
+13371-			phandle = <0x1f6>;
+13372-		};
+13373-
+13374-		apps-smmu@0x15000000 {
+13375-			compatible = "qcom,qsmmu-v500";
+13376-			reg = <0x15000000 0x80000 0x150c2000 0x20>;
+13377-			reg-names = "base", "tcu-base";
+13378-			#iommu-cells = <0x02>;
+13379-			qcom,skip-init;
+13380-			qcom,use-3-lvl-tables;
+13381-			qcom,disable-atos;
+13382-			#global-interrupts = <0x01>;
+13383-			#size-cells = <0x01>;
+13384-			#address-cells = <0x01>;
+13385-			ranges;
+13386-			interrupts = <0x00 0x41 0x04 0x00 0x60 0x04 0x00 0x61 0x04 0x00 0x62 0x04 0x00 0x63 0x04 0x00 0x64 0x04 0x00 0x65 0x04 0x00 0x66 0x04 0x00 0x67 0x04 0x00 0x68 0x04 0x00 0x69 0x04 0x00 0x6a 0x04 0x00 0x6b 0x04 0x00 0x6c 0x04 0x00 0x6d 0x04 0x00 0x6e 0x04 0x00 0x6f 0x04 0x00 0x70 0x04 0x00 0x71 0x04 0x00 0x72 0x04 0x00 0x73 0x04 0x00 0x74 0x04 0x00 0x75 0x04 0x00 0x76 0x04 0x00 0xb5 0x04 0x00 0xb6 0x04 0x00 0xb7 0x04 0x00 0xb8 0x04 0x00 0xb9 0x04 0x00 0xba 0x04 0x00 0xbb 0x04 0x00 0xbc 0x04 0x00 0xbd 0x04 0x00 0xbe 0x04 0x00 0xbf 0x04 0x00 0xc0 0x04 0x00 0x13b 0x04 0x00 0x13c 0x04 0x00 0x13d 0x04 0x00 0x13e 0x04 0x00 0x13f 0x04 0x00 0x140 0x04 0x00 0x141 0x04 0x00 0x142 0x04 0x00 0x143 0x04 0x00 0x144 0x04 0x00 0x145 0x04 0x00 0x146 0x04 0x00 0x147 0x04 0x00 0x148 0x04 0x00 0x149 0x04 0x00 0x14a 0x04 0x00 0x14b 0x04 0x00 0x14c 0x04 0x00 0x14d 0x04 0x00 0x14e 0x04 0x00 0x14f 0x04 0x00 0x150 0x04 0x00 0x151 0x04 0x00 0x152 0x04 0x00 0x153 0x04 0x00 0x154 0x04 0x00 0x155 0x04 0x00 0x156 0x04 0x00 0x157 0x04>;
+13387-			qcom,msm-bus,name = "apps_smmu";
+13388-			qcom,msm-bus,num-cases = <0x02>;
+13389-			qcom,msm-bus,active-only;
+13390-			qcom,msm-bus,num-paths = <0x01>;
+13391-			qcom,msm-bus,vectors-KBps = <0x8b 0x273 0x00 0x00 0x8b 0x273 0x00 0x3e8>;
+13392-			qcom,actlr = <0x880 0x08 0x103 0x881 0x08 0x103 0xc80 0x08 0x103 0xc81 0x08 0x103 0x1090 0x00 0x103 0x1091 0x00 0x103 0x10a0 0x08 0x103 0x10b0 0x00 0x103 0x10a1 0x08 0x103 0x10a3 0x08 0x103 0x10a4 0x08 0x103 0x10b4 0x00 0x103 0x10a5 0x08 0x103>;
+13393-			qcom,mmu500-errata-1 = <0x800 0x3ff 0xc00 0x3ff>;
+--
+13514-				clock-names = "gcc_aggre_noc_pcie_tbu_clk";
+13515-				clocks = <0x21 0x00>;
+13516-				qcom,msm-bus,name = "apps_smmu";
+13517-				qcom,msm-bus,num-cases = <0x02>;
+13518-				qcom,msm-bus,active-only;
+13519-				qcom,msm-bus,num-paths = <0x01>;
+13520-				qcom,msm-bus,vectors-KBps = <0x8b 0x273 0x00 0x00 0x8b 0x273 0x00 0x3e8>;
+13521-				linux,phandle = <0x45d>;
+13522-				phandle = <0x45d>;
+13523-			};
+13524-		};
+13525-
+13526:		kgsl_iommu_test_device {
+13527-			status = "disabled";
+13528-			compatible = "iommu-debug-test";
+13529-			iommus = <0x1f6 0x07>;
+13530-		};
+13531-
+13532-		apps_iommu_test_device {
+13533-			compatible = "iommu-debug-test";
+13534-			iommus = <0x28 0x20 0x00>;
+13535-		};
+13536-
+13537-		apps_iommu_coherent_test_device {
+13538-			compatible = "iommu-debug-test";
+13539-			iommus = <0x28 0x20 0x00>;
+13540-			dma-coherent;
+13541-		};
+13542-
+13543-		qcom,ion {
+13544-			compatible = "qcom,msm-ion";
+13545-			#address-cells = <0x01>;
+13546-			#size-cells = <0x00>;
+13547-
+13548-			qcom,ion-heap@25 {
+13549-				reg = <0x19>;
+13550-				qcom,ion-heap-type = "SYSTEM";
+13551-				linux,phandle = <0x45e>;
+13552-				phandle = <0x45e>;
+13553-			};
+13554-
+13555-			qcom,ion-heap@22 {
+13556-				reg = <0x16>;
+13557-				memory-region = <0x114>;
+13558-				qcom,ion-heap-type = "DMA";
+13559-			};
+13560-
+13561-			qcom,ion-heap@27 {
+--
+23023-			pinctrl-names = "quat-mi2s-active", "quat-mi2s-sleep", "quat-tdm-active", "quat-tdm-sleep";
+23024-			pinctrl-0 = <0x314 0x315 0x316>;
+23025-			pinctrl-1 = <0x317 0x318 0x319>;
+23026-			qcom,det_debounce_time_ms = <0x32>;
+23027-			pinctrl-2 = <0x31a 0x31b>;
+23028-			pinctrl-3 = <0x31c 0x31d>;
+23029-			mbhc-button-thres = <0x31e 0x0d 0x3f 0x31e 0x58 0x8a 0x31e 0x8a 0x8a 0x31e 0xe1 0xe1 0x31e 0x1c2 0x1c2 0x31e 0x26c 0x26c 0x31e 0x26c 0x26c 0x31e 0x26c 0x26c>;
+23030-			mixer-paths = "mixer_paths_tavil_cornell.xml";
+23031-			linux,phandle = <0x518>;
+23032-			phandle = <0x518>;
+23033-		};
+23034-
+23035:		qcom,kgsl-hyp {
+23036-			compatible = "qcom,pil-tz-generic";
+23037-			qcom,pas-id = <0x0d>;
+23038-			qcom,firmware-name = "a630_zap";
+23039-			linux,phandle = <0x519>;
+23040-			phandle = <0x519>;
+23041-		};
+23042-
+23043:		qcom,kgsl-busmon {
+23044:			label = "kgsl-busmon";
+23045:			compatible = "qcom,kgsl-busmon";
+23046-			linux,phandle = <0x51a>;
+23047-			phandle = <0x51a>;
+23048-		};
+23049-
+23050-		qcom,gpubw {
+23051-			compatible = "qcom,devbw";
+23052-			governor = "bw_vbif";
+23053-			qcom,src-dst-ports = <0x1a 0x200>;
+23054-			qcom,bw-tbl = <0x00 0x17d 0x23c 0x2fa 0x478 0x623 0x826 0xa25 0xb71 0xf27 0x134f 0x172b 0x1ae1>;
+23055-			linux,phandle = <0x31f>;
+23056-			phandle = <0x31f>;
+23057-		};
+23058-
+23059:		qcom,kgsl-3d0@5000000 {
+23060:			label = "kgsl-3d0";
+23061:			compatible = "qcom,kgsl-3d0", "qcom,kgsl-3d";
+23062-			status = "ok";
+23063-			reg = <0x5000000 0x40000 0x5061000 0x800>;
+23064:			reg-names = "kgsl_3d0_reg_memory", "kgsl_3d0_cx_dbgc_memory";
+23065-			interrupts = <0x00 0x12c 0x00>;
+23066:			interrupt-names = "kgsl_3d0_irq";
+23067-			qcom,id = <0x00>;
+23068-			qcom,chipid = <0x6030001>;
+23069-			qcom,initial-pwrlevel = <0x06>;
+23070-			qcom,gpu-quirk-hfi-use-reg;
+23071-			qcom,gpu-quirk-secvid-set-once;
+23072-			qcom,idle-timeout = <0x50>;
+23073-			qcom,no-nap;
+23074-			qcom,highest-bank-bit = <0x0f>;
+23075-			qcom,min-access-length = <0x20>;
+23076-			qcom,ubwc-mode = <0x02>;
+23077-			qcom,snapshot-size = <0x100000>;
+23078-			qcom,gpu-qdss-stm = <0x161c0000 0x40000>;
+23079-			qcom,tsens-name = "tsens_tz_sensor12";
+23080-			#cooling-cells = <0x02>;
+23081-			qcom,pm-qos-active-latency = <0x1cc>;
+23082-			clocks = <0x1b 0x03 0xe0 0x0a 0x21 0x14 0x21 0x23 0xe0 0x04>;
+23083-			clock-names = "core_clk", "rbbmtimer_clk", "mem_clk", "mem_iface_clk", "gmu_clk";
+23084-			qcom,isense-clk-on-level = <0x01>;
+23085-			qcom,gpubw-dev = <0x31f>;
+23086-			qcom,bus-control;
+23087-			qcom,msm-bus,name = "grp3d";
+23088-			qcom,bus-width = <0x20>;
+23089-			qcom,msm-bus,num-cases = <0x0d>;
+23090-			qcom,msm-bus,num-paths = <0x01>;
+23091-			qcom,msm-bus,vectors-KBps = <0x1a 0x200 0x00 0x00 0x1a 0x200 0x00 0x61a80 0x1a 0x200 0x00 0x927c0 0x1a 0x200 0x00 0xc3500 0x1a 0x200 0x00 0x124f80 0x1a 0x200 0x00 0x192580 0x1a 0x200 0x00 0x2162e0 0x1a 0x200 0x00 0x2990a0 0x1a 0x200 0x00 0x2ee000 0x1a 0x200 0x00 0x3e12a0 0x1a 0x200 0x00 0x4f1a00 0x1a 0x200 0x00 0x5ee8e0 0x1a 0x200 0x00 0x6e1b80>;
+23092-			regulator-names = "vddcx", "vdd";
+23093-			vddcx-supply = <0x1ee>;
+23094-			vdd-supply = <0x320>;
+23095-			cache-slice-names = "gpu", "gpuhtw";
+23096-			cache-slices = <0x36 0x0c 0x36 0x0b>;
+23097-			linux,phandle = <0xd8>;
+23098-			phandle = <0xd8>;
+23099-
+23100-			qcom,gpu-coresights {
+23101-				#address-cells = <0x01>;
+--
+23227-				};
+23228-
+23229-				qcom,gpu-pwrlevel@7 {
+23230-					reg = <0x07>;
+23231-					qcom,gpu-freq = <0x00>;
+23232-					qcom,bus-freq = <0x00>;
+23233-					qcom,bus-min = <0x00>;
+23234-					qcom,bus-max = <0x00>;
+23235-				};
+23236-			};
+23237-		};
+23238-
+23239:		qcom,kgsl-iommu {
+23240:			compatible = "qcom,kgsl-smmu-v2";
+23241:			reg = <0x5040000 0x10000>;
+23242-			qcom,protect = <0x40000 0xc000>;
+23243-			qcom,micro-mmu-control = <0x6000>;
+23244-			clocks = <0x21 0x20 0x21 0x14 0x21 0x23>;
+23245-			clock-names = "iface_clk", "mem_clk", "mem_iface_clk";
+23246-			qcom,secure_align_mask = <0xfff>;
+23247-			qcom,retention;
+23248-			qcom,hyp_secure_alloc;
+23249-			linux,phandle = <0x51b>;
+23250-			phandle = <0x51b>;
+23251-
+23252-			gfx3d_user {
+23253:				compatible = "qcom,smmu-kgsl-cb";
+23254-				label = "gfx3d_user";
+23255-				iommus = <0x1f6 0x00>;
+23256-				qcom,gpu-offset = <0x48000>;
+23257-				linux,phandle = <0x51c>;
+23258-				phandle = <0x51c>;
+23259-			};
+23260-
+23261-			gfx3d_secure {
+23262:				compatible = "qcom,smmu-kgsl-cb";
+23263-				iommus = <0x1f6 0x02 0x1f6 0x01>;
+23264-				linux,phandle = <0x51d>;
+23265-				phandle = <0x51d>;
+23266-			};
+23267-		};
+23268-
+23269-		qcom,gmu {
+23270:			label = "kgsl-gmu";
+23271-			compatible = "qcom,gpu-gmu";
+23272-			reg = <0x506a000 0x30000 0xb200000 0x300000>;
+23273:			reg-names = "kgsl_gmu_reg", "kgsl_gmu_pdc_reg";
+23274-			interrupts = <0x00 0x130 0x00 0x00 0x131 0x00>;
+23275:			interrupt-names = "kgsl_hfi_irq", "kgsl_gmu_irq";
+23276-			qcom,msm-bus,name = "cnoc";
+23277-			qcom,msm-bus,num-cases = <0x02>;
+23278-			qcom,msm-bus,num-paths = <0x01>;
+23279-			qcom,msm-bus,vectors-KBps = <0x1a 0x2734 0x00 0x00 0x1a 0x2734 0x00 0x64>;
+23280-			regulator-names = "vddcx", "vdd";
+23281-			vddcx-supply = <0x1ee>;
+23282-			vdd-supply = <0x320>;
+23283-			clocks = <0xe0 0x04 0xe0 0x0a 0x21 0x14 0x21 0x23>;
+23284-			clock-names = "gmu_clk", "cxo_clk", "axi_clk", "memnoc_clk";
+23285-			linux,phandle = <0xd7>;
+23286-			phandle = <0xd7>;
+23287-
+23288-			qcom,gmu-pwrlevels {
+23289-				#address-cells = <0x01>;
+23290-				#size-cells = <0x00>;
+23291-				compatible = "qcom,gmu-pwrlevels";
+23292-
+23293-				qcom,gmu-pwrlevel@0 {
+23294-					reg = <0x00>;
+23295-					qcom,gmu-freq = <0x00>;
+23296-				};
+23297-
+23298-				qcom,gmu-pwrlevel@1 {
+23299-					reg = <0x01>;
+23300-					qcom,gmu-freq = <0xbebc200>;
+23301-				};
+23302-
+23303-				qcom,gmu-pwrlevel@2 {
+23304-					reg = <0x02>;
+23305-					qcom,gmu-freq = <0x1dcd6500>;
+23306-				};
+23307-			};
+23308-
+23309-			gmu_user {
+23310-				compatible = "qcom,smmu-gmu-user-cb";
+--
+26096-		devfreq_l3lat_0 = "/soc/qcom,cpu0-l3lat-mon";
+26097-		devfreq_l3lat_4 = "/soc/qcom,cpu4-l3lat-mon";
+26098-		l3_cdsp = "/soc/qcom,l3-cdsp";
+26099-		cpu_pmu = "/soc/cpu-pmu";
+26100-		mincpubw = "/soc/qcom,mincpubw";
+26101-		devfreq_cpufreq = "/soc/devfreq-cpufreq";
+26102-		devfreq_compute = "/soc/qcom,devfreq-compute";
+26103-		clock_rpmh = "/soc/qcom,rpmhclk";
+26104-		clock_gcc = "/soc/qcom,gcc@100000";
+26105-		clock_videocc = "/soc/qcom,videocc@ab00000";
+26106-		clock_camcc = "/soc/qcom,camcc@ad00000";
+26107-		clock_dispcc = "/soc/qcom,dispcc@af00000";
+26108:		clock_gpucc = "/soc/qcom,gpucc@5090000";
+26109-		clock_gfx = "/soc/qcom,gfxcc@5090000";
+26110-		cpucc_debug = "/soc/syscon@17970018";
+26111-		clock_cpucc = "/soc/qcom,cpucc@0x17d41000";
+26112-		lmh_dcvs0 = "/soc/qcom,cpucc@0x17d41000/qcom,limits-dcvs@0";
+26113-		lmh_dcvs1 = "/soc/qcom,cpucc@0x17d41000/qcom,limits-dcvs@1";
+26114-		wil6210 = "/soc/qcom,cpucc@0x17d41000/qcom,wil6210";
+26115-		clock_debug = "/soc/qcom,cc-debug@100000";
+26116-		clock_aop = "/soc/qcom,aopclk";
+26117-		ufs_ice = "/soc/ufsice@1d90000";
+26118-		ufsphy_mem = "/soc/ufsphy_mem@1d87000";
+26119-		ufshc_mem = "/soc/ufshc@1d84000";
+26120-		sdhc_2 = "/soc/sdhci@8804000";
+26121-		pil_modem = "/soc/qcom,mss@4080000";
+26122-		slim_aud = "/soc/slim@171c0000";
+26123-		iommu_slim_aud_ctrl_cb = "/soc/slim@171c0000/qcom,iommu_slim_ctrl_cb";
+26124-		wcd934x_cdc = "/soc/slim@171c0000/tavil_codec";
+26125-		wcd = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5";
+26126-		us_euro_sw_wcd_active = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/us_euro_sw_wcd_active";
+26127-		us_euro_sw_wcd_sleep = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/us_euro_sw_wcd_sleep";
+26128-		spkr_1_wcd_en_active = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/spkr_1_wcd_en_active";
+26129-		spkr_1_wcd_en_sleep = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/spkr_1_wcd_en_sleep";
+26130-		spkr_2_wcd_en_active = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/spkr_2_sd_n_active";
+26131-		spkr_2_wcd_en_sleep = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/spkr_2_sd_n_sleep";
+26132-		hph_en0_wcd_active = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/hph_en0_wcd_active";
+26133-		hph_en0_wcd_sleep = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/hph_en0_wcd_sleep";
+26134-		hph_en1_wcd_active = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/hph_en1_wcd_active";
+26135-		hph_en1_wcd_sleep = "/soc/slim@171c0000/tavil_codec/wcd_pinctrl@5/hph_en1_wcd_sleep";
+26136-		wcd_spi_0 = "/soc/slim@171c0000/tavil_codec/wcd_spi";
+26137-		imp_list = "/soc/slim@171c0000/imp_list";
+26138-		eud = "/soc/qcom,msm-eud@88e0000";
+26139-		wdog = "/soc/qcom,wdt@17980000";
+26140-		ssc_sensors = "/soc/qcom,msm-ssc-sensors";
+26141-		llcc = "/soc/qcom,llcc@1100000/qcom,sdm845-llcc";
+26142-		LLCC_1 = "/soc/qcom,llcc@1100000/llcc_1_dcache";
+26143-		LLCC_2 = "/soc/qcom,llcc@1100000/llcc_2_dcache";
+--
+26466-		etm7 = "/soc/etm@7740000";
+26467-		etm7_out_funnel_apss = "/soc/etm@7740000/port/endpoint";
+26468-		funnel_apss = "/soc/funnel@7800000";
+26469-		funnel_apss_out_funnel_apss_merg = "/soc/funnel@7800000/ports/port@0/endpoint";
+26470-		funnel_apss_in_etm0 = "/soc/funnel@7800000/ports/port@1/endpoint";
+26471-		funnel_apss_in_etm1 = "/soc/funnel@7800000/ports/port@2/endpoint";
+26472-		funnel_apss_in_etm2 = "/soc/funnel@7800000/ports/port@3/endpoint";
+26473-		funnel_apss_in_etm3 = "/soc/funnel@7800000/ports/port@4/endpoint";
+26474-		funnel_apss_in_etm4 = "/soc/funnel@7800000/ports/port@5/endpoint";
+26475-		funnel_apss_in_etm5 = "/soc/funnel@7800000/ports/port@6/endpoint";
+26476-		funnel_apss_in_etm6 = "/soc/funnel@7800000/ports/port@7/endpoint";
+26477-		funnel_apss_in_etm7 = "/soc/funnel@7800000/ports/port@8/endpoint";
+26478:		kgsl_smmu = "/soc/arm,smmu-kgsl@5040000";
+26479-		apps_smmu = "/soc/apps-smmu@0x15000000";
+26480-		anoc_1_tbu = "/soc/apps-smmu@0x15000000/anoc_1_tbu@0x150c5000";
+26481-		anoc_2_tbu = "/soc/apps-smmu@0x15000000/anoc_2_tbu@0x150c9000";
+26482-		mnoc_hf_0_tbu = "/soc/apps-smmu@0x15000000/mnoc_hf_0_tbu@0x150cd000";
+26483-		mnoc_hf_1_tbu = "/soc/apps-smmu@0x15000000/mnoc_hf_1_tbu@0x150d1000";
+26484-		mnoc_sf_0_tbu = "/soc/apps-smmu@0x15000000/mnoc_sf_0_tbu@0x150d5000";
+26485-		compute_dsp_tbu = "/soc/apps-smmu@0x15000000/compute_dsp_tbu@0x150d9000";
+26486-		adsp_tbu = "/soc/apps-smmu@0x15000000/adsp_tbu@0x150dd000";
+26487-		anoc_1_pcie_tbu = "/soc/apps-smmu@0x15000000/anoc_1_pcie_tbu@0x150e1000";
+26488-		system_heap = "/soc/qcom,ion/qcom,ion-heap@25";
+26489-		smp2pgpio_smp2p_15_in = "/soc/qcom,smp2pgpio-smp2p-15-in";
+26490-		smp2pgpio_smp2p_15_out = "/soc/qcom,smp2pgpio-smp2p-15-out";
+26491-		smp2pgpio_smp2p_1_in = "/soc/qcom,smp2pgpio-smp2p-1-in";
+26492-		smp2pgpio_smp2p_1_out = "/soc/qcom,smp2pgpio-smp2p-1-out";
+26493-		smp2pgpio_smp2p_2_in = "/soc/qcom,smp2pgpio-smp2p-2-in";
+26494-		smp2pgpio_smp2p_2_out = "/soc/qcom,smp2pgpio-smp2p-2-out";
+26495-		smp2pgpio_smp2p_3_in = "/soc/qcom,smp2pgpio-smp2p-3-in";
+26496-		smp2pgpio_smp2p_3_out = "/soc/qcom,smp2pgpio-smp2p-3-out";
+26497-		smp2pgpio_smp2p_5_in = "/soc/qcom,smp2pgpio-smp2p-5-in";
+26498-		smp2pgpio_smp2p_5_out = "/soc/qcom,smp2pgpio-smp2p-5-out";
+26499-		smp2pgpio_sleepstate_3_out = "/soc/qcom,smp2pgpio-sleepstate-gpio-3-out";
+26500-		smp2pgpio_ssr_smp2p_1_in = "/soc/qcom,smp2pgpio-ssr-smp2p-1-in";
+26501-		smp2pgpio_ssr_smp2p_1_out = "/soc/qcom,smp2pgpio-ssr-smp2p-1-out";
+26502-		smp2pgpio_ssr_smp2p_2_in = "/soc/qcom,smp2pgpio-ssr-smp2p-2-in";
+26503-		smp2pgpio_ssr_smp2p_2_out = "/soc/qcom,smp2pgpio-ssr-smp2p-2-out";
+26504-		smp2pgpio_ssr_smp2p_3_in = "/soc/qcom,smp2pgpio-ssr-smp2p-3-in";
+26505-		smp2pgpio_ssr_smp2p_3_out = "/soc/qcom,smp2pgpio-ssr-smp2p-3-out";
+26506-		smp2pgpio_ssr_smp2p_5_in = "/soc/qcom,smp2pgpio-ssr-smp2p-5-in";
+26507-		smp2pgpio_ssr_smp2p_5_out = "/soc/qcom,smp2pgpio-ssr-smp2p-5-out";
+26508-		smp2pgpio_ipa_1_out = "/soc/qcom,smp2pgpio-ipa-1-out";
+26509-		smp2pgpio_ipa_1_in = "/soc/qcom,smp2pgpio-ipa-1-in";
+26510-		cam_csiphy0 = "/soc/qcom,csiphy@ac65000";
+26511-		cam_csiphy1 = "/soc/qcom,csiphy@ac66000";
+26512-		cam_csiphy2 = "/soc/qcom,csiphy@ac67000";
+26513-		cam_cci = "/soc/qcom,cci@ac4a000";
+--
+27121-		msm_audio_ion = "/soc/qcom,msm-audio-ion";
+27122-		dai_pri_tdm_rx_0 = "/soc/qcom,msm-dai-tdm-pri-rx/qcom,msm-dai-q6-tdm-pri-rx-0";
+27123-		dai_pri_tdm_tx_0 = "/soc/qcom,msm-dai-tdm-pri-tx/qcom,msm-dai-q6-tdm-pri-tx-0";
+27124-		dai_sec_tdm_rx_0 = "/soc/qcom,msm-dai-tdm-sec-rx/qcom,msm-dai-q6-tdm-sec-rx-0";
+27125-		dai_sec_tdm_tx_0 = "/soc/qcom,msm-dai-tdm-sec-tx/qcom,msm-dai-q6-tdm-sec-tx-0";
+27126-		dai_tert_tdm_rx_0 = "/soc/qcom,msm-dai-tdm-tert-rx/qcom,msm-dai-q6-tdm-tert-rx-0";
+27127-		dai_tert_tdm_tx_0 = "/soc/qcom,msm-dai-tdm-tert-tx/qcom,msm-dai-q6-tdm-tert-tx-0";
+27128-		dai_quat_tdm_rx_0 = "/soc/qcom,msm-dai-tdm-quat-rx/qcom,msm-dai-q6-tdm-quat-rx-0";
+27129-		dai_quat_tdm_tx_0 = "/soc/qcom,msm-dai-tdm-quat-tx/qcom,msm-dai-q6-tdm-quat-tx-0";
+27130-		dai_quin_tdm_rx_0 = "/soc/qcom,msm-dai-tdm-quin-rx/qcom,msm-dai-q6-tdm-quin-rx-0";
+27131-		dai_quin_tdm_tx_0 = "/soc/qcom,msm-dai-tdm-quin-tx/qcom,msm-dai-q6-tdm-quin-tx-0";
+27132-		snd_934x = "/soc/sound-tavil";
+27133:		pil_gpu = "/soc/qcom,kgsl-hyp";
+27134:		msm_bus = "/soc/qcom,kgsl-busmon";
+27135-		gpubw = "/soc/qcom,gpubw";
+27136:		msm_gpu = "/soc/qcom,kgsl-3d0@5000000";
+27137:		gfx_out_funnel_in2 = "/soc/qcom,kgsl-3d0@5000000/qcom,gpu-coresights/qcom,gpu-coresight@0/port/endpoint";
+27138:		gfx_cx_out_funnel_in2 = "/soc/qcom,kgsl-3d0@5000000/qcom,gpu-coresights/qcom,gpu-coresight@1/port/endpoint";
+27139:		kgsl_msm_iommu = "/soc/qcom,kgsl-iommu";
+27140:		gfx3d_user = "/soc/qcom,kgsl-iommu/gfx3d_user";
+seven@sevenzx:~/ios-s9$ grep -n -B8 -A30 \
+  -Ei 'gpu_smmu|smmu.*clk|iface.*clk|bus.*clk|mem.*clk|rbbm|gx|cx' \
+  work/dt/live-twrp.dts | head -500
+652-			compatible = "syscon";
+653-			reg = <0x5091540 0x04>;
+654-			linux,phandle = <0x1a>;
+655-			phandle = <0x1a>;
+656-		};
+657-
+658-		qcom,gdsc@0x509106c {
+659-			compatible = "qcom,gdsc";
+660:			regulator-name = "gpu_cx_gdsc";
+661-			reg = <0x509106c 0x04>;
+662-			hw-ctrl-addr = <0x1a>;
+663-			qcom,no-status-check-on-disable;
+664-			qcom,gds-timeout = <0x1f4>;
+665-			qcom,clk-dis-wait-val = <0x08>;
+666-			status = "ok";
+667-			linux,phandle = <0x1ee>;
+668-			phandle = <0x1ee>;
+669-		};
+670-
+671-		qcom,gdsc@0x509100c {
+672-			compatible = "qcom,gdsc";
+673:			regulator-name = "gpu_gx_gdsc";
+674-			reg = <0x509100c 0x04>;
+675-			qcom,poll-cfg-gdscr;
+676-			status = "ok";
+677-			clock-names = "core_root_clk";
+678-			clocks = <0x1b 0x02>;
+679-			qcom,force-enable-root-clk;
+680-			parent-supply = <0x1c>;
+681-			domain-addr = <0x1d>;
+682-			sw-reset = <0x1e>;
+683-			qcom,reset-aon-logic;
+684-			linux,phandle = <0x320>;
+685-			phandle = <0x320>;
+686-		};
+687-
+688-		qcom,gdsc@0xab00874 {
+689-			compatible = "qcom,gdsc";
+690-			regulator-name = "vcodec0_gdsc";
+691-			reg = <0xab00874 0x04>;
+692-			qcom,poll-cfg-gdscr;
+693-			status = "ok";
+694-			qcom,support-hw-trigger;
+695-			linux,phandle = <0x2c3>;
+696-			phandle = <0x2c3>;
+697-		};
+698-
+699-		qcom,gdsc@0xab008b4 {
+700-			compatible = "qcom,gdsc";
+701-			regulator-name = "vcodec1_gdsc";
+702-			reg = <0xab008b4 0x04>;
+703-			qcom,poll-cfg-gdscr;
+--
+720-		qcom,mdss_dsi_pll@ae94a00 {
+721-			compatible = "qcom,mdss_dsi_pll_10nm";
+722-			label = "MDSS DSI 0 PLL";
+723-			cell-index = <0x00>;
+724-			#clock-cells = <0x01>;
+725-			reg = <0xae94a00 0x1e0 0xae94400 0x800 0xaf03000 0x08>;
+726-			reg-names = "pll_base", "phy_base", "gdsc_base";
+727-			clocks = <0x1f 0x00>;
+728:			clock-names = "iface_clk";
+729-			clock-rate = <0x00>;
+730-			qcom,dsi-pll-ssc-en;
+731-			qcom,dsi-pll-ssc-mode = "down-spread";
+732-			gdsc-supply = <0x19>;
+733-			linux,phandle = <0x32f>;
+734-			phandle = <0x32f>;
+735-
+736-			qcom,platform-supply-entries {
+737-				#address-cells = <0x01>;
+738-				#size-cells = <0x00>;
+739-
+740-				qcom,platform-supply-entry@0 {
+741-					reg = <0x00>;
+742-					qcom,supply-name = "gdsc";
+743-					qcom,supply-min-voltage = <0x00>;
+744-					qcom,supply-max-voltage = <0x00>;
+745-					qcom,supply-enable-load = <0x00>;
+746-					qcom,supply-disable-load = <0x00>;
+747-				};
+748-			};
+749-		};
+750-
+751-		qcom,mdss_dsi_pll@ae96a00 {
+752-			compatible = "qcom,mdss_dsi_pll_10nm";
+753-			label = "MDSS DSI 1 PLL";
+754-			cell-index = <0x01>;
+755-			#clock-cells = <0x01>;
+756-			reg = <0xae96a00 0x1e0 0xae96400 0x800 0xaf03000 0x08>;
+757-			reg-names = "pll_base", "phy_base", "gdsc_base";
+758-			clocks = <0x1f 0x00>;
+759:			clock-names = "iface_clk";
+760-			clock-rate = <0x00>;
+761-			qcom,dsi-pll-ssc-en;
+762-			qcom,dsi-pll-ssc-mode = "down-spread";
+763-			gdsc-supply = <0x19>;
+764-			linux,phandle = <0x33a>;
+765-			phandle = <0x33a>;
+766-
+767-			qcom,platform-supply-entries {
+768-				#address-cells = <0x01>;
+769-				#size-cells = <0x00>;
+770-
+771-				qcom,platform-supply-entry@0 {
+772-					reg = <0x00>;
+773-					qcom,supply-name = "gdsc";
+774-					qcom,supply-min-voltage = <0x00>;
+775-					qcom,supply-max-voltage = <0x00>;
+776-					qcom,supply-enable-load = <0x00>;
+777-					qcom,supply-disable-load = <0x00>;
+778-				};
+779-			};
+780-		};
+781-
+782-		qcom,mdss_dp_pll@c011000 {
+783-			compatible = "qcom,mdss_dp_pll_10nm";
+784-			label = "MDSS DP PLL";
+785-			cell-index = <0x00>;
+786-			#clock-cells = <0x01>;
+787-			reg = <0x88ea000 0x200 0x88eaa00 0x200 0x88ea200 0x200 0x88ea600 0x200 0xaf03000 0x08>;
+788-			reg-names = "pll_base", "phy_base", "ln_tx0_base", "ln_tx1_base", "gdsc_base";
+789-			gdsc-supply = <0x19>;
+790-			clocks = <0x1f 0x00 0x20 0x00 0x21 0x99 0x21 0xa3 0x21 0x9d>;
+791:			clock-names = "iface_clk", "ref_clk_src", "ref_clk", "cfg_ahb_clk", "pipe_clk";
+792-			clock-rate = <0x00>;
+793-			linux,phandle = <0x39>;
+794-			phandle = <0x39>;
+795-
+796-			qcom,platform-supply-entries {
+797-				#address-cells = <0x01>;
+798-				#size-cells = <0x00>;
+799-
+800-				qcom,platform-supply-entry@0 {
+801-					reg = <0x00>;
+802-					qcom,supply-name = "gdsc";
+803-					qcom,supply-min-voltage = <0x00>;
+804-					qcom,supply-max-voltage = <0x00>;
+805-					qcom,supply-enable-load = <0x00>;
+806-					qcom,supply-disable-load = <0x00>;
+807-				};
+808-			};
+809-		};
+810-
+811-		qcom,smp2pgpio-rdbg-2-in {
+812-			compatible = "qcom,smp2pgpio";
+813-			qcom,entry-name = "rdbg";
+814-			qcom,remote-pid = <0x02>;
+815-			qcom,is-inbound;
+816-			gpio-controller;
+817-			#gpio-cells = <0x02>;
+818-			interrupt-controller;
+819-			#interrupt-cells = <0x02>;
+820-			linux,phandle = <0x22>;
+821-			phandle = <0x22>;
+--
+913-			gpios = <0x27 0x00 0x00>;
+914-		};
+915-
+916-		qcom,mdss_mdp@ae00000 {
+917-			compatible = "qcom,sde-kms";
+918-			reg = <0xae00000 0x81d40 0xaeb0000 0x2008 0xaeac000 0xf0>;
+919-			reg-names = "mdp_phys", "vbif_phys", "regdma_phys";
+920-			clocks = <0x21 0x15 0x21 0x16 0x1f 0x00 0x1f 0x01 0x1f 0x17 0x1f 0x24>;
+921:			clock-names = "gcc_iface", "gcc_bus", "iface_clk", "bus_clk", "core_clk", "vsync_clk";
+922-			clock-rate = <0x00 0x00 0x00 0x00 0x11e1a300 0x124f800 0x00>;
+923-			clock-max-rate = <0x00 0x00 0x00 0x00 0x19a14780 0x124f800 0x00>;
+924-			sde-vdd-supply = <0x19>;
+925-			interrupt-parent = <0x01>;
+926-			interrupts = <0x00 0x53 0x00>;
+927-			interrupt-controller;
+928-			#interrupt-cells = <0x01>;
+929-			iommus = <0x28 0x880 0x08 0x28 0xc80 0x08>;
+930-			#address-cells = <0x01>;
+931-			#size-cells = <0x00>;
+932-			#power-domain-cells = <0x00>;
+933-			qcom,sde-off = <0x1000>;
+934-			qcom,sde-len = <0x45c>;
+935-			qcom,sde-ctl-off = <0x2000 0x2200 0x2400 0x2600 0x2800>;
+936-			qcom,sde-ctl-size = <0xe4>;
+937-			qcom,sde-ctl-display-pref = "primary", "primary", "none", "none", "none";
+938-			qcom,sde-mixer-off = <0x45000 0x46000 0x47000 0x00 0x00 0x4a000>;
+939-			qcom,sde-mixer-size = <0x320>;
+940-			qcom,sde-mixer-display-pref = "primary", "primary", "none", "none", "none", "none";
+941-			qcom,sde-dspp-top-off = <0x1300>;
+942-			qcom,sde-dspp-top-size = <0x0c>;
+943-			qcom,sde-dspp-off = <0x55000 0x57000 0x59000 0x5b000>;
+944-			qcom,sde-dspp-size = <0x17e0>;
+945-			qcom,sde-dest-scaler-top-off = <0x61000>;
+946-			qcom,sde-dest-scaler-top-size = <0x0c>;
+947-			qcom,sde-dest-scaler-off = <0x800 0x1000>;
+948-			qcom,sde-dest-scaler-size = <0x800>;
+949-			qcom,sde-wb-off = <0x66000>;
+950-			qcom,sde-wb-size = <0x2c8>;
+951-			qcom,sde-wb-xin-id = <0x06>;
+--
+3304-		qcom,sde_rscc@af20000 {
+3305-			cell-index = <0x00>;
+3306-			compatible = "qcom,sde-rsc";
+3307-			reg = <0xaf20000 0x2010 0xaf30000 0x3fd4 0xaf00000 0x8008 0xb290000 0x5518 0xb490000 0x60>;
+3308-			reg-names = "drv", "wrapper", "dispcc", "pdc", "pdc_seq_mem";
+3309-			qcom,sde-rsc-version = <0x01>;
+3310-			vdd-supply = <0x19>;
+3311-			clocks = <0x1f 0x23 0x1f 0x22>;
+3312:			clock-names = "vsync_clk", "iface_clk";
+3313-			clock-rate = <0x00 0x00>;
+3314-			qcom,sde-dram-channels = <0x02>;
+3315-			mboxes = <0x34 0x00>;
+3316-			mbox-names = "disp_rsc";
+3317-			linux,phandle = <0x2a>;
+3318-			phandle = <0x2a>;
+3319-
+3320-			qcom,sde-data-bus {
+3321-				qcom,msm-bus,name = "disp_rsc_mnoc";
+3322-				qcom,msm-bus,active-only;
+3323-				qcom,msm-bus,num-cases = <0x03>;
+3324-				qcom,msm-bus,num-paths = <0x02>;
+3325-				qcom,msm-bus,vectors-KBps = <0x4e23 0x5023 0x00 0x00 0x4e24 0x5023 0x00 0x00 0x4e23 0x5023 0x00 0x61a800 0x4e24 0x5023 0x00 0x61a800 0x4e23 0x5023 0x00 0x61a800 0x4e24 0x5023 0x00 0x61a800>;
+3326-			};
+3327-
+3328-			qcom,sde-llcc-bus {
+3329-				qcom,msm-bus,name = "disp_rsc_llcc";
+3330-				qcom,msm-bus,active-only;
+3331-				qcom,msm-bus,num-cases = <0x03>;
+3332-				qcom,msm-bus,num-paths = <0x01>;
+3333-				qcom,msm-bus,vectors-KBps = <0x4e21 0x5021 0x00 0x00 0x4e21 0x5021 0x00 0x61a800 0x4e21 0x5021 0x00 0x61a800>;
+3334-			};
+3335-
+3336-			qcom,sde-ebi-bus {
+3337-				qcom,msm-bus,name = "disp_rsc_ebi";
+3338-				qcom,msm-bus,active-only;
+3339-				qcom,msm-bus,num-cases = <0x03>;
+3340-				qcom,msm-bus,num-paths = <0x01>;
+3341-				qcom,msm-bus,vectors-KBps = <0x4e20 0x5020 0x00 0x00 0x4e20 0x5020 0x00 0x61a800 0x4e20 0x5020 0x00 0x61a800>;
+3342-			};
+--
+3351-			qcom,mdss-highest-bank-bit = <0x02>;
+3352-			qcom,msm-bus,name = "mdss_rotator";
+3353-			qcom,msm-bus,num-cases = <0x03>;
+3354-			qcom,msm-bus,num-paths = <0x01>;
+3355-			qcom,msm-bus,vectors-KBps = <0x19 0x200 0x00 0x00 0x19 0x200 0x00 0x61a800 0x19 0x200 0x00 0x61a800>;
+3356-			rot-vdd-supply = <0x19>;
+3357-			qcom,supply-names = "rot-vdd";
+3358-			clocks = <0x21 0x15 0x21 0x16 0x1f 0x00 0x1f 0x20 0x1f 0x01>;
+3359:			clock-names = "gcc_iface", "gcc_bus", "iface_clk", "rot_clk", "axi_clk";
+3360-			interrupt-parent = <0x35>;
+3361-			interrupts = <0x02 0x00>;
+3362-			power-domains = <0x35>;
+3363-			qcom,mdss-rot-vbif-qos-setting = <0x03 0x03 0x03 0x03 0x03 0x03 0x03 0x03>;
+3364-			qcom,mdss-rot-vbif-memtype = <0x03 0x03>;
+3365-			qcom,mdss-rot-cdp-setting = <0x01 0x01>;
+3366-			qcom,mdss-rot-qos-lut = <0x00 0x00 0x00 0x00>;
+3367-			qcom,mdss-rot-danger-lut = <0x00 0x00>;
+3368-			qcom,mdss-rot-safe-lut = <0xffff 0xffff>;
+3369-			qcom,mdss-inline-rot-qos-lut = <0x44556677 0x112233 0x44556677 0x112233>;
+3370-			qcom,mdss-inline-rot-danger-lut = <0x55aaff 0xffff>;
+3371-			qcom,mdss-inline-rot-safe-lut = <0xf000 0xff00>;
+3372-			qcom,mdss-default-ot-rd-limit = <0x20>;
+3373-			qcom,mdss-default-ot-wr-limit = <0x20>;
+3374-			qcom,mdss-sbuf-headroom = <0x14>;
+3375-			cache-slice-names = "rotator";
+3376-			cache-slices = <0x36 0x04>;
+3377-			linux,phandle = <0x29>;
+3378-			phandle = <0x29>;
+3379-
+3380-			qcom,rot-reg-bus {
+3381-				qcom,msm-bus,name = "mdss_rot_reg";
+3382-				qcom,msm-bus,num-cases = <0x02>;
+3383-				qcom,msm-bus,num-paths = <0x01>;
+3384-				qcom,msm-bus,active-only;
+3385-				qcom,msm-bus,vectors-KBps = <0x01 0x24e 0x00 0x00 0x01 0x24e 0x00 0x12c00>;
+3386-				linux,phandle = <0x381>;
+3387-				phandle = <0x381>;
+3388-			};
+3389-
+--
+3554-			gdsc-supply = <0x19>;
+3555-			vdda-1p2-supply = <0x37>;
+3556-			vdda-0p9-supply = <0x38>;
+3557-			reg = <0xae90000 0xdc 0xae90200 0xc0 0xae90400 0x508 0xae90a00 0x94 0x88eaa00 0x200 0x88ea200 0x200 0x88ea600 0x200 0xaf02000 0x1a0 0x780000 0x621c 0x88ea030 0x10 0x88e8000 0x20 0xaee1000 0x34>;
+3558-			reg-names = "dp_ahb", "dp_aux", "dp_link", "dp_p0", "dp_phy", "dp_ln_tx0", "dp_ln_tx1", "dp_mmss_cc", "qfprom_physical", "dp_pll", "usb3_dp_com", "hdcp_physical";
+3559-			interrupt-parent = <0x35>;
+3560-			interrupts = <0x0c 0x00>;
+3561-			clocks = <0x1f 0x08 0x20 0x00 0x21 0x99 0x21 0xa3 0x21 0x9d 0x1f 0x0c 0x1f 0x0e 0x1f 0x11 0x1f 0x0a 0x1f 0x12 0x39 0x05>;
+3562:			clock-names = "core_aux_clk", "core_usb_ref_clk_src", "core_usb_ref_clk", "core_usb_cfg_ahb_clk", "core_usb_pipe_clk", "ctrl_link_clk", "ctrl_link_iface_clk", "ctrl_pixel_clk", "crypto_clk", "pixel_clk_rcg", "pixel_parent";
+3563-			qcom,aux-cfg0-settings = " ";
+3564-			qcom,aux-cfg1-settings = <0x2413231d>;
+3565-			qcom,aux-cfg2-settings = [28 24];
+3566-			qcom,aux-cfg3-settings = ",";
+3567-			qcom,aux-cfg4-settings = [30 0a];
+3568-			qcom,aux-cfg5-settings = [34 26];
+3569-			qcom,aux-cfg6-settings = [38 0a];
+3570-			qcom,aux-cfg7-settings = [3c 03];
+3571-			qcom,aux-cfg8-settings = [40 bb];
+3572-			qcom,aux-cfg9-settings = [44 03];
+3573-			qcom,max-pclk-frequency-khz = <0xa4cb8>;
+3574-			qcom,ext-disp = <0x3a>;
+3575-			pinctrl-names = "mdss_dp_active", "mdss_dp_sleep";
+3576-			pinctrl-0 = <0x3b 0x3c>;
+3577-			pinctrl-1 = <0x3d 0x3e 0x3f>;
+3578-			qcom,aux-en-gpio = <0x2e 0x07 0x00>;
+3579-			qcom,aux-sel-gpio = <0x2e 0x64 0x00>;
+3580-			qcom,usbplug-cc-gpio = <0x2e 0x26 0x00>;
+3581-			vdda-usb1-ss-core-supply = <0x40>;
+3582-			aux-pullup-supply = <0x41>;
+3583-			linux,phandle = <0x2c>;
+3584-			phandle = <0x2c>;
+3585-
+3586-			qcom,ctrl-supply-entries {
+3587-				#address-cells = <0x01>;
+3588-				#size-cells = <0x00>;
+3589-
+3590-				qcom,ctrl-supply-entry@0 {
+3591-					reg = <0x00>;
+3592-					qcom,supply-name = "vdda-1p2";
+--
+5428-						qcom,btm-channel-number = <0x88>;
+5429-					};
+5430-				};
+5431-
+5432-				qcom,clkdiv@5b00 {
+5433-					compatible = "qcom,qpnp-clkdiv";
+5434-					reg = <0x5b00 0x100>;
+5435-					#clock-cells = <0x01>;
+5436:					qcom,cxo-freq = <0x124f800>;
+5437-					qcom,clkdiv-id = <0x01>;
+5438-					qcom,clkdiv-init-freq = <0x124f800>;
+5439-					linux,phandle = <0x3b4>;
+5440-					phandle = <0x3b4>;
+5441-				};
+5442-
+5443-				qcom,clkdiv@5c00 {
+5444-					compatible = "qcom,qpnp-clkdiv";
+5445-					reg = <0x5c00 0x100>;
+5446-					#clock-cells = <0x01>;
+5447:					qcom,cxo-freq = <0x124f800>;
+5448-					qcom,clkdiv-id = <0x02>;
+5449-					qcom,clkdiv-init-freq = <0x124f800>;
+5450-					linux,phandle = <0x3b5>;
+5451-					phandle = <0x3b5>;
+5452-				};
+5453-
+5454-				qcom,clkdiv@5d00 {
+5455-					compatible = "qcom,qpnp-clkdiv";
+5456-					reg = <0x5d00 0x100>;
+5457-					#clock-cells = <0x01>;
+5458:					qcom,cxo-freq = <0x124f800>;
+5459-					qcom,clkdiv-id = <0x03>;
+5460-					qcom,clkdiv-init-freq = <0x124f800>;
+5461-					linux,phandle = <0x3b6>;
+5462-					phandle = <0x3b6>;
+5463-				};
+5464-			};
+5465-
+5466-			qcom,pm8998@1 {
+5467-				compatible = "qcom,spmi-pmic";
+5468-				reg = <0x01 0x00>;
+5469-				#address-cells = <0x02>;
+5470-				#size-cells = <0x00>;
+5471-			};
+5472-
+5473-			qcom,pm8005@4 {
+5474-				compatible = "qcom,spmi-pmic";
+5475-				reg = <0x04 0x00>;
+5476-				#address-cells = <0x02>;
+5477-				#size-cells = <0x00>;
+5478-
+5479-				qcom,revid@100 {
+5480-					compatible = "qcom,qpnp-revid";
+5481-					reg = <0x100 0x100>;
+5482-					linux,phandle = <0x3b7>;
+5483-					phandle = <0x3b7>;
+5484-				};
+5485-
+5486-				qcom,temp-alarm@2400 {
+5487-					compatible = "qcom,qpnp-temp-alarm";
+5488-					reg = <0x2400 0x100>;
+--
+5776-			linux,phandle = <0x20>;
+5777-			phandle = <0x20>;
+5778-		};
+5779-
+5780-		qcom,gcc@100000 {
+5781-			compatible = "qcom,gcc-sdm845-v2.1", "syscon";
+5782-			reg = <0x100000 0x1f0000>;
+5783-			reg-names = "cc_base";
+5784:			vdd_cx-supply = <0xc5>;
+5785:			vdd_cx_ao-supply = <0xc6>;
+5786-			#clock-cells = <0x01>;
+5787-			#reset-cells = <0x01>;
+5788-			linux,phandle = <0x21>;
+5789-			phandle = <0x21>;
+5790-		};
+5791-
+5792-		qcom,videocc@ab00000 {
+5793-			compatible = "qcom,video_cc-sdm845-v2", "syscon";
+5794-			reg = <0xab00000 0x10000>;
+5795-			reg-names = "cc_base";
+5796:			vdd_cx-supply = <0xc5>;
+5797-			#clock-cells = <0x01>;
+5798-			#reset-cells = <0x01>;
+5799-			linux,phandle = <0xdf>;
+5800-			phandle = <0xdf>;
+5801-		};
+5802-
+5803-		qcom,camcc@ad00000 {
+5804-			compatible = "qcom,cam_cc-sdm845-v2", "syscon";
+5805-			reg = <0xad00000 0x10000>;
+5806-			reg-names = "cc_base";
+5807:			vdd_cx-supply = <0xc5>;
+5808-			vdd_mx-supply = <0xc7>;
+5809-			qcom,cam_cc_csi0phytimer_clk_src-opp-handle = <0xc8>;
+5810-			qcom,cam_cc_csi1phytimer_clk_src-opp-handle = <0xc9>;
+5811-			qcom,cam_cc_csi2phytimer_clk_src-opp-handle = <0xca>;
+5812-			qcom,cam_cc_cci_clk_src-opp-handle = <0xcb>;
+5813-			qcom,cam_cc_ife_0_csid_clk_src-opp-handle = <0xcc>;
+5814-			qcom,cam_cc_ife_0_clk_src-opp-handle = <0xcd>;
+5815-			qcom,cam_cc_ife_1_csid_clk_src-opp-handle = <0xce>;
+5816-			qcom,cam_cc_ife_1_clk_src-opp-handle = <0xcf>;
+5817-			qcom,cam_cc_ife_lite_csid_clk_src-opp-handle = <0xd0>;
+5818-			qcom,cam_cc_ife_lite_clk_src-opp-handle = <0xd1>;
+5819-			qcom,cam_cc_icp_clk_src-opp-handle = <0xd2>;
+5820-			qcom,cam_cc_ipe_0_clk_src-opp-handle = <0xd3>;
+5821-			qcom,cam_cc_ipe_1_clk_src-opp-handle = <0xd4>;
+5822-			qcom,cam_cc_bps_clk_src-opp-handle = <0xd5>;
+5823-			#clock-cells = <0x01>;
+5824-			#reset-cells = <0x01>;
+5825-			qcom,cam_cc_csi3phytimer_clk_src-opp-handle = <0xd6>;
+5826-			linux,phandle = <0x63>;
+5827-			phandle = <0x63>;
+5828-		};
+5829-
+5830-		qcom,dispcc@af00000 {
+5831-			compatible = "qcom,dispcc-sdm845-v2", "syscon";
+5832-			reg = <0xaf00000 0x10000>;
+5833-			reg-names = "cc_base";
+5834:			vdd_cx-supply = <0xc5>;
+5835-			#clock-cells = <0x01>;
+5836-			#reset-cells = <0x01>;
+5837-			linux,phandle = <0x1f>;
+5838-			phandle = <0x1f>;
+5839-		};
+5840-
+5841-		qcom,gpucc@5090000 {
+5842-			compatible = "qcom,gpucc-sdm845-v2", "syscon";
+5843-			reg = <0x5090000 0x9000>;
+5844-			reg-names = "cc_base";
+5845:			vdd_cx-supply = <0xc5>;
+5846-			vdd_mx-supply = <0xc7>;
+5847-			qcom,gpu_cc_gmu_clk_src-opp-handle = <0xd7>;
+5848-			#clock-cells = <0x01>;
+5849-			#reset-cells = <0x01>;
+5850-			linux,phandle = <0xe0>;
+5851-			phandle = <0xe0>;
+5852-		};
+5853-
+5854-		qcom,gfxcc@5090000 {
+5855-			compatible = "qcom,gfxcc-sdm845-v2";
+5856-			reg = <0x5090000 0x9000>;
+5857-			reg-names = "cc_base";
+5858-			vdd_gfx-supply = <0x1c>;
+5859:			qcom,gpu_cc_gx_gfx3d_clk_src-opp-handle = <0xd8>;
+5860-			#clock-cells = <0x01>;
+5861-			#reset-cells = <0x01>;
+5862-			linux,phandle = <0x1b>;
+5863-			phandle = <0x1b>;
+5864-		};
+5865-
+5866-		syscon@17970018 {
+5867-			compatible = "syscon";
+5868-			reg = <0x17970018 0x04>;
+5869-			linux,phandle = <0xe1>;
+5870-			phandle = <0xe1>;
+5871-		};
+5872-
+5873-		qcom,cpucc@0x17d41000 {
+5874-			compatible = "qcom,clk-cpu-osm-v2";
+5875-			reg = <0x17d41000 0x1400 0x17d43000 0x1400 0x17d45800 0x1400>;
+5876-			reg-names = "osm_l3_base", "osm_pwrcl_base", "osm_perfcl_base";
+5877-			vdd_l3_mx_ao-supply = <0xd9>;
+5878-			vdd_pwrcl_mx_ao-supply = <0xd9>;
+5879-			qcom,mx-turbo-freq = <0x581e9800 0x64b54000 0xc4b20101>;
+5880-			l3-devs = <0xc1 0xc2 0xda>;
+5881-			clock-names = "xo_ao";
+5882-			clocks = <0x20 0x01>;
+5883-			#clock-cells = <0x01>;
+5884-			linux,phandle = <0xc0>;
+5885-			phandle = <0xc0>;
+5886-
+5887-			qcom,limits-dcvs@0 {
+5888-				compatible = "qcom,msm-hw-limits";
+5889-				interrupts = <0x00 0x20 0x04>;
+--
+5954-			linux,phandle = <0xbb>;
+5955-			phandle = <0xbb>;
+5956-		};
+5957-
+5958-		ufsice@1d90000 {
+5959-			compatible = "qcom,ice";
+5960-			reg = <0x1d90000 0x8000>;
+seven@sevenzx:~/ios-s9$ 
