@@ -1,0 +1,100 @@
+seven@sevenzx:~/ios-s9$ ls -lh research/samsung-fw/NON-HLOS.bin
+file research/samsung-fw/NON-HLOS.bin
+sha256sum research/samsung-fw/NON-HLOS.bin
+-rw-rw-r-- 1 seven seven 57M Jun 30  2022 research/samsung-fw/NON-HLOS.bin
+research/samsung-fw/NON-HLOS.bin: DOS/MBR boot sector, code offset 0x3c+2, OEM-ID "MSDOS5.0", Bytes/sector 4096, sectors/cluster 4, root entries 512, Media descriptor 0xf8, sectors/FAT 3, sectors/track 63, heads 255, sectors 24320 (volumes > 32 MB), serial number 0xbc614e, unlabeled, FAT (16 bit)
+c0ab504be519b246ed4cee0eb5b56a0185dac00226c00b4bd90c311fc07feaed  research/samsung-fw/NON-HLOS.bin
+seven@sevenzx:~/ios-s9$ strings -a research/samsung-fw/NON-HLOS.bin \
+  | grep -iE 'a630|zap|adreno|gpu' | head -100
+A630_ZAPB00 
+A630_ZAPB01 
+A630_ZAPB02 
+A630_ZAPMDT 
+TZAPPENTRY
+TZAPPENTRY
+APP_BWMON_THROTTLE_BWMON_WRAPPER_2_CPU_GPU
+GPU_BWMON_THROTTLE_BWMON_WRAPPER_2_CPU_GPU
+GPU_BWMON_THROTTLE_0_THROTTLE_0_THROTTLE
+GPU_BWMON_THROTTLE_1_THROTTLE_1_THROTTLE
+GPU_BWMON_BWMON_BWMON_BWMON_1_2
+RPMH_PDC_GPU_GPU_PDC
+RPMH_PDC_GPU_GPU_PDC_SEQ_MEM
+TZAPPENTRY
+[%s] GPUtils_registerAndPrepareSharedBufferForTA(): 0x%08X
+[%s] GPUtils_convert_internal_params(): 0x%08X
+GPUtils_registerAndPrepareSharedBufferForTA
+[%s] Error in GPUtils_registerSharedBuffer: 0x%08X
+[%s] Error in GPUtils_prepareSharedBufForSecureRead: 0x%08X
+[%s] gpUtils:ByteStringToBase64Encode():
+GPUtils_byteStringToBase64Encode
+[%s] Error in GPUtils_convert_internal_params, overflow on parameter %zu: 0x%08X
+GPUtils_convert_internal_params
+[%s] GPUtils_registerAndPrepareSharedBufferForTA(): 0x%08X
+[%s] GPUtils_convert_internal_params(): 0x%08X
+GPUtils_registerAndPrepareSharedBufferForTA
+[%s] Error in GPUtils_registerSharedBuffer: 0x%08X
+[%s] Error in GPUtils_prepareSharedBufForSecureRead: 0x%08X
+[%s] gpUtils:ByteStringToBase64Encode():
+GPUtils_byteStringToBase64Encode
+[%s] Error in GPUtils_convert_internal_params, overflow on parameter %zu: 0x%08X
+GPUtils_convert_internal_params
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+EGPuttyImage
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+]g~]g|]gz\ew[ctZapY`mY_k\`j\am]cp^ds^fv^fx]ey[dyXaxT]tOXoKSiHPeHNbFL]BGW?CR=AQ>CSBHZGNcJSkNXsR]zTa
+\g|[ey[dwZbtZarZapZ`n[`m[`l\ak]ak^bj_bj`cjacjbdjcdgbcgabg`bg_ag^`g]`h\_i[_j[_kZ_lZ`nZap[bs[cv\ey^g|`j
+\f~\f|[e{[dyZcvYasW_oU\kT[gTZdUZcW[bY\cabc^_b[]aY\aX[bW\eX]hY_lZap[bs[cu[cw[dy\e|]g
+]g}]g|]fz\ex\du[csZapY`nY_lY_jZ_i[_i\`i]ai^bi`cjEJ\EK^FMaIPfKTlMWrPZwS^|Ta
+]g~]g|]gz\ew[ctZapY`mY_k\`j\am]cp^ds^fv^fx]ey[dyXaxT]tOXoKSiHPeHNbFL]BGW?CR=AQ>CSBHZGNcJSkNXsR]zTa
+\g|[ey[dwZbtZarZapZ`n[`m[`l\ak]ak^bj_bj`cjacjbdjcdgbcgabg`bg_ag^`g]`h\_i[_j[_kZ_lZ`nZap[bs[cv\ey^g|`j
+\f~\f|[e{[dyZcvYasW_oU\kT[gTZdUZcW[bY\cabc^_b[]aY\aX[bW\eX]hY_lZap[bs[cu[cw[dy\e|]g
+]g}]g|]fz\ex\du[csZapY`nY_lY_jZ_i[_i\`i]ai^bi`cjEJ\EK^FMaIPfKTlMWrPZwS^|Ta
+TZAPPENTRY
+]g~]g|]gz\ew[ctZapY`mY_k\`j\am]cp^ds^fv^fx]ey[dyXaxT]tOXoKSiHPeHNbFL]BGW?CR=AQ>CSBHZGNcJSkNXsR]zTa
+\g|[ey[dwZbtZarZapZ`n[`m[`l\ak]ak^bj_bj`cjacjbdjcdgbcgabg`bg_ag^`g]`h\_i[_j[_kZ_lZ`nZap[bs[cv\ey^g|`j
+\f~\f|[e{[dyZcvYasW_oU\kT[gTZdUZcW[bY\cabc^_b[]aY\aX[bW\eX]hY_lZap[bs[cu[cw[dy\e|]g
+]g}]g|]fz\ex\du[csZapY`nY_lY_jZ_i[_i\`i]ai^bi`cjEJ\EK^FMaIPfKTlMWrPZwS^|Ta
+]g~]g|]gz\ew[ctZapY`mY_k\`j\am]cp^ds^fv^fx]ey[dyXaxT]tOXoKSiHPeHNbFL]BGW?CR=AQ>CSBHZGNcJSkNXsR]zTa
+\g|[ey[dwZbtZarZapZ`n[`m[`l\ak]ak^bj_bj`cjacjbdjcdgbcgabg`bg_ag^`g]`h\_i[_j[_kZ_lZ`nZap[bs[cv\ey^g|`j
+\f~\f|[e{[dyZcvYasW_oU\kT[gTZdUZcW[bY\cabc^_b[]aY\aX[bW\eX]hY_lZap[bs[cu[cw[dy\e|]g
+]g}]g|]fz\ex\du[csZapY`nY_lY_jZ_i[_i\`i]ai^bi`cjEJ\EK^FMaIPfKTlMWrPZwS^|Ta
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+APP_BWMON_THROTTLE_BWMON_WRAPPER_2_CPU_GPU
+GPU_BWMON_THROTTLE_BWMON_WRAPPER_2_CPU_GPU
+GPU_BWMON_THROTTLE_0_THROTTLE_0_THROTTLE
+GPU_BWMON_THROTTLE_1_THROTTLE_1_THROTTLE
+GPU_BWMON_BWMON_BWMON_BWMON_1_2
+RPMH_PDC_GPU_GPU_PDC
+RPMH_PDC_GPU_GPU_PDC_SEQ_MEM
+ZaP!
+ZaP!
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+TZAPPENTRY
+seven@sevenzx:~/ios-s9$ grep -aob \
+  -E 'a630_zap|zap\.mdt|a630_gmu|a630_sqe' \
+  research/samsung-fw/NON-HLOS.bin | head -50
+seven@sevenzx:~/ios-s9$ 
