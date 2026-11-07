@@ -1,0 +1,345 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9
+
+find . -type f \( \
+  -iname '*dts*' -o \
+  -iname '*dtb*' -o \
+  -iname '*device*tree*' \
+\) -print | sort
+./s9/dtb/live-twrp-20261103-010304.dtb
+./s9/dtb/live-twrp-20261103-022647.dtb
+./s9/dtb/stock-dtbs.bin
+./s9/out/Image.gz-dtb
+./s9/tools/extract-stock-dtbs.py
+./work/device-tree/DeviceTree.d22ap.im4p
+./xnu/patches/0016-sweet-device-tree-platform-expert.patch
+./xnu/patches/0017-sweet-device-tree-virtual-timer-irq.patch
+seven@sevenzx:~/ios-s9$ grep -RInE \
+  '5040000|arm,smmu|smmu|gpucc|gpu_cc|gpu-cx|gpu-gx|kgsl|clock|reset' \
+  s9/research s9/logs 2>/dev/null | head -300
+s9/logs/s9-baseline.txt:25:    |   "clock-frequency" = <00e1f505>
+s9/logs/s9-baseline.txt:100:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:125:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:150:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:175:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:200:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:225:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:250:    | |     "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:275:    |       "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:383:    |     "graphics-featureset-class" = <"APPLE4">
+s9/logs/s9-baseline.txt:400:    |     "graphics-featureset-fallbacks" = <"APPLE3:APPLE3v1:APPLE2:APPLE1:GLES2,0">
+s9/logs/s9-baseline.txt:447:    |   "clock-frequency" = <00e1f505>
+s9/logs/s9-baseline.txt:792:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:832:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:872:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:912:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:952:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:992:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:1032:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:1072:    | | |   "clock-frequency" = <00204969>
+s9/logs/s9-baseline.txt:1167:    | |     "graphics-featureset-class" = <"APPLE4">
+s9/logs/s9-baseline.txt:1184:    | |     "graphics-featureset-fallbacks" = <"APPLE3:APPLE3v1:APPLE2:APPLE1:GLES2,0">
+s9/logs/s9-baseline.txt:1860:   99   ??  Ss     0:00.17 /usr/libexec/audioclocksyncd
+s9/logs/android-backlight-driver.txt:1:<5>[    0.000000]  [0:        swapper:    0] Kernel command line: rcupdate.rcu_expedited=1 console=null androidboot.hardware=qcom video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=20488 androidboot.selinux=permissive buildvariant=eng root=/dev/sda23 androidboot.bootdevice=1d84000.ufshc androidboot.serialno=24e4b799241c7ece androidboot.baseband=sdm msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD: lcd_id=0x910443 androidboot.sec_atd.tty=/dev/ttyHS8 androidboot.revision=14 androidboot.ap_serial=0xE08D217D ccic_info=1 fg_reset=0 batt_temp=350 sec_log=0x200000@0xA1600000 sec_dbg=0x1FF000@0xA1400000 sec_dbg_ex_info=0xFC0@0xA15FF000 androidboot.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 androidboot.cp_debug_level=0x55FF sec_debug.enable_cp_debug=0 softdog.soft_margin=100 softdog.soft_panic=1 watchdog_v2.ipi_en=1 androidboot.cp_reserved_mem=off androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.carrierid.param.offset=9437644 androidboot.carrierid=ZVV androidboot.sales.param.offset=9437648 androidboot.sales_code=TTT androidboot.prototype.param.offset=9437660 androidboot.verifiedbootstate=orange androidboot.warranty_bit=1 androidboot.wb.hs=30C androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.em.did=20208BE08D217D11 androidboot.em.model=SM-G9600 androidboot.em.status=0x0 androidboot.sb.debug0=0x0 androidboot.bootloader=G9600ZHU9FVF2 charging_mode=0x00 afc_disable=0x00 androidboot.security_mode=1526595585 androidboot.kap.param.offset=100 androidboot.ddr_start_type=1 androidboot.dram_info=FF,04,10,4G androidboot.usrf=9438192 sec_dqa=0418
+s9/logs/android-backlight-driver.txt:27:<6>[    3.130896]  [0:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp:qcom,smmu_sde_sec_cb to group 41
+s9/logs/cmdline-20261103-022647.txt:1:rcupdate.rcu_expedited=1 console=null androidboot.hardware=qcom video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=20488 androidboot.selinux=permissive buildvariant=eng root=/dev/sda23 androidboot.bootdevice=1d84000.ufshc androidboot.serialno=24e4b799241c7ece androidboot.baseband=sdm msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD: lcd_id=0x910443 androidboot.sec_atd.tty=/dev/ttyHS8 androidboot.revision=14 androidboot.ap_serial=0xE08D217D ccic_info=1 fg_reset=0 batt_temp=377 sec_log=0x200000@0xA1600000 sec_dbg=0x1FF000@0xA1400000 sec_dbg_ex_info=0xFC0@0xA15FF000 androidboot.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 androidboot.cp_debug_level=0x55FF sec_debug.enable_cp_debug=0 softdog.soft_margin=100 softdog.soft_panic=1 watchdog_v2.ipi_en=1 androidboot.cp_reserved_mem=off androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.carrierid.param.offset=9437644 androidboot.carrierid=ZVV androidboot.sales.param.offset=9437648 androidboot.sales_code=TTT androidboot.prototype.param.offset=9437660 androidboot.warranty_bit=1 androidboot.wb.hs=30C androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.em.did=20208BE08D217D11 androidboot.em.model=SM-G9600 androidboot.em.status=0x0 androidboot.sb.debug0=0x0 androidboot.bootloader=G9600ZHU9FVF2 charging_mode=0x00 afc_disable=0x00 androidboot.security_mode=1526595585 androidboot.kap.param.offset=100 androidboot.ddr_start_type=1 androidboot.dram_info=FF,04,10,4G androidboot.usrf=9438192 sec_dqa=0418
+s9/logs/pstore-20261103-010304.txt:17:[    3.066872]  [4:      swapper/0:    1] [SDE] ss_smmu_debug_init : sec_debug_is_enabled : 0
+s9/logs/pstore-20261103-010304.txt:18:[    3.066921]  [4:      swapper/0:    1] [SDE] ss_panel_init : Fail to create smmu debug
+s9/logs/pstore-20261103-010304.txt:96:[    3.347578]  [0:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp:qcom,smmu_sde_sec_cb to group 41
+s9/logs/pstore-20261103-010304.txt:97:[    3.348453]  [0:      swapper/0:    1] [drm] probing device qcom,smmu_sde_sec
+s9/logs/pstore-20261103-010304.txt:118:[    3.373916]  [0:    kworker/0:1:  109] iommu: Adding device ae00000.qcom,mdss_rotator:qcom,smmu_rot_unsec_cb to group 42
+s9/logs/pstore-20261103-010304.txt:119:[    3.374534]  [0:    kworker/0:1:  109] sde_smmu_probe: <SDEROT_INFO> iommu v2 domain[0] mapping and clk register successful!
+s9/logs/pstore-20261103-010304.txt:120:[    3.375128]  [0:    kworker/0:1:  109] iommu: Adding device ae00000.qcom,mdss_rotator:qcom,smmu_rot_sec_cb to group 43
+s9/logs/pstore-20261103-010304.txt:121:[    3.375704]  [0:    kworker/0:1:  109] sde_smmu_probe: <SDEROT_INFO> iommu v2 domain[1] mapping and clk register successful!
+s9/logs/pstore-20261103-010304.txt:170:[    3.692535]  [4:      swapper/0:    1] qcom,qpnp-rtc c440000.qcom,spmi:qcom,pm8998@0:qcom,pm8998_rtc: setting system clock to 2018-08-28 11:25:18 UTC (1535455518)
+s9/logs/pstore-20261103-010304.txt:339:[    3.794635]  [0:  kworker/u16:1:  294] sec-battery soc:battery: sec_bat_cable_work: Polling time is reset to 30 sec.
+s9/logs/pstore-20261103-010304.txt:618:[    4.091139]  [3:    kworker/3:1:  186] msm_pcie_enable: PCIe: Assert the reset of endpoint of RC0.
+s9/logs/pstore-20261103-010304.txt:620:[    4.107361]  [3:    kworker/3:1:  186] msm_pcie_enable: PCIe: Release the reset of endpoint of RC0.
+s9/logs/pstore-20261103-010304.txt:648:[    4.130294]  [3:    kworker/3:1:  186] dhdpcie_smmu_init: SMMU initialize
+s9/logs/pstore-20261103-010304.txt:649:[    4.131582]  [3:    kworker/3:1:  186] dhdpcie_smmu_init : get SMMU start address 0xa0000000, size 0x10000000
+s9/logs/pstore-20261103-010304.txt:650:[    4.131646]  [3:    kworker/3:1:  186] dhdpcie_smmu_init : SMMU init start
+s9/logs/pstore-20261103-010304.txt:683:[    4.145818]  [3:    kworker/3:1:  186] dhd_bus_devreset: == Power OFF ==
+s9/logs/pstore-20261103-010304.txt:686:[    4.145976]  [3:    kworker/3:1:  186] ******** Perform BP reset ********
+s9/logs/pstore-20261103-010304.txt:687:[    4.147821]  [3:    kworker/3:1:  186] ******** BP reset Succedeed ********
+s9/logs/pstore-20261103-010304.txt:692:[    4.149814]  [3:    kworker/3:1:  186] msm_pcie_disable: PCIe: Assert the reset of endpoint of RC0.
+s9/logs/pstore-20261103-010304.txt:693:[    4.150785]  [3:    kworker/3:1:  186] dhd_bus_devreset:  WLAN OFF Done
+s9/logs/pstore-20261103-010304.txt:1160:[   13.932450]  [0:    kworker/0:1:  109] msm-qusb-phy-v2 88e2000.qusb: qusb_phy_enable_clocks(): clocks_enabled:0 on:1
+s9/logs/pstore-20261103-010304.txt:1161:[   13.932575]  [0:    kworker/0:1:  109] msm-qusb-phy-v2 88e2000.qusb: qusb_phy_enable_clocks(): clocks_enabled:1
+s9/logs/pstore-20261103-010304.txt:1164:[   13.933023]  [0:    kworker/0:1:  109] msm-usb-ssphy-qmp 88e8000.ssphy: Global reset of QMP DP combo phy
+s9/logs/pstore-20261103-010304.txt:1169:[   13.934947]  [0:    kworker/0:1:  109] msm-qusb-phy-v2 88e2000.qusb: qusb_phy_enable_clocks(): clocks_enabled:1 on:1
+s9/logs/pstore-20261103-010304.txt:1170:[   13.935068]  [0:    kworker/0:1:  109] msm-qusb-phy-v2 88e2000.qusb: qusb_phy_enable_clocks(): clocks_enabled:1
+s9/logs/pstore-20261103-010304.txt:1202:[   13.940011]  [0:    kworker/0:1:  109] msm-qusb-phy-v2 88e2000.qusb: qusb_phy_enable_clocks(): clocks_enabled:1 on:1
+s9/logs/pstore-20261103-010304.txt:1203:[   13.940192]  [0:    kworker/0:1:  109] msm-qusb-phy-v2 88e2000.qusb: qusb_phy_enable_clocks(): clocks_enabled:1
+s9/logs/pstore-20261103-010304.txt:1263:[   14.155048]  [3:  kworker/u17:0:   97] usb: dwc3_gadget_reset_interrupt
+s9/logs/pstore-20261103-010304.txt:1279:[   14.280664]  [0:  kworker/u17:0:   97] usb: dwc3_gadget_reset_interrupt
+s9/logs/pstore-20261103-010304.txt:1839:[   90.869039]  [0:       recovery:  675] [<ffffff80085f9d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-010304.txt:1920:[   90.873417]  [0:       recovery:  675] [<ffffff80085f9d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-010304.txt:2001:[   90.878124]  [0:       recovery:  675] [<ffffff80085f9d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-010304.txt:2082:[   90.882460]  [0:       recovery:  675] [<ffffff80085f9d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-010304.txt:2306:[   91.459792]  [0:  kworker/u16:8:  393] sec-battery soc:battery: sec_bat_cable_work: Polling time is reset to 30 sec.
+s9/logs/ios-boot-20261103.txt:420:dc_reset: /tmp: Invalid argument
+s9/logs/ios-boot-20261103.txt:421:dc_reset: /var/run: Invalid argument
+s9/logs/ios-boot-20261103.txt:662:exec audioclocksyncd
+s9/logs/cmdline-20261103-010304.txt:1:rcupdate.rcu_expedited=1 console=null androidboot.hardware=qcom video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=20488 androidboot.selinux=permissive buildvariant=eng root=/dev/sda23 androidboot.bootdevice=1d84000.ufshc androidboot.serialno=24e4b799241c7ece androidboot.baseband=sdm msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD: lcd_id=0x910443 androidboot.sec_atd.tty=/dev/ttyHS8 androidboot.revision=14 androidboot.ap_serial=0xE08D217D ccic_info=1 fg_reset=0 batt_temp=360 sec_log=0x200000@0xA1600000 sec_dbg=0x1FF000@0xA1400000 sec_dbg_ex_info=0xFC0@0xA15FF000 androidboot.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 androidboot.cp_debug_level=0x55FF sec_debug.enable_cp_debug=0 softdog.soft_margin=100 softdog.soft_panic=1 watchdog_v2.ipi_en=1 androidboot.cp_reserved_mem=off androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.carrierid.param.offset=9437644 androidboot.carrierid=ZVV androidboot.sales.param.offset=9437648 androidboot.sales_code=TTT androidboot.prototype.param.offset=9437660 androidboot.warranty_bit=1 androidboot.wb.hs=30C androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.em.did=20208BE08D217D11 androidboot.em.model=SM-G9600 androidboot.em.status=0x0 androidboot.sb.debug0=0x0 androidboot.bootloader=G9600ZHU9FVF2 charging_mode=0x00 afc_disable=0x00 androidboot.security_mode=1526595585 androidboot.kap.param.offset=100 androidboot.ddr_start_type=1 androidboot.dram_info=FF,04,10,4G androidboot.usrf=9438192 sec_dqa=0418
+s9/logs/android-backlight-driver-final.txt:1:<5>[    0.000000]  [0:        swapper:    0] Kernel command line: rcupdate.rcu_expedited=1 console=null androidboot.hardware=qcom video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=20488 androidboot.selinux=permissive buildvariant=eng root=/dev/sda23 androidboot.bootdevice=1d84000.ufshc androidboot.serialno=24e4b799241c7ece androidboot.baseband=sdm msm_drm.dsi_display0=ss_dsi_panel_S6E3HA8_AMB577PX01_WQHD: lcd_id=0x910443 androidboot.sec_atd.tty=/dev/ttyHS8 androidboot.revision=14 androidboot.ap_serial=0xE08D217D ccic_info=1 fg_reset=0 batt_temp=350 sec_log=0x200000@0xA1600000 sec_dbg=0x1FF000@0xA1400000 sec_dbg_ex_info=0xFC0@0xA15FF000 androidboot.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 androidboot.cp_debug_level=0x55FF sec_debug.enable_cp_debug=0 softdog.soft_margin=100 softdog.soft_panic=1 watchdog_v2.ipi_en=1 androidboot.cp_reserved_mem=off androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.carrierid.param.offset=9437644 androidboot.carrierid=ZVV androidboot.sales.param.offset=9437648 androidboot.sales_code=TTT androidboot.prototype.param.offset=9437660 androidboot.verifiedbootstate=orange androidboot.warranty_bit=1 androidboot.wb.hs=30C androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.em.did=20208BE08D217D11 androidboot.em.model=SM-G9600 androidboot.em.status=0x0 androidboot.sb.debug0=0x0 androidboot.bootloader=G9600ZHU9FVF2 charging_mode=0x00 afc_disable=0x00 androidboot.security_mode=1526595585 androidboot.kap.param.offset=100 androidboot.ddr_start_type=1 androidboot.dram_info=FF,04,10,4G androidboot.usrf=9438192 sec_dqa=0418
+s9/logs/android-backlight-driver-final.txt:27:<6>[    3.130896]  [0:      swapper/0:    1] iommu: Adding device ae00000.qcom,mdss_mdp:qcom,smmu_sde_sec_cb to group 41
+s9/logs/ios-boot-clean.txt:417:dc_reset: /tmp: Invalid argument
+s9/logs/ios-boot-clean.txt:418:dc_reset: /var/run: Invalid argument
+s9/logs/ios-boot-clean.txt:649:exec audioclocksyncd
+s9/logs/pstore-20261103-022647.txt:1783:[ 2664.070544]  [3:       recovery:  605] [<ffffff8008699d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-022647.txt:1864:[ 2664.074951]  [3:       recovery:  605] [<ffffff8008699d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-022647.txt:1945:[ 2664.079689]  [3:       recovery:  605] [<ffffff8008699d04>] arm_smmu_unmap+0x84/0x128
+s9/logs/pstore-20261103-022647.txt:2026:[ 2664.087096]  [3:       recovery:  605] [<ffffff8008699d04>] arm_smmu_unmap+0x84/0x128
+seven@sevenzx:~/ios-s9$ grep -RInE \
+  'SMMU_BASE|SMMU_IDR0|SMMU_SCR0|SMMU_CB|SMMU_SMR|GPUCC|GMU_BASE' \
+  s9/shim s9/tools | head -250
+s9/shim/m11-before-smmu-probe.c:46:#define GPUCC			0x05090000UL
+s9/shim/m11-before-smmu-probe.c:48:#define GMU_BASE		0x0506a000UL
+s9/shim/m11-before-smmu-probe.c:50:#define SMMU_BASE		0x05040000UL
+s9/shim/m11-before-smmu-probe.c:53:#define GMU(n)			(GMU_BASE + (((uint32_t)(n) - 0x1A800u) << 2))
+s9/shim/m11-before-smmu-probe.c:57:#define GPUCC_CX_GDSCR		0x106c
+s9/shim/m11-before-smmu-probe.c:58:#define GPUCC_CX_HWCTRL		0x1540
+s9/shim/m11-before-smmu-probe.c:59:#define GPUCC_GX_GDSCR		0x100c
+s9/shim/m11-before-smmu-probe.c:60:#define GPUCC_GMU_RCG_CMD	0x1120
+s9/shim/m11-before-smmu-probe.c:61:#define GPUCC_GMU_RCG_CFG	0x1124
+s9/shim/m11-before-smmu-probe.c:62:#define GPUCC_CBCR_AHB		0x1078
+s9/shim/m11-before-smmu-probe.c:63:#define GPUCC_CBCR_CX_GMU	0x1098
+s9/shim/m11-before-smmu-probe.c:64:#define GPUCC_CBCR_CXO		0x109c
+s9/shim/m11-before-smmu-probe.c:139:#define SMMU_SCR0		0x000
+s9/shim/m11-before-smmu-probe.c:140:#define SMMU_IDR0		0x020		/* [7:0] stream match registers */
+s9/shim/m11-before-smmu-probe.c:144:#define SMMU_SMR(n)		(0x800 + 4 * (n))	/* bit31 valid, [30:16] mask, [14:0] stream */
+s9/shim/m11-before-smmu-probe.c:146:#define SMMU_CBAR(n)		(4 * (n))		/* second page */
+s9/shim/m11-before-smmu-probe.c:147:#define SMMU_CBA2R(n)		(0x800 + 4 * (n))	/* second page */
+s9/shim/m11-before-smmu-probe.c:148:#define SMMU_CB_SCTLR		0x00
+s9/shim/m11-before-smmu-probe.c:149:#define SMMU_CB_TCR2		0x10
+s9/shim/m11-before-smmu-probe.c:150:#define SMMU_CB_TTBR0		0x20
+s9/shim/m11-before-smmu-probe.c:151:#define SMMU_CB_TTBR1		0x28
+s9/shim/m11-before-smmu-probe.c:152:#define SMMU_CB_TCR		0x30
+s9/shim/m11-before-smmu-probe.c:153:#define SMMU_CB_MAIR0		0x38
+s9/shim/m11-before-smmu-probe.c:154:#define SMMU_CB_MAIR1		0x3c
+s9/shim/m11-before-smmu-probe.c:155:#define SMMU_CB_FSR		0x58
+s9/shim/m11-before-smmu-probe.c:156:#define SMMU_CB_FAR		0x60
+s9/shim/m11-before-smmu-probe.c:157:#define SMMU_CB_FSYNR0		0x68
+s9/shim/m11-before-smmu-probe.c:158:#define SMMU_CB_TLBIALL		0x618
+s9/shim/m11-before-smmu-probe.c:159:#define SMMU_CB_TLBSYNC		0x7f0
+s9/shim/m11-before-smmu-probe.c:160:#define SMMU_CB_TLBSTATUS	0x7f4
+s9/shim/m11-before-smmu-probe.c:162:#define SMMU_SMR_VALID		(1u << 31)
+s9/shim/m11-before-smmu-probe.c:164:#define SMMU_CBAR_STAGE_1	((1u << 16) | (3u << 8) | (0xfu << 12))	/* type S1, weakest defaults */
+s9/shim/m11-before-smmu-probe.c:165:#define SMMU_CBA2R_64BIT	1u
+s9/shim/m11-before-smmu-probe.c:166:#define SMMU_CB_SCTLR_ON	((1u << 0) | (1u << 1) | (1u << 2) | (1u << 5) | (1u << 12)) /* on, faults recorded, no irq */
+s9/shim/m11-before-smmu-probe.c:258:	uint32_t v = rd32(GPUCC + GPUCC_CX_GDSCR);
+s9/shim/m11-before-smmu-probe.c:261:		wr32(GPUCC + GPUCC_CX_GDSCR, v & ~SW_COLLAPSE);
+s9/shim/m11-before-smmu-probe.c:265:		if ((rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON))
+s9/shim/m11-before-smmu-probe.c:269:	return (rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON);
+s9/shim/m11-before-smmu-probe.c:284:	showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+s9/shim/m11-before-smmu-probe.c:286:	wr32(GPUCC + GPUCC_GMU_RCG_CFG, GMU_RCG_CFG_200MHZ);
+s9/shim/m11-before-smmu-probe.c:288:	wr32(GPUCC + GPUCC_GMU_RCG_CMD, rd32(GPUCC + GPUCC_GMU_RCG_CMD) | CMD_UPDATE);
+s9/shim/m11-before-smmu-probe.c:290:	for (int i = 0; i < 2000 && (rd32(GPUCC + GPUCC_GMU_RCG_CMD) & CMD_UPDATE); i++)
+s9/shim/m11-before-smmu-probe.c:292:	clk_branch_on(GPUCC + GPUCC_CBCR_CXO);
+s9/shim/m11-before-smmu-probe.c:293:	clk_branch_on(GPUCC + GPUCC_CBCR_AHB);
+s9/shim/m11-before-smmu-probe.c:294:	if (!clk_branch_on(GPUCC + GPUCC_CBCR_CX_GMU))
+s9/shim/m11-before-smmu-probe.c:311:	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+s9/shim/m11-before-smmu-probe.c:312:	idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+s9/shim/m11-before-smmu-probe.c:319:	showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+s9/shim/m11-before-smmu-probe.c:320:	showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+s9/shim/m11-before-smmu-probe.c:334:	showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+s9/shim/m11-before-smmu-probe.c:335:	showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+s9/shim/m11-before-smmu-probe.c:336:	showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+s9/shim/m11-before-smmu-probe.c:402:	wr32(SMMU_BASE + SMMU_SCR0, rd32(SMMU_BASE + SMMU_SCR0) & ~(1u << 0));	/* CLIENTPD=0 */
+s9/shim/m11-before-smmu-probe.c:404:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, 0);
+s9/shim/m11-before-smmu-probe.c:405:	wr32(SMMU_BASE + smmu_page + SMMU_CBA2R(cb), SMMU_CBA2R_64BIT);
+s9/shim/m11-before-smmu-probe.c:406:	wr32(SMMU_BASE + smmu_page + SMMU_CBAR(cb), SMMU_CBAR_STAGE_1);
+s9/shim/m11-before-smmu-probe.c:407:	wr32(SMMU_BASE + SMMU_CB_TCR2 + ctx, SMMU_TCR2_VAL);
+s9/shim/m11-before-smmu-probe.c:408:	wr32(SMMU_BASE + SMMU_CB_TCR + ctx, SMMU_TCR_39BITS);
+s9/shim/m11-before-smmu-probe.c:409:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + ctx, (uint32_t)ttbr);
+s9/shim/m11-before-smmu-probe.c:410:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + 4 + ctx, (uint32_t)(ttbr >> 32));
+s9/shim/m11-before-smmu-probe.c:411:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + ctx, 0);
+s9/shim/m11-before-smmu-probe.c:412:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + 4 + ctx, 0);
+s9/shim/m11-before-smmu-probe.c:413:	wr32(SMMU_BASE + SMMU_CB_MAIR0 + ctx, SMMU_MAIR0_VAL);
+s9/shim/m11-before-smmu-probe.c:414:	wr32(SMMU_BASE + SMMU_CB_MAIR1 + ctx, 0);
+s9/shim/m11-before-smmu-probe.c:415:	wr32(SMMU_BASE + SMMU_CB_FSR + ctx, SMMU_FSR_ALL);
+s9/shim/m11-before-smmu-probe.c:416:	wr32(SMMU_BASE + SMMU_CB_TLBIALL + ctx, 0);
+s9/shim/m11-before-smmu-probe.c:417:	wr32(SMMU_BASE + SMMU_CB_TLBSYNC + ctx, 0);
+s9/shim/m11-before-smmu-probe.c:418:	for (int i = 0; i < 100 && (rd32(SMMU_BASE + SMMU_CB_TLBSTATUS + ctx) & 1); i++)
+s9/shim/m11-before-smmu-probe.c:420:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, SMMU_CB_SCTLR_ON);
+s9/shim/m11-before-smmu-probe.c:422:	wr32(SMMU_BASE + SMMU_S2CR(0), cb);
+s9/shim/m11-before-smmu-probe.c:423:	wr32(SMMU_BASE + SMMU_SMR(0), SMMU_SMR_VALID | GMU_STREAM_KERNEL);
+s9/shim/m11-before-smmu-probe.c:424:	wr32(SMMU_BASE + SMMU_S2CR(1), cb);
+s9/shim/m11-before-smmu-probe.c:425:	wr32(SMMU_BASE + SMMU_SMR(1), SMMU_SMR_VALID | GMU_STREAM_USER);
+s9/shim/m11-before-smmu-probe.c:429:	showhex("cb0 sctlr<-", rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx));
+s9/shim/m11-before-smmu-probe.c:430:	showhex("cb0 ttbr0 lo", rd32(SMMU_BASE + SMMU_CB_TTBR0 + ctx));
+s9/shim/m11-before-smmu-probe.c:431:	showhex("cbar0<-", rd32(SMMU_BASE + smmu_page + SMMU_CBAR(cb)));
+s9/shim/m11-before-smmu-probe.c:432:	showhex("smr0<-", rd32(SMMU_BASE + SMMU_SMR(0)));
+s9/shim/m11-before-smmu-probe.c:433:	showhex("s2cr0<-", rd32(SMMU_BASE + SMMU_S2CR(0)));
+s9/shim/m11-before-smmu-probe.c:434:	if (!(rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx) & 1) ||
+s9/shim/m11-before-smmu-probe.c:435:	    (rd32(SMMU_BASE + SMMU_SMR(0)) != (SMMU_SMR_VALID | GMU_STREAM_KERNEL))) {
+s9/shim/m11-before-smmu-probe.c:446:	uint32_t fsr = rd32(SMMU_BASE + SMMU_CB_FSR + ctx);
+s9/shim/m11-before-smmu-probe.c:451:	showhex("  far lo", rd32(SMMU_BASE + SMMU_CB_FAR + ctx));
+s9/shim/m10.c:54:#define GPUCC			0x05090000UL
+s9/shim/m10.c:56:#define GMU_BASE		0x0506a000UL
+s9/shim/m10.c:59:/* The GMU and the blocks around it are read through one window at GMU_BASE
+s9/shim/m10.c:62:#define GMU(n)			(GMU_BASE + (((uint32_t)(n) - 0x1A800u) << 2))
+s9/shim/m10.c:67:#define GPUCC_CX_GDSCR		0x106c		/* gpu_cx_gdsc */
+s9/shim/m10.c:68:#define GPUCC_CX_HWCTRL		0x1540		/* syscon@0x5091540: CX power-on status */
+s9/shim/m10.c:69:#define GPUCC_GX_GDSCR		0x100c		/* gpu_gx_gdsc (NOT touched in stages 1-3) */
+s9/shim/m10.c:70:#define GPUCC_GMU_RCG_CMD	0x1120		/* CMD_RCGR */
+s9/shim/m10.c:71:#define GPUCC_GMU_RCG_CFG	0x1124		/* CFG_RCGR */
+s9/shim/m10.c:72:#define GPUCC_CBCR_AHB		0x1078		/* gpu_cc_ahb_clk */
+s9/shim/m10.c:73:#define GPUCC_CBCR_CX_GMU	0x1098		/* gpu_cc_cx_gmu_clk */
+s9/shim/m10.c:74:#define GPUCC_CBCR_CXO		0x109c		/* gpu_cc_cxo_clk */
+s9/shim/m10.c:210:		showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+s9/shim/m10.c:211:		showhex("gpucc gx gdscr", rd32(GPUCC + GPUCC_GX_GDSCR));
+s9/shim/m10.c:212:		showhex("gpucc gmu rcg cfg", rd32(GPUCC + GPUCC_GMU_RCG_CFG));
+s9/shim/m10.c:223:	uint32_t v = rd32(GPUCC + GPUCC_CX_GDSCR);
+s9/shim/m10.c:228:		wr32(GPUCC + GPUCC_CX_GDSCR, v & ~SW_COLLAPSE);
+s9/shim/m10.c:232:		if ((rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) ||
+s9/shim/m10.c:233:		    (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON))
+s9/shim/m10.c:237:	return (rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) ||
+s9/shim/m10.c:238:	       (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON);
+s9/shim/m10.c:244:	wr32(GPUCC + GPUCC_GMU_RCG_CFG, GMU_RCG_CFG_200MHZ);
+s9/shim/m10.c:246:	wr32(GPUCC + GPUCC_GMU_RCG_CMD, rd32(GPUCC + GPUCC_GMU_RCG_CMD) | CMD_UPDATE);
+s9/shim/m10.c:249:		if (!(rd32(GPUCC + GPUCC_GMU_RCG_CMD) & CMD_UPDATE))
+s9/shim/m10.c:268:	showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+s9/shim/m10.c:272:	showhex("gpucc gmu rcg cfg", rd32(GPUCC + GPUCC_GMU_RCG_CFG));
+s9/shim/m10.c:273:	clk_branch_on(GPUCC + GPUCC_CBCR_CXO, "cxo");
+s9/shim/m10.c:274:	clk_branch_on(GPUCC + GPUCC_CBCR_AHB, "gpu ahb");
+s9/shim/m10.c:275:	if (!clk_branch_on(GPUCC + GPUCC_CBCR_CX_GMU, "cx_gmu"))
+s9/shim/m11.c:46:#define GPUCC			0x05090000UL
+s9/shim/m11.c:48:#define GMU_BASE		0x0506a000UL
+s9/shim/m11.c:50:#define SMMU_BASE		0x05040000UL
+s9/shim/m11.c:53:#define GMU(n)			(GMU_BASE + (((uint32_t)(n) - 0x1A800u) << 2))
+s9/shim/m11.c:57:#define GPUCC_CX_GDSCR		0x106c
+s9/shim/m11.c:58:#define GPUCC_CX_HWCTRL		0x1540
+s9/shim/m11.c:59:#define GPUCC_GX_GDSCR		0x100c
+s9/shim/m11.c:60:#define GPUCC_GMU_RCG_CMD	0x1120
+s9/shim/m11.c:61:#define GPUCC_GMU_RCG_CFG	0x1124
+s9/shim/m11.c:62:#define GPUCC_CBCR_AHB		0x1078
+s9/shim/m11.c:63:#define GPUCC_CBCR_CX_GMU	0x1098
+s9/shim/m11.c:64:#define GPUCC_CBCR_CXO		0x109c
+s9/shim/m11.c:139:#define SMMU_SCR0		0x000
+s9/shim/m11.c:140:#define SMMU_IDR0		0x020		/* [7:0] stream match registers */
+s9/shim/m11.c:144:#define SMMU_SMR(n)		(0x800 + 4 * (n))	/* bit31 valid, [30:16] mask, [14:0] stream */
+s9/shim/m11.c:146:#define SMMU_CBAR(n)		(4 * (n))		/* second page */
+s9/shim/m11.c:147:#define SMMU_CBA2R(n)		(0x800 + 4 * (n))	/* second page */
+s9/shim/m11.c:148:#define SMMU_CB_SCTLR		0x00
+s9/shim/m11.c:149:#define SMMU_CB_TCR2		0x10
+s9/shim/m11.c:150:#define SMMU_CB_TTBR0		0x20
+s9/shim/m11.c:151:#define SMMU_CB_TTBR1		0x28
+s9/shim/m11.c:152:#define SMMU_CB_TCR		0x30
+s9/shim/m11.c:153:#define SMMU_CB_MAIR0		0x38
+s9/shim/m11.c:154:#define SMMU_CB_MAIR1		0x3c
+s9/shim/m11.c:155:#define SMMU_CB_FSR		0x58
+s9/shim/m11.c:156:#define SMMU_CB_FAR		0x60
+s9/shim/m11.c:157:#define SMMU_CB_FSYNR0		0x68
+s9/shim/m11.c:158:#define SMMU_CB_TLBIALL		0x618
+s9/shim/m11.c:159:#define SMMU_CB_TLBSYNC		0x7f0
+s9/shim/m11.c:160:#define SMMU_CB_TLBSTATUS	0x7f4
+s9/shim/m11.c:162:#define SMMU_SMR_VALID		(1u << 31)
+s9/shim/m11.c:164:#define SMMU_CBAR_STAGE_1	((1u << 16) | (3u << 8) | (0xfu << 12))	/* type S1, weakest defaults */
+s9/shim/m11.c:165:#define SMMU_CBA2R_64BIT	1u
+s9/shim/m11.c:166:#define SMMU_CB_SCTLR_ON	((1u << 0) | (1u << 1) | (1u << 2) | (1u << 5) | (1u << 12)) /* on, faults recorded, no irq */
+s9/shim/m11.c:258:	uint32_t v = rd32(GPUCC + GPUCC_CX_GDSCR);
+s9/shim/m11.c:261:		wr32(GPUCC + GPUCC_CX_GDSCR, v & ~SW_COLLAPSE);
+s9/shim/m11.c:265:		if ((rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON))
+s9/shim/m11.c:269:	return (rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON);
+s9/shim/m11.c:284:	showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+s9/shim/m11.c:286:	wr32(GPUCC + GPUCC_GMU_RCG_CFG, GMU_RCG_CFG_200MHZ);
+s9/shim/m11.c:288:	wr32(GPUCC + GPUCC_GMU_RCG_CMD, rd32(GPUCC + GPUCC_GMU_RCG_CMD) | CMD_UPDATE);
+s9/shim/m11.c:290:	for (int i = 0; i < 2000 && (rd32(GPUCC + GPUCC_GMU_RCG_CMD) & CMD_UPDATE); i++)
+s9/shim/m11.c:292:	clk_branch_on(GPUCC + GPUCC_CBCR_CXO);
+s9/shim/m11.c:293:	clk_branch_on(GPUCC + GPUCC_CBCR_AHB);
+s9/shim/m11.c:294:	if (!clk_branch_on(GPUCC + GPUCC_CBCR_CX_GMU))
+s9/shim/m11.c:312:	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+s9/shim/m11.c:316:	idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+s9/shim/m11.c:324:	step("2c antes SCR0"); showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+s9/shim/m11.c:325:	step("2d antes SGFSR"); showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+s9/shim/m11.c:339:	step("2e antes SMR0"); showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+s9/shim/m11.c:340:	step("2f antes S2CR0"); showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+s9/shim/m11.c:341:	step("2g antes CB0 SCTLR"); showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+s9/shim/m11.c:407:	wr32(SMMU_BASE + SMMU_SCR0, rd32(SMMU_BASE + SMMU_SCR0) & ~(1u << 0));	/* CLIENTPD=0 */
+s9/shim/m11.c:409:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, 0);
+s9/shim/m11.c:410:	wr32(SMMU_BASE + smmu_page + SMMU_CBA2R(cb), SMMU_CBA2R_64BIT);
+s9/shim/m11.c:411:	wr32(SMMU_BASE + smmu_page + SMMU_CBAR(cb), SMMU_CBAR_STAGE_1);
+s9/shim/m11.c:412:	wr32(SMMU_BASE + SMMU_CB_TCR2 + ctx, SMMU_TCR2_VAL);
+s9/shim/m11.c:413:	wr32(SMMU_BASE + SMMU_CB_TCR + ctx, SMMU_TCR_39BITS);
+s9/shim/m11.c:414:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + ctx, (uint32_t)ttbr);
+s9/shim/m11.c:415:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + 4 + ctx, (uint32_t)(ttbr >> 32));
+s9/shim/m11.c:416:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + ctx, 0);
+s9/shim/m11.c:417:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + 4 + ctx, 0);
+s9/shim/m11.c:418:	wr32(SMMU_BASE + SMMU_CB_MAIR0 + ctx, SMMU_MAIR0_VAL);
+s9/shim/m11.c:419:	wr32(SMMU_BASE + SMMU_CB_MAIR1 + ctx, 0);
+s9/shim/m11.c:420:	wr32(SMMU_BASE + SMMU_CB_FSR + ctx, SMMU_FSR_ALL);
+s9/shim/m11.c:421:	wr32(SMMU_BASE + SMMU_CB_TLBIALL + ctx, 0);
+s9/shim/m11.c:422:	wr32(SMMU_BASE + SMMU_CB_TLBSYNC + ctx, 0);
+s9/shim/m11.c:423:	for (int i = 0; i < 100 && (rd32(SMMU_BASE + SMMU_CB_TLBSTATUS + ctx) & 1); i++)
+s9/shim/m11.c:425:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, SMMU_CB_SCTLR_ON);
+s9/shim/m11.c:427:	wr32(SMMU_BASE + SMMU_S2CR(0), cb);
+s9/shim/m11.c:428:	wr32(SMMU_BASE + SMMU_SMR(0), SMMU_SMR_VALID | GMU_STREAM_KERNEL);
+s9/shim/m11.c:429:	wr32(SMMU_BASE + SMMU_S2CR(1), cb);
+s9/shim/m11.c:430:	wr32(SMMU_BASE + SMMU_SMR(1), SMMU_SMR_VALID | GMU_STREAM_USER);
+s9/shim/m11.c:434:	showhex("cb0 sctlr<-", rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx));
+s9/shim/m11.c:435:	showhex("cb0 ttbr0 lo", rd32(SMMU_BASE + SMMU_CB_TTBR0 + ctx));
+s9/shim/m11.c:436:	showhex("cbar0<-", rd32(SMMU_BASE + smmu_page + SMMU_CBAR(cb)));
+s9/shim/m11.c:437:	showhex("smr0<-", rd32(SMMU_BASE + SMMU_SMR(0)));
+s9/shim/m11.c:438:	showhex("s2cr0<-", rd32(SMMU_BASE + SMMU_S2CR(0)));
+s9/shim/m11.c:439:	if (!(rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx) & 1) ||
+s9/shim/m11.c:440:	    (rd32(SMMU_BASE + SMMU_SMR(0)) != (SMMU_SMR_VALID | GMU_STREAM_KERNEL))) {
+s9/shim/m11.c:451:	uint32_t fsr = rd32(SMMU_BASE + SMMU_CB_FSR + ctx);
+s9/shim/m11.c:456:	showhex("  far lo", rd32(SMMU_BASE + SMMU_CB_FAR + ctx));
+s9/shim/m11-m11a.c:46:#define GPUCC			0x05090000UL
+s9/shim/m11-m11a.c:48:#define GMU_BASE		0x0506a000UL
+s9/shim/m11-m11a.c:50:#define SMMU_BASE		0x05040000UL
+s9/shim/m11-m11a.c:53:#define GMU(n)			(GMU_BASE + (((uint32_t)(n) - 0x1A800u) << 2))
+s9/shim/m11-m11a.c:57:#define GPUCC_CX_GDSCR		0x106c
+s9/shim/m11-m11a.c:58:#define GPUCC_CX_HWCTRL		0x1540
+s9/shim/m11-m11a.c:59:#define GPUCC_GX_GDSCR		0x100c
+s9/shim/m11-m11a.c:60:#define GPUCC_GMU_RCG_CMD	0x1120
+s9/shim/m11-m11a.c:61:#define GPUCC_GMU_RCG_CFG	0x1124
+s9/shim/m11-m11a.c:62:#define GPUCC_CBCR_AHB		0x1078
+s9/shim/m11-m11a.c:63:#define GPUCC_CBCR_CX_GMU	0x1098
+s9/shim/m11-m11a.c:64:#define GPUCC_CBCR_CXO		0x109c
+s9/shim/m11-m11a.c:139:#define SMMU_SCR0		0x000
+s9/shim/m11-m11a.c:140:#define SMMU_IDR0		0x020		/* [7:0] stream match registers */
+s9/shim/m11-m11a.c:144:#define SMMU_SMR(n)		(0x800 + 4 * (n))	/* bit31 valid, [30:16] mask, [14:0] stream */
+s9/shim/m11-m11a.c:146:#define SMMU_CBAR(n)		(4 * (n))		/* second page */
+s9/shim/m11-m11a.c:147:#define SMMU_CBA2R(n)		(0x800 + 4 * (n))	/* second page */
+s9/shim/m11-m11a.c:148:#define SMMU_CB_SCTLR		0x00
+s9/shim/m11-m11a.c:149:#define SMMU_CB_TCR2		0x10
+s9/shim/m11-m11a.c:150:#define SMMU_CB_TTBR0		0x20
+s9/shim/m11-m11a.c:151:#define SMMU_CB_TTBR1		0x28
+s9/shim/m11-m11a.c:152:#define SMMU_CB_TCR		0x30
+s9/shim/m11-m11a.c:153:#define SMMU_CB_MAIR0		0x38
+s9/shim/m11-m11a.c:154:#define SMMU_CB_MAIR1		0x3c
+s9/shim/m11-m11a.c:155:#define SMMU_CB_FSR		0x58
+s9/shim/m11-m11a.c:156:#define SMMU_CB_FAR		0x60
+s9/shim/m11-m11a.c:157:#define SMMU_CB_FSYNR0		0x68
+s9/shim/m11-m11a.c:158:#define SMMU_CB_TLBIALL		0x618
+s9/shim/m11-m11a.c:159:#define SMMU_CB_TLBSYNC		0x7f0
+s9/shim/m11-m11a.c:160:#define SMMU_CB_TLBSTATUS	0x7f4
+s9/shim/m11-m11a.c:162:#define SMMU_SMR_VALID		(1u << 31)
+s9/shim/m11-m11a.c:164:#define SMMU_CBAR_STAGE_1	((1u << 16) | (3u << 8) | (0xfu << 12))	/* type S1, weakest defaults */
+s9/shim/m11-m11a.c:165:#define SMMU_CBA2R_64BIT	1u
+s9/shim/m11-m11a.c:166:#define SMMU_CB_SCTLR_ON	((1u << 0) | (1u << 1) | (1u << 2) | (1u << 5) | (1u << 12)) /* on, faults recorded, no irq */
+s9/shim/m11-m11a.c:258:	uint32_t v = rd32(GPUCC + GPUCC_CX_GDSCR);
+s9/shim/m11-m11a.c:261:		wr32(GPUCC + GPUCC_CX_GDSCR, v & ~SW_COLLAPSE);
+s9/shim/m11-m11a.c:265:		if ((rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON))
+s9/shim/m11-m11a.c:269:	return (rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON);
+s9/shim/m11-m11a.c:284:	showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+s9/shim/m11-m11a.c:286:	wr32(GPUCC + GPUCC_GMU_RCG_CFG, GMU_RCG_CFG_200MHZ);
+s9/shim/m11-m11a.c:288:	wr32(GPUCC + GPUCC_GMU_RCG_CMD, rd32(GPUCC + GPUCC_GMU_RCG_CMD) | CMD_UPDATE);
+s9/shim/m11-m11a.c:290:	for (int i = 0; i < 2000 && (rd32(GPUCC + GPUCC_GMU_RCG_CMD) & CMD_UPDATE); i++)
+s9/shim/m11-m11a.c:292:	clk_branch_on(GPUCC + GPUCC_CBCR_CXO);
+s9/shim/m11-m11a.c:293:	clk_branch_on(GPUCC + GPUCC_CBCR_AHB);
+s9/shim/m11-m11a.c:294:	if (!clk_branch_on(GPUCC + GPUCC_CBCR_CX_GMU))
+s9/shim/m11-m11a.c:311:	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+s9/shim/m11-m11a.c:312:	idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+s9/shim/m11-m11a.c:319:	showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+s9/shim/m11-m11a.c:320:	showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+s9/shim/m11-m11a.c:334:	showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+s9/shim/m11-m11a.c:335:	showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+s9/shim/m11-m11a.c:336:	showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+s9/shim/m11-m11a.c:402:	wr32(SMMU_BASE + SMMU_SCR0, rd32(SMMU_BASE + SMMU_SCR0) & ~(1u << 0));	/* CLIENTPD=0 */
+s9/shim/m11-m11a.c:404:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, 0);
+s9/shim/m11-m11a.c:405:	wr32(SMMU_BASE + smmu_page + SMMU_CBA2R(cb), SMMU_CBA2R_64BIT);
+s9/shim/m11-m11a.c:406:	wr32(SMMU_BASE + smmu_page + SMMU_CBAR(cb), SMMU_CBAR_STAGE_1);
+s9/shim/m11-m11a.c:407:	wr32(SMMU_BASE + SMMU_CB_TCR2 + ctx, SMMU_TCR2_VAL);
+seven@sevenzx:~/ios-s9$ 
