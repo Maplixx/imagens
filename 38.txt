@@ -1,0 +1,181 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+sed -n '510,620p' shim/m11.c
+sed -n '680,725p' shim/m11.c
+	showhex("  far lo", rd32(SMMU_BASE + SMMU_CB_FAR + ctx));
+	return 1;
+}
+
+/* ---- the HFI queue table + polled send/receive ----------------------------------------------------- */
+
+/* kgsl_hfi.h: 6-word table header, then one 12-word header per queue. */
+#define HFI_TBL_HDR_WORDS	6
+#define HFI_QHDR_WORDS		12
+#define HFI_QHDR_MAX		17
+#define HFI_TABLE_WORDS		(HFI_TBL_HDR_WORDS + HFI_QHDR_MAX * HFI_QHDR_WORDS)
+#define HFI_QUEUE_SIZE_BYTES	4096u
+#define HFI_TABLE_BYTES_ALIGNED	((HFI_TABLE_WORDS * 4u + 15u) & ~15u)
+#define HFI_QUEUE_OFFSET(i)	(HFI_TABLE_BYTES_ALIGNED + (i) * HFI_QUEUE_SIZE_BYTES) /* bytes */
+/* queue header word indices */
+#define HFI_V1_MSG_POST	1
+#define HFI_V1_MSG_ACK	2
+
+#define QH_STATUS		0
+#define QH_START		1
+#define QH_TYPE			2
+#define QH_SIZE			3
+#define QH_MSG_SIZE		4
+#define QH_RX_REQ		8
+#define QH_READ			10
+#define QH_WRITE		11
+
+static volatile uint32_t *hfi;	/* = gmu_hfi_mem as words */
+
+static uint32_t hfi_number;
+static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+
+static volatile uint32_t *hfi_qhdr(unsigned q)
+{
+	return hfi + HFI_TBL_HDR_WORDS + q * HFI_QHDR_WORDS;
+}
+
+static void hfi_table_init(void)
+{
+	zero(gmu_hfi_mem, GMU_MEM_SIZE);
+	hfi = (volatile uint32_t *)gmu_hfi_mem;
+	hfi[0] = 0;				/* version */
+	hfi[1] = HFI_TABLE_WORDS;		/* size (dwords) */
+	hfi[2] = HFI_TBL_HDR_WORDS;		/* qhdr0 offset */
+	hfi[3] = HFI_QHDR_WORDS;		/* qhdr size */
+	hfi[4] = HFI_QUEUES;			/* num_q */
+	hfi[5] = HFI_QUEUES;			/* num_active_q */
+	{
+		static const uint8_t qid[HFI_QUEUES] = { 0, 4, 5 };
+		static const uint8_t qprio[HFI_QUEUES] = { 10, 10, 40 };
+		for (unsigned i = 0; i < HFI_QUEUES; i++) {
+			volatile uint32_t *h = hfi_qhdr(i);
+			h[QH_STATUS] = 1;
+			h[QH_START] = GMU_HFI_ADDR + HFI_QUEUE_OFFSET(i);
+			h[QH_TYPE] = qid[i] | ((uint32_t)qprio[i] << 8);
+			h[QH_SIZE] = HFI_QUEUE_SIZE_BYTES / 4u;
+			h[QH_MSG_SIZE] = 0;
+			h[QH_RX_REQ] = 1;
+			h[QH_READ] = 0;
+			h[QH_WRITE] = 0;
+		}
+	}
+	dsb();
+}
+
+/* Receive from queue `which`; true if the answer to `number` was seen. */
+static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+	uint32_t *verdict)
+{
+	volatile uint32_t *h = hfi_qhdr(which);
+	volatile uint32_t *q = (volatile uint32_t *)(gmu_hfi_mem + HFI_QUEUE_OFFSET(which));
+	int answered = 0;
+
+	while (h[QH_READ] != h[QH_WRITE]) {
+		uint32_t at = h[QH_READ] % HFI_QUEUE_WORDS, msg0 = q[at], words = (msg0 >> 8) & 0xff;
+		uint32_t m[8] = { 0 };
+
+		for (uint32_t i = 0; i < words; i++) {
+			if (i < 8)
+				m[i] = q[at];
+			at = (at + 1) % HFI_QUEUE_WORDS;
+		}
+		h[QH_READ] = (at + 3) / 4 * 4 % HFI_QUEUE_WORDS;
+		if (!answered) {
+			showhex("hfi rx m0", m[0]);
+			showhex("hfi rx m1", m[1]);
+			showhex("hfi rx m2", m[2]);
+			showhex("hfi rx m3", m[3]);
+			showhex("hfi rx words", words);
+			showhex("hfi rx expected", number);
+		}
+		{
+			uint32_t type = (m[0] >> 16) & 0xf;
+			int is_ack = (type == HFI_V1_MSG_ACK) || (type == 1);
+			int matches = (type == HFI_V1_MSG_ACK) ?
+				((m[0] & 0xffu) == 126u && m[2] == 0u) :
+				(((m[1] >> 20) & 0xfff) == number);
+			if (is_ack && matches) {
+				*verdict = m[2];	/* error (0 = ok) */
+				hfi_payload0 = m[3];	/* payload[0] */
+				answered = 1;
+			}
+		}
+		if (words == 0)
+			break;
+	}
+	return answered;
+}
+
+/* Send `words` to the CMD queue and wait for the GMU's verdict. */
+static int hfi_send(const char *what, uint32_t id, uint32_t *msg, uint32_t words, uint32_t *verdict)
+	for (unsigned i = 0; i < 5; i++)
+		wr32(GMU(RSCC_SEQ_MEM_0_DRV0) + 4 * i, rsc_seq[i]);
+	for (unsigned i = 0; i < 5; i++)
+		wr32(PDC(PDC_GPU_SEQ_MEM_0) + 4 * i, pdc_seq[i]);
+	wr32(PDC(PDC_GPU_TCS1_CMD_ENABLE_BANK), 7);
+	wr32(PDC(PDC_GPU_TCS1_CMD_WAIT_FOR_CMPL_BANK), 0);
+	wr32(PDC(PDC_GPU_TCS1_CONTROL), 0);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_MSGID), 0x10108);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_ADDR), 0x30010);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_DATA), 1);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_MSGID + PDC_CMD_OFFSET), 0x10108);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_ADDR + PDC_CMD_OFFSET), 0x30000);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_DATA + PDC_CMD_OFFSET), 0x0);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_MSGID + PDC_CMD_OFFSET * 2), 0x10108);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_ADDR + PDC_CMD_OFFSET * 2), 0x30080);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_DATA + PDC_CMD_OFFSET * 2), 0x0);
+	wr32(PDC(PDC_GPU_TCS3_CMD_ENABLE_BANK), 7);
+	wr32(PDC(PDC_GPU_TCS3_CMD_WAIT_FOR_CMPL_BANK), 0);
+	wr32(PDC(PDC_GPU_TCS3_CONTROL), 0);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_MSGID), 0x10108);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_ADDR), 0x30010);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_DATA), 2);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_MSGID + PDC_CMD_OFFSET), 0x10108);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_ADDR + PDC_CMD_OFFSET), 0x30000);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_DATA + PDC_CMD_OFFSET), 0x3);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_MSGID + PDC_CMD_OFFSET * 2), 0x10108);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_ADDR + PDC_CMD_OFFSET * 2), 0x30080);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_DATA + PDC_CMD_OFFSET * 2), 0x3);
+	wr32(PDC(PDC_GPU_SEQ_START_ADDR), 0);
+	wr32(PDC(PDC_GPU_ENABLE_PDC), 0x80000001u);
+	dsb();
+}
+
+/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+
+static int gmu_boot_plain(void)
+{
+	uint32_t result = 0, wrong = 0;
+	unsigned words = sizeof(a630_gmu_fw) / sizeof(a630_gmu_fw[0]);
+
+	stage = "3 firmware GMU";
+	step("3a RSC/PDC + firmware no ITCM");
+	load_rpmh_ucode();
+	wr32(GMU(GMU_CM3_SYSRESET), 1);
+	dsb();
+	wr32(GMU(GMU_GENERAL_7), 1);
+seven@sevenzx:~/ios-s9/s9$ ls -lh out/boot-* | tail -30
+-r--r--r-- 1 seven seven 27M Nov  6 23:36 out/boot-ios-usb2-functional.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:14 out/boot-m10-post-gmu-working.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:04 out/boot-m10.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:26 out/boot-m11-hfi-instrumented.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:46 out/boot-m11-hfi-layout-fixed.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:37 out/boot-m11-hfi-response-dump.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 01:10 out/boot-m11-hfi-v1-ack-success.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:52 out/boot-m11-hfi-v1-fixed.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 02:02 out/boot-m11-pas-buffers.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 02:12 out/boot-m11-pas-metadata-verified.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:17 out/boot-m11-post-gmu.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 00:24 out/boot-m11-smmu-working-hfi-stuck.img
+-rw-rw-r-- 1 seven seven 11M Nov  7 02:11 out/boot-m11.img
+-rw-rw-r-- 1 seven seven 27M Nov  3 02:54 out/boot-m4.img
+-rw-rw-r-- 1 seven seven 27M Nov  3 02:43 out/boot-no-usb.img
+-rw-rw-r-- 1 seven seven 27M Nov  3 02:43 out/boot-no-usb.tar.md5
+-rw-rw-r-- 1 seven seven 27M Nov  3 02:54 out/boot-usb1.img
+-rw-rw-r-- 1 seven seven 27M Nov  3 02:54 out/boot-usb1.tar.md5
+seven@sevenzx:~/ios-s9/s9$
