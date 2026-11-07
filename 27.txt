@@ -1,0 +1,577 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+cat > research/gpu-fw/samsung-zap/MANIFEST.txt <<'EOF'
+Firmware: a630_zap
+Origem: Samsung SM-G9600 / ZTO-G9600ZHU9FVF2 / NON-HLOS.bin
+Formato: ELF32 Qualcomm DSP6
+Entry point: 0x5000
+
+a630_zap.b00:
+  tamanho: 148 bytes
+  função: cabeçalho NULL do manifesto
+
+a630_zap.b01:
+  tamanho: 6536 bytes
+  segmento: offset 0x1000
+  endereço virtual: 0x6000
+  tamanho em arquivo: 0x1988
+  tamanho em memória: 0x2000
+
+a630_zap.b02:
+  tamanho: 1968 bytes
+  segmento: offset 0x3000
+  endereço virtual: 0x5000
+  tamanho em arquivo: 0x7b0
+  tamanho em memória: 0x7b0
+
+entry point: 0x5000
+EOF
+
+cat research/gpu-fw/samsung-zap/MANIFEST.txt
+Firmware: a630_zap
+Origem: Samsung SM-G9600 / ZTO-G9600ZHU9FVF2 / NON-HLOS.bin
+Formato: ELF32 Qualcomm DSP6
+Entry point: 0x5000
+
+a630_zap.b00:
+  tamanho: 148 bytes
+  função: cabeçalho NULL do manifesto
+
+a630_zap.b01:
+  tamanho: 6536 bytes
+  segmento: offset 0x1000
+  endereço virtual: 0x6000
+  tamanho em arquivo: 0x1988
+  tamanho em memória: 0x2000
+
+a630_zap.b02:
+  tamanho: 1968 bytes
+  segmento: offset 0x3000
+  endereço virtual: 0x5000
+  tamanho em arquivo: 0x7b0
+  tamanho em memória: 0x7b0
+
+entry point: 0x5000
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+grep -RInE \
+  'qcom_scm|scm_call|PAS|pas_init|pas_auth|pas_mem|remoteproc|firmware_load|zap|a630_zap|CORE_FW_START' \
+  . 2>/dev/null | head -250
+./s9/ESTUDO-2026-10-24.md:388:  O som chega a ele em formato digital pela interface **TDM quaternária** do LPASS (GPIO58-61, função `qua_mi2s`).
+./s9/ESTUDO-2026-10-24.md:392:- **Quem comanda tudo:** o **ADSP**, um processador de sinal (Hexagon) dentro do bloco de áudio (LPASS). Na placa de
+./s9/ESTUDO-2026-10-24.md:427:| **B. Alto-falante pelo ADSP** | ligar o ADSP (carga autenticada pelo TrustZone, chamadas PAS), SMEM + GLINK, QRTR + QMI (pd-mapper), APR + AFE/ADM/ASM mínimos, SMMU para o ADSP ler nossos buffers, MAX98512 por I²C, um driver no kernel e o plug-in do caminho A apontando para ele | 8-15 mil linhas novas (no Linux, esses pedaços somam ~66 mil: `q6afe.c` 7,6 mil, `q6asm.c` 9,9 mil, `glink.c` 6,4 mil, `arm-smmu.c` 5,9 mil, `max98512.c` 3 mil...); 20-40 idas ao aparelho | médio: falha do ADSP derruba o celular (watchdog), não estraga nada; sem a proteção do alto-falante (o DSM da Maxim roda **dentro** do ADSP, com calibração da fábrica) o volume tem que ficar baixo | som de verdade no alto-falante; base para microfone e fone depois |
+./s9/PROMPT-sessao-2026-10-25-gpu.md:23:  no ADT (`/sweet-gpu`, `tools/adt-gpufw.py`, `tools/zap-split.py`, boot-arg `sweetgpu=8`), payload GL no branch
+./s9/PROMPT-sessao-2026-10-25-gpu.md:91:   `ipsw`). **Zap shader:** o TrustZone do S9 é da Samsung, então use o `a630_zap` do próprio S9 (está no
+./s9/PROMPT-sessao-2026-10-25-gpu.md:92:   `NON-HLOS.bin` do BL do firmware oficial: `image/a630_zap.mdt` + `.bNN`), não o da Xiaomi. `a630_sqe.fw` e
+./s9/PROMPT-sessao-2026-10-25-gpu.md:95:1. Estudar no Bergamota: os patches de kernel da GPU (bring-up do GMU, SQE, zap via SCM/PAS, SMMU da GPU, a
+./s9/PROMPT-sessao-2026-10-25-gpu.md:99:   SQE carregado, zap aceito pelo TZ, um comando simples executado.
+./s9/shim/m10-post-gmu-working.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+./s9/shim/m10-post-gmu-working.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+./s9/shim/m10-post-gmu-working.c:165:	con_str("PASSO", b);
+./s9/shim/m11-before-ack-fallback.c:223:	con_str("PASSO", b);
+./s9/shim/m11-before-smmu-probe.c:223:	con_str("PASSO", b);
+./s9/shim/m11-hfi-response-before.c:223:	con_str("PASSO", b);
+./s9/shim/m9.c:121:	con_str("PASSO", b);
+./s9/shim/m7.c:184:	con_str("PASSO", b);
+./s9/shim/m7.c:397: * BYPASS into FAULT).
+./s9/shim/m11-before-reorder.c:223:	con_str("PASSO", b);
+./s9/shim/m11-hfi-before-instrumentation.c:223:	con_str("PASSO", b);
+./s9/shim/m5.c:84:	con_str("PASSO", b);
+./s9/shim/m10.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+./s9/shim/m10.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+./s9/shim/m10.c:165:	con_str("PASSO", b);
+./s9/shim/m11-before-v1-hfi-fix.c:223:	con_str("PASSO", b);
+./s9/shim/m6.c:86:	con_str("PASSO", b);
+./s9/shim/m11-before-hfi-layout-fix.c:223:	con_str("PASSO", b);
+./s9/shim/m11.c:223:	con_str("PASSO", b);
+./s9/shim/m11-m11a.c:223:	con_str("PASSO", b);
+./s9/shim/m11.c.before-pa-fix:223:	con_str("PASSO", b);
+./s9/shim/m10-before-post-gmu-smmu.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+./s9/shim/m10-before-post-gmu-smmu.c:27: * The GX rail, the GPU SMMU, HFI, the zap shader and the CP are NOT here: those
+./s9/shim/m10-before-post-gmu-smmu.c:163:	con_str("PASSO", b);
+./s9/shim/m8.c:19: * names the address). A hang = watchdog, last PASSO on screen.
+./s9/shim/m8.c:59:	con_str("PASSO", b);
+./s9/tools/prep-ios6.sh:94:	NO_PASSWORD_PROMPT=1 /bin/sh /prep_bootstrap.sh
+./s9/NOTES.md:147:     (BYPASS vira FAULT). Sem isso o 1º DMA (TRB) trava a CPU — era também o problema do GPI do touch.
+./s9/NOTES.md:267:1. **Zap da Samsung extraído** do `BL/NON-HLOS.bin` oficial (`image/a630_zap.mdt`+`.b00/.b01/.b02`, ELF32, 1 segmento
+./s9/NOTES.md:268:   de código relocável) → `research/gpu-fw/` (fora do git). O zap assinado por aparelho era o maior desconhecido dos
+./s9/NOTES.md:276:0x5090000, GCC 0x100000, PDC 0xb200000, SMMU da GPU 0x5040000 (nossa, não emulada pelo hyp), zap PAS 13 região
+./s9/NOTES.md:280:A GMU (energia+relógios+firmware → `0xBABEFACE`) · B SMMU+GX+HFI · C zap+CP (NOP) — **tudo no shim** (hardware
+./s9/NOTES.md:292:**🎉 M10 GRAVADO E PASSOU DE PRIMEIRA (2026-10-25, tarde, foto do dono):** todas as etapas verdes.
+./s9/NOTES.md:308:Depois: etapa C (zap da Samsung já extraído + CP).
+./s9/ESTUDO-2026-10-25-gpu.md:30:**Bergamota, xnu-11215 / iOS 18** [H]: etapa 8 passou (zap aceito pelo TrustZone, CP executou NOP + MEM_WRITE pela SMMU,
+./s9/ESTUDO-2026-10-25-gpu.md:67:`qcom,kgsl-hyp` PAS 13, região `0x8c415000` +0x2000 (fora da RAM do nosso XNU, que começa em 0xa6000000). cmd-db em
+./s9/ESTUDO-2026-10-25-gpu.md:71:**Firmware:** o zap da Samsung está no `NON-HLOS.bin` do BL oficial: `image/a630_zap.mdt` (6.684 B = cabeçalho ELF
+./s9/ESTUDO-2026-10-25-gpu.md:82:init do CP (UCHE, VBIF, endereçamento 64 bits, proteção, SQE, anel) → zap pelo TrustZone (PAS 13; o Linux do S9
+./s9/ESTUDO-2026-10-25-gpu.md:103:| **A** | **GMU: energia + relógios + firmware do GMU → `0xBABEFACE`** | shim M10 (feito) | baixo: sem GX/zap/CP; hang = watchdog | o processador de energia da GPU roda |
+./s9/ESTUDO-2026-10-25-gpu.md:105:| C | zap pelo TrustZone (PAS 13, o `a630_zap` **da Samsung** já extraído), CP (SQE, anel, `CP_ME_INIT`), sai do modo seguro, NOP+MEM_WRITE | shim M12 | médio: TrustZone/modo seguro | CP executa um comando e escreve na RAM |
+./s9/ESTUDO-2026-10-25-gpu.md:117:- **Zap da Samsung extraído** do `BL/NON-HLOS.bin` → `s9port/research/gpu-fw/a630_zap.{mdt,b00,b01,b02}` (fora do git):
+./s9/ESTUDO-2026-10-25-gpu.md:132:   (SMMU/GX). Se parar antes, a última linha "PASSO" diz onde (ex.: "CX GDSC não liga", "ITCM não guarda o firmware").
+./s9/logs/pstore-20261103-010304.txt:934:[    4.661171]  [1:    kworker/1:1:  301] sec_ts 30-0048: [sec_input] PAS  0,  0,  0, 11  FAI  0,  0,  0,  1
+./s9/logs/ios-boot-20261103.txt:283:FIPSPOST_USER [698570176] fipspost_post:160: PASSED: (0 ms) - fipspost_post_hmac
+./s9/logs/ios-boot-20261103.txt:284:FIPSPOST_USER [698601085] fipspost_post:164: PASSED: (1 ms) - fipspost_post_integrity
+./s9/logs/ios-boot-20261103.txt:285:FIPSPOST_USER [698605048] fipspost_post:168: PASSED: (0 ms) - fipspost_post_indicator
+./s9/logs/ios-boot-20261103.txt:286:FIPSPOST_USER [698607333] fipspost_post:169: PASSED: (0 ms) - fipspost_post_aes_ecb
+./s9/logs/ios-boot-20261103.txt:287:FIPSPOST_USER [698609607] fipspost_post:170: PASSED: (0 ms) - fipspost_post_aes_cbc
+./s9/logs/ios-boot-20261103.txt:288:FIPSPOST_USER [698709103] fipspost_post:171: PASSED: (5 ms) - fipspost_post_rsa_sig
+./s9/logs/ios-boot-20261103.txt:289:FIPSPOST_USER [698878100] fipspost_post:172: PASSED: (8 ms) - fipspost_post_ecdsa
+./s9/logs/ios-boot-20261103.txt:290:FIPSPOST_USER [698887387] fipspost_post:173: PASSED: (0 ms) - fipspost_post_ecdh
+./s9/logs/ios-boot-20261103.txt:291:FIPSPOST_USER [698889577] fipspost_post:174: PASSED: (0 ms) - fipspost_post_aes_ccm
+./s9/logs/ios-boot-20261103.txt:292:FIPSPOST_USER [698891984] fipspost_post:175: PASSED: (0 ms) - fipspost_post_aes_cmac
+./s9/logs/ios-boot-20261103.txt:293:FIPSPOST_USER [698895207] fipspost_post:176: PASSED: (0 ms) - fipspost_post_hkdf
+./s9/logs/ios-boot-20261103.txt:294:FIPSPOST_USER [699212044] fipspost_post:177: PASSED: (16 ms) - fipspost_post_pbkdf
+./s9/logs/ios-boot-20261103.txt:295:FIPSPOST_USER [699214917] fipspost_post:178: PASSED: (0 ms) - fipspost_post_drbg_hmac
+./s9/logs/ios-boot-20261103.txt:296:FIPSPOST_USER [699217702] fipspost_post:180: PASSED: (0 ms) - fipspost_post_kdf_ctr
+./s9/logs/ios-boot-20261103.txt:297:FIPSPOST_USER [699219889] fipspost_post:181: PASSED: (0 ms) - fipspost_post_aes_gcm
+./s9/logs/ios-boot-20261103.txt:298:FIPSPOST_USER [699222163] fipspost_post:182: PASSED: (0 ms) - fipspost_post_aes_xts
+./s9/logs/ios-boot-20261103.txt:299:FIPSPOST_USER [699225065] fipspost_post:183: PASSED: (0 ms) - fipspost_post_tdes_ecb
+./s9/logs/ios-boot-20261103.txt:300:FIPSPOST_USER [699227396] fipspost_post:184: PASSED: (0 ms) - fipspost_post_drbg_ctr
+./s9/logs/ios-boot-20261103.txt:301:FIPSPOST_USER [699585556] fipspost_post:186: PASSED: (18 ms) - fipspost_post_ffdh
+./s9/logs/ios-boot-20261103.txt:302:FIPSPOST_USER [699782944] fipspost_post:187: PASSED: (10 ms) - fipspost_post_rsa_enc_dec
+./s9/logs/ios-boot-20261103.txt:303:FIPSPOST_USER [699785230] fipspost_post:206: all tests PASSED (64 ms)
+./s9/logs/ios-boot-clean.txt:280:FIPSPOST_USER [698642302] fipspost_post:160: PASSED: (0 ms) - fipspost_post_hmac
+./s9/logs/ios-boot-clean.txt:281:FIPSPOST_USER [698673041] fipspost_post:164: PASSED: (1 ms) - fipspost_post_integrity
+./s9/logs/ios-boot-clean.txt:282:FIPSPOST_USER [698677284] fipspost_post:168: PASSED: (0 ms) - fipspost_post_indicator
+./s9/logs/ios-boot-clean.txt:283:FIPSPOST_USER [698679527] fipspost_post:169: PASSED: (0 ms) - fipspost_post_aes_ecb
+./s9/logs/ios-boot-clean.txt:284:FIPSPOST_USER [698681854] fipspost_post:170: PASSED: (0 ms) - fipspost_post_aes_cbc
+./s9/logs/ios-boot-clean.txt:285:FIPSPOST_USER [698781117] fipspost_post:171: PASSED: (5 ms) - fipspost_post_rsa_sig
+./s9/logs/ios-boot-clean.txt:286:FIPSPOST_USER [698950284] fipspost_post:172: PASSED: (8 ms) - fipspost_post_ecdsa
+./s9/logs/ios-boot-clean.txt:287:FIPSPOST_USER [698959629] fipspost_post:173: PASSED: (0 ms) - fipspost_post_ecdh
+./s9/logs/ios-boot-clean.txt:288:FIPSPOST_USER [698961852] fipspost_post:174: PASSED: (0 ms) - fipspost_post_aes_ccm
+./s9/logs/ios-boot-clean.txt:289:FIPSPOST_USER [698964285] fipspost_post:175: PASSED: (0 ms) - fipspost_post_aes_cmac
+./s9/logs/ios-boot-clean.txt:290:FIPSPOST_USER [698967589] fipspost_post:176: PASSED: (0 ms) - fipspost_post_hkdf
+./s9/logs/ios-boot-clean.txt:291:FIPSPOST_USER [699284371] fipspost_post:177: PASSED: (16 ms) - fipspost_post_pbkdf
+./s9/logs/ios-boot-clean.txt:292:FIPSPOST_USER [699287169] fipspost_post:178: PASSED: (0 ms) - fipspost_post_drbg_hmac
+./s9/logs/ios-boot-clean.txt:293:FIPSPOST_USER [699289876] fipspost_post:180: PASSED: (0 ms) - fipspost_post_kdf_ctr
+./s9/logs/ios-boot-clean.txt:294:FIPSPOST_USER [699292122] fipspost_post:181: PASSED: (0 ms) - fipspost_post_aes_gcm
+./s9/logs/ios-boot-clean.txt:295:FIPSPOST_USER [699294324] fipspost_post:182: PASSED: (0 ms) - fipspost_post_aes_xts
+./s9/logs/ios-boot-clean.txt:296:FIPSPOST_USER [699297204] fipspost_post:183: PASSED: (0 ms) - fipspost_post_tdes_ecb
+./s9/logs/ios-boot-clean.txt:297:FIPSPOST_USER [699299564] fipspost_post:184: PASSED: (0 ms) - fipspost_post_drbg_ctr
+./s9/logs/ios-boot-clean.txt:298:FIPSPOST_USER [699657926] fipspost_post:186: PASSED: (18 ms) - fipspost_post_ffdh
+./s9/logs/ios-boot-clean.txt:299:FIPSPOST_USER [699855461] fipspost_post:187: PASSED: (10 ms) - fipspost_post_rsa_enc_dec
+./s9/logs/ios-boot-clean.txt:300:FIPSPOST_USER [699857820] fipspost_post:206: all tests PASSED (64 ms)
+./work/dt/live-twrp.dts:23038:			qcom,firmware-name = "a630_zap";
+./research/gpu-fw/samsung-zap/MANIFEST.txt:1:Firmware: a630_zap
+./research/gpu-fw/samsung-zap/MANIFEST.txt:6:a630_zap.b00:
+./research/gpu-fw/samsung-zap/MANIFEST.txt:10:a630_zap.b01:
+./research/gpu-fw/samsung-zap/MANIFEST.txt:17:a630_zap.b02:
+./tools/validate-repo.py:139:        print(bold(green("\nAll repository integrity checks PASSED successfully!")))
+./NOTES.md:137:- **LAUNCHD DAEMONS RUN (boot 0039u, 18:29:13 UTC, photo IMG_20261016_203052).** With `launchd_unsecure_cache=1` all boot tasks pass and launchd starts LaunchDaemons (pids > 100: identityservicesd 114 and lockdownd 106 crash, "Too many corpses being created"). Fatal: `watchdogd: ERROR: failed to discover watchdog KEXT service` -> exit (namespace 2 = signal, subcode 5) -> `_PanicOnCrash` panic. watchdogd: IOServiceMatching("IOWatchdog"), IOServiceOpen type 1, IOConnectCallScalarMethod sel 0/1 (check in)/3/4 (disable/enable userspace monitoring)/5, IOConnectCallStructMethod sel 2 (1 KiB in) and 9 (small out); VM path ("detected virtual machine environment and no watchdog KEXT found, exiting...") only when it detects a VM. Console also flooded with `hfs: set hardlink bit on vol=iOSRoot cnid=321318` (Linux-made hard links lack kHFSHasLinkChainBit; repaired only in memory on each lookup). Patches **0040** (`iokit/Kernel/arm/SweetWatchdog.cpp`: IOWatchdog + IOWatchdogUserClient, all selectors succeed with zeroed outputs, each logged once as `SWEET WDT: ...`) and **0041** (sweet_hfs hfs_catalog.c: the three link-repair printfs limited to 8 per boot); CI `38948245372` PASSED -> `xnu/out-0041` (QEMU regression OK). Image `shim/out/shim-boot-0041u.img` (0041 + sweet-0038hi.adt + ufsrw rootrw + launchd_unsecure_cache=1) booted 18:39:53 UTC (`research/boot0041u.log`), photo pending.
+./NOTES.md:140:- **0038 AppleKeyStore (CI 38938744130 PASSED -> `xnu/out-0038`; QEMU msgbuf: `SWEET AKS: AppleKeyStore registered (no passcode, unlocked)`; phone image `shim/out/shim-boot-0038w.img` booted 17:38:10 UTC, `research/boot0038w.log`, photo pending).** QEMU full kernel log trick (fb.txt is only the last screen): `llvm-nm KERNEL | grep _msgbufp` -> `--hmp "x /1gx ADDR"` gives struct msgbuf address (static, 0xfffffe0007b56678 on 0038) -> `--hmp "x /3gx STRUCT"` gives bufc (3rd quad) -> `--hmp "memsave BUFC 0x20000 \"FILE\""` (quote the file name), `tr -d "\0" < FILE`. Same inputs give the same addresses. Boot 0037w 17:08:35 UTC, photo IMG_20261016_191052: bindfs fixed mount; mount-phase-1/2 pass; `cc_fips_test` boot task: all corecrypto FIPS POST tests PASSED in userspace; then keybag boot task `keybagd --init`: `MKB_INIT: FATAL KEYBAG ERROR: failed to load system bag`, `Could not get options entry from the device tree` (x2, IODeviceTree:/options = NVRAM, non-fatal), `REBOOTING INTO RECOVERY MODE` -> reboot -> panic `Halt/Restart Timed Out @IOPlatformExpert.cpp:884` (no restart path on SWEET).
+./NOTES.md:173:- **MILESTONE ON HARDWARE: BOOT FROM INTERNAL FLASH.** 0029 CI `38797924912` PASSED, `xnu/out-0029` SHA256 `a68bc847...2a37`. Image `shim/out/shim-boot-0029u.img` (payload-0029u = 0029 kernel + `shim/out/sweet-0028.adt` + `rd=ufsroot0`, NO RAM disk). Boots 20:01:34 and 20:12:37 UTC (`research/boot0029u*.log`), photo IMG_20261015_221403: `SWEET UFS: "userdata" on LUN 0: first block 0x2b8c00, 109643 MiB, read-only` -> `BSD root: ufsroot0, major 1, minor 0` -> `hfs: mounted SweetRoot on device b(1, 0)` -> `SWEET: root volume is not authenticated (error 25); continuing unsealed` -> `load_init_program ... /sbin/launchd` -> `*** SWEET userspace: init running as PID 1 ***` -> heartbeat (ran for minutes unattended). userdata currently holds the 8 MB `research/root-hfs.img`. NEXT: build a multi-GB HFS+ image with the iOS 16 (iPhone X 20H392) userland (OS rootfs + SystemOS cryptex contents incl. dyld shared cache at /System/Library/Caches/com.apple.dyld; preserve modes/owners/symlinks; decompress LZBITMAP via apfs-fuse), flash it to userdata (sparse, needs user OK), then try Apple's dyld/launchd. Driver is read-only (root mounts RDONLY), fine for first launchd attempts.
+./NOTES.md:175:- **UFS ROOT DRIVER VERIFIED ON HARDWARE (read-only).** 0028 CI `38796139570` PASSED, `xnu/out-0028` SHA256 `8b981640...9da6`; QEMU HFS RAM-disk regression `research/q0028-hfs` still runs init. Phone boot 2026-10-15 19:50:24 UTC (`research/boot0028u.log`, image `shim/out/shim-boot-0028u.img`, phone ADT `shim/out/sweet-0028.adt` with /sweet-ufs, NO RAM disk, `rd=ufsroot0`), photos IMG_20261015_215151/215220: `SWEET UFS: "userdata" on LUN 0: first block 0x2b8c00, 109643 MiB, read-only` -> `BSD root: ufsroot0, major 1, minor 0` -> `hfs_ValidateHFSPlusVolumeHeader: unknown Volume Signature : f188` (Android-encrypted data, as expected) -> `cannot mount root, errno = 19`, kernel retries mountroot (no panic). Nothing written to flash. NEXT (destructive, needs user confirmation right before): `fastboot flash userdata research/root-hfs.img` (8 MB HFS with test init) then boot rd=ufsroot0 -> expect init from internal flash.
+./NOTES.md:187:- **HFS ROOT WORKS (QEMU).** 0027 CI `38779441895` PASSED, `xnu/out-0027` SHA256 `a8643886...5f6a`. QEMU `research/q0027-hfs` (RAM disk = `research/root-hfs.img`, rd=md0): `BSD root: md0` -> `hfs: mounted SweetRoot on device b(1, 0)` -> `load_init_program: attempting to load /sbin/launchd` -> `*** SWEET userspace: init running as PID 1 ***` + heartbeat, no panic. Phone image `shim/out/shim-boot-0027.img` (payload-0027 = 0027 kernel + sweet-0021.adt + root-hfs.img + rd=md0, ramdisk byte-match check-0027) ready; awaiting FASTBOOT for phone test.
+./NOTES.md:189:  - 0026 (`f0e990c` + link fix `64c96f4`): Apple OSS **hfs-627.100.6** (commit `31d5ec238dfab485e78a9a30b8b92d13e8914f03`, paired with xnu-8796.141.3 in macos-135 release.json) staged by `xnu/patches/0026-stage-hfs.sh` into `bsd/sweet_hfs` (core + hfs_encodings; AppleKeyStore include/key prototypes guarded by CONFIG_PROTECT; SDK TargetConditionals copied). New config option `sweet_hfs` (MASTER + MASTER.arm64.sweet); 40 `optional sweet_hfs` files; Makefile.template foreach adds `_CFLAGS_ADD = -include sweet_hfs_compat.h -I...` (MUST come after kernel -D flags; compat undefs BSD/XNU_KERNEL_PRIVATE and the CONFIG_* HFS tests so kext-config.h decides: macOS profile, no content protection). `sweet_hfs_iokit.c` replaces hfs_iokit.cpp/hfs_encodings_kext.cpp: `sweet_hfs_register()` called in bsd_init after vfsinit (encodings init, vfs_fsadd VFS_TBLCANMOUNTROOT, zones, sysctls); is_ejectable 0, iterate_media none, serial KERN_NOT_SUPPORTED, OSKextGetCurrentLoadTag -> kOSKextInvalidLoadTag (renamed via compat macro). hfs_encodings' own `hfs_allocated` renamed per object (separate kexts on Apple; first CI `38777325964` failed on that duplicate at link). mockfs now validates Mach-O magic (its TODO) so non-Mach-O roots fall through to HFS (new fs entries come AFTER mockfs in vfsconf). CI `38778133720` PASSED, `xnu/out-0026` SHA256 `0b49170c...701a`, prints `SWEET HFS: hfs-627.100.6 registered`.
+./NOTES.md:196:- **MILESTONE: USERSPACE RUNS (QEMU).** 0025 CI `38774788048` PASSED, `xnu/out-0025` SHA256 `5496069b...4877`. QEMU `research/q0025-rd` (150 s, no panic): `BSD root: md0` -> `load_init_program: attempting to load /sbin/launchd` -> `*** SWEET userspace: init running as PID 1 ***` -> `SWEET init: still alive` every 5 s. Exec, ad-hoc SHA-256 code signature, syscalls, devfs /dev/console, select timeouts all work. Phone image prepared: `shim/out/shim-boot-0025.img` 16,515,072 bytes SHA256 `9dbfa0b15140c0bd733a16c4f727f6a7df44a8741f98d8e266d5f2fa4f689db0` (payload-0025 = 0025 kernel + sweet-0021.adt + research/sweet-init + rd=md0; ramdisk byte-match check-0025). Waiting for user to put phone in FASTBOOT.
+./NOTES.md:197:- **0024 CI `38773277811` PASSED**, `xnu/out-0024` SHA256 `a0ba964b...4348`. QEMU `research/q0024-rd` and **PHONE (boot 2026-10-15 17:05:55 UTC, `research/boot0024.log`, image `shim/out/shim-boot-0024.img` SHA256 `cf3dac86...6964`, 16,510,976 bytes, payload `shim/out/payload-0024.bin` = 0024 kernel + `shim/out/sweet-0021.adt` + RAM disk `research/sweet-init` + rd=md0; ramdisk byte-match `check-0024`)** agree: `Added memory device md0`, `BSD root: md0`, `load_init_program: attempting to load /sbin/launchd`, then data abort in accelerate_entitlement_queries (PC 0x...77d2458, FAR 0x1a0) = NULL AMFI interface. Photo `IMG_20261015_190715.jpg`. RAM disk root is physically verified.
+./NOTES.md:200:  - 0021 CI `38769532000` PASSED, `xnu/out-0021` SHA256 `2b7500a1...962e`, `research/bt25`/`run25.log`. QEMU `research/q0021-rd`: md0 root, then assert `iomediaClass` in IOService::publishHiddenMedia.
+./NOTES.md:201:  - 0022 (`20ece9c`, publishHiddenMedia without IOMedia class) CI `38770666158` PASSED, `xnu/out-0022` SHA256 `a4d0e787...30c5`, `research/bt26`/`run26.log`. QEMU `research/q0022-rd`: data abort in SHA256_Init (NULL g_crypto_funcs) from vm_kernel_addrhash_internal.
+./NOTES.md:202:  - 0023 (`c8089d1`, libkern SHA256_Init/Update/Final use built-in ccsha256_ltc_di + ccdigest_init/update on SWEET; also serves code-signing SHA-256; SHA-1/MD5/SHA-384/512 still have NO provider - BearSSL from 0020 could supply them later) CI `38771876423` PASSED, `xnu/out-0023` SHA256 `d763fed7...1003`, `research/bt27`/`run27.log`. QEMU `research/q0023-rd`: **mockfs mounted md0, `load_init_program: attempting to load /sbin/launchd`**, then panic `mockfs_fsnode_vnode failed to create fictitious pages ... rvalue = 5` (mockfs.c:351).
+./NOTES.md:210:- **0020 PHONE RESULT (user transcription of screen, 2026-10-15): KERNEL INIT COMPLETE, WAITING FOR ROOT.** After Skywalk self-tests PASSED, kminit, ifnet_attach lo0/gif0/stf0, screen prints `BSD`, then `Waiting on <dict><key>IOProviderClass</key><string>IOMedia</string><key>Content</key><string>Apple_HFS</string></dict>` and `Failed to write boot-picker-bringup-reason to NVRAM.` No panic. This is IOFindBSDRoot waiting for a root device (none exists); NVRAM warning is expected (no NVRAM driver). QEMU `cpu_idle` snapshot is presumably the same wait (not GDB-confirmed; milestone GDB run was cancelled by user since phone answered it). Draft `research/check-milestones20.gdb` (hbreaks inittodr/vfs_mountroot/IOFindBSDRoot/bsd_utaskbootstrap) left uncommitted/ignored.
+./NOTES.md:212:- **0020 (AES) VERIFIED + PHONE BOOTED (Claude took over after Codex usage limit).** Actions `38765422261` (`ab9e23f`) PASSED; kernel `xnu/out-0020/kernel.development.sweet` checksum OK; buildtree `research/bt24`, log `research/run24.log`. Actual-kernel AES checks PASS (`research/check-aes20.gdb` / `.log`, 12 extra CBC cases match OpenSSL). 45s QEMU `research/q0020`: no panic, zero unknown glyphs, past old TCP/AES panic -> Skywalk self-tests PASSED -> bsd_autoconf kminit -> ifnet_attach lo0/gif0/stf0; final snapshot PC in `cpu_idle` (idle or waiting; NOT yet diagnosed, could be root-device wait). Image `shim/out/shim-boot-0020.img` 16,461,824 bytes SHA256 `775200cb02d95fc750981516b79d91dcdc96184bbe67a38f9d57c59b4a391828`, ramdisk byte-matches `payload-0020.bin` (`check-0020`). **Phone temporarily booted 2026-10-15 16:10:00 UTC**: one FASTBOOT product sweet, send OKAY0.407s, boot OKAY0.134s, total0.549s, exit0 (`research/boot0020.log`). Awaiting user photo; do not reboot the phone before it. NEXT: read photo; diagnose what QEMU waits on after stf0 (GDB backtrace of threads / longer run). Codex's STOP request below is complete.
+./NOTES.md:216:- **Latest built kernel0019**, implementation `256d3f0`, patches0001-0019. Actions `38763072907` PASSED (4m5s): https://github.com/dipa-studio/ios-sweet/actions/runs/38763072907. Kernel `xnu/out-0019/kernel.development.sweet`, SHA256 `a27df7568f03fb541cf0e8024c0a594fa178a85054fcf9eba29158cbd4c5ecc0`; checksum verified. Log/source `research/run23.log` / `research/bt23` (no nested .git). Seven pthread source/build/header files and staged adaptations byte-match local compile inputs.
+./NOTES.md:218:- **0019 pthread FIXED in QEMU and observed beyond its init on phone**: 45s QEMU `research/q0019`, zero unknown glyphs, then AES panic. Actual-kernel API checks PASS `research/check-pthread19.gdb` / `.log`, guest `research/q0019-api`: function/callback table identity, actual provider pthread_init returns, locks/global hash/threadcall/typed zones initialized, thread_selfid via syscall shim + buffer bounds, process hash init/delete via shims restores NULL. Monitor quit prints expected remote-disconnect after PASS. All fixture guests stopped.
+./NOTES.md:230:- **0019 build PASSED** Actions `38763072907` (4m5s), implementation `256d3f0`. Kernel `xnu/out-0019/kernel.development.sweet`, SHA256 `a27df7568f03fb541cf0e8024c0a594fa178a85054fcf9eba29158cbd4c5ecc0`; checksum verified. Log/source `research/run23.log` / `research/bt23`; all seven patched files and staged provider adaptations match local compile inputs. Prefer bt23 as the next baseline.
+./NOTES.md:231:- **0019 pthread FIXED in QEMU**: 45s run `research/q0019` registers provider, passes mbinit, DLIL SUM16 checks and DLIL thread scheduling. Actual-kernel GDB checks `research/check-pthread19.gdb` / `.log` PASS: function/callback table identity, real _pthread_init returns, locks/global hash/cleanup threadcall/typed zones non-NULL, thread_selfid via actual syscall shim with output bounds, process hash init/delete through actual shims restores NULL. Guest stopped after tests; no fixture left running. GDB monitor quit prints expected remote disconnect after PASS.
+./NOTES.md:236:- **Latest kernel implementation `e7d9550`, patches0001-0018; CI `38760004398` PASSED (3m56s)**: https://github.com/dipa-studio/ios-sweet/actions/runs/38760004398. No build is pending. Kernel `xnu/out-0018/kernel.development.sweet`, SHA256 `b3c8d59acc88f93a2c836eb2527a05ed4fbaac7c580a2ea8c3b795137f4aadf1`; checksum verified. Source/log `research/bt22` / `research/run22.log` (baseline for patch0019; no nested .git). New driver/config sources match CI exactly.
+./NOTES.md:249:- **0018 milestone:** Actions `38760004398` PASSED (3m56s), checksums passed, new CPU/build files byte-match CI tree. Kernel `xnu/out-0018/kernel.development.sweet`, SHA256 `b3c8d59acc88f93a2c836eb2527a05ed4fbaac7c580a2ea8c3b795137f4aadf1`; log/tree `research/run22.log` / `research/bt22`. QEMU `research/q0018` 12s: boot CPU registered, SGI1 verified, CPU initialization complete, **BSD initialization entered** (copyright, MAC framework, buffer headers), no panic/zero unknown glyphs. Direct CPU API checks PASS (`research/check-cpu18.gdb`, `.log`, `research/q0018-api`): CPU0 Running, processor matches processor_array[0], real SGI enabled, CPU name correct, secondary-start returns KERN_NOT_SUPPORTED. Two-CPU ADT correctly panics before registration (`research/q0018-smp`). Longer 45s run `research/q0018-long` still running; next BSD wait/fault not yet identified.
+./NOTES.md:254:- Latest kernel implementation: **`aa3f991`**, patches **0001-0017**. All four new Actions builds PASSED: 0014 `38748543058` (4m0s), 0015 `38749549779` (4m3s), 0016 `38750733996` (4m3s), 0017 **`38751507437` (4m7s)**. Latest: https://github.com/dipa-studio/ios-sweet/actions/runs/38751507437. No build is pending.
+./NOTES.md:261:- Direct QEMU/GDB API checks: PRNG 600-byte chunking, buffer bounds, changing output, zero-length reads/writes, user reseed, contended refresh, generator1 init/output PASS again on latest0017 (`research/check-prng17.gdb` / `.log`, guest `research/q0017-api`). Trust-cache unavailable-service/argument/output cases PASS on0015 (`research/check-trustcache.gdb` / `.log`). Platform registration + target/product normal/truncated/zero/null/bounds PASS on0016 (`research/check-platform.gdb`, `research/check-platform3.log`). Different platform ID correctly retains IOPanicPlatform fallback (`research/q0016-negative`). Timer PPI32 and size2 correctly panic (`research/q0017-badppi`, `research/q0017-badsize`); omitted property selects19 (`research/q0017-default`). These are API/bring-up checks, not crypto certification or SMP scheduling validation.
+./NOTES.md:269:- Patch 0016 CI `38750733996` PASSED (4m3s); artifacts not yet downloaded/booted. Patch 0017 prepared to fix QEMU timer fidelity BEFORE interpreting future no-panic/stall runs: actual `qemu-system-aarch64 -M virt,gic-version=3,dumpdtb=research/qemu-virt.dtb ...` timer property has virtual PPI 11 => INTID 27, while phone uses INTID 19. Kernel formerly hardcoded 19. New optional /arm-io/gic virtual-timer-intid property selects the PPI (validate exact u32 and 16..31); missing property retains phone default 19. One RO-late global drives GIC enable and sleh_irq dispatch. tools/mkadt.py emits phone19/QEMU27. Both C TUs compile (`research/timer-objs`), ADT serialize/parse checks confirm values/addresses, all 17 patches apply and match. Sandbox `research/bt19/xnu`, originals `research/pre0017`; initial local sleh compile failed due read-only exported header not updated, fixed export and BOTH recompiled successfully. CI exports normally.
+./NOTES.md:273:- Patch 0015 CI `38749549779` PASSED (4m3s), checksum verified. Kernel `xnu/out-0015/kernel.development.sweet`, SHA256 `ca1b424a596c7058550ad1659080a333e7643270f019656401d80bf2b876645f`; buildtree/log `research/bt19` / `research/run19.log`. QEMU `research/q0015` (10s, zero unknown glyphs) passes trust-cache handling and machine lockdown, then panics `Unable to find driver for this platform: "xiaomi,sweet" @IOPlatformExpert.cpp:2319` (IOPanicPlatform fallback). Next concrete work: add a built-in SWEET IODTPlatformExpert personality/class; keep the fallback for mismatched platforms. No phone boot yet.
+./NOTES.md:274:- Direct trust-cache API checks PASSED in the actual 0015 kernel under QEMU/GDB (`research/check-trustcache.gdb`, `research/check-trustcache.log`, `research/q0015-api`): runtime pointers NULL, hash/UUID queries return NOT_FOUND, typed/untyped/legacy loads return NOT_SUPPORTED, capabilities outputs zero and bounds preserved, invalid-argument cases still reject. Second PRNG check also verifies contended refresh returns immediately (`research/check-prng2.log`, `research/q0014-api2`).
+./NOTES.md:278:- Patch 0014 CI `38748543058` PASSED (4m0s), artifact checksum passed. Kernel `xnu/out-0014/kernel.development.sweet`, SHA256 `741de20c851755d333759d7e668346f3edb4f325efac4cc7c142d80d1f5ff75c`; buildtree/log `research/bt18` / `research/run18.log`. QEMU run `research/q0014` (10s, zero unknown glyphs) prints `SWEET PRNG: HMAC-SHA256 registered`, passes commpage initialization, loads vnguard policy, THEN panics `image4 interface not available @kern_trustcache.c:253`. PC=0 fault FIXED IN QEMU. No new phone boot performed.
+./NOTES.md:286:- Previous hardware boot: patch 0013 (`a3a46e2`) CI `38686345689` PASSED (3m44s), image `shim/out/shim-boot-0013.img` was temporarily booted on 2026-10-15 at 05:26 UTC: send OKAY (0.407s), boot OKAY (0.134s), total 0.546s. Superseded by the hardware/QEMU PC=0 observation and patch 0014 work above.
+./xnu/patches/0090-s9-usb-cold-start-jailbreak-recovery-reboot.patch:173:+ *      (reading sCR0 hangs) and S2CR BYPASS turns into FAULT; as U-Boot's
+./xnu/patches/0090-s9-usb-cold-start-jailbreak-recovery-reboot.patch:505:+	s9_wr(smmu + 0xc00 + 4 * (unsigned)slot, (uint32_t)cb);       /* type TRANSLATE (BYPASS would become FAULT) */
+seven@sevenzx:~/ios-s9$ sed -n '1,240p' s9/tools/adt.py
+sed -n '1,260p' s9/tools/mkadt.py
+#!/usr/bin/env python3
+"""Apple Device Tree (ADT) tools.
+
+  adt.py dump FILE [--hex]      FILE = raw ADT or an IM4P-wrapped DeviceTree
+  adt.py unwrap IM4P OUT        write the raw IM4P payload
+
+ADT layout: node = {u32 nprops, u32 nchildren, props..., children...};
+prop = {char name[32], u32 size (bit31 = placeholder flag), value padded to 4}.
+"""
+import struct, subprocess, sys
+
+
+def der(buf, off):
+    """Return (tag, value_start, value_end) for the DER element at off."""
+    tag = buf[off]
+    ln = buf[off + 1]
+    off += 2
+    if ln & 0x80:
+        n = ln & 0x7f
+        ln = int.from_bytes(buf[off:off + n], 'big')
+        off += n
+    return tag, off, off + ln
+
+
+def im4p_payload(buf):
+    tag, s, e = der(buf, 0)
+    assert tag == 0x30, 'not a DER sequence'
+    items, off = [], s
+    while off < e:
+        t, vs, ve = der(buf, off)
+        items.append((t, buf[vs:ve]))
+        off = ve
+    assert items[0][1] == b'IM4P', items[0]
+    # optional trailing items: KBAG (OCTET STRING) = encrypted, SEQUENCE = compression info
+    info = {'type': items[1][1].decode(), 'desc': items[2][1].decode(),
+            'encrypted': any(t == 0x04 for t, _ in items[4:])}
+    payload = items[3][1]
+    if payload[:4] == b'bvx2':
+        payload = subprocess.run(['lzfse', '-decode'], input=payload,
+                                 capture_output=True, check=True).stdout
+    return payload, info
+
+
+def load(path):
+    buf = open(path, 'rb').read()
+    if buf[:1] == b'\x30' and b'IM4P' in buf[:16]:
+        buf, info = im4p_payload(buf)
+        assert not info['encrypted'], 'payload is encrypted (KBAG present)'
+    return buf
+
+
+class Node:
+    def __init__(self):
+        self.props = []		# (name, flags, bytes)
+        self.children = []
+
+    @property
+    def name(self):
+        for n, _, v in self.props:
+            if n == 'name':
+                return v.split(b'\0')[0].decode()
+        return '?'
+
+    def prop(self, name):
+        for n, _, v in self.props:
+            if n == name:
+                return v
+        return None
+
+
+def parse(buf, off=0):
+    node = Node()
+    nprops, nchildren = struct.unpack_from('<II', buf, off)
+    off += 8
+    for _ in range(nprops):
+        name = buf[off:off + 32].split(b'\0')[0].decode()
+        size, = struct.unpack_from('<I', buf, off + 32)
+        flags, ln = size >> 31, size & 0x7fffffff
+        node.props.append((name, flags, buf[off + 36:off + 36 + ln]))
+        off += 36 + ((ln + 3) & ~3)
+    for _ in range(nchildren):
+        child, off = parse(buf, off)
+        node.children.append(child)
+    return node, off
+
+
+def serialize(node):
+    out = bytearray(struct.pack('<II', len(node.props), len(node.children)))
+    for name, flags, val in node.props:
+        out += name.encode().ljust(32, b'\0')[:32]
+        out += struct.pack('<I', len(val) | (flags << 31))
+        out += val + b'\0' * (-len(val) & 3)
+    for c in node.children:
+        out += serialize(c)
+    return bytes(out)
+
+
+def fmt(v, hexall=False):
+    if v and v[-1:] == b'\0' and all(32 <= c < 127 for c in v[:-1].replace(b'\0', b' ')) and len(v) > 1:
+        return repr(v.rstrip(b'\0').replace(b'\0', b'|').decode())
+    if len(v) in (4, 8) and not hexall:
+        return hex(int.from_bytes(v, 'little'))
+    if len(v) % 8 == 0 and len(v) <= 64:
+        return '<' + ' '.join(hex(x) for x in struct.unpack('<%dQ' % (len(v) // 8), v)) + '>'
+    if len(v) % 4 == 0 and len(v) <= 64:
+        return '<' + ' '.join(hex(x) for x in struct.unpack('<%dI' % (len(v) // 4), v)) + '>'
+    return v[:48].hex() + ('...' if len(v) > 48 else '') + f' ({len(v)} bytes)'
+
+
+def dump(node, depth=0, hexall=False):
+    ind = '  ' * depth
+    print(f'{ind}{node.name} {{')
+    for n, flags, v in node.props:
+        if n == 'name':
+            continue
+        print(f'{ind}  {n}{" [placeholder]" if flags else ""} = {fmt(v, hexall)}')
+    for c in node.children:
+        dump(c, depth + 1, hexall)
+    print(f'{ind}}}')
+
+
+if __name__ == '__main__':
+    cmd = sys.argv[1]
+    if cmd == 'dump':
+        root, end = parse(load(sys.argv[2]))
+        dump(root, hexall='--hex' in sys.argv)
+    elif cmd == 'unwrap':
+        open(sys.argv[3], 'wb').write(load(sys.argv[2]))
+#!/usr/bin/env python3
+"""Build the minimal Apple Device Tree that the SWEET xnu needs to boot,
+Galaxy S9 (SM-G9600, SDM845) edition of ios-sweet's tools/mkadt.py (MIT, dipa-studio).
+Every S9 address comes from its live FDT (TWRP /sys/firmware/fdt) and the shim
+milestones M1-M3; see s9port/NOTES.md.
+
+Only what the early boot path actually reads (see NOTES.md); every MMIO
+address comes from the sweet live FDT. Usage:  mkadt.py OUT.adt [--dump] [--qemu] [--highmem]
+"""
+import hashlib, os, struct, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import adt  # noqa: E402
+
+# Kernel-managed RAM: above every Qualcomm XPU carve-out (see NOTES.md)
+# Galaxy S9: one bank 0x80000000 + 0xfe1c0000; every fixed carve-out sits below
+# 4GB, so the kernel gets the whole range from 0x100000000 (with or without
+# --highmem).
+PHYS_BASE = 0xa6000000
+MEM_SIZE = 0xd81c0000   # 0xa6000000 (acima do staging do ABL) -> 0x17e1c0000   # 0xa1800000 -> 0x17e1c0000 span (holes excluded in pmap)
+# Panic log buffer, carved from the TOP of the dram range and exposed to XNU as
+# /pram + /chosen/embedded-panic-log-size. Without it, pe_init.c's
+# check_for_panic_log() leaves gPanicBase == 0, debug_log_init() bails out twice
+# and the kernel hangs right after "kdp_core zlib memory" — reproduced on QEMU
+# and independently on ios-fajita.
+PANIC_LOG_SIZE = 0x100000
+# --highmem (phone only): the whole upper DDR bank. The live FDT memory node is
+# <0x80000000 2G>, <0x1_00000000 0xfcc00000>; every fixed reserved-memory
+# carve-out is in the low bank and the dynamic pools are limited below 4G.
+HIGH_PHYS_BASE = 0xa6000000
+HIGH_MEM_SIZE = 0xd81c0000
+# /arm-io children are relative to this; it must not be 0 (serial_init bails)
+SOC_BASE = 0x01000000
+
+GICD, GICD_SIZE = 0x17a00000, 0x10000
+GICR, GICR_SIZE = 0x17a60000, 0x100000
+# cont_splash_region@9d400000; M1.1 read the scanout pipe: 1440x2960, B G R A
+FB, FB_SIZE = 0x9d400000, 0x1100000
+SWEET_ECID = 0x5357454554000001  # 'SWEET' + 1, synthetic
+FB_W, FB_H, FB_STRIDE = 1440, 2960, 1440 * 4
+# Internal UFS host (ufshc@1d84000 "ufs_mem"); QEMU virt has none
+UFS, UFS_SIZE = 0x01d84000, 0x3000
+TIMEBASE = 19200000
+VTIMER_INTID = 19
+# QEMU virt (-M virt,gic-version=3 -cpu cortex-a76): GICD/GICR and the generic timer's CNTFRQ
+QEMU_GICD, QEMU_GICR, QEMU_TIMEBASE = 0x08000000, 0x080a0000, 62500000
+QEMU_VTIMER_INTID = 27
+
+# Canvas (pixels) and artwork subtype per display-scale. UIKit picks the
+# status bar layout (_UIStatusBarVisualProvider_Split<width>) by the native
+# pixel width AND the notch size, and the notch comes from SpringBoard's
+# screen type, looked up from points, scale and artwork-device-subtype
+# (SBHScreenTypeForCurrentDevice). So @2x must be a whole iPhone XR screen:
+# 828 px wide (Split828) and subtype 1792, or the bar falls back to red.
+CANVAS = {3: (1125, 2436, 2436), 2: (828, 1792, 1792)}
+
+BOOT_MANIFEST_HASH = hashlib.sha384(b'sweet boot manifest').digest()
+
+# The iOS userland is the iPhone X (iPhone10,3 / D22AP) IPSW. MobileGestalt
+# derives product type, device class, home-button-less UI, artwork etc. from
+# the root identity and /product of the real D22AP device tree. That tree is
+# an Apple artifact (kept out of git): extract it from the IPSW with
+#   tools/remotezip.py URL DeviceTree.d22ap.im4p DIR
+#   ipsw img4 im4p extract DIR/Firmware/all_flash/DeviceTree.d22ap.im4p -o d22ap.adt
+D22AP_ADT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../research/ipsw-x/d22ap.adt')
+
+
+def d22ap_product(path=D22AP_ADT):
+    """/product properties of the real D22AP tree, without the syscfg
+    placeholders iBoot would fill in (flag bit set) and the node bookkeeping."""
+    if not os.path.exists(path):
+        print(f'warning: {path} missing, no /product node', file=sys.stderr)
+        return None
+    root, _ = adt.parse(open(path, 'rb').read())
+    for c in root.children:
+        if dict((k, v) for k, f, v in c.props).get('name') == b'product\0':
+            return [(k, v) for k, f, v in c.props if not f and k not in ('name', 'AAPL,phandle')]
+    raise SystemExit(f'{path}: no /product node')
+
+u32 = lambda *v: struct.pack('<%dI' % len(v), *v)
+u64 = lambda *v: struct.pack('<%dQ' % len(v), *v)
+cstr = lambda s: s.encode() + b'\0'
+
+
+def node(name, props=(), children=()):
+    n = adt.Node()
+    n.props = [('name', 0, cstr(name))] + [(k, 0, v) for k, v in props]
+    n.children = list(children)
+    return n
+
+
+def build(seed=None, qemu=False, highmem=False, scale=3):
+    """qemu=True: same tree, but with QEMU virt's GIC addresses and CNTFRQ (tools/qemu-sweet.py)."""
+    phys_base, mem_size = (HIGH_PHYS_BASE, HIGH_MEM_SIZE) if highmem else (PHYS_BASE, MEM_SIZE)
+    # Carve the panic log off the top so the kernel never allocates over it.
+    panic_base = phys_base + mem_size - PANIC_LOG_SIZE
+    mem_size -= PANIC_LOG_SIZE
+    gicd, gicr, timebase = (QEMU_GICD, QEMU_GICR, QEMU_TIMEBASE) if qemu else (GICD, GICR, TIMEBASE)
+    seed = seed if seed is not None else os.urandom(64)
+    phandle = iter(range(1, 1000))
+    ph = lambda: ('AAPL,phandle', u32(next(phandle)))
+
+    chosen = node('chosen', [
+        ph(),
+        ('dram-base', u64(phys_base)),
+        ('dram-size', u64(mem_size)),
+        ('random-seed', seed),
+        ('debug-enabled', u32(1)),
+        ('embedded-panic-log-size', u32(PANIC_LOG_SIZE)),
+        ('firmware-version', cstr('sweet-shim')),
+        ('system-firmware-version', cstr('sweet-shim')),
+        # iBoot's SHA-384 of the boot manifest; /sbin/mount -P 1 exits unless
+        # it exists (bind mounts /private/preboot/<hex>/usr/standalone/firmware,
+        # tolerating a missing directory). Fixed stand-in value.
+        ('boot-manifest-hash', BOOT_MANIFEST_HASH),
+        # libimg4 (cryptexd) aborts "failed to get crypto algorithm" without
+        # it; real A11+ device trees say sha2-384.
+        ('crypto-hash-method', cstr('sha2-384')),
+        # MobileGestalt's screen class: display-scale (u32, default 0) comes
+        # from /chosen, the pixel size from IOMobileFramebuffer. Scale 0 makes
+        # SpringBoard's FBSDisplayMode "infxinf@0x" invalid. 1080x2400 @3x =
+        # 360x800 points (like iPhone X class devices).
+        # Galaxy S9 --scale2: the iPhone XR/11 screen, 414x896 points at @2x
+        # (828x1792), 46% fewer pixels than @3x for CoreAnimation's CPU
+        # renderer; the kernel reads the canvas size from disp0 below and
+        # scales it to the panel. 375x812 @2x (750x1624) is no real iPhone:
+        # UIKit has no status bar provider for it (red "rdar:45025538" bar).
+        ('display-scale', u32(scale)),
+        # XNU derives IOPlatformUUID (gethostuuid) from these on arm; without
+        # them CFPreferences cannot use kCFPreferencesCurrentHost (no ByHost
+        # files), so e.g. DataMigration never records LastSystemVersion and
+        # migrates on every boot. Synthetic ECID (not the phone's); chip-id
+        # of the A11 that the iPhone X userland expects.
+        ('unique-chip-id', struct.pack('<Q', SWEET_ECID)),
+        ('chip-id', u32(0x8015)),
+        # Security status as on a dev-fused, undemoted board (tuple 0,0,1,1):
+        # MobileGestalt reads these from /chosen, and mobileactivationd's
+        # DeviceType then takes its native "Hactivation" branch (state
+        # Activated without an activation record; no SEP, no baseband here).
+        ('certificate-production-status', u32(0)),
+        ('effective-production-status-ap', u32(0)),
+        ('certificate-security-mode', u32(1)),
+        ('effective-security-mode-sep', u32(1)),
+    ], [node('memory-map', [ph()]),
+        # Local boot policy (kern_csr.c): SIP relaxed like `csrutil disable`
+        # (lp-sip0: untrusted kexts, unrestricted FS, task_for_pid, kernel
+        # debugger, dtrace, nvram), lp-sip1: unauthenticated (unsealed) root.
+        # The iOS shared cache is in no trust cache, so dyld can only map it
+        # with CSR_ALLOW_UNRESTRICTED_FS (vm_unix.c shared region checks).
+        node('asmb', [ph(), ('lp-sip0', u64(0x6f)), ('lp-sip1', u32(1))])])
+
+    # Galaxy S9 SMP (shim M2): eight cores in physical-core order, 0-3 Cortex-A55
+    # (MIDR 0x517F803C), 4-7 Cortex-A75 (0x516F802D), one homogeneous cluster.
+    # 'qcom,kryo470' stays: KernelConfigTables.cpp matches the CPU driver on it. The kernel defaults to one
+    # and uses cpus=N to select an initial prefix (N <= 8).
+    # QEMU retains its original single-CPU tree: its MPIDRs differ from sweet.
+    cpu_nodes = []
+    for core in range(1 if qemu else 8):
+        cpu_nodes.append(node(f'cpu{core}', [
+            ph(),
+            ('device_type', cstr('cpu')),
+            ('compatible', cstr('qcom,kryo470') + cstr('ARM,v8')),
+            ('reg', u32(core << 8)),  # actual MPIDR Aff1:Aff0, NOT logical ID
+            ('cpu-id', u32(core)),   # descriptive: XNU assigns IDs by DT order
+            ('cluster-id', u32(0)),  # descriptive; see ml_parse_cpu_topology
+            ('cluster-type', u32(0)),  # homogeneous CLUSTER_TYPE_SMP, not AMP
+            ('die-cluster-id', u32(0)),
+            ('cluster-core-id', u32(core)),
+            ('l2-cache-id', u32(core)),  # distinct per-core L2 nodes in live FDT
+            ('l3-cache-id', u32(0)),     # shared L3
+            ('state', cstr('running' if core == 0 else 'stopped')),
+            ('timebase-frequency', u32(timebase)),
+            ('clock-frequency', u32(2803200000 if core >= 4 else 1766400000)),
+            ('bus-frequency', u32(100000000)),
+            ('memory-frequency', u32(1866000000)),
+            ('peripheral-frequency', u32(timebase)),
+            ('fixed-frequency', u32(timebase)),
+        ]))
+    cpus = node('cpus', [ph(), ('#address-cells', u32(1)),
+                         ('#size-cells', u32(0))], cpu_nodes)
+
+    gic = node('gic', [
+        ph(),
+        ('compatible', cstr('arm,gic-v3')),
+        ('interrupt-controller', b''),
+        ('virtual-timer-intid', u32(QEMU_VTIMER_INTID if qemu else VTIMER_INTID)),
+        ('reg', u64(gicd - SOC_BASE, GICD_SIZE, gicr - SOC_BASE, GICR_SIZE)),
+    ])
+    arm_io = node('arm-io', [
+        ph(),
+        ('device_type', cstr('sweet-io')),
+        ('compatible', cstr('sweet-io') + cstr('arm-io')),
+        ('#address-cells', u32(2)),
+        ('#size-cells', u32(2)),
+        ('ranges', u64(0, SOC_BASE, 0x100000000 - SOC_BASE)),
+    ], [gic,
+        # No hardware: watchdogd checks IODeviceTree:/arm-io/wdt for no-pmu and
+        # otherwise crashes trying to set the PMU boot stage (customer builds
+        # ignore the -wdt_no_pmu boot-arg).
+        node('wdt', [ph(), ('no-pmu', u32(1))]),
+        # Main display: IOMobileFramebuffer.framework counts /arm-io children
+        # with this device_type and reads the canvas size from the node
+        # (the presented iPhone X size, see SweetFramebuffer.cpp);
+        # the kernel's AppleCLCD matches the compatible string.
+        node('disp0', [
+            ph(),
+            ('device_type', cstr('display-subsystem')),
+            ('compatible', cstr('sweet,display')),
+            ('canvas-width', u32(CANVAS[scale][0])),
+            ('canvas-height', u32(CANVAS[scale][1])),
+        ])])
+
+    fbcon = node('sweet-fbcon', [
+        ph(),
+        ('reg', u64(FB, FB_SIZE)),
+        ('width', u32(FB_W)),
+        ('height', u32(FB_H)),
+        ('stride', u32(FB_STRIDE)),
+    ])
+
+    # bsd/dev/sweet_ufs.c: the UFS host ABL leaves running (absolute physical reg).
+    ufs = node('sweet-ufs', [
+        ph(),
+        ('compatible', cstr('qcom,ufshc')),
+        ('reg', u64(UFS, UFS_SIZE)),
+    ])
+
+    # pmap_compute_max_asids requires the node even when no overrides are set.
+    # An absent pmap-max-asids property selects XNU's own MAX_ASIDS default.
+    # No effaceable storage: keybagd then reads /private/var/keybags/systembag.kb
+    # as a plain plist instead of decrypting it with the effaceable key.
+    defaults = node('defaults', [ph(), ('no-effaceable-storage', u32(1))])
+
+    # MobileGestalt HomeButtonType = IODeviceTree:/buttons home-button-type
+    # (D22AP: 2, no Home button; absent = 0 = Home-button device).
+    buttons = node('buttons', [
+        ph(),
+        ('button-names', cstr('volup') + cstr('voldown') + cstr('hold')),
+        ('home-button-type', u32(2)),
+        ('opposed-power-vol-buttons', u32(1)),
+    ])
+
+    product_props = d22ap_product()
+    if product_props and scale != 3:
+        over = {'artwork-device-subtype': u32(CANVAS[scale][2]), 'artwork-scale-factor': u32(scale)}
+        product_props = [(k, over.get(k, v)) for k, v in product_props]
+    product = [node('product', [ph()] + product_props)] if product_props else []
+
+    # Panic log region. /pram reg = <phys size>; it sits just above the
+    # dram-size we expose, so XNU maps it but never allocates into it.
+    pram = node('pram', [ph(), ('reg', u64(panic_base) + u64(PANIC_LOG_SIZE))])
+
+    # Identity of the iPhone X whose userland runs here: compatible[0] is
+    # hw.model/hw.target (D22AP), model is hw.machine/hw.product
+    # (iPhone10,3). 'xiaomi,sweet' stays for SweetPlatformExpert matching.
+    return node('device-tree', [
+        ph(),
+        ('compatible', cstr('D22AP') + cstr('iPhone10,3') + cstr('xiaomi,sweet') + cstr('samsung,starqltechn') + cstr('qcom,sdm845') + cstr('AppleARM')),
+        ('model', cstr('iPhone10,3')),
+        ('target-type', cstr('D22')),
+seven@sevenzx:~/ios-s9$ 
