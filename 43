@@ -1,0 +1,69 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+if 'showhex("hfi ack seq"' in s:
+    raise SystemExit("hfi ack seq já existe; nada foi alterado.")
+
+old = """\t\t\tshowhex("hfi ack type", type);
+\t\t\tshowhex("hfi ack hdr", m[0]);
+\t\t\tshowhex("hfi ack req", m[1]);
+\t\t\tshowhex("hfi sent hdr", sent_hdr);
+\t\t\tshowhex("hfi ack result", m[2]);
+\t\t\tshowhex("hfi ack payload", m[3]);
+\t\t\tshowhex("hfi ack match", matches);"""
+
+new = """\t\t\tshowhex("hfi ack seq", number);
+\t\t\tshowhex("hfi ack type", type);
+\t\t\tshowhex("hfi ack result", m[2]);
+\t\t\tshowhex("hfi ack payload", m[3]);
+\t\t\tshowhex("hfi ack match", matches);"""
+
+if old not in s:
+    raise SystemExit("Bloco compacto de ACK não encontrado; nada foi alterado.")
+
+p.write_text(s.replace(old, new, 1))
+print("diagnóstico ACK com sequência local aplicado")
+PY
+diagnóstico ACK com sequência local aplicado
+seven@sevenzx:~/ios-s9/s9$ grep -nA8 -B3 'hfi ack seq' shim/m11.c
+598-			int is_ack = (type == HFI_V1_MSG_ACK);
+599-			int matches = is_ack;
+600-
+601:			showhex("hfi ack seq", number);
+602-			showhex("hfi ack type", type);
+603-			showhex("hfi ack result", m[2]);
+604-			showhex("hfi ack payload", m[3]);
+605-			showhex("hfi ack match", matches);
+606-
+607-			/*
+608-			 * This S9 firmware returns a V1 ACK with m[1] == 0.
+609-			 * The result is m[2]; zero means success.
+seven@sevenzx:~/ios-s9/s9$ rm -rf out/obj
+./build.sh m11
+shim/m11.c: In function ‘pas_metadata_stage’:
+shim/m11.c:262:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  262 |         showhex("PAS metadata PA", pa(pas_metadata));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:249:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  249 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c:263:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  263 |         showhex("PAS firmware PA", pa(pas_firmware));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:249:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  249 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c: In function ‘hfi_receive’:
+shim/m11.c:577:66: warning: unused parameter ‘sent_hdr’ [-Wunused-parameter]
+  577 | static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+      |                                                         ~~~~~~~~~^~~~~~~~
+-rwxrwxr-x 1 seven seven   225280 Nov  7 15:51 out/Image
+-rw-rw-r-- 1 seven seven 11206656 Nov  7 15:51 out/boot.img
+-rw-rw-r-- 1 seven seven 11212843 Nov  7 15:51 out/boot.tar.md5
+7773b43c69f09953e7ddd8fd761ca3354db8d7976afbb3eb1d87e5c26a7a208e  out/boot.img
+seven@sevenzx:~/ios-s9/s9$
