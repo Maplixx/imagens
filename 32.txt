@@ -1,0 +1,124 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+curl -fsSL \
+  'https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-crosshatch-4.9-android10/drivers/firmware/qcom_scm-64.c?format=TEXT' \
+  | base64 -d \
+  > research/gpu-fw/qcom-source/qcom_scm-64.c
+
+wc -c research/gpu-fw/qcom-source/qcom_scm-64.c
+9334 research/gpu-fw/qcom-source/qcom_scm-64.c
+seven@sevenzx:~/ios-s9$ grep -nE \
+  'PAS_|pas_|QCOM_SCM_SVC_PIL|SCM_F余|SCM_FNUM|FNID|qcom_scm_call' \
+  research/gpu-fw/qcom-source/qcom_scm-64.c \
+  | head -120
+25:#define QCOM_SCM_FNID(s, c) ((((s) & 0xFF) << 8) | ((c) & 0xFF))
+74: * qcom_scm_call() - Invoke a syscall in the secure world
+83:static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
+89:	u32 fn_id = QCOM_SCM_FNID(svc_id, cmd_id);
+214:	desc.args[0] = QCOM_SCM_FNID(svc_id, cmd_id) |
+217:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_INFO, QCOM_IS_CALL_AVAIL_CMD,
+245:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_HDCP, QCOM_SCM_CMD_HDCP, &desc,
+256:	u32 function = QCOM_SCM_FNID(QCOM_SCM_SVC_INFO, QCOM_IS_CALL_AVAIL_CMD);
+271:bool __qcom_scm_pas_supported(struct device *dev, u32 peripheral)
+280:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL,
+281:				QCOM_SCM_PAS_IS_SUPPORTED_CMD,
+287:int __qcom_scm_pas_init_image(struct device *dev, u32 peripheral,
+298:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_INIT_IMAGE_CMD,
+304:int __qcom_scm_pas_mem_setup(struct device *dev, u32 peripheral,
+316:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_MEM_SETUP_CMD,
+322:int __qcom_scm_pas_auth_and_reset(struct device *dev, u32 peripheral)
+331:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL,
+332:				QCOM_SCM_PAS_AUTH_AND_RESET_CMD,
+338:int __qcom_scm_pas_shutdown(struct device *dev, u32 peripheral)
+347:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_SHUTDOWN_CMD,
+353:int __qcom_scm_pas_mss_reset(struct device *dev, bool reset)
+363:	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_MSS_RESET, &desc,
+seven@sevenzx:~/ios-s9$ grep -nA35 -B5 \
+  '__qcom_scm_pas_init_image\|__qcom_scm_pas_mem_setup\|__qcom_scm_pas_auth_and_reset' \
+  research/gpu-fw/qcom-source/qcom_scm-64.c
+282-				&desc, &res);
+283-
+284-	return ret ? false : !!res.a1;
+285-}
+286-
+287:int __qcom_scm_pas_init_image(struct device *dev, u32 peripheral,
+288-			      dma_addr_t metadata_phys)
+289-{
+290-	int ret;
+291-	struct qcom_scm_desc desc = {0};
+292-	struct arm_smccc_res res;
+293-
+294-	desc.args[0] = peripheral;
+295-	desc.args[1] = metadata_phys;
+296-	desc.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_VAL, QCOM_SCM_RW);
+297-
+298-	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_INIT_IMAGE_CMD,
+299-				&desc, &res);
+300-
+301-	return ret ? : res.a1;
+302-}
+303-
+304:int __qcom_scm_pas_mem_setup(struct device *dev, u32 peripheral,
+305-			      phys_addr_t addr, phys_addr_t size)
+306-{
+307-	int ret;
+308-	struct qcom_scm_desc desc = {0};
+309-	struct arm_smccc_res res;
+310-
+311-	desc.args[0] = peripheral;
+312-	desc.args[1] = addr;
+313-	desc.args[2] = size;
+314-	desc.arginfo = QCOM_SCM_ARGS(3);
+315-
+316-	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_MEM_SETUP_CMD,
+317-				&desc, &res);
+318-
+319-	return ret ? : res.a1;
+320-}
+321-
+322:int __qcom_scm_pas_auth_and_reset(struct device *dev, u32 peripheral)
+323-{
+324-	int ret;
+325-	struct qcom_scm_desc desc = {0};
+326-	struct arm_smccc_res res;
+327-
+328-	desc.args[0] = peripheral;
+329-	desc.arginfo = QCOM_SCM_ARGS(1);
+330-
+331-	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL,
+332-				QCOM_SCM_PAS_AUTH_AND_RESET_CMD,
+333-				&desc, &res);
+334-
+335-	return ret ? : res.a1;
+336-}
+337-
+338-int __qcom_scm_pas_shutdown(struct device *dev, u32 peripheral)
+339-{
+340-	int ret;
+341-	struct qcom_scm_desc desc = {0};
+342-	struct arm_smccc_res res;
+343-
+344-	desc.args[0] = peripheral;
+345-	desc.arginfo = QCOM_SCM_ARGS(1);
+346-
+347-	ret = qcom_scm_call(dev, QCOM_SCM_SVC_PIL, QCOM_SCM_PAS_SHUTDOWN_CMD,
+348-			&desc, &res);
+349-
+350-	return ret ? : res.a1;
+351-}
+352-
+353-int __qcom_scm_pas_mss_reset(struct device *dev, bool reset)
+354-{
+355-	struct qcom_scm_desc desc = {0};
+356-	struct arm_smccc_res res;
+357-	int ret;
+seven@sevenzx:~/ios-s9$ wc -c research/gpu-fw/qcom-source/scm.h
+grep -nE 'SCM_SVC_PIL|SCM_SIP_FNID|SCM_QSEEOS_FNID|MAX_SCM_ARGS' \
+  research/gpu-fw/qcom-source/scm.h
+6029 research/gpu-fw/qcom-source/scm.h
+16:#define SCM_SVC_PIL			0x2
+47:#define SCM_SIP_FNID(s, c) (((((s) & 0xFF) << 8) | ((c) & 0xFF)) | 0x02000000)
+48:#define SCM_QSEEOS_FNID(s, c) (((((s) & 0xFF) << 8) | ((c) & 0xFF)) | \
+52:#define MAX_SCM_ARGS 10
+89:	u64 args[MAX_SCM_ARGS];
+seven@sevenzx:~/ios-s9$
