@@ -1,0 +1,133 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+grep -RInE \
+  'uintptr_t pa|static.*pa|#define pa|pa\(' \
+  shim | head -80
+
+grep -RInE \
+  'out/Image|shim.ld|a6000000|0xa6000000|mkpayload|entry' \
+  build.sh tools shim | head -160
+shim/ufs.c:175:static void list_partitions(uint32_t entry_lba, uint32_t nent)
+shim/m10-post-gmu-working.c:287:	static const uint32_t pat[2] = { 0x600d0001u, 0x0a110002u };
+shim/m11-before-ack-fallback.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-before-ack-fallback.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-ack-fallback.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-before-ack-fallback.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-before-ack-fallback.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-before-ack-fallback.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-before-ack-fallback.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-before-ack-fallback.c:486:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m11-before-smmu-probe.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-before-smmu-probe.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-smmu-probe.c:365:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-before-smmu-probe.c:374:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-before-smmu-probe.c:391:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-before-smmu-probe.c:392:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-before-smmu-probe.c:400:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-before-smmu-probe.c:475:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m11-hfi-response-before.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-hfi-response-before.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-hfi-response-before.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-hfi-response-before.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-hfi-response-before.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-hfi-response-before.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-hfi-response-before.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-hfi-response-before.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m7.c:415:static int smmu_usb_bypass(void)
+shim/m11-before-reorder.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-before-reorder.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-reorder.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-before-reorder.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-before-reorder.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-before-reorder.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-before-reorder.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-before-reorder.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m11-hfi-before-instrumentation.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-hfi-before-instrumentation.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-hfi-before-instrumentation.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-hfi-before-instrumentation.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-hfi-before-instrumentation.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-hfi-before-instrumentation.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-hfi-before-instrumentation.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-hfi-before-instrumentation.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m10.c:287:	static const uint32_t pat[2] = { 0x600d0001u, 0x0a110002u };
+shim/m11-before-v1-hfi-fix.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-before-v1-hfi-fix.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-v1-hfi-fix.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-before-v1-hfi-fix.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-before-v1-hfi-fix.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-before-v1-hfi-fix.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-before-v1-hfi-fix.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-before-v1-hfi-fix.c:483:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m3.c:38:static void par_line(const char *label, uintptr_t va)
+shim/plat.c:22:static volatile int in_panic;
+shim/plat-before-pas.c:22:static volatile int in_panic;
+shim/m11-before-hfi-layout-fix.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-before-hfi-layout-fix.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-hfi-layout-fix.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-before-hfi-layout-fix.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-before-hfi-layout-fix.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-before-hfi-layout-fix.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-before-hfi-layout-fix.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-before-hfi-layout-fix.c:480:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m11.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11.c:486:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/m11-before-m12.c:207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+shim/m11-before-m12.c:240:__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-m12.c:370:		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+shim/m11-before-m12.c:379:		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+shim/m11-before-m12.c:396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+shim/m11-before-m12.c:397:		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+shim/m11-before-m12.c:405:	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+shim/m11-before-m12.c:486:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+shim/fb.c:62:static void span(uintptr_t p, int n, uint32_t w)
+build.sh:36:    [ -f "${PAYLOAD:-}" ] || { echo "m4 needs PAYLOAD=path/to/payload.bin (tools/mkpayload.py)" >&2; exit 2; } ;;
+build.sh:52:"$CC" $CFLAGS -static -T shim/shim.ld -Wl,--build-id=none -Wl,--no-warn-rwx-segments -Wl,-N \
+build.sh:54:"$OBJCOPY" -O binary out/shim.elf out/Image
+build.sh:57:truncate -s "$size" out/Image
+build.sh:58:gzip -9 -n -c out/Image > out/Image.gz
+build.sh:62:cat out/Image.gz dtb/stock-dtbs.bin > out/Image.gz-dtb
+build.sh:73:mkbootimg --header_version 0 --kernel out/Image.gz-dtb --ramdisk out/ramdisk.cpio.gz \
+build.sh:90:ls -l out/Image out/boot.img out/boot.tar.md5
+tools/mkadt.py:19:PHYS_BASE = 0xa6000000
+tools/mkadt.py:20:MEM_SIZE = 0xd81c0000   # 0xa6000000 (acima do staging do ABL) -> 0x17e1c0000   # 0xa1800000 -> 0x17e1c0000 span (holes excluded in pmap)
+tools/mkadt.py:30:HIGH_PHYS_BASE = 0xa6000000
+tools/mkpayload.py:4:  mkpayload.py KERNEL ADT OUT [--cmdline "..."] [--ramdisk IMAGE]
+tools/mkpayload.py:15:  0x018  u64   entry_va       LC_UNIXTHREAD pc
+tools/mkpayload.py:44:    segs, entry, fixups = [], None, None
+tools/mkpayload.py:55:            entry, = struct.unpack_from('<Q', buf, off + 16 + 32 * 8)
+tools/mkpayload.py:59:    return dict(cputype=cputype, cpusub=cpusub & 0xff, segs=segs, entry=entry, fixups=fixups)
+tools/mkpayload.py:184:    struct.pack_into('<7Q', out, 0x10, virt_base, m['entry'], adt_off, len(adt_blob), kernel_end,
+tools/mkpayload.py:191:                entry=hex(m['entry']), kernel_end=hex(kernel_end), ramdisk=ramdisk, size=len(out),
+shim/ufs.c:174:/* One line per GPT entry of at least 64 MiB: name, first LBA, size in MiB (4K blocks). */
+shim/ufs.c:175:static void list_partitions(uint32_t entry_lba, uint32_t nent)
+shim/ufs.c:179:	if (read_blocks(entry_lba, blocks, ents)) {
+shim/loader.c:5: * mkpayload.py already resolved the kernel's chained fixups and built the
+shim/loader.c:8: * boot_args behind the kernel, and jump to the entry point with the MMU
+shim/loader.c:27:	uint64_t virt_base, entry_va, adt_off, adt_size, kernel_end;
+shim/loader.c:79:typedef void (*xnu_entry_t)(uint64_t boot_args_pa);
+shim/loader.c:99:	con_hex("ENTRY", p->entry_va);
+shim/loader.c:141:	uintptr_t entry_pa = p->entry_va + pa_of_va_base;
+shim/loader.c:142:	con_hex("JUMP", entry_pa);
+shim/loader.c:147:	((xnu_entry_t)entry_pa)(ba_pa);
+shim/start.S:2: * Galaxy S9 (starqlte) boot shim entry, from ios-sweet shim/start.S
+shim/start.S:48:	.globl secondary_entry
+shim/start.S:49:secondary_entry:
+shim/m6.c:69:extern char secondary_entry[];
+shim/m6.c:210:	int64_t ret = (int64_t)smc(PSCI_CPU_ON, (uint64_t)GOLD_CPU << 8, (uintptr_t)secondary_entry, GOLD_CPU);
+shim/m2.c:68:extern char secondary_entry[];
+shim/m2.c:255:		ret[i] = smc(PSCI_CPU_ON, (uint64_t)i << 8, (uintptr_t)secondary_entry, i);
+shim/m4.c:3: * SWEETXNU payload (tools/mkpayload.py: kernel + ADT + boot-args); loader.c
+seven@sevenzx:~/ios-s9/s9$ file out/Image out/boot-m11-hfi-v1-ack-success.img
+stat -c '%n — %s bytes' out/Image out/boot-m11-hfi-v1-ack-success.img
+out/Image:                           Linux kernel ARM64 boot executable Image, little-endian, 4K pages
+out/boot-m11-hfi-v1-ack-success.img: Android bootimg, kernel (0x8000), ramdisk (0x2000000), page size: 4096, cmdline (console=null)
+out/Image — 196608 bytes
+out/boot-m11-hfi-v1-ack-success.img — 11202560 bytes
+seven@sevenzx:~/ios-s9/s9$
