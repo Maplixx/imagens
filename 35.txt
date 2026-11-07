@@ -1,0 +1,79 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+cp shim/m11.c shim/m11-before-pas-buffers.c
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+marker = """static uint8_t gmu_dump_mem[GMU_MEM_SIZE] __attribute__((aligned(4096)));
+"""
+
+insert = """static uint8_t gmu_dump_mem[GMU_MEM_SIZE] __attribute__((aligned(4096)));
+
+/*
+ * Buffers reservados para o futuro teste PAS.
+ * Nesta etapa eles não são enviados ao TrustZone.
+ */
+static uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+static uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+"""
+
+if "static uint8_t pas_metadata" in s:
+    raise SystemExit("Os buffers PAS já foram adicionados.")
+
+if marker not in s:
+    raise SystemExit("Marcador não encontrado; nenhum arquivo foi alterado.")
+
+p.write_text(s.replace(marker, insert, 1))
+print("buffers PAS adicionados; nenhum SMC foi chamado")
+PY
+buffers PAS adicionados; nenhum SMC foi chamado
+seven@sevenzx:~/ios-s9/s9$ grep -nA12 -B5 'pas_metadata' shim/m11.c
+206-
+207-/*
+208- * Buffers reservados para o futuro teste PAS.
+209- * Nesta etapa eles não são enviados ao TrustZone.
+210- */
+211:static uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+212-static uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+213-
+214-static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+215-
+216-void exc_handler(uint64_t slot, uint64_t *regs)
+217-{
+218-	panic_screen(stage, slot, regs);
+219-}
+220-
+221-static void step(const char *s)
+222-{
+223-	char b[52], *p = put(b, s);
+seven@sevenzx:~/ios-s9/s9$ rm -rf out/obj
+./build.sh m11
+shim/m11.c: In function ‘hfi_receive’:
+shim/m11.c:529:66: warning: unused parameter ‘sent_hdr’ [-Wunused-parameter]
+  529 | static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+      |                                                         ~~~~~~~~~^~~~~~~~
+shim/m11.c: At top level:
+shim/m11.c:212:16: warning: ‘pas_firmware’ defined but not used [-Wunused-variable]
+  212 | static uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+      |                ^~~~~~~~~~~~
+shim/m11.c:211:16: warning: ‘pas_metadata’ defined but not used [-Wunused-variable]
+  211 | static uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+      |                ^~~~~~~~~~~~
+-rwxrwxr-x 1 seven seven   196608 Nov  7 02:00 out/Image
+-rw-rw-r-- 1 seven seven 11202560 Nov  7 02:00 out/boot.img
+-rw-rw-r-- 1 seven seven 11212843 Nov  7 02:00 out/boot.tar.md5
+9a7f60a2159036d0e962c39b4fcac75cb813b9dad857fbd4f6a81587e7fdb57e  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ nm -n out/shim.elf | grep -E \
+  'pas_metadata|pas_firmware|gmu_hfi_mem|gmu_dump_mem|_bss_end|_end'
+
+stat -c '%n — %s bytes' out/Image
+000000000000f000 b gmu_dump_mem
+0000000000013000 b gmu_hfi_mem
+000000000001f040 B _bss_end
+0000000000030000 B _end
+out/Image — 196608 bytes
+seven@sevenzx:~/ios-s9/s9$ 
