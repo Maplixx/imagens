@@ -1,0 +1,389 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+sed -n '1,260p' shim/plat.h
+sed -n '1,360p' shim/plat.c
+grep -RInE \
+  'smc|SMC|scm|SCM|secure|pas|PAS|smccc|hvc|svc' \
+  shim tools 2>/dev/null | head -240
+#pragma once
+#include <stdint.h>
+
+/* Pieces every shim stage after M2 shares: SMC, time, watchdog, reboot, panic. */
+uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+uint64_t now(void);
+uint64_t ticks_per_s(void);
+void delay_ms(unsigned ms);
+uint32_t ticks_to_us(uint64_t ticks);
+void wdog_arm(void);
+void wdog_pet(void);
+void __attribute__((noreturn)) reboot(void);
+/* Blue screen with the exception state; stays 60 s (watchdog fed), then reboots. */
+void __attribute__((noreturn)) panic_screen(const char *stage, uint64_t slot, uint64_t *regs);
+/* "TEMPO" line counting to secs at row, feeding the watchdog, then reboot. */
+void __attribute__((noreturn)) countdown_reboot(int row, unsigned secs);
+/*
+ * Shared by the shim stages: PSCI calls, the generic timer, the APSS
+ * watchdog (programmed like drivers/soc/qcom/watchdog_v2.c) and the ways a
+ * stage ends: a countdown, or a blue panic screen, then a reboot.
+ */
+#include "hw.h"
+#include "fb.h"
+#include "con.h"
+#include "plat.h"
+
+#define APSS_WDT		0x17980000UL	/* qcom,wdt@17980000 */
+#define WDT0_RST		0x04
+#define WDT0_EN			0x08
+#define WDT0_BARK_TIME		0x10
+#define WDT0_BITE_TIME		0x14
+#define WDT_HZ			32765
+#define WDT_BARK_S		15		/* bite 3 s later, as watchdog_v2 does */
+
+#define PSCI_SYSTEM_RESET	0x84000009UL
+#define PANIC_SECONDS		60
+
+static volatile int in_panic;
+
+uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+{
+	register uint64_t x0 __asm__("x0") = fn;
+	register uint64_t x1 __asm__("x1") = a1;
+	register uint64_t x2 __asm__("x2") = a2;
+	register uint64_t x3 __asm__("x3") = a3;
+	__asm__ volatile("smc #0"
+			 : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3)
+			 :
+			 : "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11",
+			   "x12", "x13", "x14", "x15", "x16", "x17", "memory");
+	return x0;
+}
+
+uint64_t now(void)
+{
+	isb();
+	return rsr("cntpct_el0");
+}
+
+uint64_t ticks_per_s(void)
+{
+	uint64_t f = rsr("cntfrq_el0");
+	return f ? f : 19200000;	/* Qualcomm's 19.2 MHz if firmware left it 0 */
+}
+
+void delay_ms(unsigned ms)
+{
+	uint64_t end = now() + ticks_per_s() / 1000 * ms;
+	while (now() < end)
+		;
+}
+
+uint32_t ticks_to_us(uint64_t ticks)
+{
+	return ticks * 1000000 / ticks_per_s();
+}
+
+void wdog_pet(void)
+{
+	wr32(APSS_WDT + WDT0_RST, 1);
+}
+
+void wdog_arm(void)
+{
+	wr32(APSS_WDT + WDT0_EN, 0);
+	wr32(APSS_WDT + WDT0_BARK_TIME, WDT_BARK_S * WDT_HZ);
+	wr32(APSS_WDT + WDT0_BITE_TIME, (WDT_BARK_S + 3) * WDT_HZ);
+	wr32(APSS_WDT + WDT0_EN, 1);
+	wdog_pet();
+}
+
+void reboot(void)
+{
+	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+	for (;;)
+		__asm__ volatile("wfe");	/* the watchdog bites */
+}
+
+/* regs: x0-x28, a pad word, then the x29/x30 the vector stashed */
+void panic_screen(const char *stage, uint64_t slot, uint64_t *regs)
+{
+	static const char kind[4][8] = { "SYNC", "IRQ", "FIQ", "SERROR" };
+	char b[48];
+
+	if (in_panic++)
+		reboot();	/* a fault while drawing the last one */
+	con_clear(PANICBG);
+	con_title("PANICO NO SHIM");
+	put_dec(put(put(b, kind[slot & 3]), " slot "), slot);
+	con_str("EXCECAO", b);
+	con_str("ETAPA", stage ? stage : "?");
+	con_hex2("CPU", "mpidr=", rsr("mpidr_el1"), 0, 0);
+	con_hex("ESR", rsr("esr_el1"));
+	con_hex("ELR", rsr("elr_el1"));
+	con_hex("FAR", rsr("far_el1"));
+	con_hex("LR", regs[31]);
+	con_skip();
+	con_str("", "Tire uma foto desta tela!");
+	for (int s = 0; s < PANIC_SECONDS; s++) {
+		wdog_pet();
+		delay_ms(1000);
+	}
+	reboot();
+}
+
+void countdown_reboot(int row, unsigned secs)
+{
+	uint64_t f = ticks_per_s(), t0 = now();
+	char b[48], *p;
+
+	for (unsigned s = 0; s <= secs; s++) {
+		while (now() - t0 < f * s)
+			;
+		wdog_pet();
+		p = put(put_dec(b, s), "s  reinicia em ");
+		put(put_dec(p, secs - s), "s  ");
+		con_set_row(row);
+		con_str("TEMPO", b);
+	}
+	reboot();
+}
+shim/m10-post-gmu-working.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+shim/m10-post-gmu-working.c:12: * the APSS watchdog (a full hang reboots by itself) and MMU is off (a secure
+shim/m10-post-gmu-working.c:165:	con_str("PASSO", b);
+shim/m11-before-ack-context.c:35:#include "pas_mdt.h"
+shim/m11-before-ack-context.c:147:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-ack-context.c:210: * Buffers reservados para o futuro teste PAS.
+shim/m11-before-ack-context.c:213:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11-before-ack-context.c:214:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11-before-ack-context.c:232:	con_str("PASSO", b);
+shim/m11-before-ack-context.c:254:static int pas_metadata_stage(void)
+shim/m11-before-ack-context.c:259:	stage = "PAS metadata";
+shim/m11-before-ack-context.c:260:	step("PAS: prepara metadata sem SMC");
+shim/m11-before-ack-context.c:261:	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+shim/m11-before-ack-context.c:262:	showhex("PAS metadata PA", pa(pas_metadata));
+shim/m11-before-ack-context.c:263:	showhex("PAS firmware PA", pa(pas_firmware));
+shim/m11-before-ack-context.c:264:	showhex("PAS destino reservado", 0x8c415000);
+shim/m11-before-ack-context.c:265:	showhex("PAS destino tamanho", 0x2000);
+shim/m11-before-ack-context.c:267:	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+shim/m11-before-ack-context.c:268:		con_str("PAS", "MDT maior que buffer");
+shim/m11-before-ack-context.c:272:	zero((void *)pas_metadata, sizeof(pas_metadata));
+shim/m11-before-ack-context.c:274:	for (i = 0; i < PAS_MDT_SIZE; i++)
+shim/m11-before-ack-context.c:275:		pas_metadata[i] = pas_mdt_blob[i];
+shim/m11-before-ack-context.c:277:	for (i = 0; i < PAS_MDT_SIZE; i++) {
+shim/m11-before-ack-context.c:278:		if (pas_metadata[i] != pas_mdt_blob[i]) {
+shim/m11-before-ack-context.c:284:	showhex("PAS mismatch", mismatches);
+shim/m11-before-ack-context.c:285:	showhex("PAS MDT magic",
+shim/m11-before-ack-context.c:286:		pas_metadata[0] |
+shim/m11-before-ack-context.c:287:		((uint32_t)pas_metadata[1] << 8) |
+shim/m11-before-ack-context.c:288:		((uint32_t)pas_metadata[2] << 16) |
+shim/m11-before-ack-context.c:289:		((uint32_t)pas_metadata[3] << 24));
+shim/m11-before-ack-context.c:292:		con_str("PAS", "falha na copia do MDT");
+shim/m11-before-ack-context.c:296:	con_str("PAS", "MDT copiado/verificado; SMC nao executado");
+shim/m11-before-ack-context.c:393:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-ack-context.c:461:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-ack-context.c:878:	if (!pas_metadata_stage())
+shim/plat.h:4:/* Pieces every shim stage after M2 shares: SMC, time, watchdog, reboot, panic. */
+shim/plat.h:5:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+shim/m11-before-ack-fallback.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-ack-fallback.c:223:	con_str("PASSO", b);
+shim/m11-before-ack-fallback.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-ack-fallback.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-smmu-probe.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-smmu-probe.c:223:	con_str("PASSO", b);
+shim/m11-before-smmu-probe.c:333:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-smmu-probe.c:401:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-fwver-1-10.c:35:#include "pas_mdt.h"
+shim/m11-before-fwver-1-10.c:147:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-fwver-1-10.c:210: * Buffers reservados para o futuro teste PAS.
+shim/m11-before-fwver-1-10.c:213:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-1-10.c:214:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-1-10.c:232:	con_str("PASSO", b);
+shim/m11-before-fwver-1-10.c:254:static int pas_metadata_stage(void)
+shim/m11-before-fwver-1-10.c:259:	stage = "PAS metadata";
+shim/m11-before-fwver-1-10.c:260:	step("PAS: prepara metadata sem SMC");
+shim/m11-before-fwver-1-10.c:261:	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+shim/m11-before-fwver-1-10.c:262:	showhex("PAS metadata PA", pa(pas_metadata));
+shim/m11-before-fwver-1-10.c:263:	showhex("PAS firmware PA", pa(pas_firmware));
+shim/m11-before-fwver-1-10.c:264:	showhex("PAS destino reservado", 0x8c415000);
+shim/m11-before-fwver-1-10.c:265:	showhex("PAS destino tamanho", 0x2000);
+shim/m11-before-fwver-1-10.c:267:	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+shim/m11-before-fwver-1-10.c:268:		con_str("PAS", "MDT maior que buffer");
+shim/m11-before-fwver-1-10.c:272:	zero((void *)pas_metadata, sizeof(pas_metadata));
+shim/m11-before-fwver-1-10.c:274:	for (i = 0; i < PAS_MDT_SIZE; i++)
+shim/m11-before-fwver-1-10.c:275:		pas_metadata[i] = pas_mdt_blob[i];
+shim/m11-before-fwver-1-10.c:277:	for (i = 0; i < PAS_MDT_SIZE; i++) {
+shim/m11-before-fwver-1-10.c:278:		if (pas_metadata[i] != pas_mdt_blob[i]) {
+shim/m11-before-fwver-1-10.c:284:	showhex("PAS mismatch", mismatches);
+shim/m11-before-fwver-1-10.c:285:	showhex("PAS MDT magic",
+shim/m11-before-fwver-1-10.c:286:		pas_metadata[0] |
+shim/m11-before-fwver-1-10.c:287:		((uint32_t)pas_metadata[1] << 8) |
+shim/m11-before-fwver-1-10.c:288:		((uint32_t)pas_metadata[2] << 16) |
+shim/m11-before-fwver-1-10.c:289:		((uint32_t)pas_metadata[3] << 24));
+shim/m11-before-fwver-1-10.c:292:		con_str("PAS", "falha na copia do MDT");
+shim/m11-before-fwver-1-10.c:296:	con_str("PAS", "MDT copiado/verificado; SMC nao executado");
+shim/m11-before-fwver-1-10.c:393:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-fwver-1-10.c:461:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-fwver-1-10.c:889:	if (!pas_metadata_stage())
+shim/m11-hfi-response-before.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-hfi-response-before.c:223:	con_str("PASSO", b);
+shim/m11-hfi-response-before.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-hfi-response-before.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m9.c:121:	con_str("PASSO", b);
+shim/m9.c:417:		p = put_hex(put(p, " passo="), stx, 6);
+shim/m7.c:184:	con_str("PASSO", b);
+shim/m7.c:395: * "S1 translate, S2 bypass" with translation off (SCTLR.M = 0, TTBR 0), and
+shim/m7.c:397: * BYPASS into FAULT).
+shim/m7.c:415:static int smmu_usb_bypass(void)
+shim/m7.c:1164:	if (!smmu_usb_bypass())
+shim/m11-before-reorder.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-reorder.c:223:	con_str("PASSO", b);
+shim/m11-before-reorder.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-reorder.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-hfi-before-instrumentation.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-hfi-before-instrumentation.c:223:	con_str("PASSO", b);
+shim/m11-hfi-before-instrumentation.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-hfi-before-instrumentation.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m5.c:84:	con_str("PASSO", b);
+shim/m11-before-pas-metadata-stage.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-pas-metadata-stage.c:208: * Buffers reservados para o futuro teste PAS.
+shim/m11-before-pas-metadata-stage.c:211:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11-before-pas-metadata-stage.c:212:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11-before-pas-metadata-stage.c:230:	con_str("PASSO", b);
+shim/m11-before-pas-metadata-stage.c:345:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-pas-metadata-stage.c:413:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m10.c:6: * clocked and booted. Everything the 3D core, the secure "zap" shader and the
+shim/m10.c:12: * the APSS watchdog (a full hang reboots by itself) and MMU is off (a secure
+shim/m10.c:165:	con_str("PASSO", b);
+shim/m11-before-v1-hfi-fix.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-v1-hfi-fix.c:223:	con_str("PASSO", b);
+shim/m11-before-v1-hfi-fix.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-v1-hfi-fix.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m3.c:32:	for (int pass = 0; pass < 16; pass++)
+shim/m11-before-fwver-queue-debug.c:35:#include "pas_mdt.h"
+shim/m11-before-fwver-queue-debug.c:147:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-fwver-queue-debug.c:210: * Buffers reservados para o futuro teste PAS.
+shim/m11-before-fwver-queue-debug.c:213:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-queue-debug.c:214:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-queue-debug.c:232:	con_str("PASSO", b);
+shim/m11-before-fwver-queue-debug.c:254:static int pas_metadata_stage(void)
+shim/m11-before-fwver-queue-debug.c:259:	stage = "PAS metadata";
+shim/m11-before-fwver-queue-debug.c:260:	step("PAS: prepara metadata sem SMC");
+shim/m11-before-fwver-queue-debug.c:261:	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+shim/m11-before-fwver-queue-debug.c:262:	showhex("PAS metadata PA", pa(pas_metadata));
+shim/m11-before-fwver-queue-debug.c:263:	showhex("PAS firmware PA", pa(pas_firmware));
+shim/m11-before-fwver-queue-debug.c:264:	showhex("PAS destino reservado", 0x8c415000);
+shim/m11-before-fwver-queue-debug.c:265:	showhex("PAS destino tamanho", 0x2000);
+shim/m11-before-fwver-queue-debug.c:267:	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+shim/m11-before-fwver-queue-debug.c:268:		con_str("PAS", "MDT maior que buffer");
+shim/m11-before-fwver-queue-debug.c:272:	zero((void *)pas_metadata, sizeof(pas_metadata));
+shim/m11-before-fwver-queue-debug.c:274:	for (i = 0; i < PAS_MDT_SIZE; i++)
+shim/m11-before-fwver-queue-debug.c:275:		pas_metadata[i] = pas_mdt_blob[i];
+shim/m11-before-fwver-queue-debug.c:277:	for (i = 0; i < PAS_MDT_SIZE; i++) {
+shim/m11-before-fwver-queue-debug.c:278:		if (pas_metadata[i] != pas_mdt_blob[i]) {
+shim/m11-before-fwver-queue-debug.c:284:	showhex("PAS mismatch", mismatches);
+shim/m11-before-fwver-queue-debug.c:285:	showhex("PAS MDT magic",
+shim/m11-before-fwver-queue-debug.c:286:		pas_metadata[0] |
+shim/m11-before-fwver-queue-debug.c:287:		((uint32_t)pas_metadata[1] << 8) |
+shim/m11-before-fwver-queue-debug.c:288:		((uint32_t)pas_metadata[2] << 16) |
+shim/m11-before-fwver-queue-debug.c:289:		((uint32_t)pas_metadata[3] << 24));
+shim/m11-before-fwver-queue-debug.c:292:		con_str("PAS", "falha na copia do MDT");
+shim/m11-before-fwver-queue-debug.c:296:	con_str("PAS", "MDT copiado/verificado; SMC nao executado");
+shim/m11-before-fwver-queue-debug.c:393:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-fwver-queue-debug.c:461:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-fwver-queue-debug.c:876:	if (!pas_metadata_stage())
+shim/m6.c:86:	con_str("PASSO", b);
+shim/m6.c:201:	smc(PSCI_CPU_OFF, 0, 0, 0);
+shim/m6.c:210:	int64_t ret = (int64_t)smc(PSCI_CPU_ON, (uint64_t)GOLD_CPU << 8, (uintptr_t)secondary_entry, GOLD_CPU);
+shim/plat.c:24:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat.c:30:	__asm__ volatile("smc #0"
+shim/plat.c:78:	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+shim/plat-before-pas.c:24:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat-before-pas.c:30:	__asm__ volatile("smc #0"
+shim/plat-before-pas.c:78:	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+shim/m11-before-fwver-ack-type2.c:35:#include "pas_mdt.h"
+shim/m11-before-fwver-ack-type2.c:146:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-fwver-ack-type2.c:209: * Buffers reservados para o futuro teste PAS.
+shim/m11-before-fwver-ack-type2.c:212:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-ack-type2.c:213:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-ack-type2.c:231:	con_str("PASSO", b);
+shim/m11-before-fwver-ack-type2.c:253:static int pas_metadata_stage(void)
+shim/m11-before-fwver-ack-type2.c:258:	stage = "PAS metadata";
+shim/m11-before-fwver-ack-type2.c:259:	step("PAS: prepara metadata sem SMC");
+shim/m11-before-fwver-ack-type2.c:260:	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+shim/m11-before-fwver-ack-type2.c:261:	showhex("PAS metadata PA", pa(pas_metadata));
+shim/m11-before-fwver-ack-type2.c:262:	showhex("PAS firmware PA", pa(pas_firmware));
+shim/m11-before-fwver-ack-type2.c:263:	showhex("PAS destino reservado", 0x8c415000);
+shim/m11-before-fwver-ack-type2.c:264:	showhex("PAS destino tamanho", 0x2000);
+shim/m11-before-fwver-ack-type2.c:266:	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+shim/m11-before-fwver-ack-type2.c:267:		con_str("PAS", "MDT maior que buffer");
+shim/m11-before-fwver-ack-type2.c:271:	zero((void *)pas_metadata, sizeof(pas_metadata));
+shim/m11-before-fwver-ack-type2.c:273:	for (i = 0; i < PAS_MDT_SIZE; i++)
+shim/m11-before-fwver-ack-type2.c:274:		pas_metadata[i] = pas_mdt_blob[i];
+shim/m11-before-fwver-ack-type2.c:276:	for (i = 0; i < PAS_MDT_SIZE; i++) {
+shim/m11-before-fwver-ack-type2.c:277:		if (pas_metadata[i] != pas_mdt_blob[i]) {
+shim/m11-before-fwver-ack-type2.c:283:	showhex("PAS mismatch", mismatches);
+shim/m11-before-fwver-ack-type2.c:284:	showhex("PAS MDT magic",
+shim/m11-before-fwver-ack-type2.c:285:		pas_metadata[0] |
+shim/m11-before-fwver-ack-type2.c:286:		((uint32_t)pas_metadata[1] << 8) |
+shim/m11-before-fwver-ack-type2.c:287:		((uint32_t)pas_metadata[2] << 16) |
+shim/m11-before-fwver-ack-type2.c:288:		((uint32_t)pas_metadata[3] << 24));
+shim/m11-before-fwver-ack-type2.c:291:		con_str("PAS", "falha na copia do MDT");
+shim/m11-before-fwver-ack-type2.c:295:	con_str("PAS", "MDT copiado/verificado; SMC nao executado");
+shim/m11-before-fwver-ack-type2.c:392:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-fwver-ack-type2.c:460:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-fwver-ack-type2.c:887:	if (!pas_metadata_stage())
+shim/m11-before-fwver-correlation.c:35:#include "pas_mdt.h"
+shim/m11-before-fwver-correlation.c:147:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-fwver-correlation.c:210: * Buffers reservados para o futuro teste PAS.
+shim/m11-before-fwver-correlation.c:213:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-correlation.c:214:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11-before-fwver-correlation.c:232:	con_str("PASSO", b);
+shim/m11-before-fwver-correlation.c:254:static int pas_metadata_stage(void)
+shim/m11-before-fwver-correlation.c:259:	stage = "PAS metadata";
+shim/m11-before-fwver-correlation.c:260:	step("PAS: prepara metadata sem SMC");
+shim/m11-before-fwver-correlation.c:261:	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+shim/m11-before-fwver-correlation.c:262:	showhex("PAS metadata PA", pa(pas_metadata));
+shim/m11-before-fwver-correlation.c:263:	showhex("PAS firmware PA", pa(pas_firmware));
+shim/m11-before-fwver-correlation.c:264:	showhex("PAS destino reservado", 0x8c415000);
+shim/m11-before-fwver-correlation.c:265:	showhex("PAS destino tamanho", 0x2000);
+shim/m11-before-fwver-correlation.c:267:	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+shim/m11-before-fwver-correlation.c:268:		con_str("PAS", "MDT maior que buffer");
+shim/m11-before-fwver-correlation.c:272:	zero((void *)pas_metadata, sizeof(pas_metadata));
+shim/m11-before-fwver-correlation.c:274:	for (i = 0; i < PAS_MDT_SIZE; i++)
+shim/m11-before-fwver-correlation.c:275:		pas_metadata[i] = pas_mdt_blob[i];
+shim/m11-before-fwver-correlation.c:277:	for (i = 0; i < PAS_MDT_SIZE; i++) {
+shim/m11-before-fwver-correlation.c:278:		if (pas_metadata[i] != pas_mdt_blob[i]) {
+shim/m11-before-fwver-correlation.c:284:	showhex("PAS mismatch", mismatches);
+shim/m11-before-fwver-correlation.c:285:	showhex("PAS MDT magic",
+shim/m11-before-fwver-correlation.c:286:		pas_metadata[0] |
+shim/m11-before-fwver-correlation.c:287:		((uint32_t)pas_metadata[1] << 8) |
+shim/m11-before-fwver-correlation.c:288:		((uint32_t)pas_metadata[2] << 16) |
+shim/m11-before-fwver-correlation.c:289:		((uint32_t)pas_metadata[3] << 24));
+shim/m11-before-fwver-correlation.c:292:		con_str("PAS", "falha na copia do MDT");
+shim/m11-before-fwver-correlation.c:296:	con_str("PAS", "MDT copiado/verificado; SMC nao executado");
+shim/m11-before-fwver-correlation.c:393:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-fwver-correlation.c:461:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-fwver-correlation.c:878:	if (!pas_metadata_stage())
+shim/m11-before-hfi-layout-fix.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-hfi-layout-fix.c:223:	con_str("PASSO", b);
+shim/m11-before-hfi-layout-fix.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-hfi-layout-fix.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11.c:35:#include "pas_mdt.h"
+shim/m11.c:147:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11.c:210: * Buffers reservados para o futuro teste PAS.
+shim/m11.c:213:static volatile uint8_t pas_metadata[0x2000] __attribute__((aligned(4096)));
+shim/m11.c:214:static volatile uint8_t pas_firmware[0x4000] __attribute__((aligned(4096)));
+shim/m11.c:232:	con_str("PASSO", b);
+shim/m11.c:254:static int pas_metadata_stage(void)
+shim/m11.c:259:	stage = "PAS metadata";
+shim/m11.c:260:	step("PAS: prepara metadata sem SMC");
+shim/m11.c:261:	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+shim/m11.c:262:	showhex("PAS metadata PA", pa(pas_metadata));
+shim/m11.c:263:	showhex("PAS firmware PA", pa(pas_firmware));
+shim/m11.c:264:	showhex("PAS destino reservado", 0x8c415000);
+shim/m11.c:265:	showhex("PAS destino tamanho", 0x2000);
+shim/m11.c:267:	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+shim/m11.c:268:		con_str("PAS", "MDT maior que buffer");
+shim/m11.c:272:	zero((void *)pas_metadata, sizeof(pas_metadata));
+shim/m11.c:274:	for (i = 0; i < PAS_MDT_SIZE; i++)
+shim/m11.c:275:		pas_metadata[i] = pas_mdt_blob[i];
+seven@sevenzx:~/ios-s9/s9$ 
