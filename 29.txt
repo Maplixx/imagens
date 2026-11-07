@@ -1,0 +1,390 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+grep -RInE \
+  'smc|SMC|hvc|HVC|arm_smccc|0x42000000|qcom,kgsl-hyp|PAS|pas_init|pas_auth|pas_mem' \
+  s9 xnu 2>/dev/null | head -300
+s9/ESTUDO-2026-10-24.md:388:  O som chega a ele em formato digital pela interface **TDM quaternária** do LPASS (GPIO58-61, função `qua_mi2s`).
+s9/ESTUDO-2026-10-24.md:392:- **Quem comanda tudo:** o **ADSP**, um processador de sinal (Hexagon) dentro do bloco de áudio (LPASS). Na placa de
+s9/ESTUDO-2026-10-24.md:427:| **B. Alto-falante pelo ADSP** | ligar o ADSP (carga autenticada pelo TrustZone, chamadas PAS), SMEM + GLINK, QRTR + QMI (pd-mapper), APR + AFE/ADM/ASM mínimos, SMMU para o ADSP ler nossos buffers, MAX98512 por I²C, um driver no kernel e o plug-in do caminho A apontando para ele | 8-15 mil linhas novas (no Linux, esses pedaços somam ~66 mil: `q6afe.c` 7,6 mil, `q6asm.c` 9,9 mil, `glink.c` 6,4 mil, `arm-smmu.c` 5,9 mil, `max98512.c` 3 mil...); 20-40 idas ao aparelho | médio: falha do ADSP derruba o celular (watchdog), não estraga nada; sem a proteção do alto-falante (o DSM da Maxim roda **dentro** do ADSP, com calibração da fábrica) o volume tem que ficar baixo | som de verdade no alto-falante; base para microfone e fone depois |
+s9/PROMPT-sessao-2026-10-25-gpu.md:95:1. Estudar no Bergamota: os patches de kernel da GPU (bring-up do GMU, SQE, zap via SCM/PAS, SMMU da GPU, a
+s9/shim/m10-post-gmu-working.c:165:	con_str("PASSO", b);
+s9/shim/plat.h:4:/* Pieces every shim stage after M2 shares: SMC, time, watchdog, reboot, panic. */
+s9/shim/plat.h:5:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+s9/shim/m11-before-ack-fallback.c:223:	con_str("PASSO", b);
+s9/shim/m11-before-smmu-probe.c:223:	con_str("PASSO", b);
+s9/shim/m11-hfi-response-before.c:223:	con_str("PASSO", b);
+s9/shim/m9.c:121:	con_str("PASSO", b);
+s9/shim/m7.c:184:	con_str("PASSO", b);
+s9/shim/m7.c:397: * BYPASS into FAULT).
+s9/shim/m11-before-reorder.c:223:	con_str("PASSO", b);
+s9/shim/m11-hfi-before-instrumentation.c:223:	con_str("PASSO", b);
+s9/shim/m5.c:84:	con_str("PASSO", b);
+s9/shim/m10.c:165:	con_str("PASSO", b);
+s9/shim/m11-before-v1-hfi-fix.c:223:	con_str("PASSO", b);
+s9/shim/m6.c:86:	con_str("PASSO", b);
+s9/shim/m6.c:201:	smc(PSCI_CPU_OFF, 0, 0, 0);
+s9/shim/m6.c:210:	int64_t ret = (int64_t)smc(PSCI_CPU_ON, (uint64_t)GOLD_CPU << 8, (uintptr_t)secondary_entry, GOLD_CPU);
+s9/shim/plat.c:24:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+s9/shim/plat.c:30:	__asm__ volatile("smc #0"
+s9/shim/plat.c:78:	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+s9/shim/m11-before-hfi-layout-fix.c:223:	con_str("PASSO", b);
+s9/shim/m11.c:223:	con_str("PASSO", b);
+s9/shim/m1.c:46:static uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+s9/shim/m1.c:52:	__asm__ volatile("smc #0"
+s9/shim/m1.c:103:	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+s9/shim/m1.c:241:	info.psci = smc(PSCI_VERSION, 0, 0, 0);
+s9/shim/m2.c:6: *   - PSCI/SMCCC versions and which PSCI calls the Qualcomm TZ offers
+s9/shim/m2.c:10: * Live DTB (TWRP) matches sweet: PSCI 1.0 over smc, MPIDR Aff1 = core,
+s9/shim/m2.c:57:#define SMCCC_VERSION		0x80000000UL
+s9/shim/m2.c:76:static uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+s9/shim/m2.c:82:	__asm__ volatile("smc #0"
+s9/shim/m2.c:125:	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+s9/shim/m2.c:222:	con_hex2("PSCI", "ver=", smc(PSCI_VERSION, 0, 0, 0), "smccc=", smc(SMCCC_VERSION, 0, 0, 0));
+s9/shim/m2.c:223:	p = put_ret(put(b, "ON "), smc(PSCI_FEATURES, PSCI_CPU_ON, 0, 0));
+s9/shim/m2.c:224:	p = put_ret(put(p, " OFF "), smc(PSCI_FEATURES, PSCI_CPU_OFF, 0, 0));
+s9/shim/m2.c:225:	p = put_ret(put(p, " SUSP "), smc(PSCI_FEATURES, PSCI_CPU_SUSPEND, 0, 0));
+s9/shim/m2.c:226:	put_ret(put(p, " MIGR "), smc(PSCI_FEATURES, PSCI_MIGRATE_INFO_TYPE, 0, 0));
+s9/shim/m2.c:228:	p = put_ret(put(b, "SYSOFF "), smc(PSCI_FEATURES, PSCI_SYSTEM_OFF, 0, 0));
+s9/shim/m2.c:229:	p = put_ret(put(p, " RST "), smc(PSCI_FEATURES, PSCI_SYSTEM_RESET, 0, 0));
+s9/shim/m2.c:230:	p = put_ret(put(p, " RST2 "), smc(PSCI_FEATURES, PSCI_SYSTEM_RESET2, 0, 0));
+s9/shim/m2.c:231:	put_ret(put(p, " SYSSUSP "), smc(PSCI_FEATURES, PSCI_SYSTEM_SUSPEND, 0, 0));
+s9/shim/m2.c:244:	smc(PSCI_CPU_OFF, 0, 0, 0);
+s9/shim/m2.c:255:		ret[i] = smc(PSCI_CPU_ON, (uint64_t)i << 8, (uintptr_t)secondary_entry, i);
+s9/shim/m11-m11a.c:223:	con_str("PASSO", b);
+s9/shim/m11.c.before-pa-fix:223:	con_str("PASSO", b);
+s9/shim/m10-before-post-gmu-smmu.c:163:	con_str("PASSO", b);
+s9/shim/m8.c:19: * names the address). A hang = watchdog, last PASSO on screen.
+s9/shim/m8.c:59:	con_str("PASSO", b);
+s9/tools/prep-ios6.sh:94:	NO_PASSWORD_PROMPT=1 /bin/sh /prep_bootstrap.sh
+s9/NOTES.md:44:  psci 1.0 smc, timer PPI 1/2/3/0 (vtimer INTID 19), GICD 0x17a00000, GICR 0x17a60000 stride 0x20000,
+s9/NOTES.md:51:  PSCI 1.0, SMCCC_VERSION ausente (FFFFFFFF). FEATURES: CPU_ON 0, OFF 0, SUSPEND 3, MIGRATE_INFO -1,
+s9/NOTES.md:147:     (BYPASS vira FAULT). Sem isso o 1º DMA (TRB) trava a CPU — era também o problema do GPI do touch.
+s9/NOTES.md:276:0x5090000, GCC 0x100000, PDC 0xb200000, SMMU da GPU 0x5040000 (nossa, não emulada pelo hyp), zap PAS 13 região
+s9/NOTES.md:292:**🎉 M10 GRAVADO E PASSOU DE PRIMEIRA (2026-10-25, tarde, foto do dono):** todas as etapas verdes.
+s9/ESTUDO-2026-10-25-gpu.md:67:`qcom,kgsl-hyp` PAS 13, região `0x8c415000` +0x2000 (fora da RAM do nosso XNU, que começa em 0xa6000000). cmd-db em
+s9/ESTUDO-2026-10-25-gpu.md:82:init do CP (UCHE, VBIF, endereçamento 64 bits, proteção, SQE, anel) → zap pelo TrustZone (PAS 13; o Linux do S9
+s9/ESTUDO-2026-10-25-gpu.md:83:vota antes a banda do motor de cripto) → `CP_ME_INIT` → sai do modo seguro. Chamada SMC: `0x42000000 | svc<<8 | cmd`,
+s9/ESTUDO-2026-10-25-gpu.md:105:| C | zap pelo TrustZone (PAS 13, o `a630_zap` **da Samsung** já extraído), CP (SQE, anel, `CP_ME_INIT`), sai do modo seguro, NOP+MEM_WRITE | shim M12 | médio: TrustZone/modo seguro | CP executa um comando e escreve na RAM |
+s9/ESTUDO-2026-10-25-gpu.md:132:   (SMMU/GX). Se parar antes, a última linha "PASSO" diz onde (ex.: "CX GDSC não liga", "ITCM não guarda o firmware").
+s9/logs/pstore-20261103-010304.txt:934:[    4.661171]  [1:    kworker/1:1:  301] sec_ts 30-0048: [sec_input] PAS  0,  0,  0, 11  FAI  0,  0,  0,  1
+s9/logs/ios-boot-20261103.txt:283:FIPSPOST_USER [698570176] fipspost_post:160: PASSED: (0 ms) - fipspost_post_hmac
+s9/logs/ios-boot-20261103.txt:284:FIPSPOST_USER [698601085] fipspost_post:164: PASSED: (1 ms) - fipspost_post_integrity
+s9/logs/ios-boot-20261103.txt:285:FIPSPOST_USER [698605048] fipspost_post:168: PASSED: (0 ms) - fipspost_post_indicator
+s9/logs/ios-boot-20261103.txt:286:FIPSPOST_USER [698607333] fipspost_post:169: PASSED: (0 ms) - fipspost_post_aes_ecb
+s9/logs/ios-boot-20261103.txt:287:FIPSPOST_USER [698609607] fipspost_post:170: PASSED: (0 ms) - fipspost_post_aes_cbc
+s9/logs/ios-boot-20261103.txt:288:FIPSPOST_USER [698709103] fipspost_post:171: PASSED: (5 ms) - fipspost_post_rsa_sig
+s9/logs/ios-boot-20261103.txt:289:FIPSPOST_USER [698878100] fipspost_post:172: PASSED: (8 ms) - fipspost_post_ecdsa
+s9/logs/ios-boot-20261103.txt:290:FIPSPOST_USER [698887387] fipspost_post:173: PASSED: (0 ms) - fipspost_post_ecdh
+s9/logs/ios-boot-20261103.txt:291:FIPSPOST_USER [698889577] fipspost_post:174: PASSED: (0 ms) - fipspost_post_aes_ccm
+s9/logs/ios-boot-20261103.txt:292:FIPSPOST_USER [698891984] fipspost_post:175: PASSED: (0 ms) - fipspost_post_aes_cmac
+s9/logs/ios-boot-20261103.txt:293:FIPSPOST_USER [698895207] fipspost_post:176: PASSED: (0 ms) - fipspost_post_hkdf
+s9/logs/ios-boot-20261103.txt:294:FIPSPOST_USER [699212044] fipspost_post:177: PASSED: (16 ms) - fipspost_post_pbkdf
+s9/logs/ios-boot-20261103.txt:295:FIPSPOST_USER [699214917] fipspost_post:178: PASSED: (0 ms) - fipspost_post_drbg_hmac
+s9/logs/ios-boot-20261103.txt:296:FIPSPOST_USER [699217702] fipspost_post:180: PASSED: (0 ms) - fipspost_post_kdf_ctr
+s9/logs/ios-boot-20261103.txt:297:FIPSPOST_USER [699219889] fipspost_post:181: PASSED: (0 ms) - fipspost_post_aes_gcm
+s9/logs/ios-boot-20261103.txt:298:FIPSPOST_USER [699222163] fipspost_post:182: PASSED: (0 ms) - fipspost_post_aes_xts
+s9/logs/ios-boot-20261103.txt:299:FIPSPOST_USER [699225065] fipspost_post:183: PASSED: (0 ms) - fipspost_post_tdes_ecb
+s9/logs/ios-boot-20261103.txt:300:FIPSPOST_USER [699227396] fipspost_post:184: PASSED: (0 ms) - fipspost_post_drbg_ctr
+s9/logs/ios-boot-20261103.txt:301:FIPSPOST_USER [699585556] fipspost_post:186: PASSED: (18 ms) - fipspost_post_ffdh
+s9/logs/ios-boot-20261103.txt:302:FIPSPOST_USER [699782944] fipspost_post:187: PASSED: (10 ms) - fipspost_post_rsa_enc_dec
+s9/logs/ios-boot-20261103.txt:303:FIPSPOST_USER [699785230] fipspost_post:206: all tests PASSED (64 ms)
+s9/logs/ios-boot-clean.txt:280:FIPSPOST_USER [698642302] fipspost_post:160: PASSED: (0 ms) - fipspost_post_hmac
+s9/logs/ios-boot-clean.txt:281:FIPSPOST_USER [698673041] fipspost_post:164: PASSED: (1 ms) - fipspost_post_integrity
+s9/logs/ios-boot-clean.txt:282:FIPSPOST_USER [698677284] fipspost_post:168: PASSED: (0 ms) - fipspost_post_indicator
+s9/logs/ios-boot-clean.txt:283:FIPSPOST_USER [698679527] fipspost_post:169: PASSED: (0 ms) - fipspost_post_aes_ecb
+s9/logs/ios-boot-clean.txt:284:FIPSPOST_USER [698681854] fipspost_post:170: PASSED: (0 ms) - fipspost_post_aes_cbc
+s9/logs/ios-boot-clean.txt:285:FIPSPOST_USER [698781117] fipspost_post:171: PASSED: (5 ms) - fipspost_post_rsa_sig
+s9/logs/ios-boot-clean.txt:286:FIPSPOST_USER [698950284] fipspost_post:172: PASSED: (8 ms) - fipspost_post_ecdsa
+s9/logs/ios-boot-clean.txt:287:FIPSPOST_USER [698959629] fipspost_post:173: PASSED: (0 ms) - fipspost_post_ecdh
+s9/logs/ios-boot-clean.txt:288:FIPSPOST_USER [698961852] fipspost_post:174: PASSED: (0 ms) - fipspost_post_aes_ccm
+s9/logs/ios-boot-clean.txt:289:FIPSPOST_USER [698964285] fipspost_post:175: PASSED: (0 ms) - fipspost_post_aes_cmac
+s9/logs/ios-boot-clean.txt:290:FIPSPOST_USER [698967589] fipspost_post:176: PASSED: (0 ms) - fipspost_post_hkdf
+s9/logs/ios-boot-clean.txt:291:FIPSPOST_USER [699284371] fipspost_post:177: PASSED: (16 ms) - fipspost_post_pbkdf
+s9/logs/ios-boot-clean.txt:292:FIPSPOST_USER [699287169] fipspost_post:178: PASSED: (0 ms) - fipspost_post_drbg_hmac
+s9/logs/ios-boot-clean.txt:293:FIPSPOST_USER [699289876] fipspost_post:180: PASSED: (0 ms) - fipspost_post_kdf_ctr
+s9/logs/ios-boot-clean.txt:294:FIPSPOST_USER [699292122] fipspost_post:181: PASSED: (0 ms) - fipspost_post_aes_gcm
+s9/logs/ios-boot-clean.txt:295:FIPSPOST_USER [699294324] fipspost_post:182: PASSED: (0 ms) - fipspost_post_aes_xts
+s9/logs/ios-boot-clean.txt:296:FIPSPOST_USER [699297204] fipspost_post:183: PASSED: (0 ms) - fipspost_post_tdes_ecb
+s9/logs/ios-boot-clean.txt:297:FIPSPOST_USER [699299564] fipspost_post:184: PASSED: (0 ms) - fipspost_post_drbg_ctr
+s9/logs/ios-boot-clean.txt:298:FIPSPOST_USER [699657926] fipspost_post:186: PASSED: (18 ms) - fipspost_post_ffdh
+s9/logs/ios-boot-clean.txt:299:FIPSPOST_USER [699855461] fipspost_post:187: PASSED: (10 ms) - fipspost_post_rsa_enc_dec
+s9/logs/ios-boot-clean.txt:300:FIPSPOST_USER [699857820] fipspost_post:206: all tests PASSED (64 ms)
+xnu/patches/0090-s9-usb-cold-start-jailbreak-recovery-reboot.patch:173:+ *      (reading sCR0 hangs) and S2CR BYPASS turns into FAULT; as U-Boot's
+xnu/patches/0090-s9-usb-cold-start-jailbreak-recovery-reboot.patch:505:+	s9_wr(smmu + 0xc00 + 4 * (unsigned)slot, (uint32_t)cb);       /* type TRANSLATE (BYPASS would become FAULT) */
+xnu/patches/0065-sweet-smp-psci.patch:28:+/* SMCCC 1.0: x0 is the signed PSCI result; do not assume x1-x17 survive. */
+xnu/patches/0065-sweet-smp-psci.patch:36:+	__asm__ volatile("smc #0" : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3) : :
+seven@sevenzx:~/ios-s9$ grep -nA35 -B10 \
+  'qcom,kgsl-hyp\|hyp' \
+  work/dt/live-twrp.dts | head -160
+7270-			qcom,msm-bus,vectors-KBps = <0x01 0x26a 0x00 0x00 0x01 0x26a 0x00 0x493e0>;
+7271-			clocks = <0x21 0x42>;
+7272-			clock-names = "iface_clk";
+7273-			linux,phandle = <0x3da>;
+7274-			phandle = <0x3da>;
+7275-		};
+7276-
+7277-		tz-log@146bf720 {
+7278-			compatible = "qcom,tz-log";
+7279-			reg = <0x146bf720 0x3000>;
+7280:			qcom,hyplog-enabled;
+7281:			hyplog-address-offset = <0x410>;
+7282:			hyplog-size-offset = <0x414>;
+7283-			linux,phandle = <0x3db>;
+7284-			phandle = <0x3db>;
+7285-		};
+7286-
+7287-		qcedev@1de0000 {
+7288-			compatible = "qcom,qcedev";
+7289-			reg = <0x1de0000 0x20000 0x1dc4000 0x24000>;
+7290-			reg-names = "crypto-base", "crypto-bam-base";
+7291-			interrupts = <0x00 0x110 0x00>;
+7292-			qcom,bam-pipe-pair = <0x03>;
+7293-			qcom,ce-hw-instance = <0x00>;
+7294-			qcom,ce-device = <0x00>;
+7295-			qcom,ce-hw-shared;
+7296-			qcom,bam-ee = <0x00>;
+7297-			qcom,msm-bus,name = "qcedev-noc";
+7298-			qcom,msm-bus,num-cases = <0x02>;
+7299-			qcom,msm-bus,num-paths = <0x01>;
+7300-			qcom,msm-bus,vectors-KBps = <0x7d 0x200 0x00 0x00 0x7d 0x200 0x60180 0x60180>;
+7301-			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7302-			clocks = <0x21 0x0b 0x21 0x0b 0x21 0x09 0x21 0x0a>;
+7303-			qcom,ce-opp-freq = <0xa37d070>;
+7304-			qcom,request-bw-before-clk;
+7305-			qcom,smmu-s1-enable;
+7306-			iommus = <0x28 0x706 0x01 0x28 0x716 0x01>;
+7307-			linux,phandle = <0x3dc>;
+7308-			phandle = <0x3dc>;
+7309-		};
+7310-
+7311-		qcom,msm_hdcp {
+7312-			compatible = "qcom,msm-hdcp";
+7313-			linux,phandle = <0x3dd>;
+7314-			phandle = <0x3dd>;
+7315-		};
+7316-
+7317-		qcrypto@1de0000 {
+--
+23025-			pinctrl-1 = <0x317 0x318 0x319>;
+23026-			qcom,det_debounce_time_ms = <0x32>;
+23027-			pinctrl-2 = <0x31a 0x31b>;
+23028-			pinctrl-3 = <0x31c 0x31d>;
+23029-			mbhc-button-thres = <0x31e 0x0d 0x3f 0x31e 0x58 0x8a 0x31e 0x8a 0x8a 0x31e 0xe1 0xe1 0x31e 0x1c2 0x1c2 0x31e 0x26c 0x26c 0x31e 0x26c 0x26c 0x31e 0x26c 0x26c>;
+23030-			mixer-paths = "mixer_paths_tavil_cornell.xml";
+23031-			linux,phandle = <0x518>;
+23032-			phandle = <0x518>;
+23033-		};
+23034-
+23035:		qcom,kgsl-hyp {
+23036-			compatible = "qcom,pil-tz-generic";
+23037-			qcom,pas-id = <0x0d>;
+23038-			qcom,firmware-name = "a630_zap";
+23039-			linux,phandle = <0x519>;
+23040-			phandle = <0x519>;
+23041-		};
+23042-
+23043-		qcom,kgsl-busmon {
+23044-			label = "kgsl-busmon";
+23045-			compatible = "qcom,kgsl-busmon";
+23046-			linux,phandle = <0x51a>;
+23047-			phandle = <0x51a>;
+23048-		};
+23049-
+23050-		qcom,gpubw {
+23051-			compatible = "qcom,devbw";
+23052-			governor = "bw_vbif";
+23053-			qcom,src-dst-ports = <0x1a 0x200>;
+23054-			qcom,bw-tbl = <0x00 0x17d 0x23c 0x2fa 0x478 0x623 0x826 0xa25 0xb71 0xf27 0x134f 0x172b 0x1ae1>;
+23055-			linux,phandle = <0x31f>;
+23056-			phandle = <0x31f>;
+23057-		};
+23058-
+23059-		qcom,kgsl-3d0@5000000 {
+23060-			label = "kgsl-3d0";
+23061-			compatible = "qcom,kgsl-3d0", "qcom,kgsl-3d";
+23062-			status = "ok";
+23063-			reg = <0x5000000 0x40000 0x5061000 0x800>;
+23064-			reg-names = "kgsl_3d0_reg_memory", "kgsl_3d0_cx_dbgc_memory";
+23065-			interrupts = <0x00 0x12c 0x00>;
+23066-			interrupt-names = "kgsl_3d0_irq";
+23067-			qcom,id = <0x00>;
+23068-			qcom,chipid = <0x6030001>;
+23069-			qcom,initial-pwrlevel = <0x06>;
+23070-			qcom,gpu-quirk-hfi-use-reg;
+--
+23238-
+23239-		qcom,kgsl-iommu {
+23240-			compatible = "qcom,kgsl-smmu-v2";
+23241-			reg = <0x5040000 0x10000>;
+23242-			qcom,protect = <0x40000 0xc000>;
+23243-			qcom,micro-mmu-control = <0x6000>;
+23244-			clocks = <0x21 0x20 0x21 0x14 0x21 0x23>;
+23245-			clock-names = "iface_clk", "mem_clk", "mem_iface_clk";
+23246-			qcom,secure_align_mask = <0xfff>;
+23247-			qcom,retention;
+23248:			qcom,hyp_secure_alloc;
+23249-			linux,phandle = <0x51b>;
+23250-			phandle = <0x51b>;
+23251-
+23252-			gfx3d_user {
+23253-				compatible = "qcom,smmu-kgsl-cb";
+23254-				label = "gfx3d_user";
+23255-				iommus = <0x1f6 0x00>;
+23256-				qcom,gpu-offset = <0x48000>;
+23257-				linux,phandle = <0x51c>;
+23258-				phandle = <0x51c>;
+23259-			};
+23260-
+23261-			gfx3d_secure {
+23262-				compatible = "qcom,smmu-kgsl-cb";
+23263-				iommus = <0x1f6 0x02 0x1f6 0x01>;
+23264-				linux,phandle = <0x51d>;
+23265-				phandle = <0x51d>;
+23266-			};
+23267-		};
+23268-
+23269-		qcom,gmu {
+23270-			label = "kgsl-gmu";
+23271-			compatible = "qcom,gpu-gmu";
+23272-			reg = <0x506a000 0x30000 0xb200000 0x300000>;
+23273-			reg-names = "kgsl_gmu_reg", "kgsl_gmu_pdc_reg";
+23274-			interrupts = <0x00 0x130 0x00 0x00 0x131 0x00>;
+23275-			interrupt-names = "kgsl_hfi_irq", "kgsl_gmu_irq";
+23276-			qcom,msm-bus,name = "cnoc";
+23277-			qcom,msm-bus,num-cases = <0x02>;
+23278-			qcom,msm-bus,num-paths = <0x01>;
+23279-			qcom,msm-bus,vectors-KBps = <0x1a 0x2734 0x00 0x00 0x1a 0x2734 0x00 0x64>;
+23280-			regulator-names = "vddcx", "vdd";
+23281-			vddcx-supply = <0x1ee>;
+23282-			vdd-supply = <0x320>;
+23283-			clocks = <0xe0 0x04 0xe0 0x0a 0x21 0x14 0x21 0x23>;
+--
+25442-				};
+25443-			};
+25444-		};
+25445-	};
+25446-
+25447-	reserved-memory {
+25448-		#address-cells = <0x02>;
+25449-		#size-cells = <0x02>;
+25450-		ranges;
+25451-
+25452:		hyp_region@85700000 {
+25453-			no-map;
+25454-			reg = <0x00 0x85700000 0x00 0x600000>;
+25455-			linux,phandle = <0x558>;
+25456-			phandle = <0x558>;
+25457-		};
+25458-
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9/s9
+
+grep -RInE \
+  'static.*smc|smc_call|hvc|msr.*x0|mrs.*x0|__asm__|svc|pas' \
+  shim tools 2>/dev/null | head -200
+shim/ufs.c:67:	__asm__ volatile("isb; mrs %0, cntvct_el0" : "=r"(t));
+shim/ufs.c:119:	__asm__ volatile("dsb sy" ::: "memory");
+shim/ufs.c:129:	__asm__ volatile("dsb sy" ::: "memory");
+shim/m11-before-ack-fallback.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-ack-fallback.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-ack-fallback.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-before-smmu-probe.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-smmu-probe.c:333:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-smmu-probe.c:401:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-hfi-response-before.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-hfi-response-before.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-hfi-response-before.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m9.c:417:		p = put_hex(put(p, " passo="), stx, 6);
+shim/m7.c:395: * "S1 translate, S2 bypass" with translation off (SCTLR.M = 0, TTBR 0), and
+shim/m7.c:415:static int smmu_usb_bypass(void)
+shim/m7.c:1164:	if (!smmu_usb_bypass())
+shim/loader.c:146:	__asm__ volatile("dsb sy; ic iallu; dsb sy; isb" ::: "memory");
+shim/m11-before-reorder.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-reorder.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-reorder.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11-hfi-before-instrumentation.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-hfi-before-instrumentation.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-hfi-before-instrumentation.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/lib.c:33:		__asm__ volatile("wfe");
+shim/m11-before-v1-hfi-fix.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-v1-hfi-fix.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-v1-hfi-fix.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m3.c:32:	for (int pass = 0; pass < 16; pass++)
+shim/mmu.c:55:#define rsr(r) ({ uint64_t _v; __asm__ volatile("mrs %0, " r : "=r"(_v)); _v; })
+shim/mmu.c:56:#define wsr(r, v) __asm__ volatile("msr " r ", %0" : : "r"((uint64_t)(v)))
+shim/mmu.c:68:		__asm__ volatile("dc ivac, %0" : : "r"(a) : "memory");
+shim/mmu.c:69:	__asm__ volatile("dsb sy" ::: "memory");
+shim/mmu.c:113:	__asm__ volatile("ic iallu; dsb sy; isb" ::: "memory");
+shim/mmu.c:118:	__asm__ volatile("isb; tlbi vmalle1; dsb nsh; isb" ::: "memory");
+shim/mmu.c:125:	__asm__ volatile("isb" ::: "memory");
+shim/mmu.c:133:	__asm__ volatile("at s1e1r, %0; isb" : : "r"(va) : "memory");
+shim/hw.h:9:#define rsr(r) ({ uint64_t _v; __asm__ volatile("mrs %0, " r : "=r"(_v)); _v; })
+shim/hw.h:10:#define isb() __asm__ volatile("isb" ::: "memory")
+shim/hw.h:11:#define dsb() __asm__ volatile("dsb sy" ::: "memory")
+shim/m6.c:96:	__asm__ volatile(
+shim/m6.c:110:	__asm__ volatile(
+shim/m6.c:180:		__asm__ volatile("dc civac, %0" : : "r"(a) : "memory");
+shim/m6.c:188:	__asm__ volatile("msr mair_el1, %0" : : "r"(mmu_regs.mair));
+shim/m6.c:189:	__asm__ volatile("msr tcr_el1, %0" : : "r"(mmu_regs.tcr));
+shim/m6.c:190:	__asm__ volatile("msr ttbr0_el1, %0" : : "r"(mmu_regs.ttbr));
+shim/m6.c:191:	__asm__ volatile("isb; tlbi vmalle1; dsb nsh; isb" ::: "memory");
+shim/m6.c:192:	__asm__ volatile("ic iallu; dsb nsh; isb" ::: "memory");
+shim/m6.c:193:	__asm__ volatile("msr sctlr_el1, %0; isb" : : "r"(mmu_regs.sctlr) : "memory");
+shim/plat.c:26:	register uint64_t x0 __asm__("x0") = fn;
+shim/plat.c:27:	register uint64_t x1 __asm__("x1") = a1;
+shim/plat.c:28:	register uint64_t x2 __asm__("x2") = a2;
+shim/plat.c:29:	register uint64_t x3 __asm__("x3") = a3;
+shim/plat.c:30:	__asm__ volatile("smc #0"
+shim/plat.c:80:		__asm__ volatile("wfe");	/* the watchdog bites */
+shim/m11-before-hfi-layout-fix.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-before-hfi-layout-fix.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-before-hfi-layout-fix.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11.c:338:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11.c:406:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m1.c:46:static uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/m1.c:48:	register uint64_t x0 __asm__("x0") = fn;
+shim/m1.c:49:	register uint64_t x1 __asm__("x1") = a1;
+shim/m1.c:50:	register uint64_t x2 __asm__("x2") = a2;
+shim/m1.c:51:	register uint64_t x3 __asm__("x3") = a3;
+shim/m1.c:52:	__asm__ volatile("smc #0"
+shim/m1.c:107:		__asm__ volatile("wfe");	/* the watchdog bites */
+shim/m2.c:63:#define wsr(r, v) __asm__ volatile("msr " r ", %0" : : "r"((uint64_t)(v)))
+shim/m2.c:76:static uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/m2.c:78:	register uint64_t x0 __asm__("x0") = fn;
+shim/m2.c:79:	register uint64_t x1 __asm__("x1") = a1;
+shim/m2.c:80:	register uint64_t x2 __asm__("x2") = a2;
+shim/m2.c:81:	register uint64_t x3 __asm__("x3") = a3;
+shim/m2.c:82:	__asm__ volatile("smc #0"
+shim/m2.c:127:		__asm__ volatile("wfe");	/* the watchdog bites */
+shim/m2.c:325:	__asm__ volatile("msr daifclr, #2" ::: "memory");
+shim/m2.c:336:	__asm__ volatile("msr daifset, #2" ::: "memory");
+shim/m11-m11a.c:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11-m11a.c:333:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11-m11a.c:401:	/* global enable: translation on (not client-pd bypass), fault handling */
+shim/m11.c.before-pa-fix:145:#define SMMU_S2CR(n)		(0xc00 + 4 * (n))	/* [17:16] 0 translate 1 bypass 2 fault, [7:0] context */
+shim/m11.c.before-pa-fix:333:	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+shim/m11.c.before-pa-fix:401:	/* global enable: translation on (not client-pd bypass), fault handling */
+tools/s9-audio-recv.py:76:        pass
+tools/extract-stock-dtbs.py:4:ABL picks the one matching the board's msm-id/board-id and passes it to the
+tools/twrp-check.sh:29:echo "== o que o ABL passou"
+tools/s9-dryrun.sh:97:printf 'buffers: 8 MB, 32 passes per test (GB/s; copy counts read + write)\nthreads   write    copy    read\n  1       9.10    6.20   11.00\nlatency (32 MB random chain): 110.0 ns per load (end 0x1)\n'
+tools/trim-daemons.py:37: "passd","wallet","appstore","softwareupdate","storedownload","storeaccount",
+tools/mkpayload.py:24:kernel_end past it, so the shim needs no changes: the image lands below the
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9
+
+sha256sum \
+  research/samsung-fw/NON-HLOS.bin \
+  research/gpu-fw/samsung-zap/a630_zap.mdt \
+  research/gpu-fw/samsung-zap/a630_zap.b00 \
+  research/gpu-fw/samsung-zap/a630_zap.b01 \
+  research/gpu-fw/samsung-zap/a630_zap.b02 \
+  research/gpu-fw/a630_sqe.fw \
+  research/gpu-fw/a630_gmu.bin
+c0ab504be519b246ed4cee0eb5b56a0185dac00226c00b4bd90c311fc07feaed  research/samsung-fw/NON-HLOS.bin
+d45707933603e958e6d35069c49770bc3ad334c7bd39926ebd89e1f1e3997cb5  research/gpu-fw/samsung-zap/a630_zap.mdt
+b2975f6a4c28a98197c1d694f6e275e71b23ec7e31e32ff5d1f83fdb80a94282  research/gpu-fw/samsung-zap/a630_zap.b00
+e6c25b83cf68821268922674c1e0514442e02859878ae5a7e06bd2e4f9f2a909  research/gpu-fw/samsung-zap/a630_zap.b01
+519b5538809f54ee566246b0520746a8ea82ca9384ea6bddb0b0e0d3c2de520c  research/gpu-fw/samsung-zap/a630_zap.b02
+1c21b527d9183487cc550dabbb3f43e555df5a977a461934fc61f0635a9aa90c  research/gpu-fw/a630_sqe.fw
+da8d9b1b1f5c1a0b311f32567093b4828f3c80031dd8435f91ac13c664e173a6  research/gpu-fw/a630_gmu.bin
+seven@sevenzx:~/ios-s9$ 
