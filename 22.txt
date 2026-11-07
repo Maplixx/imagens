@@ -1,0 +1,506 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("work/dt/live-twrp.dts")
+s = p.read_text(errors="replace")
+lines = s.splitlines()
+
+targets = ("qcom,kgsl-iommu", "qcom,gmu", "gpucc", "gpu_cc")
+
+for i, line in enumerate(lines):
+    if not any(t in line.lower() for t in targets):
+        continue
+
+    start = i
+    while start > 0 and lines[start].strip() not in ("{",):
+        start -= 1
+
+    # sobe até a linha que contém o nome do nó
+    if start > 0:
+        start -= 1
+
+    depth = 0
+    end = None
+    for j in range(start, len(lines)):
+        depth += lines[j].count("{")
+        depth -= lines[j].count("}")
+        if j > start and depth <= 0:
+            end = j
+            break
+
+    print(f"\n===== bloco próximo da linha {i+1} =====")
+    print("\n".join(f"{n+1}: {lines[n]}" for n in range(start, min(end or i+30, len(lines)))))
+PY
+
+===== bloco próximo da linha 5841 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 5842 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 5847 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 5859 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 5940 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23239 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23269 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23288 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23291 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23293 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23295 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23298 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23300 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23303 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 23305 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 26108 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 27139 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 27140 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 27141 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 27142 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 27143 =====
+1: /dts-v1/;
+
+===== bloco próximo da linha 27144 =====
+1: /dts-v1/;
+seven@sevenzx:~/ios-s9$ grep -nE \
+  'qcom,kgsl-iommu|qcom,gmu|clock-names|clocks|reset-names|resets|power-domains|iommus|stream-id|status' \
+  work/dt/live-twrp.dts | grep -B3 -A8 \
+  -E 'kgsl|gmu|clock|reset|power|iommu|stream|status' | head -400
+443:			status = "ok";
+453:			status = "ok";
+463:			status = "ok";
+473:			status = "ok";
+483:			status = "ok";
+493:			status = "ok";
+502:			qcom,no-status-check-on-disable;
+504:			status = "ok";
+513:			qcom,no-status-check-on-disable;
+515:			status = "ok";
+524:			qcom,no-status-check-on-disable;
+526:			status = "ok";
+535:			qcom,no-status-check-on-disable;
+537:			status = "ok";
+546:			qcom,no-status-check-on-disable;
+548:			status = "ok";
+557:			qcom,no-status-check-on-disable;
+559:			status = "ok";
+568:			qcom,no-status-check-on-disable;
+570:			status = "ok";
+580:			status = "ok";
+591:			status = "ok";
+601:			status = "ok";
+611:			status = "ok";
+622:			status = "ok";
+633:			status = "ok";
+644:			status = "ok";
+663:			qcom,no-status-check-on-disable;
+666:			status = "ok";
+676:			status = "ok";
+677:			clock-names = "core_root_clk";
+678:			clocks = <0x1b 0x02>;
+693:			status = "ok";
+704:			status = "ok";
+715:			status = "ok";
+727:			clocks = <0x1f 0x00>;
+728:			clock-names = "iface_clk";
+758:			clocks = <0x1f 0x00>;
+759:			clock-names = "iface_clk";
+790:			clocks = <0x1f 0x00 0x20 0x00 0x21 0x99 0x21 0xa3 0x21 0x9d>;
+791:			clock-names = "iface_clk", "ref_clk_src", "ref_clk", "cfg_ahb_clk", "pipe_clk";
+920:			clocks = <0x21 0x15 0x21 0x16 0x1f 0x00 0x1f 0x01 0x1f 0x17 0x1f 0x24>;
+921:			clock-names = "gcc_iface", "gcc_bus", "iface_clk", "bus_clk", "core_clk", "vsync_clk";
+929:			iommus = <0x28 0x880 0x08 0x28 0xc80 0x08>;
+1071:				iommus = <0x28 0x881 0x08 0x28 0xc81 0x08>;
+2583:				qcom,mdss-dsi-panel-status-check-mode = "irq_check";
+2584:				qcom,mdss-dsi-panel-status-irq-trigger1 = "falling";
+2617:				samsung,poc_status_rx_cmds_revA = [06 01 00 00 00 00 01 eb 04 00];
+2931:				qcom,mdss-dsi-panel-status-check-mode = "irq_check";
+2932:				qcom,mdss-dsi-panel-status-irq-trigger1 = "falling";
+2964:				samsung,poc_status_rx_cmds_revA = [06 01 00 00 00 00 01 eb 04 00];
+3311:			clocks = <0x1f 0x23 0x1f 0x22>;
+3312:			clock-names = "vsync_clk", "iface_clk";
+3358:			clocks = <0x21 0x15 0x21 0x16 0x1f 0x00 0x1f 0x20 0x1f 0x01>;
+3359:			clock-names = "gcc_iface", "gcc_bus", "iface_clk", "rot_clk", "axi_clk";
+3362:			power-domains = <0x35>;
+3392:				iommus = <0x28 0x1090 0x00>;
+3399:				iommus = <0x28 0x1091 0x00>;
+3414:			clocks = <0x1f 0x02 0x1f 0x03 0x1f 0x04 0x1f 0x1a 0x1f 0x1b 0x1f 0x13>;
+3415:			clock-names = "byte_clk", "byte_clk_rcg", "byte_intf_clk", "pixel_clk", "pixel_clk_rcg", "esc_clk";
+3458:			clocks = <0x1f 0x05 0x1f 0x06 0x1f 0x07 0x1f 0x1c 0x1f 0x1d 0x1f 0x15>;
+3459:			clock-names = "byte_clk", "byte_clk_rcg", "byte_intf_clk", "pixel_clk", "pixel_clk_rcg", "esc_clk";
+3561:			clocks = <0x1f 0x08 0x20 0x00 0x21 0x99 0x21 0xa3 0x21 0x9d 0x1f 0x0c 0x1f 0x0e 0x1f 0x11 0x1f 0x0a 0x1f 0x12 0x39 0x05>;
+3562:			clock-names = "core_aux_clk", "core_usb_ref_clk_src", "core_usb_ref_clk", "core_usb_cfg_ahb_clk", "core_usb_pipe_clk", "ctrl_link_clk", "ctrl_link_iface_clk", "ctrl_pixel_clk", "crypto_clk", "pixel_clk_rcg", "pixel_parent";
+3640:				iommus = <0x28 0x03 0x00>;
+3650:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3651:			clocks = <0x21 0x52 0x21 0x66 0x21 0x67>;
+3656:			status = "okay";
+3668:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3669:			clocks = <0x21 0x54 0x21 0x66 0x21 0x67>;
+3674:			status = "disabled";
+3686:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3687:			clocks = <0x21 0x46 0x21 0x66 0x21 0x67>;
+3694:			status = "disabled";
+3705:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3706:			clocks = <0x21 0x48 0x21 0x66 0x21 0x67>;
+3713:			status = "disabled";
+3724:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3725:			clocks = <0x21 0x4a 0x21 0x66 0x21 0x67>;
+3732:			status = "disabled";
+3743:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3744:			clocks = <0x21 0x4c 0x21 0x66 0x21 0x67>;
+3751:			status = "ok";
+3770:				clocks = <0x20 0x04>;
+3771:				clock-names = "ref_clk";
+3803:				status = "ok";
+3804:				clocks = <0x63 0x48>;
+3805:				clock-names = "cam_clk";
+3828:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3829:			clocks = <0x21 0x4e 0x21 0x66 0x21 0x67>;
+3836:			status = "ok";
+3852:				status = "ok";
+3870:				status = "ok";
+3897:				clocks = <0x63 0x42>;
+3898:				clock-names = "cam_clk";
+3901:				status = "ok";
+3913:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3914:			clocks = <0x21 0x50 0x21 0x66 0x21 0x67>;
+3921:			status = "disabled";
+3932:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3933:			clocks = <0x21 0x52 0x21 0x66 0x21 0x67>;
+3940:			status = "disabled";
+3951:			clock-names = "se-clk", "m-ahb", "s-ahb";
+3952:			clocks = <0x21 0x54 0x21 0x66 0x21 0x67>;
+3959:			status = "ok";
+4014:				status = "ok";
+4031:				status = "ok";
+4043:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4044:			clocks = <0x21 0x46 0x21 0x66 0x21 0x67>;
+4053:			status = "ok";
+4176:				status = "ok";
+4188:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4189:			clocks = <0x21 0x48 0x21 0x66 0x21 0x67>;
+4198:			status = "disabled";
+4209:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4210:			clocks = <0x21 0x4a 0x21 0x66 0x21 0x67>;
+4219:			status = "ok";
+4238:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4239:			clocks = <0x21 0x4c 0x21 0x66 0x21 0x67>;
+4248:			status = "disabled";
+4259:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4260:			clocks = <0x21 0x4e 0x21 0x66 0x21 0x67>;
+4269:			status = "disabled";
+4280:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4281:			clocks = <0x21 0x50 0x21 0x66 0x21 0x67>;
+4290:			status = "ok";
+4317:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4318:			clocks = <0x21 0x52 0x21 0x66 0x21 0x67>;
+4327:			status = "disabled";
+4338:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4339:			clocks = <0x21 0x54 0x21 0x66 0x21 0x67>;
+4348:			status = "disabled";
+4364:				iommus = <0x28 0x6c3 0x00>;
+4374:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4375:			clocks = <0x21 0x58 0x21 0x68 0x21 0x69>;
+4381:			status = "ok";
+4390:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4391:			clocks = <0x21 0x5a 0x21 0x68 0x21 0x69>;
+4397:			status = "disabled";
+4406:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4407:			clocks = <0x21 0x5e 0x21 0x68 0x21 0x69>;
+4413:			status = "ok";
+4424:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4425:			clocks = <0x21 0x56 0x21 0x68 0x21 0x69>;
+4432:			status = "disabled";
+4443:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4444:			clocks = <0x21 0x58 0x21 0x68 0x21 0x69>;
+4451:			status = "disabled";
+4462:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4463:			clocks = <0x21 0x5a 0x21 0x68 0x21 0x69>;
+4470:			status = "ok";
+4500:				clocks = <0x20 0x04>;
+4501:				clock-names = "rf_clk";
+4514:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4515:			clocks = <0x21 0x5c 0x21 0x68 0x21 0x69>;
+4522:			status = "ok";
+4527:				status = "okay";
+4558:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4559:			clocks = <0x21 0x5e 0x21 0x68 0x21 0x69>;
+4566:			status = "disabled";
+4577:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4578:			clocks = <0x21 0x60 0x21 0x68 0x21 0x69>;
+4585:			status = "disabled";
+4596:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4597:			clocks = <0x21 0x62 0x21 0x68 0x21 0x69>;
+4604:			status = "ok";
+4634:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4635:			clocks = <0x21 0x64 0x21 0x68 0x21 0x69>;
+4642:			status = "disabled";
+4653:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4654:			clocks = <0x21 0x56 0x21 0x68 0x21 0x69>;
+4663:			status = "ok";
+4674:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4675:			clocks = <0x21 0x58 0x21 0x68 0x21 0x69>;
+4684:			status = "disabled";
+4695:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4696:			clocks = <0x21 0x5a 0x21 0x68 0x21 0x69>;
+4705:			status = "disabled";
+4716:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4717:			clocks = <0x21 0x5c 0x21 0x68 0x21 0x69>;
+4726:			status = "disabled";
+4737:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4738:			clocks = <0x21 0x5e 0x21 0x68 0x21 0x69>;
+4747:			status = "disabled";
+4758:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4759:			clocks = <0x21 0x60 0x21 0x68 0x21 0x69>;
+4768:			status = "disabled";
+4779:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4780:			clocks = <0x21 0x62 0x21 0x68 0x21 0x69>;
+4789:			status = "disabled";
+4800:			clock-names = "se-clk", "m-ahb", "s-ahb";
+4801:			clocks = <0x21 0x64 0x21 0x68 0x21 0x69>;
+4810:			status = "ok";
+4875:				status = "disabled";
+4882:				status = "disabled";
+4889:				status = "disabled";
+4896:				status = "disabled";
+4903:				status = "disabled";
+4910:				status = "disabled";
+5033:						status = "okay";
+5123:						status = "okay";
+5133:						status = "okay";
+5138:						status = "okay";
+5516:					status = "disabled";
+5523:					status = "disabled";
+5530:					status = "disabled";
+5537:					status = "disabled";
+5546:			clocks = <0xbb 0x00>;
+5547:			clock-names = "core_clk";
+5649:			status = "ok";
+5660:			status = "ok";
+5688:			clock-names = "devfreq_clk";
+5689:			clocks = <0xc0 0x03>;
+5697:			clock-names = "devfreq_clk";
+5698:			clocks = <0xc0 0x04>;
+5726:			clock-names = "devfreq_clk";
+5727:			clocks = <0xc0 0x0d>;
+5881:			clock-names = "xo_ao";
+5882:			clocks = <0x20 0x01>;
+5918:				qcom,use-ext-clocks;
+5919:				clocks = <0x20 0x0a 0x20 0x0b>;
+5920:				clock-names = "rf_clk3_clk", "rf_clk3_pin_clk";
+5927:				status = "ok";
+5942:			clock-names = "xo_clk_src";
+5943:			clocks = <0x20 0x00>;
+5962:			clock-names = "ufs_core_clk", "bus_clk", "iface_clk", "ice_core_clk";
+5963:			clocks = <0x21 0x84 0x21 0x82 0x21 0x83 0x21 0x86>;
+5981:			clock-names = "ref_clk_src", "ref_clk", "ref_aux_clk";
+5982:			clocks = <0x20 0x00 0x21 0x82 0x21 0xb3>;
+5983:			status = "ok";
+6002:			clock-names = "core_clk", "bus_aggr_clk", "iface_clk", "core_clk_unipro", "core_clk_ice", "ref_clk", "tx_lane0_sync_clk", "rx_lane0_sync_clk", "rx_lane1_sync_clk";
+6003:			clocks = <0x21 0xab 0x21 0xb1 0x21 0x83 0x21 0xad 0x21 0xaf 0x20 0x00 0x21 0x8c 0x21 0x8a 0x21 0x8b>;
+6017:			resets = <0x21 0x0e>;
+6018:			reset-names = "core_reset";
+6019:			status = "ok";
+6050:			clocks = <0x21 0x6a 0x21 0x6b>;
+6051:			clock-names = "iface_clk", "core_clk";
+6056:			status = "ok";
+6080:			clocks = <0x20 0x00 0x21 0x26 0x21 0x29 0x21 0x05 0x21 0x27 0x21 0x2a 0x21 0x28 0x21 0x42>;
+6081:			clock-names = "xo", "iface_clk", "bus_clk", "mem_clk", "gpll0_mss_clk", "snoc_axi_clk", "mnoc_axi_clk", "prng_clk";
+6082:			qcom,proxy-clock-names = "xo", "prng_clk";
+6083:			qcom,active-clock-names = "iface_clk", "bus_clk", "mem_clk", "gpll0_mss_clk", "snoc_axi_clk", "mnoc_axi_clk";
+6099:			status = "ok";
+6128:			clocks = <0x20 0x00>;
+6129:			clock-names = "xo";
+6130:			qcom,proxy-clock-names = "xo";
+6135:			status = "ok";
+6159:			clocks = <0x20 0x00>;
+6160:			clock-names = "xo";
+6161:			qcom,proxy-clock-names = "xo";
+6169:			status = "ok";
+6200:				iommus = <0x28 0x1806 0x00 0x28 0x180d 0x00 0x28 0x180e 0x01 0x28 0x1810 0x01>;
+6216:				clock-names = "wcd_clk";
+6217:				clocks = <0x10e 0x00>;
+6253:					status = "disabled";
+6422:			clocks = <0x21 0xa3>;
+6423:			clock-names = "cfg_ahb_clk";
+6425:			status = "ok";
+6433:			reg-names = "sp2soc_irq_status", "sp2soc_irq_clr", "sp2soc_irq_mask", "rmb_err", "rmb_err_spare2";
+6440:			clocks = <0x20 0x00>;
+6441:			clock-names = "xo";
+6442:			qcom,proxy-clock-names = "xo";
+6444:			status = "ok";
+6475:			clocks = <0x20 0x00>;
+6476:			clock-names = "xo";
+6477:			qcom,proxy-clock-names = "xo";
+6491:			status = "ok";
+6524:				iommus = <0x28 0x1401 0x30>;
+6531:				iommus = <0x28 0x1402 0x30>;
+6538:				iommus = <0x28 0x1403 0x30>;
+6545:				iommus = <0x28 0x1404 0x30>;
+6552:				iommus = <0x28 0x1405 0x30>;
+6559:				iommus = <0x28 0x1406 0x30>;
+6566:				iommus = <0x28 0x1407 0x30>;
+6573:				iommus = <0x28 0x1408 0x30>;
+6581:				iommus = <0x28 0x1409 0x30>;
+6589:				iommus = <0x28 0x140a 0x30>;
+6596:				iommus = <0x28 0x1823 0x00>;
+6603:				iommus = <0x28 0x1824 0x00>;
+6661:			clocks = <0xdf 0x0b 0xdf 0x08 0xdf 0x0a>;
+6662:			clock-names = "core_clk", "iface_clk", "bus_clk";
+6663:			qcom,proxy-clock-names = "core_clk", "iface_clk", "bus_clk";
+6672:			status = "ok";
+6677:			status = "ok";
+7142:			status = "ok";
+7155:			status = "ok";
+7234:			clock-names = "core", "iface";
+7255:			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7256:			clocks = <0x21 0x0b 0x21 0x0b 0x21 0x09 0x21 0x0a>;
+7271:			clocks = <0x21 0x42>;
+7272:			clock-names = "iface_clk";
+7301:			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7302:			clocks = <0x21 0x0b 0x21 0x0b 0x21 0x09 0x21 0x0a>;
+7306:			iommus = <0x28 0x706 0x01 0x28 0x716 0x01>;
+7332:			clock-names = "core_clk_src", "core_clk", "iface_clk", "bus_clk";
+7333:			clocks = <0x21 0x0b 0x21 0x0b 0x21 0x09 0x21 0x0a>;
+7343:			iommus = <0x28 0x704 0x01 0x28 0x714 0x01>;
+7405:				iommus = <0x28 0x720 0x00>;
+7415:				iommus = <0x28 0x721 0x00>;
+7424:				iommus = <0x28 0x722 0x00>;
+7493:			iommus = <0x28 0x40 0x01>;
+9925:			iommus = <0x28 0x16 0x00>;
+9928:			status = "ok";
+9942:			iommus = <0x28 0x6d6 0x00>;
+9945:			status = "ok";
+9956:			clock-names = "iface_clk", "ref_clk";
+9957:			clocks = <0x21 0x71 0x21 0x73>;
+9971:			iommus = <0x28 0x20 0x0f>;
+10774:			status = "ok";
+10797:			clocks = <0xbb 0x00>;
+10798:			clock-names = "apb_pclk";
+10835:			clocks = <0xbb 0x00>;
+10836:			clock-names = "apb_pclk";
+10883:			clocks = <0xbb 0x00>;
+10884:			clock-names = "apb_pclk";
+10921:			clocks = <0xbb 0x00>;
+10922:			clock-names = "apb_pclk";
+10962:			clocks = <0xbb 0x00>;
+10963:			clock-names = "apb_pclk";
+11011:			clocks = <0xbb 0x00>;
+11012:			clock-names = "apb_pclk";
+11032:			clocks = <0xbb 0x00>;
+11033:			clock-names = "apb_pclk";
+11057:			clocks = <0xbb 0x00>;
+11058:			clock-names = "apb_pclk";
+11083:			clocks = <0xbb 0x00>;
+11084:			clock-names = "apb_pclk";
+11121:			clocks = <0xbb 0x00>;
+11122:			clock-names = "apb_pclk";
+11170:			clocks = <0xbb 0x00>;
+11171:			clock-names = "apb_pclk";
+11190:			clocks = <0xbb 0x00>;
+11191:			clock-names = "apb_pclk";
+11202:			clocks = <0xbb 0x00>;
+11203:			clock-names = "apb_pclk";
+11262:			clocks = <0xbb 0x00>;
+11263:			clock-names = "apb_pclk";
+11344:			clocks = <0xbb 0x00>;
+11345:			clock-names = "apb_pclk";
+11398:			clocks = <0xbb 0x00>;
+11399:			clock-names = "apb_pclk";
+11535:			clocks = <0xbb 0x00>;
+11536:			clock-names = "apb_pclk";
+11576:			clocks = <0xbb 0x00>;
+11577:			clock-names = "apb_pclk";
+11614:			clocks = <0xbb 0x00>;
+11615:			clock-names = "apb_pclk";
+11635:			clocks = <0xbb 0x00>;
+11636:			clock-names = "apb_pclk";
+11673:			clocks = <0xbb 0x00>;
+11674:			clock-names = "apb_pclk";
+11712:			clocks = <0xbb 0x00>;
+11713:			clock-names = "apb_pclk";
+11734:			clocks = <0xbb 0x00>;
+11735:			clock-names = "apb_pclk";
+11756:			clocks = <0xbb 0x00>;
+11757:			clock-names = "apb_pclk";
+11778:			clocks = <0xbb 0x00>;
+11779:			clock-names = "apb_pclk";
+11801:			clocks = <0xbb 0x00>;
+11802:			clock-names = "apb_pclk";
+11839:			clocks = <0xbb 0x00>;
+11840:			clock-names = "apb_pclk";
+11862:			clocks = <0xbb 0x00>;
+11863:			clock-names = "apb_pclk";
+11900:			clocks = <0xbb 0x00>;
+11901:			clock-names = "apb_pclk";
+11923:			clocks = <0xbb 0x00>;
+11924:			clock-names = "apb_pclk";
+11961:			clocks = <0xbb 0x00>;
+11962:			clock-names = "apb_pclk";
+11982:			clocks = <0xbb 0x00>;
+11983:			clock-names = "apb_pclk";
+12020:			clocks = <0xbb 0x00>;
+12021:			clock-names = "apb_pclk";
+12042:			clocks = <0xbb 0x00>;
+12043:			clock-names = "apb_pclk";
+12080:			clocks = <0xbb 0x00>;
+12081:			clock-names = "apb_pclk";
+12119:			clocks = <0xbb 0x00>;
+12120:			clock-names = "apb_pclk";
+12141:			clocks = <0xbb 0x00>;
+12142:			clock-names = "apb_pclk";
+12179:			clocks = <0xbb 0x00>;
+12180:			clock-names = "apb_pclk";
+12201:			clocks = <0xbb 0x00>;
+12202:			clock-names = "apb_pclk";
+12222:			clocks = <0xbb 0x00>;
+12223:			clock-names = "apb_pclk";
+12243:			clocks = <0xbb 0x00>;
+12244:			clock-names = "apb_pclk";
+12266:			clocks = <0xbb 0x00>;
+12267:			clock-names = "apb_pclk";
+12304:			clocks = <0xbb 0x00>;
+12305:			clock-names = "apb_pclk";
+12327:			clocks = <0xbb 0x00>;
+12328:			clock-names = "apb_pclk";
+12365:			clocks = <0xbb 0x00>;
+12366:			clock-names = "apb_pclk";
+12386:			clocks = <0xbb 0x00>;
+seven@sevenzx:~/ios-s9$ 
