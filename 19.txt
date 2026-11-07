@@ -1,0 +1,91 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9
+
+echo "=== firmware ==="
+stat -c '%s bytes' research/gpu-fw/a630_gmu.bin
+sha256sum research/gpu-fw/a630_gmu.bin
+
+echo "=== imagens ==="
+ls -lh s9/out/boot.img s9/out/boot-m11.img
+
+echo "=== projeto ==="
+git -C . status --short
+=== firmware ===
+32768 bytes
+da8d9b1b1f5c1a0b311f32567093b4828f3c80031dd8435f91ac13c664e173a6  research/gpu-fw/a630_gmu.bin
+=== imagens ===
+-rw-rw-r-- 1 seven seven 11M Nov  3 04:02 s9/out/boot-m11.img
+-rw-rw-r-- 1 seven seven 11M Nov  3 04:02 s9/out/boot.img
+=== projeto ===
+ M s9/shim/m11.c
+?? ZTO-G9600ZHU9FVF2/
+?? hashes-final.txt
+?? s9/shim/m11-m11a.c
+?? s9/shim/m11.c.before-pa-fix
+?? snapshots/
+?? work/
+seven@sevenzx:~/ios-s9$ 
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9/s9
+
+cp shim/m11.c shim/m11-before-smmu-probe.c
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+old = """idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+        idr1 = rd32(SMMU_BASE + SMMU_IDR1);"""
+
+new = """step("2a antes IDR0");
+        idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+        showhex("smmu idr0", idr0);
+
+        step("2b antes IDR1");
+        idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+        showhex("smmu idr1", idr1);"""
+
+if old not in s:
+    raise SystemExit("ERRO: trecho IDR0/IDR1 não encontrado")
+
+s = s.replace(old, new, 1)
+
+replacements = {
+    'showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));':
+        'step("2c antes SCR0"); showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));',
+    'showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));':
+        'step("2d antes SGFSR"); showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));',
+    'showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));':
+        'step("2e antes SMR0"); showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));',
+    'showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));':
+        'step("2f antes S2CR0"); showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));',
+    'showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));':
+        'step("2g antes CB0 SCTLR"); showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));',
+}
+
+for old_line, new_line in replacements.items():
+    if old_line not in s:
+        print("AVISO: linha não encontrada:", old_line)
+    else:
+        s = s.replace(old_line, new_line, 1)
+
+p.write_text(s)
+print("instrumentação aplicada")
+PY
+
+grep -nE '2a antes|2b antes|2c antes|2d antes|2e antes|2f antes|2g antes' shim/m11.c
+instrumentação aplicada
+311:	step("2a antes IDR0");
+315:	step("2b antes IDR1");
+324:	step("2c antes SCR0"); showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+325:	step("2d antes SGFSR"); showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+339:	step("2e antes SMR0"); showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+340:	step("2f antes S2CR0"); showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+341:	step("2g antes CB0 SCTLR"); showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+seven@sevenzx:~/ios-s9/s9$ rm -rf out/obj
+./build.sh m11
+-rwxrwxr-x 1 seven seven   192512 Nov  6 23:30 out/Image
+-rw-rw-r-- 1 seven seven 11198464 Nov  6 23:30 out/boot.img
+-rw-rw-r-- 1 seven seven 11202603 Nov  6 23:30 out/boot.tar.md5
+379b27e44bddd2b97adbe45fa654076066bbccbf24b87d6eb6998a83b28ce525  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ 
