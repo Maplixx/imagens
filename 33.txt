@@ -1,0 +1,186 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9/s9
+
+echo '=== linker/build ==='
+find . -maxdepth 3 -type f \
+  \( -iname '*.ld' -o -iname 'link*' -o -name 'build.sh' \) \
+  -print
+
+echo '=== endereços de RAM/scratch ==='
+grep -RInE \
+  'a6000000|a7000000|RAM_BASE|SCRATCH|scratch|linker|MEMORY|KERNEL_BASE|PAYLOAD' \
+  shim tools build.sh 2>/dev/null | head -200
+
+echo '=== tamanho e layout do kernel ==='
+readelf -l out/Image 2>/dev/null | grep -E \
+  'LOAD|VirtAddr|PhysAddr|FileSiz|MemSiz|Align' || true
+
+echo '=== fontes do M11 ==='
+grep -nE \
+  'GMU_HFI|HFI|SMMU_BASE|GPU_BASE|static.*mem|uint8_t|uint32_t' \
+  shim/m11.c | head -160
+=== linker/build ===
+./shim/shim.ld
+./build.sh
+=== endereços de RAM/scratch ===
+shim/m7.c:979:	step("le qscratch 0xa6f8808");
+shim/m3.c:22:static uint64_t scratch[8192];	/* 64KB of our image: Device, then write-back */
+shim/m3.c:34:			scratch[i] = scratch[i] * 3 + i;
+tools/mkadt.py:19:PHYS_BASE = 0xa6000000
+tools/mkadt.py:20:MEM_SIZE = 0xd81c0000   # 0xa6000000 (acima do staging do ABL) -> 0x17e1c0000   # 0xa1800000 -> 0x17e1c0000 span (holes excluded in pmap)
+tools/mkadt.py:30:HIGH_PHYS_BASE = 0xa6000000
+build.sh:5:#   PAYLOAD=out/payload.bin ./build.sh m4   XNU payload as the ramdisk
+build.sh:36:    [ -f "${PAYLOAD:-}" ] || { echo "m4 needs PAYLOAD=path/to/payload.bin (tools/mkpayload.py)" >&2; exit 2; } ;;
+build.sh:67:	cp "$PAYLOAD" out/ramdisk.cpio.gz
+=== tamanho e layout do kernel ===
+=== fontes do M11 ===
+3: * GPU's own SMMU and get it talking to us over its message channel (HFI).
+6: * not reach RAM. HFI does: the GMU reads and writes a table of message queues
+9: * the SMMU must be programmed and the queue table told to the GMU (HFI_QTBL_ADDR)
+19: * exactly which register did not take, and HFI then faults (logged), never a brick.
+50:#define SMMU_BASE		0x05040000UL
+53:#define GMU(n)			(GMU_BASE + (((uint32_t)(n) - 0x1A800u) << 2))
+54:#define PDC(w)			(PDC_BASE + ((uint32_t)(w) << 2))
+77:/* GMU registers (as M10, plus HFI) */
+87:#define GMU_HFI_SFR_ADDR	0x1F982
+88:#define GMU_HFI_MMAP_ADDR	0x1F983
+89:#define GMU_HFI_QTBL_INFO	0x1F984
+90:#define GMU_HFI_QTBL_ADDR	0x1F985
+91:#define GMU_HFI_CTRL_INIT	0x1F986
+92:#define GMU_HFI_CTRL_STATUS	0x1F980
+93:#define GMU_HFI_VERSION_INFO	0x1F981
+181:/* GMU memory layout (Samsung a630: HFI at 0x60000000, dump at +1 MiB). */
+182:#define GMU_HFI_ADDR		0x60000000u
+189:/* HFI message protocol (kgsl_hfi.h) */
+190:#define HFI_QUEUES		3		/* CMD(0), MSG(1), DBG(2) */
+191:#define HFI_QUEUE_WORDS		1024
+192:#define HFI_MSG_CMD		0
+196:#define HFI_IRQ_MSGQ		(1u << 0)
+202:static uint8_t smmu_pool[8][4096] __attribute__((aligned(4096)));
+204:static uint8_t gmu_hfi_mem[GMU_MEM_SIZE] __attribute__((aligned(4096)));
+205:static uint8_t gmu_dump_mem[GMU_MEM_SIZE] __attribute__((aligned(4096)));
+207:static uint32_t smmu_page = 0x1000, smmu_pages = 8, smmu_contexts, smmu_smrs;
+234:static void zero(void *p, uint32_t n)
+236:	for (uint32_t i = 0; i < n; i++)
+237:		((volatile uint8_t *)p)[i] = 0;
+258:	uint32_t v = rd32(GPUCC + GPUCC_CX_GDSCR);
+307:	uint32_t idr0, idr1;
+312:	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+316:	idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+324:	step("2c antes SCR0"); showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+325:	step("2d antes SGFSR"); showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+339:	step("2e antes SMR0"); showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+340:	step("2f antes S2CR0"); showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+341:	step("2g antes CB0 SCTLR"); showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+387:	uint32_t cb = GMU_CB, ctx;
+391:	step("3a tabelas p/ HFI 0x60000000 + dump");
+395:	for (uint32_t off = 0; off < GMU_MEM_SIZE; off += 4096)
+396:		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+407:	wr32(SMMU_BASE + SMMU_SCR0, rd32(SMMU_BASE + SMMU_SCR0) & ~(1u << 0));	/* CLIENTPD=0 */
+409:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, 0);
+410:	wr32(SMMU_BASE + smmu_page + SMMU_CBA2R(cb), SMMU_CBA2R_64BIT);
+411:	wr32(SMMU_BASE + smmu_page + SMMU_CBAR(cb), SMMU_CBAR_STAGE_1);
+412:	wr32(SMMU_BASE + SMMU_CB_TCR2 + ctx, SMMU_TCR2_VAL);
+413:	wr32(SMMU_BASE + SMMU_CB_TCR + ctx, SMMU_TCR_39BITS);
+414:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + ctx, (uint32_t)ttbr);
+415:	wr32(SMMU_BASE + SMMU_CB_TTBR0 + 4 + ctx, (uint32_t)(ttbr >> 32));
+416:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + ctx, 0);
+417:	wr32(SMMU_BASE + SMMU_CB_TTBR1 + 4 + ctx, 0);
+418:	wr32(SMMU_BASE + SMMU_CB_MAIR0 + ctx, SMMU_MAIR0_VAL);
+419:	wr32(SMMU_BASE + SMMU_CB_MAIR1 + ctx, 0);
+420:	wr32(SMMU_BASE + SMMU_CB_FSR + ctx, SMMU_FSR_ALL);
+421:	wr32(SMMU_BASE + SMMU_CB_TLBIALL + ctx, 0);
+422:	wr32(SMMU_BASE + SMMU_CB_TLBSYNC + ctx, 0);
+423:	for (int i = 0; i < 100 && (rd32(SMMU_BASE + SMMU_CB_TLBSTATUS + ctx) & 1); i++)
+425:	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, SMMU_CB_SCTLR_ON);
+427:	wr32(SMMU_BASE + SMMU_S2CR(0), cb);
+428:	wr32(SMMU_BASE + SMMU_SMR(0), SMMU_SMR_VALID | GMU_STREAM_KERNEL);
+429:	wr32(SMMU_BASE + SMMU_S2CR(1), cb);
+430:	wr32(SMMU_BASE + SMMU_SMR(1), SMMU_SMR_VALID | GMU_STREAM_USER);
+434:	showhex("cb0 sctlr<-", rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx));
+435:	showhex("cb0 ttbr0 lo", rd32(SMMU_BASE + SMMU_CB_TTBR0 + ctx));
+436:	showhex("cbar0<-", rd32(SMMU_BASE + smmu_page + SMMU_CBAR(cb)));
+437:	showhex("smr0<-", rd32(SMMU_BASE + SMMU_SMR(0)));
+438:	showhex("s2cr0<-", rd32(SMMU_BASE + SMMU_S2CR(0)));
+439:	if (!(rd32(SMMU_BASE + SMMU_CB_SCTLR + ctx) & 1) ||
+440:	    (rd32(SMMU_BASE + SMMU_SMR(0)) != (SMMU_SMR_VALID | GMU_STREAM_KERNEL))) {
+450:	uint32_t ctx = smmu_pages * smmu_page + GMU_CB * smmu_page;
+451:	uint32_t fsr = rd32(SMMU_BASE + SMMU_CB_FSR + ctx);
+456:	showhex("  far lo", rd32(SMMU_BASE + SMMU_CB_FAR + ctx));
+460:/* ---- the HFI queue table + polled send/receive ----------------------------------------------------- */
+463:#define HFI_TBL_HDR_WORDS	6
+464:#define HFI_QHDR_WORDS		12
+465:#define HFI_QHDR_MAX		17
+466:#define HFI_TABLE_WORDS		(HFI_TBL_HDR_WORDS + HFI_QHDR_MAX * HFI_QHDR_WORDS)
+467:#define HFI_QUEUE_SIZE_BYTES	4096u
+468:#define HFI_TABLE_BYTES_ALIGNED	((HFI_TABLE_WORDS * 4u + 15u) & ~15u)
+469:#define HFI_QUEUE_OFFSET(i)	(HFI_TABLE_BYTES_ALIGNED + (i) * HFI_QUEUE_SIZE_BYTES) /* bytes */
+471:#define HFI_V1_MSG_POST	1
+472:#define HFI_V1_MSG_ACK	2
+483:static volatile uint32_t *hfi;	/* = gmu_hfi_mem as words */
+485:static uint32_t hfi_number;
+486:static uint32_t hfi_payload0;	/* first payload word of the last answer (e.g. the firmware version) */
+488:static volatile uint32_t *hfi_qhdr(unsigned q)
+490:	return hfi + HFI_TBL_HDR_WORDS + q * HFI_QHDR_WORDS;
+496:	hfi = (volatile uint32_t *)gmu_hfi_mem;
+498:	hfi[1] = HFI_TABLE_WORDS;		/* size (dwords) */
+499:	hfi[2] = HFI_TBL_HDR_WORDS;		/* qhdr0 offset */
+500:	hfi[3] = HFI_QHDR_WORDS;		/* qhdr size */
+501:	hfi[4] = HFI_QUEUES;			/* num_q */
+502:	hfi[5] = HFI_QUEUES;			/* num_active_q */
+504:		static const uint8_t qid[HFI_QUEUES] = { 0, 4, 5 };
+505:		static const uint8_t qprio[HFI_QUEUES] = { 10, 10, 40 };
+506:		for (unsigned i = 0; i < HFI_QUEUES; i++) {
+507:			volatile uint32_t *h = hfi_qhdr(i);
+509:			h[QH_START] = GMU_HFI_ADDR + HFI_QUEUE_OFFSET(i);
+510:			h[QH_TYPE] = qid[i] | ((uint32_t)qprio[i] << 8);
+511:			h[QH_SIZE] = HFI_QUEUE_SIZE_BYTES / 4u;
+522:static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+523:	uint32_t *verdict)
+525:	volatile uint32_t *h = hfi_qhdr(which);
+526:	volatile uint32_t *q = (volatile uint32_t *)(gmu_hfi_mem + HFI_QUEUE_OFFSET(which));
+530:		uint32_t at = h[QH_READ] % HFI_QUEUE_WORDS, msg0 = q[at], words = (msg0 >> 8) & 0xff;
+531:		uint32_t m[8] = { 0 };
+533:		for (uint32_t i = 0; i < words; i++) {
+536:			at = (at + 1) % HFI_QUEUE_WORDS;
+538:		h[QH_READ] = (at + 3) / 4 * 4 % HFI_QUEUE_WORDS;
+548:			uint32_t type = (m[0] >> 16) & 0xf;
+549:			int is_ack = (type == HFI_V1_MSG_ACK) || (type == 1);
+550:			int matches = (type == HFI_V1_MSG_ACK) ?
+566:static int hfi_send(const char *what, uint32_t id, uint32_t *msg, uint32_t words, uint32_t *verdict)
+568:	volatile uint32_t *h = hfi_qhdr(0);
+569:	volatile uint32_t *q = (volatile uint32_t *)(gmu_hfi_mem + HFI_QUEUE_OFFSET(0));
+570:	uint32_t at = h[QH_WRITE] % HFI_QUEUE_WORDS, number = ++hfi_number & 0xfff;
+575:		(HFI_V1_MSG_POST << 16) |
+577:	for (uint32_t i = 0; i < (words + 3) / 4 * 4; i++) {
+579:		at = (at + 1) % HFI_QUEUE_WORDS;
+589:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+590:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+601:	showhex("hfi msg word0", ((volatile uint32_t *)(gmu_hfi_mem + HFI_QUEUE_OFFSET(1)))[0]);
+611:	static const uint32_t rsc_seq[5] = { 0xA7A506A0u, 0xA1E6A6E7u, 0xA2E081E1u, 0xE9A982E2u, 0x0020E8A8u };
+612:	static const uint32_t pdc_seq[5] = { 0xFEBEA1E1u, 0xA5A4A3A2u, 0x8382A6E0u, 0xBCE3E284u, 0x002081FCu };
+659:/* ---- stage 4: firmware + boot (with HFI_QTBL set) --------------------------------------------------- */
+663:	uint32_t result = 0, wrong = 0;
+684:	step("3b config sem HFI e solta o GMU");
+685:	/* HFI ainda não é configurado nesta etapa. */
+688:	wr32(GMU(GMU_HFI_QTBL_ADDR), 0);
+689:	wr32(GMU(GMU_HFI_QTBL_INFO), 0);
+691:	wr32(GMU(GMU_HFI_SFR_ADDR), GMU_CHIPID);
+696:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+717:	uint32_t result = 0, wrong = 0;
+738:	step("4b config (HFI_QTBL=0x60000000) e solta o GMU");
+742:	wr32(GMU(GMU_HFI_QTBL_ADDR), GMU_HFI_ADDR);
+743:	wr32(GMU(GMU_HFI_QTBL_INFO), 1);
+745:	wr32(GMU(GMU_HFI_SFR_ADDR), GMU_CHIPID);
+750:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+769:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+773:	uint32_t msg[16], verdict = 0;
+775:	stage = "5 HFI";
+776:	step("5a liga as filas de mensagem (HFI_CTRL_INIT)");
+777:	wr32(GMU(GMU_HFI_CTRL_INIT), 1);
+782:			if (rd32(GMU(GMU_HFI_CTRL_STATUS)) & 1)
+787:		showhex("hfi_ctrl_status", rd32(GMU(GMU_HFI_CTRL_STATUS)));
+788:		showhex("hfi version_info", rd32(GMU(GMU_HFI_VERSION_INFO)));
+790:			con_str("5", "as filas HFI nao sobem");
+811:	con_str("5", "O GMU CONVERSA POR HFI: canal de mensagens de pe");
+820:	con_title("SHIM M11: SMMU + HFI DA ADRENO 630");
+seven@sevenzx:~/ios-s9/s9$
