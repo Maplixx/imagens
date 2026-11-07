@@ -1,0 +1,272 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9
+
+echo "=== fontes Qualcomm ==="
+find research/gpu-fw/qcom-source -type f -maxdepth 3 -print | sort
+
+echo "=== IDs HFI nas fontes ==="
+grep -RInE \
+  'HFI_MSG|H2F_MSG|F2H_MSG|FW_VER|FW_VERSION|MSG_ID|GMU_HFI' \
+  research/gpu-fw/qcom-source 2>/dev/null | head -240
+
+echo "=== strings do firmware GMU ==="
+strings -a -t x research/gpu-fw/a630_gmu.bin |
+  grep -iE 'hfi|version|firmware|init|error|message' |
+  head -120
+=== fontes Qualcomm ===
+find: aviso: você especificou a opção global -maxdepth após o argumento -type, mas as opções globais não são posicionais (ou seja, -maxdepth afeta testes especificados antes disso assim como aqueles especificados após). Por favor, especifique opções globais antes de outros argumentos.
+research/gpu-fw/qcom-source/PAS-CONSTANTS.txt
+research/gpu-fw/qcom-source/PAS-symbols.txt
+research/gpu-fw/qcom-source/qcom_scm-64.c
+research/gpu-fw/qcom-source/qcom_scm.c
+research/gpu-fw/qcom-source/qcom_scm.h
+research/gpu-fw/qcom-source/qcom_scm-private.h
+research/gpu-fw/qcom-source/qcom_scm-public.h
+research/gpu-fw/qcom-source/scm.h
+=== IDs HFI nas fontes ===
+=== strings do firmware GMU ===
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9/s9
+
+grep -RInE \
+  'HFI_MSG|H2F_MSG|F2H_MSG|FW_VER|FW_VERSION|HFI_V1|HFI_IRQ' \
+  shim tools 2>/dev/null | head -240
+shim/m11-before-ack-context.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-ack-context.c:194:#define HFI_MSG_CMD		0
+shim/m11-before-ack-context.c:195:#define H2F_MSG_INIT		0
+shim/m11-before-ack-context.c:196:#define H2F_MSG_FW_VER		1
+shim/m11-before-ack-context.c:197:#define F2H_MSG_ACK		126
+shim/m11-before-ack-context.c:198:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-ack-context.c:526:#define HFI_V1_MSG_POST	1
+shim/m11-before-ack-context.c:527:#define HFI_V1_MSG_ACK	2
+shim/m11-before-ack-context.c:598:			int is_ack = (type == HFI_V1_MSG_ACK);
+shim/m11-before-ack-context.c:635:		(HFI_V1_MSG_POST << 16) |
+shim/m11-before-ack-context.c:645:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-ack-context.c:646:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-ack-context.c:748:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-ack-context.c:802:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-ack-context.c:821:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-ack-context.c:848:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-ack-context.c:855:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-ack-context.c:858:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-ack-context.c:860:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-ack-context.c:861:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-ack-fallback.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-ack-fallback.c:192:#define HFI_MSG_CMD		0
+shim/m11-before-ack-fallback.c:193:#define H2F_MSG_INIT		0
+shim/m11-before-ack-fallback.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-ack-fallback.c:195:#define F2H_MSG_ACK		126
+shim/m11-before-ack-fallback.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-ack-fallback.c:471:#define HFI_V1_MSG_POST	1
+shim/m11-before-ack-fallback.c:472:#define HFI_V1_MSG_ACK	2
+shim/m11-before-ack-fallback.c:549:			int is_ack = (type == HFI_V1_MSG_ACK) || (type == 1);
+shim/m11-before-ack-fallback.c:550:			int matches = (type == HFI_V1_MSG_ACK) ?
+shim/m11-before-ack-fallback.c:575:		(HFI_V1_MSG_POST << 16) |
+shim/m11-before-ack-fallback.c:589:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-ack-fallback.c:590:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-ack-fallback.c:696:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-ack-fallback.c:750:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-ack-fallback.c:769:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-ack-fallback.c:796:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-ack-fallback.c:803:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-ack-fallback.c:806:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-ack-fallback.c:808:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-ack-fallback.c:809:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-smmu-probe.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-smmu-probe.c:192:#define HFI_MSG_CMD		0
+shim/m11-before-smmu-probe.c:193:#define H2F_MSG_INIT		0
+shim/m11-before-smmu-probe.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-smmu-probe.c:195:#define F2H_MSG_ACK		126
+shim/m11-before-smmu-probe.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-smmu-probe.c:555:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-smmu-probe.c:556:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-smmu-probe.c:658:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-smmu-probe.c:677:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-smmu-probe.c:704:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-smmu-probe.c:711:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-smmu-probe.c:714:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-smmu-probe.c:716:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-smmu-probe.c:717:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-hfi-response-before.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-hfi-response-before.c:192:#define HFI_MSG_CMD		0
+shim/m11-hfi-response-before.c:193:#define H2F_MSG_INIT		0
+shim/m11-hfi-response-before.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-hfi-response-before.c:195:#define F2H_MSG_ACK		126
+shim/m11-hfi-response-before.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-hfi-response-before.c:564:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-hfi-response-before.c:565:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-hfi-response-before.c:671:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-hfi-response-before.c:725:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-hfi-response-before.c:744:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-hfi-response-before.c:771:	step("5b manda H2F_MSG_INIT");
+shim/m11-hfi-response-before.c:778:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-hfi-response-before.c:781:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-hfi-response-before.c:783:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-hfi-response-before.c:784:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-reorder.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-reorder.c:192:#define HFI_MSG_CMD		0
+shim/m11-before-reorder.c:193:#define H2F_MSG_INIT		0
+shim/m11-before-reorder.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-reorder.c:195:#define F2H_MSG_ACK		126
+shim/m11-before-reorder.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-reorder.c:560:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-reorder.c:561:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-reorder.c:663:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-reorder.c:682:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-reorder.c:709:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-reorder.c:716:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-reorder.c:719:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-reorder.c:721:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-reorder.c:722:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-hfi-before-instrumentation.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-hfi-before-instrumentation.c:192:#define HFI_MSG_CMD		0
+shim/m11-hfi-before-instrumentation.c:193:#define H2F_MSG_INIT		0
+shim/m11-hfi-before-instrumentation.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-hfi-before-instrumentation.c:195:#define F2H_MSG_ACK		126
+shim/m11-hfi-before-instrumentation.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-hfi-before-instrumentation.c:560:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-hfi-before-instrumentation.c:561:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-hfi-before-instrumentation.c:663:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-hfi-before-instrumentation.c:717:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-hfi-before-instrumentation.c:736:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-hfi-before-instrumentation.c:763:	step("5b manda H2F_MSG_INIT");
+shim/m11-hfi-before-instrumentation.c:770:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-hfi-before-instrumentation.c:773:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-hfi-before-instrumentation.c:775:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-hfi-before-instrumentation.c:776:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-pas-metadata-stage.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-pas-metadata-stage.c:192:#define HFI_MSG_CMD		0
+shim/m11-before-pas-metadata-stage.c:193:#define H2F_MSG_INIT		0
+shim/m11-before-pas-metadata-stage.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-pas-metadata-stage.c:195:#define F2H_MSG_ACK		126
+shim/m11-before-pas-metadata-stage.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-pas-metadata-stage.c:478:#define HFI_V1_MSG_POST	1
+shim/m11-before-pas-metadata-stage.c:479:#define HFI_V1_MSG_ACK	2
+shim/m11-before-pas-metadata-stage.c:556:			int is_ack = (type == HFI_V1_MSG_ACK) || (type == 1);
+shim/m11-before-pas-metadata-stage.c:557:			int matches = (type == HFI_V1_MSG_ACK) ?
+shim/m11-before-pas-metadata-stage.c:582:		(HFI_V1_MSG_POST << 16) |
+shim/m11-before-pas-metadata-stage.c:596:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-pas-metadata-stage.c:597:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-pas-metadata-stage.c:703:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-pas-metadata-stage.c:757:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-pas-metadata-stage.c:776:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-pas-metadata-stage.c:803:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-pas-metadata-stage.c:810:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-pas-metadata-stage.c:813:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-pas-metadata-stage.c:815:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-pas-metadata-stage.c:816:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-v1-hfi-fix.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-v1-hfi-fix.c:192:#define HFI_MSG_CMD		0
+shim/m11-before-v1-hfi-fix.c:193:#define H2F_MSG_INIT		0
+shim/m11-before-v1-hfi-fix.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-v1-hfi-fix.c:195:#define F2H_MSG_ACK		126
+shim/m11-before-v1-hfi-fix.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-v1-hfi-fix.c:575:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-v1-hfi-fix.c:576:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-v1-hfi-fix.c:682:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-v1-hfi-fix.c:736:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-v1-hfi-fix.c:755:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-v1-hfi-fix.c:782:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-v1-hfi-fix.c:789:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-v1-hfi-fix.c:792:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-v1-hfi-fix.c:794:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-v1-hfi-fix.c:795:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-fwver-queue-debug.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-fwver-queue-debug.c:194:#define HFI_MSG_CMD		0
+shim/m11-before-fwver-queue-debug.c:195:#define H2F_MSG_INIT		0
+shim/m11-before-fwver-queue-debug.c:196:#define H2F_MSG_FW_VER		1
+shim/m11-before-fwver-queue-debug.c:197:#define F2H_MSG_ACK		126
+shim/m11-before-fwver-queue-debug.c:198:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-fwver-queue-debug.c:526:#define HFI_V1_MSG_POST	1
+shim/m11-before-fwver-queue-debug.c:527:#define HFI_V1_MSG_ACK	2
+shim/m11-before-fwver-queue-debug.c:598:			int is_ack = (type == HFI_V1_MSG_ACK);
+shim/m11-before-fwver-queue-debug.c:633:		(HFI_V1_MSG_POST << 16) |
+shim/m11-before-fwver-queue-debug.c:643:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-fwver-queue-debug.c:644:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-fwver-queue-debug.c:746:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-fwver-queue-debug.c:800:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-fwver-queue-debug.c:819:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-fwver-queue-debug.c:846:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-fwver-queue-debug.c:853:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-fwver-queue-debug.c:856:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-fwver-queue-debug.c:858:	msg[1] = 0;	/* FW_VER sem versão solicitada: teste de compatibilidade HFI V1 */
+shim/m11-before-fwver-queue-debug.c:859:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-fwver-ack-type2.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-fwver-ack-type2.c:193:#define HFI_MSG_CMD		0
+shim/m11-before-fwver-ack-type2.c:194:#define H2F_MSG_INIT		0
+shim/m11-before-fwver-ack-type2.c:195:#define H2F_MSG_FW_VER		1
+shim/m11-before-fwver-ack-type2.c:196:#define F2H_MSG_ACK		126
+shim/m11-before-fwver-ack-type2.c:197:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-fwver-ack-type2.c:525:#define HFI_V1_MSG_POST	1
+shim/m11-before-fwver-ack-type2.c:526:#define HFI_V1_MSG_ACK	2
+shim/m11-before-fwver-ack-type2.c:605:			int is_ack = (type == HFI_V1_MSG_ACK);
+shim/m11-before-fwver-ack-type2.c:616:				hfi_payload0 = m[3];	/* FW_VER result */
+shim/m11-before-fwver-ack-type2.c:636:		(HFI_V1_MSG_POST << 16) |
+shim/m11-before-fwver-ack-type2.c:650:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-fwver-ack-type2.c:651:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-fwver-ack-type2.c:757:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-fwver-ack-type2.c:811:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-fwver-ack-type2.c:830:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-fwver-ack-type2.c:857:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-fwver-ack-type2.c:864:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-fwver-ack-type2.c:867:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-fwver-ack-type2.c:869:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-fwver-ack-type2.c:870:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-fwver-correlation.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-fwver-correlation.c:194:#define HFI_MSG_CMD		0
+shim/m11-before-fwver-correlation.c:195:#define H2F_MSG_INIT		0
+shim/m11-before-fwver-correlation.c:196:#define H2F_MSG_FW_VER		1
+shim/m11-before-fwver-correlation.c:197:#define F2H_MSG_ACK		126
+shim/m11-before-fwver-correlation.c:198:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-fwver-correlation.c:526:#define HFI_V1_MSG_POST	1
+shim/m11-before-fwver-correlation.c:527:#define HFI_V1_MSG_ACK	2
+shim/m11-before-fwver-correlation.c:598:			int is_ack = (type == HFI_V1_MSG_ACK);
+shim/m11-before-fwver-correlation.c:635:		(HFI_V1_MSG_POST << 16) |
+shim/m11-before-fwver-correlation.c:645:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-fwver-correlation.c:646:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-fwver-correlation.c:748:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-fwver-correlation.c:802:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-fwver-correlation.c:821:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-fwver-correlation.c:848:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-fwver-correlation.c:855:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-fwver-correlation.c:858:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-fwver-correlation.c:860:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-fwver-correlation.c:861:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-hfi-layout-fix.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11-before-hfi-layout-fix.c:192:#define HFI_MSG_CMD		0
+shim/m11-before-hfi-layout-fix.c:193:#define H2F_MSG_INIT		0
+shim/m11-before-hfi-layout-fix.c:194:#define H2F_MSG_FW_VER		1
+shim/m11-before-hfi-layout-fix.c:195:#define F2H_MSG_ACK		126
+shim/m11-before-hfi-layout-fix.c:196:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11-before-hfi-layout-fix.c:572:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11-before-hfi-layout-fix.c:573:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11-before-hfi-layout-fix.c:679:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-hfi-layout-fix.c:733:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11-before-hfi-layout-fix.c:752:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11-before-hfi-layout-fix.c:779:	step("5b manda H2F_MSG_INIT");
+shim/m11-before-hfi-layout-fix.c:786:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11-before-hfi-layout-fix.c:789:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11-before-hfi-layout-fix.c:791:	msg[1] = (1u << 28) | (3u << 16) | 0;	/* expected FW_VERSION(major=1,minor=3) */
+shim/m11-before-hfi-layout-fix.c:792:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+shim/m11.c:194:#define HFI_MSG_CMD		0
+shim/m11.c:195:#define H2F_MSG_INIT		0
+shim/m11.c:196:#define H2F_MSG_FW_VER		1
+shim/m11.c:197:#define F2H_MSG_ACK		126
+shim/m11.c:198:#define HFI_IRQ_MSGQ		(1u << 0)
+shim/m11.c:526:#define HFI_V1_MSG_POST	1
+shim/m11.c:527:#define HFI_V1_MSG_ACK	2
+shim/m11.c:598:			int is_ack = (type == HFI_V1_MSG_ACK);
+shim/m11.c:633:		(HFI_V1_MSG_POST << 16) |
+shim/m11.c:635:	if (id == H2F_MSG_FW_VER) {
+shim/m11.c:650:		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+shim/m11.c:651:			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+shim/m11.c:659:	if (id == H2F_MSG_FW_VER) {
+shim/m11.c:759:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11.c:813:	wr32(GMU(GMU_GMU2HOST_INTR_MASK), (uint32_t)~HFI_IRQ_MSGQ);	/* let the message-queue interrupt through */
+shim/m11.c:832:/* ---- stage 5: HFI up + INIT + FW_VER ---------------------------------------------------------------- */
+shim/m11.c:859:	step("5b manda H2F_MSG_INIT");
+shim/m11.c:866:	if (!hfi_send("5b INIT", H2F_MSG_INIT, msg, 5, &verdict))
+shim/m11.c:869:	step("5c pede a versao do firmware (FW_VER)");
+shim/m11.c:871:	msg[1] = 0;	/* FW_VER sem versão solicitada: teste de compatibilidade HFI V1 */
+shim/m11.c:872:	if (hfi_send("5c FW_VER", H2F_MSG_FW_VER, msg, 2, &verdict))
+shim/m11-before-fwver-fix.c:12: * messages (INIT, FW_VER) and reads back its firmware version.
+seven@sevenzx:~/ios-s9/s9$ 
