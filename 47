@@ -1,0 +1,330 @@
+seven@sevenzx:~/ios-s9/s9$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+cp shim/m11.c shim/m11-before-pas-supported.c
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+if "pas_supported_probe" in s:
+    raise SystemExit("O probe PAS_SUPPORTED já foi aplicado.")
+
+anchor = "#define H2F_MSG_INIT"
+pos = s.find(anchor)
+if pos < 0:
+    raise SystemExit("Constante H2F_MSG_INIT não encontrada.")
+
+line_end = s.find("\n", pos)
+if line_end < 0:
+    raise SystemExit("Fim da linha H2F_MSG_INIT não encontrado.")
+
+defs = """
+#define SCM_SVC_PIL                 0x02u
+#define SCM_PAS_IS_SUPPORTED_CMD    0x07u
+#define SCM_PAS_IS_SUPPORTED        0x42000207u
+#define PAS_ID_GPU_ZAP              13u
+"""
+
+s = s[:line_end + 1] + defs + s[line_end + 1:]
+
+anchor2 = "static int pas_metadata_stage(void)"
+pos2 = s.find(anchor2)
+if pos2 < 0:
+    raise SystemExit("pas_metadata_stage não encontrada.")
+
+probe = """
+static int pas_supported_probe(void)
+{
+    uint64_t ret;
+
+    stage = "PAS supported";
+    step("PAS: consulta IS_SUPPORTED");
+    ret = smc(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+    showhex("PAS supported ret", ret);
+
+    if (ret != 0) {
+        con_str("PAS", "TrustZone nao confirmou PAS 13");
+        return 0;
+    }
+
+    con_str("PAS", "TrustZone confirmou PAS 13");
+    return 1;
+}
+
+"""
+
+s = s[:pos2] + probe + s[pos2:]
+
+old = """\tif (!pas_metadata_stage())
+\t\treturn;"""
+
+new = """\tif (!pas_supported_probe())
+\t\treturn;
+
+\tif (!pas_metadata_stage())
+\t\treturn;"""
+
+if old not in s:
+    raise SystemExit("Chamada de pas_metadata_stage não encontrada.")
+
+s = s.replace(old, new, 1)
+p.write_text(s)
+print("probe PAS_IS_SUPPORTED aplicado; nenhuma chamada de carregamento foi adicionada")
+PY
+probe PAS_IS_SUPPORTED aplicado; nenhuma chamada de carregamento foi adicionada
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+grep -nE \
+  'SCM_PAS_IS_SUPPORTED|PAS_ID_GPU_ZAP|pas_supported_probe|PAS supported ret|TrustZone confirmou|pas_metadata_stage' \
+  shim/m11.c
+198:#define SCM_PAS_IS_SUPPORTED_CMD    0x07u
+199:#define SCM_PAS_IS_SUPPORTED        0x42000207u
+200:#define PAS_ID_GPU_ZAP              13u
+260:static int pas_supported_probe(void)
+266:    ret = smc(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+267:    showhex("PAS supported ret", ret);
+274:    con_str("PAS", "TrustZone confirmou PAS 13");
+278:static int pas_metadata_stage(void)
+913:	if (!pas_supported_probe())
+916:	if (!pas_metadata_stage())
+seven@sevenzx:~/ios-s9/s9$ rm -rf out/obj
+./build.sh m11
+shim/m11.c: In function ‘pas_metadata_stage’:
+shim/m11.c:286:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  286 |         showhex("PAS metadata PA", pa(pas_metadata));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:254:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  254 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c:287:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  287 |         showhex("PAS firmware PA", pa(pas_firmware));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:254:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  254 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c: In function ‘hfi_receive’:
+shim/m11.c:601:66: warning: unused parameter ‘sent_hdr’ [-Wunused-parameter]
+  601 | static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+      |                                                         ~~~~~~~~~^~~~~~~~
+-rwxrwxr-x 1 seven seven   229376 Nov  7 18:48 out/Image
+-rw-rw-r-- 1 seven seven 11206656 Nov  7 18:48 out/boot.img
+-rw-rw-r-- 1 seven seven 11212843 Nov  7 18:48 out/boot.tar.md5
+03acc01dd385f3069b45f3354a386c248a953c641f6de1181b7b9ec560dc3807  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ cp out/boot.img out/boot-m11-pas-supported.img
+
+sha256sum \
+  out/boot-m11-pas-supported.img \
+  | tee out/SHA256-pas-supported.txt
+
+file out/boot-m11-pas-supported.img
+stat -c '%n — %s bytes' out/Image out/boot-m11-pas-supported.img
+03acc01dd385f3069b45f3354a386c248a953c641f6de1181b7b9ec560dc3807  out/boot-m11-pas-supported.img
+out/boot-m11-pas-supported.img: Android bootimg, kernel (0x8000), ramdisk (0x2000000), page size: 4096, cmdline (console=null)
+out/Image — 229376 bytes
+out/boot-m11-pas-supported.img — 11206656 bytes
+seven@sevenzx:~/ios-s9/s9$ ./tools/flash-twrp.sh out/boot-m11-pas-supported.img
+adb reboot
+out/boot-m11-pas-supported.img: 1 file pushed, 0 skipped. 22.9 MB/s (11206656 bytes in 0.467s)
+2736+0 records in
+2736+0 records out
+11206656 bytes (10.7MB) copied, 0.104148 seconds, 102.6MB/s
+boot = out/boot-m11-pas-supported.img (03acc01dd385f3069b45f3354a386c248a953c641f6de1181b7b9ec560dc3807)
+error: no devices/emulators found
+seven@sevenzx:~/ios-s9/s9$ NOREBOOT=1 ./tools/flash-twrp.sh out/boot-ios-usb2-functional.img
+out/boot-ios-usb2-functional.img: 1 file pushed, 0 skipped. 18.1 MB/s (27840512 bytes in 1.470s)
+6797+0 records in
+6797+0 records out
+27840512 bytes (26.6MB) copied, 0.202949 seconds, 130.8MB/s
+boot = out/boot-ios-usb2-functional.img (7606f1c2dbb218f042462252db64a0fa8024298f9735f452b0b58ee6b298ade6)
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+cp shim/plat.h shim/plat-before-smc-full.c
+cp shim/plat.c shim/plat-before-smc-full.c.source
+cp shim/m11.c shim/m11-before-smc-full.c
+seven@sevenzx:~/ios-s9/s9$ 
+seven@sevenzx:~/ios-s9/s9$ python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/plat.h")
+s = p.read_text()
+
+if "struct smc_result" in s:
+    raise SystemExit("A estrutura SMC completa já existe.")
+
+old = """uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+uint64_t now(void);"""
+
+new = """struct smc_result {
+    uint64_t x0;
+    uint64_t x1;
+    uint64_t x2;
+    uint64_t x3;
+};
+
+struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+uint64_t now(void);"""
+
+if old not in s:
+    raise SystemExit("Protótipo smc não encontrado.")
+
+p.write_text(s.replace(old, new, 1))
+print("protótipo smc_full inserido")
+PY
+protótipo smc_full inserido
+seven@sevenzx:~/ios-s9/s9$ 
+seven@sevenzx:~/ios-s9/s9$ python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/plat.c")
+s = p.read_text()
+
+if "struct smc_result smc_full" in s:
+    raise SystemExit("smc_full já existe.")
+
+marker = "uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)\n"
+pos = s.find(marker)
+if pos < 0:
+    raise SystemExit("Função smc não encontrada.")
+
+impl = """struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+{
+    struct smc_result r;
+    register uint64_t x0 __asm__("x0") = fn;
+    register uint64_t x1 __asm__("x1") = a1;
+    register uint64_t x2 __asm__("x2") = a2;
+    register uint64_t x3 __asm__("x3") = a3;
+
+    __asm__ volatile("smc #0"
+        : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3)
+        :
+        : "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11",
+          "x12", "x13", "x14", "x15", "x16", "x17", "memory");
+
+    r.x0 = x0;
+    r.x1 = x1;
+    r.x2 = x2;
+    r.x3 = x3;
+    return r;
+}
+
+"""
+
+p.write_text(s[:pos] + impl + s[pos:])
+print("implementação smc_full inserida")
+PY
+implementação smc_full inserida
+seven@sevenzx:~/ios-s9/s9$ 
+seven@sevenzx:~/ios-s9/s9$ python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+if "PAS ret x1" in s:
+    raise SystemExit("O probe SMC completo já foi aplicado.")
+
+old = """    uint64_t ret;
+
+    stage = "PAS supported";
+    step("PAS: consulta IS_SUPPORTED");
+    ret = smc(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+    showhex("PAS supported ret", ret);
+
+    if (ret != 0) {
+        con_str("PAS", "TrustZone nao confirmou PAS 13");
+        return 0;
+    }
+
+    con_str("PAS", "TrustZone confirmou PAS 13");
+    return 1;"""
+
+new = """    struct smc_result ret;
+
+    stage = "PAS supported";
+    step("PAS: consulta IS_SUPPORTED");
+    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+    showhex("PAS ret x0", ret.x0);
+    showhex("PAS ret x1", ret.x1);
+    showhex("PAS ret x2", ret.x2);
+    showhex("PAS ret x3", ret.x3);
+
+    if (ret.x0 != 0) {
+        con_str("PAS", "TrustZone nao confirmou PAS 13");
+        return 0;
+    }
+
+    con_str("PAS", "TrustZone confirmou PAS 13");
+    return 1;"""
+
+if old not in s:
+    raise SystemExit("Bloco antigo do probe PAS não encontrado.")
+
+p.write_text(s.replace(old, new, 1))
+print("probe PAS agora captura x0-x3")
+PY
+probe PAS agora captura x0-x3
+seven@sevenzx:~/ios-s9/s9$ grep -nE \
+  'struct smc_result|smc_full|PAS ret x[0-3]|PAS supported' \
+  shim/plat.h shim/plat.c shim/m11.c
+shim/plat.h:5:struct smc_result {
+shim/plat.h:12:struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+shim/plat.c:24:struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat.c:26:    struct smc_result r;
+shim/m11.c:262:    struct smc_result ret;
+shim/m11.c:264:    stage = "PAS supported";
+shim/m11.c:266:    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+shim/m11.c:267:    showhex("PAS ret x0", ret.x0);
+shim/m11.c:268:    showhex("PAS ret x1", ret.x1);
+shim/m11.c:269:    showhex("PAS ret x2", ret.x2);
+shim/m11.c:270:    showhex("PAS ret x3", ret.x3);
+seven@sevenzx:~/ios-s9/s9$ rm -rf out/obj
+./build.sh m11
+shim/m11.c: In function ‘pas_metadata_stage’:
+shim/m11.c:289:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  289 |         showhex("PAS metadata PA", pa(pas_metadata));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:254:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  254 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c:290:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  290 |         showhex("PAS firmware PA", pa(pas_firmware));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:254:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  254 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c: In function ‘hfi_receive’:
+shim/m11.c:604:66: warning: unused parameter ‘sent_hdr’ [-Wunused-parameter]
+  604 | static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+      |                                                         ~~~~~~~~~^~~~~~~~
+-rwxrwxr-x 1 seven seven   229376 Nov  7 18:57 out/Image
+-rw-rw-r-- 1 seven seven 11206656 Nov  7 18:57 out/boot.img
+-rw-rw-r-- 1 seven seven 11212843 Nov  7 18:57 out/boot.tar.md5
+118bb7c6ec28c4a61b80cda474d0931b8621aadddf89d51e1b7274d61a39362e  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ 
