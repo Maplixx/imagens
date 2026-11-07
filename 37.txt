@@ -1,0 +1,585 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+echo '=== todas as ocorrências do endereço ==='
+grep -nEi \
+  '8c415000|8c417000|0x8c41|8c41' \
+  work/dt/live-twrp.dts || true
+
+echo '=== nós de memória reservada ==='
+grep -nEi \
+  'reserved-memory|no-map|memory-region|qcom,kgsl-hyp|a630_zap|pas-id' \
+  work/dt/live-twrp.dts
+=== todas as ocorrências do endereço ===
+25482:		ipa_gsi_region@8c410000 {
+25485:			reg = <0x00 0x8c410000 0x00 0x5000>;
+25490:		gpu_region@8c415000 {
+25493:			reg = <0x00 0x8c415000 0x00 0x2000>;
+27253:		pil_ipa_gsi_mem = "/reserved-memory/ipa_gsi_region@8c410000";
+27254:		pil_gpu_mem = "/reserved-memory/gpu_region@8c415000";
+=== nós de memória reservada ===
+4825:			memory-region = <0xb8>;
+6100:			memory-region = <0xfe>;
+6117:				memory-region = <0x101>;
+6131:			qcom,pas-id = <0x01>;
+6139:			memory-region = <0x102>;
+6162:			qcom,pas-id = <0x0c>;
+6170:			memory-region = <0x107>;
+6445:			qcom,pas-id = <0x0e>;
+6449:			memory-region = <0x110>;
+6478:			qcom,pas-id = <0x12>;
+6485:			memory-region = <0x111>;
+6514:			memory-region = <0x114>;
+6664:			qcom,pas-id = <0x09>;
+6671:			memory-region = <0x116>;
+7433:			qcom,pas-id = <0x0f>;
+7436:			memory-region = <0x13d>;
+9858:			memory-region = <0x169>;
+13557:				memory-region = <0x114>;
+13563:				memory-region = <0x1f7>;
+13569:				memory-region = <0x1f8>;
+13575:				memory-region = <0x1f9>;
+13581:				memory-region = <0x1fa>;
+13592:				memory-region = <0x1fb>;
+14274:				memory-region = <0x223>;
+23035:		qcom,kgsl-hyp {
+23037:			qcom,pas-id = <0x0d>;
+23038:			qcom,firmware-name = "a630_zap";
+25447:	reserved-memory {
+25453:			no-map;
+25460:			no-map;
+25468:			no-map;
+25476:			no-map;
+25484:			no-map;
+25492:			no-map;
+25506:			no-map;
+25514:			no-map;
+25522:			no-map;
+25530:			no-map;
+25538:			no-map;
+25546:			no-map;
+25615:			no-map;
+25625:			no-map;
+25633:			no-map;
+25641:			no-map;
+25656:			no-map;
+25664:			no-map;
+25679:			no-map;
+25686:			no-map;
+27133:		pil_gpu = "/soc/qcom,kgsl-hyp";
+27249:		hyp_region = "/reserved-memory/hyp_region@85700000";
+27250:		xbl_region = "/reserved-memory/xbl_region@85e00000";
+27251:		pil_camera_mem = "/reserved-memory/camera_region@8bf00000";
+27252:		pil_ipa_fw_mem = "/reserved-memory/ipa_fw_region@8c400000";
+27253:		pil_ipa_gsi_mem = "/reserved-memory/ipa_gsi_region@8c410000";
+27254:		pil_gpu_mem = "/reserved-memory/gpu_region@8c415000";
+27255:		wlan_fw_region = "/reserved-memory/wlan_fw_region@8df00000";
+27256:		pil_modem_mem = "/reserved-memory/modem_region@8e000000";
+27257:		pil_video_mem = "/reserved-memory/pil_video_region@95800000";
+27258:		pil_cdsp_mem = "/reserved-memory/cdsp_regions@95d00000";
+27259:		pil_mba_mem = "/reserved-memory/pil_mba_region@0x96500000";
+27260:		pil_slpi_mem = "/reserved-memory/pil_slpi_region@96700000";
+27261:		pil_spss_mem = "/reserved-memory/pil_spss_region@97b00000";
+27262:		adsp_mem = "/reserved-memory/adsp_region";
+27263:		qseecom_ta_mem = "/reserved-memory/qseecom_ta_region";
+27264:		secure_sp_mem = "/reserved-memory/secure_sp_region";
+27265:		cont_splash_memory = "/reserved-memory/cont_splash_region@9d400000";
+27266:		secure_display_memory = "/reserved-memory/secure_display_region";
+27267:		dump_mem = "/reserved-memory/mem_dump_region";
+27268:		pil_mdata_buf_mem = "/reserved-memory/pil_mdata_buf_mem_region";
+27269:		pil_adsp_mem = "/reserved-memory/pil_adsp_region";
+27270:		qseecom_mem = "/reserved-memory/qseecom_region";
+27271:		sec_debug_region = "/reserved-memory/sec_debug_region@0";
+27272:		sec_debug_low_region = "/reserved-memory/sec_debug_low_region@0";
+27273:		tima_mem = "/reserved-memory/tima_region@9F800000";
+27274:		rkp_region = "/reserved-memory/rkp_region@9FA00000";
+27275:		modem_shared_mem = "/reserved-memory/modem_shared_mem_region@BA000000";
+27276:		pil_ipa_fw_ld = "/reserved-memory/ipa_fw_ld_region@a0700000";
+27277:		removed_region = "/reserved-memory/removed_region";
+27278:		camera_mem = "/reserved-memory/camera_mem_region";
+seven@sevenzx:~/ios-s9$ grep -nA220 -B10 \
+  'reserved-memory' \
+  work/dt/live-twrp.dts | head -260
+25437-					compatible = "android,system";
+25438-					dev = "/dev/block/platform/soc/1d84000.ufshc/by-name/system";
+25439-					type = "ext4";
+25440-					mnt_flags = "ro,errors=panic";
+25441-					fsmgr_flags = "wait";
+25442-				};
+25443-			};
+25444-		};
+25445-	};
+25446-
+25447:	reserved-memory {
+25448-		#address-cells = <0x02>;
+25449-		#size-cells = <0x02>;
+25450-		ranges;
+25451-
+25452-		hyp_region@85700000 {
+25453-			no-map;
+25454-			reg = <0x00 0x85700000 0x00 0x600000>;
+25455-			linux,phandle = <0x558>;
+25456-			phandle = <0x558>;
+25457-		};
+25458-
+25459-		xbl_region@85e00000 {
+25460-			no-map;
+25461-			reg = <0x00 0x85e00000 0x00 0x100000>;
+25462-			linux,phandle = <0x559>;
+25463-			phandle = <0x559>;
+25464-		};
+25465-
+25466-		camera_region@8bf00000 {
+25467-			compatible = "removed-dma-pool";
+25468-			no-map;
+25469-			reg = <0x00 0x8db00000 0x00 0x500000>;
+25470-			linux,phandle = <0x223>;
+25471-			phandle = <0x223>;
+25472-		};
+25473-
+25474-		ipa_fw_region@8c400000 {
+25475-			compatible = "removed-dma-pool";
+25476-			no-map;
+25477-			reg = <0x00 0x8c400000 0x00 0x10000>;
+25478-			linux,phandle = <0x55a>;
+25479-			phandle = <0x55a>;
+25480-		};
+25481-
+25482-		ipa_gsi_region@8c410000 {
+25483-			compatible = "removed-dma-pool";
+25484-			no-map;
+25485-			reg = <0x00 0x8c410000 0x00 0x5000>;
+25486-			linux,phandle = <0x55b>;
+25487-			phandle = <0x55b>;
+25488-		};
+25489-
+25490-		gpu_region@8c415000 {
+25491-			compatible = "removed-dma-pool";
+25492-			no-map;
+25493-			reg = <0x00 0x8c415000 0x00 0x2000>;
+25494-			linux,phandle = <0x55c>;
+25495-			phandle = <0x55c>;
+25496-		};
+25497-
+25498-		wlan_fw_region@8df00000 {
+25499-			compatible = "shared-dma-pool";
+25500-			linux,phandle = <0x55d>;
+25501-			phandle = <0x55d>;
+25502-		};
+25503-
+25504-		modem_region@8e000000 {
+25505-			compatible = "removed-dma-pool";
+25506-			no-map;
+25507-			reg = <0x00 0x8e000000 0x00 0x7800000>;
+25508-			linux,phandle = <0xfe>;
+25509-			phandle = <0xfe>;
+25510-		};
+25511-
+25512-		pil_video_region@95800000 {
+25513-			compatible = "removed-dma-pool";
+25514-			no-map;
+25515-			reg = <0x00 0x95800000 0x00 0x500000>;
+25516-			linux,phandle = <0x116>;
+25517-			phandle = <0x116>;
+25518-		};
+25519-
+25520-		cdsp_regions@95d00000 {
+25521-			compatible = "removed-dma-pool";
+25522-			no-map;
+25523-			reg = <0x00 0x95d00000 0x00 0x800000>;
+25524-			linux,phandle = <0x111>;
+25525-			phandle = <0x111>;
+25526-		};
+25527-
+25528-		pil_mba_region@0x96500000 {
+25529-			compatible = "removed-dma-pool";
+25530-			no-map;
+25531-			reg = <0x00 0x96500000 0x00 0x200000>;
+25532-			linux,phandle = <0x101>;
+25533-			phandle = <0x101>;
+25534-		};
+25535-
+25536-		pil_slpi_region@96700000 {
+25537-			compatible = "removed-dma-pool";
+25538-			no-map;
+25539-			reg = <0x00 0x96700000 0x00 0xf00000>;
+25540-			linux,phandle = <0x107>;
+25541-			phandle = <0x107>;
+25542-		};
+25543-
+25544-		pil_spss_region@97b00000 {
+25545-			compatible = "removed-dma-pool";
+25546-			no-map;
+25547-			reg = <0x00 0x97b00000 0x00 0x100000>;
+25548-			linux,phandle = <0x110>;
+25549-			phandle = <0x110>;
+25550-		};
+25551-
+25552-		adsp_region {
+25553-			compatible = "shared-dma-pool";
+25554-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25555-			reusable;
+25556-			alignment = <0x00 0x400000>;
+25557-			size = <0x00 0x1000000>;
+25558-			linux,phandle = <0x114>;
+25559-			phandle = <0x114>;
+25560-		};
+25561-
+25562-		qseecom_ta_region {
+25563-			compatible = "removed-dma-pool";
+25564-			reg = <0x00 0xff000000 0x00 0x1000000>;
+25565-			linux,phandle = <0x1f8>;
+25566-			phandle = <0x1f8>;
+25567-		};
+25568-
+25569-		secure_sp_region {
+25570-			compatible = "shared-dma-pool";
+25571-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25572-			reusable;
+25573-			alignment = <0x00 0x400000>;
+25574-			size = <0x00 0x800000>;
+25575-			linux,phandle = <0x1f9>;
+25576-			phandle = <0x1f9>;
+25577-		};
+25578-
+25579-		cont_splash_region@9d400000 {
+25580-			reg = <0x00 0x9d400000 0x00 0x2400000>;
+25581-			label = "cont_splash_region";
+25582-			linux,phandle = <0x55e>;
+25583-			phandle = <0x55e>;
+25584-		};
+25585-
+25586-		secure_display_region {
+25587-			compatible = "shared-dma-pool";
+25588-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25589-			reusable;
+25590-			alignment = <0x00 0x400000>;
+25591-			size = <0x00 0x8c00000>;
+25592-			linux,phandle = <0x1fa>;
+25593-			phandle = <0x1fa>;
+25594-		};
+25595-
+25596-		mem_dump_region {
+25597-			compatible = "shared-dma-pool";
+25598-			reusable;
+25599-			size = <0x00 0x2400000>;
+25600-			linux,phandle = <0x169>;
+25601-			phandle = <0x169>;
+25602-		};
+25603-
+25604-		linux,cma {
+25605-			compatible = "shared-dma-pool";
+25606-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25607-			reusable;
+25608-			alignment = <0x00 0x400000>;
+25609-			size = <0x00 0x2000000>;
+25610-			linux,cma-default;
+25611-		};
+25612-
+25613-		pil_mdata_buf_mem_region {
+25614-			compatible = "shared-dma-pool";
+25615-			no-map;
+25616-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25617-			alignment = <0x00 0x200000>;
+25618-			size = <0x00 0x200000>;
+25619-			linux,phandle = <0xb8>;
+25620-			phandle = <0xb8>;
+25621-		};
+25622-
+25623-		pil_adsp_region {
+25624-			compatible = "removed-dma-pool";
+25625-			no-map;
+25626-			reg = <0x00 0x97c00000 0x00 0x2000000>;
+25627-			linux,phandle = <0x102>;
+25628-			phandle = <0x102>;
+25629-		};
+25630-
+25631-		qseecom_region {
+25632-			compatible = "shared-dma-pool";
+25633-			no-map;
+25634-			reg = <0x00 0x99c00000 0x00 0x2000000>;
+25635-			linux,phandle = <0x1f7>;
+25636-			phandle = <0x1f7>;
+25637-		};
+25638-
+25639-		ss_plog@A1100000 {
+25640-			compatible = "ss_plog";
+25641-			no-map;
+25642-			reg = <0x00 0xa1100000 0x00 0x200000>;
+25643-		};
+25644-
+25645-		ramoops@A1300000 {
+25646-			compatible = "ramoops";
+25647-			reg = <0x00 0xa1300000 0x00 0x100000>;
+25648-			record-size = <0x40000>;
+25649-			console-size = <0x40000>;
+25650-			ftrace-size = <0x40000>;
+25651-			pmsg-size = <0x40000>;
+25652-		};
+25653-
+25654-		sec_debug_low_region@0 {
+25655-			compatible = "removed-dma-pool";
+25656-			no-map;
+25657-			reg = <0x00 0xa1400000 0x00 0x400000>;
+25658-			linux,phandle = <0x560>;
+25659-			phandle = <0x560>;
+25660-		};
+25661-
+25662-		tima_region@9F800000 {
+25663-			compatible = "removed-dma-pool";
+25664-			no-map;
+25665-			reg = <0x00 0x9f800000 0x00 0x200000>;
+25666-			linux,phandle = <0x561>;
+25667-			phandle = <0x561>;
+--
+27239-		led_flash_rear = "/soc/qcom,camera-flash@0";
+27240-		led_flash_front_ir = "/soc/qcom,camera-flash@1";
+27241-		energy_costs = "/energy-costs";
+27242-		CPU_COST_0 = "/energy-costs/core-cost0";
+27243-		CPU_COST_1 = "/energy-costs/core-cost1";
+27244-		CLUSTER_COST_0 = "/energy-costs/cluster-cost0";
+27245-		CLUSTER_COST_1 = "/energy-costs/cluster-cost1";
+27246-		vendor = "/vendor";
+27247-		bluetooth = "/vendor/bt_wcn3990";
+27248-		firmware = "/firmware";
+27249:		hyp_region = "/reserved-memory/hyp_region@85700000";
+27250:		xbl_region = "/reserved-memory/xbl_region@85e00000";
+27251:		pil_camera_mem = "/reserved-memory/camera_region@8bf00000";
+27252:		pil_ipa_fw_mem = "/reserved-memory/ipa_fw_region@8c400000";
+27253:		pil_ipa_gsi_mem = "/reserved-memory/ipa_gsi_region@8c410000";
+27254:		pil_gpu_mem = "/reserved-memory/gpu_region@8c415000";
+27255:		wlan_fw_region = "/reserved-memory/wlan_fw_region@8df00000";
+27256:		pil_modem_mem = "/reserved-memory/modem_region@8e000000";
+27257:		pil_video_mem = "/reserved-memory/pil_video_region@95800000";
+27258:		pil_cdsp_mem = "/reserved-memory/cdsp_regions@95d00000";
+27259:		pil_mba_mem = "/reserved-memory/pil_mba_region@0x96500000";
+27260:		pil_slpi_mem = "/reserved-memory/pil_slpi_region@96700000";
+27261:		pil_spss_mem = "/reserved-memory/pil_spss_region@97b00000";
+27262:		adsp_mem = "/reserved-memory/adsp_region";
+27263:		qseecom_ta_mem = "/reserved-memory/qseecom_ta_region";
+27264:		secure_sp_mem = "/reserved-memory/secure_sp_region";
+27265:		cont_splash_memory = "/reserved-memory/cont_splash_region@9d400000";
+27266:		secure_display_memory = "/reserved-memory/secure_display_region";
+seven@sevenzx:~/ios-s9$ grep -nA100 -B10 \
+  -E 'memory@|reg = <0x8c|0x8c000000|0x8c400000' \
+  work/dt/live-twrp.dts | head -220
+3621-					qcom,supply-min-voltage = <0x00>;
+3622-					qcom,supply-max-voltage = <0x00>;
+3623-					qcom,supply-enable-load = <0x00>;
+3624-					qcom,supply-disable-load = <0x00>;
+3625-				};
+3626-			};
+3627-		};
+3628-
+3629-		qcom,qupv3_0_geni_se@8c0000 {
+3630-			compatible = "qcom,qupv3-geni-se";
+3631:			reg = <0x8c0000 0x6000>;
+3632-			qcom,bus-mas-id = <0x56>;
+3633-			qcom,bus-slv-id = <0x200>;
+3634-			qcom,iommu-s1-bypass;
+3635-			linux,phandle = <0x49>;
+3636-			phandle = <0x49>;
+3637-
+3638-			qcom,iommu_qupv3_0_geni_se_cb {
+3639-				compatible = "qcom,qupv3-geni-se-cb";
+3640-				iommus = <0x28 0x03 0x00>;
+3641-				linux,phandle = <0x384>;
+3642-				phandle = <0x384>;
+3643-			};
+3644-		};
+3645-
+3646-		qcom,qup_uart@0x898000 {
+3647-			compatible = "qcom,msm-geni-serial-hs", "qcom,msm-geni-uart";
+3648-			reg = <0x898000 0x4000>;
+3649-			reg-names = "se_phys";
+3650-			clock-names = "se-clk", "m-ahb", "s-ahb";
+3651-			clocks = <0x21 0x52 0x21 0x66 0x21 0x67>;
+3652-			pinctrl-names = "default", "sleep";
+3653-			pinctrl-0 = <0x42 0x43 0x44>;
+3654-			pinctrl-1 = <0x45 0x46 0x47>;
+3655-			interrupts-extended = <0x48 0x00 0x25f 0x00>;
+3656-			status = "okay";
+3657-			qcom,wakeup-byte = <0xfd>;
+3658-			qcom,wrapper-core = <0x49>;
+3659-			qcom,bus-mas = <0x56>;
+3660-			linux,phandle = <0x385>;
+3661-			phandle = <0x385>;
+3662-		};
+3663-
+3664-		qcom,qup_uart@0x89c000 {
+3665-			compatible = "qcom,msm-geni-serial-hs", "qcom,msm-geni-uart";
+3666-			reg = <0x89c000 0x4000>;
+3667-			reg-names = "se_phys";
+3668-			clock-names = "se-clk", "m-ahb", "s-ahb";
+3669-			clocks = <0x21 0x54 0x21 0x66 0x21 0x67>;
+3670-			pinctrl-names = "default", "sleep";
+3671-			pinctrl-0 = <0x4a>;
+3672-			pinctrl-1 = <0x4b>;
+3673-			interrupts-extended = <0x01 0x00 0x260 0x00>;
+3674-			status = "disabled";
+3675-			qcom,wrapper-core = <0x49>;
+3676-			linux,phandle = <0x386>;
+3677-			phandle = <0x386>;
+3678-		};
+3679-
+3680-		i2c@880000 {
+3681-			compatible = "qcom,i2c-geni";
+3682-			reg = <0x880000 0x4000>;
+3683-			interrupts = <0x00 0x259 0x00>;
+3684-			#address-cells = <0x01>;
+3685-			#size-cells = <0x00>;
+3686-			clock-names = "se-clk", "m-ahb", "s-ahb";
+3687-			clocks = <0x21 0x46 0x21 0x66 0x21 0x67>;
+3688-			dmas = <0x4c 0x00 0x00 0x03 0x40 0x00 0x4c 0x01 0x00 0x03 0x40 0x00>;
+3689-			dma-names = "tx", "rx";
+3690-			pinctrl-names = "default", "sleep";
+3691-			pinctrl-0 = <0x4d>;
+3692-			pinctrl-1 = <0x4e>;
+3693-			qcom,wrapper-core = <0x49>;
+3694-			status = "disabled";
+3695-			linux,phandle = <0x387>;
+3696-			phandle = <0x387>;
+3697-		};
+3698-
+3699-		i2c@884000 {
+3700-			compatible = "qcom,i2c-geni";
+3701-			reg = <0x884000 0x4000>;
+3702-			interrupts = <0x00 0x25a 0x00>;
+3703-			#address-cells = <0x01>;
+3704-			#size-cells = <0x00>;
+3705-			clock-names = "se-clk", "m-ahb", "s-ahb";
+3706-			clocks = <0x21 0x48 0x21 0x66 0x21 0x67>;
+3707-			dmas = <0x4c 0x00 0x01 0x03 0x40 0x00 0x4c 0x01 0x01 0x03 0x40 0x00>;
+3708-			dma-names = "tx", "rx";
+3709-			pinctrl-names = "default", "sleep";
+3710-			pinctrl-0 = <0x4f>;
+3711-			pinctrl-1 = <0x50>;
+3712-			qcom,wrapper-core = <0x49>;
+3713-			status = "disabled";
+3714-			linux,phandle = <0x388>;
+3715-			phandle = <0x388>;
+3716-		};
+3717-
+3718-		i2c@888000 {
+3719-			compatible = "qcom,i2c-geni";
+3720-			reg = <0x888000 0x4000>;
+3721-			interrupts = <0x00 0x25b 0x00>;
+3722-			#address-cells = <0x01>;
+3723-			#size-cells = <0x00>;
+3724-			clock-names = "se-clk", "m-ahb", "s-ahb";
+3725-			clocks = <0x21 0x4a 0x21 0x66 0x21 0x67>;
+3726-			dmas = <0x4c 0x00 0x02 0x03 0x40 0x00 0x4c 0x01 0x02 0x03 0x40 0x00>;
+3727-			dma-names = "tx", "rx";
+3728-			pinctrl-names = "default", "sleep";
+3729-			pinctrl-0 = <0x51>;
+3730-			pinctrl-1 = <0x52>;
+3731-			qcom,wrapper-core = <0x49>;
+--
+25467-			compatible = "removed-dma-pool";
+25468-			no-map;
+25469-			reg = <0x00 0x8db00000 0x00 0x500000>;
+25470-			linux,phandle = <0x223>;
+25471-			phandle = <0x223>;
+25472-		};
+25473-
+25474-		ipa_fw_region@8c400000 {
+25475-			compatible = "removed-dma-pool";
+25476-			no-map;
+25477:			reg = <0x00 0x8c400000 0x00 0x10000>;
+25478-			linux,phandle = <0x55a>;
+25479-			phandle = <0x55a>;
+25480-		};
+25481-
+25482-		ipa_gsi_region@8c410000 {
+25483-			compatible = "removed-dma-pool";
+25484-			no-map;
+25485-			reg = <0x00 0x8c410000 0x00 0x5000>;
+25486-			linux,phandle = <0x55b>;
+25487-			phandle = <0x55b>;
+25488-		};
+25489-
+25490-		gpu_region@8c415000 {
+25491-			compatible = "removed-dma-pool";
+25492-			no-map;
+25493-			reg = <0x00 0x8c415000 0x00 0x2000>;
+25494-			linux,phandle = <0x55c>;
+25495-			phandle = <0x55c>;
+25496-		};
+25497-
+25498-		wlan_fw_region@8df00000 {
+25499-			compatible = "shared-dma-pool";
+25500-			linux,phandle = <0x55d>;
+25501-			phandle = <0x55d>;
+25502-		};
+25503-
+25504-		modem_region@8e000000 {
+25505-			compatible = "removed-dma-pool";
+25506-			no-map;
+25507-			reg = <0x00 0x8e000000 0x00 0x7800000>;
+25508-			linux,phandle = <0xfe>;
+25509-			phandle = <0xfe>;
+25510-		};
+25511-
+25512-		pil_video_region@95800000 {
+25513-			compatible = "removed-dma-pool";
+25514-			no-map;
+25515-			reg = <0x00 0x95800000 0x00 0x500000>;
+25516-			linux,phandle = <0x116>;
+25517-			phandle = <0x116>;
+25518-		};
+25519-
+25520-		cdsp_regions@95d00000 {
+25521-			compatible = "removed-dma-pool";
+25522-			no-map;
+25523-			reg = <0x00 0x95d00000 0x00 0x800000>;
+25524-			linux,phandle = <0x111>;
+25525-			phandle = <0x111>;
+25526-		};
+25527-
+25528-		pil_mba_region@0x96500000 {
+25529-			compatible = "removed-dma-pool";
+25530-			no-map;
+25531-			reg = <0x00 0x96500000 0x00 0x200000>;
+25532-			linux,phandle = <0x101>;
+25533-			phandle = <0x101>;
+25534-		};
+25535-
+25536-		pil_slpi_region@96700000 {
+25537-			compatible = "removed-dma-pool";
+25538-			no-map;
+25539-			reg = <0x00 0x96700000 0x00 0xf00000>;
+25540-			linux,phandle = <0x107>;
+25541-			phandle = <0x107>;
+25542-		};
+25543-
+25544-		pil_spss_region@97b00000 {
+25545-			compatible = "removed-dma-pool";
+25546-			no-map;
+25547-			reg = <0x00 0x97b00000 0x00 0x100000>;
+25548-			linux,phandle = <0x110>;
+25549-			phandle = <0x110>;
+25550-		};
+25551-
+25552-		adsp_region {
+25553-			compatible = "shared-dma-pool";
+25554-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25555-			reusable;
+25556-			alignment = <0x00 0x400000>;
+25557-			size = <0x00 0x1000000>;
+25558-			linux,phandle = <0x114>;
+25559-			phandle = <0x114>;
+25560-		};
+25561-
+25562-		qseecom_ta_region {
+25563-			compatible = "removed-dma-pool";
+25564-			reg = <0x00 0xff000000 0x00 0x1000000>;
+25565-			linux,phandle = <0x1f8>;
+25566-			phandle = <0x1f8>;
+25567-		};
+25568-
+25569-		secure_sp_region {
+25570-			compatible = "shared-dma-pool";
+25571-			alloc-ranges = <0x00 0x00 0x00 0xffffffff>;
+25572-			reusable;
+25573-			alignment = <0x00 0x400000>;
+25574-			size = <0x00 0x800000>;
+seven@sevenzx:~/ios-s9$ 
