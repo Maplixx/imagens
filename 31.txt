@@ -1,0 +1,175 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+sed -n '150,275p' research/gpu-fw/qcom-source/qcom_scm.c
+		return ret;
+
+	ret = __qcom_scm_hdcp_req(__scm->dev, req, req_cnt, resp);
+	qcom_scm_clk_disable();
+	return ret;
+}
+EXPORT_SYMBOL(qcom_scm_hdcp_req);
+
+/**
+ * qcom_scm_pas_supported() - Check if the peripheral authentication service is
+ *			      available for the given peripherial
+ * @peripheral:	peripheral id
+ *
+ * Returns true if PAS is supported for this peripheral, otherwise false.
+ */
+bool qcom_scm_pas_supported(u32 peripheral)
+{
+	int ret;
+
+	ret = __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+					   QCOM_SCM_PAS_IS_SUPPORTED_CMD);
+	if (ret <= 0)
+		return false;
+
+	return __qcom_scm_pas_supported(__scm->dev, peripheral);
+}
+EXPORT_SYMBOL(qcom_scm_pas_supported);
+
+/**
+ * qcom_scm_pas_init_image() - Initialize peripheral authentication service
+ *			       state machine for a given peripheral, using the
+ *			       metadata
+ * @peripheral: peripheral id
+ * @metadata:	pointer to memory containing ELF header, program header table
+ *		and optional blob of data used for authenticating the metadata
+ *		and the rest of the firmware
+ * @size:	size of the metadata
+ *
+ * Returns 0 on success.
+ */
+int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size)
+{
+	dma_addr_t mdata_phys;
+	void *mdata_buf;
+	int ret;
+
+	/*
+	 * During the scm call memory protection will be enabled for the meta
+	 * data blob, so make sure it's physically contiguous, 4K aligned and
+	 * non-cachable to avoid XPU violations.
+	 */
+	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
+				       GFP_KERNEL);
+	if (!mdata_buf) {
+		dev_err(__scm->dev, "Allocation of metadata buffer failed.\n");
+		return -ENOMEM;
+	}
+	memcpy(mdata_buf, metadata, size);
+
+	ret = qcom_scm_clk_enable();
+	if (ret)
+		goto free_metadata;
+
+	ret = __qcom_scm_pas_init_image(__scm->dev, peripheral, mdata_phys);
+
+	qcom_scm_clk_disable();
+
+free_metadata:
+	dma_free_coherent(__scm->dev, size, mdata_buf, mdata_phys);
+
+	return ret;
+}
+EXPORT_SYMBOL(qcom_scm_pas_init_image);
+
+/**
+ * qcom_scm_pas_mem_setup() - Prepare the memory related to a given peripheral
+ *			      for firmware loading
+ * @peripheral:	peripheral id
+ * @addr:	start address of memory area to prepare
+ * @size:	size of the memory area to prepare
+ *
+ * Returns 0 on success.
+ */
+int qcom_scm_pas_mem_setup(u32 peripheral, phys_addr_t addr, phys_addr_t size)
+{
+	int ret;
+
+	ret = qcom_scm_clk_enable();
+	if (ret)
+		return ret;
+
+	ret = __qcom_scm_pas_mem_setup(__scm->dev, peripheral, addr, size);
+	qcom_scm_clk_disable();
+
+	return ret;
+}
+EXPORT_SYMBOL(qcom_scm_pas_mem_setup);
+
+/**
+ * qcom_scm_pas_auth_and_reset() - Authenticate the given peripheral firmware
+ *				   and reset the remote processor
+ * @peripheral:	peripheral id
+ *
+ * Return 0 on success.
+ */
+int qcom_scm_pas_auth_and_reset(u32 peripheral)
+{
+	int ret;
+
+	ret = qcom_scm_clk_enable();
+	if (ret)
+		return ret;
+
+	ret = __qcom_scm_pas_auth_and_reset(__scm->dev, peripheral);
+	qcom_scm_clk_disable();
+
+	return ret;
+}
+EXPORT_SYMBOL(qcom_scm_pas_auth_and_reset);
+
+/**
+ * qcom_scm_pas_shutdown() - Shut down the remote processor
+ * @peripheral: peripheral id
+ *
+ * Returns 0 on success.
+ */
+seven@sevenzx:~/ios-s9$ grep -RInE \
+  '__qcom_scm_pas|QCOM_SCM_SVC_PIL|QCOM_SCM_PAS|PAS_INIT|PAS_MEM|PAS_AUTH|SCM_CMD' \
+  research/gpu-fw/qcom-source
+research/gpu-fw/qcom-source/PAS-symbols.txt:2:research/gpu-fw/qcom-source/qcom_scm.c:129:						QCOM_SCM_CMD_HDCP);
+research/gpu-fw/qcom-source/PAS-symbols.txt:3:research/gpu-fw/qcom-source/qcom_scm.c:169:	ret = __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+research/gpu-fw/qcom-source/PAS-symbols.txt:6:research/gpu-fw/qcom-source/qcom_scm.c:213:	ret = __qcom_scm_pas_init_image(__scm->dev, peripheral, mdata_phys);
+research/gpu-fw/qcom-source/PAS-symbols.txt:10:research/gpu-fw/qcom-source/qcom_scm.c:241:	ret = __qcom_scm_pas_mem_setup(__scm->dev, peripheral, addr, size);
+research/gpu-fw/qcom-source/PAS-symbols.txt:14:research/gpu-fw/qcom-source/qcom_scm.c:263:	ret = __qcom_scm_pas_auth_and_reset(__scm->dev, peripheral);
+research/gpu-fw/qcom-source/qcom_scm.c:129:						QCOM_SCM_CMD_HDCP);
+research/gpu-fw/qcom-source/qcom_scm.c:169:	ret = __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+research/gpu-fw/qcom-source/qcom_scm.c:170:					   QCOM_SCM_PAS_IS_SUPPORTED_CMD);
+research/gpu-fw/qcom-source/qcom_scm.c:174:	return __qcom_scm_pas_supported(__scm->dev, peripheral);
+research/gpu-fw/qcom-source/qcom_scm.c:213:	ret = __qcom_scm_pas_init_image(__scm->dev, peripheral, mdata_phys);
+research/gpu-fw/qcom-source/qcom_scm.c:241:	ret = __qcom_scm_pas_mem_setup(__scm->dev, peripheral, addr, size);
+research/gpu-fw/qcom-source/qcom_scm.c:263:	ret = __qcom_scm_pas_auth_and_reset(__scm->dev, peripheral);
+research/gpu-fw/qcom-source/qcom_scm.c:284:	ret = __qcom_scm_pas_shutdown(__scm->dev, peripheral);
+research/gpu-fw/qcom-source/qcom_scm.c:297:	return __qcom_scm_pas_mss_reset(__scm->dev, 1);
+research/gpu-fw/qcom-source/qcom_scm.c:306:	return __qcom_scm_pas_mss_reset(__scm->dev, 0);
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+curl -fsSL \
+  'https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-crosshatch-4.9-android10/include/soc/qcom/scm.h?format=TEXT' \
+  | base64 -d \
+  > research/gpu-fw/qcom-source/scm.h
+
+curl -fsSL \
+  'https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-crosshatch-4.9-android10/include/soc/qcom/qcom_scm.h?format=TEXT' \
+  | base64 -d \
+  > research/gpu-fw/qcom-source/soc-qcom_scm.h
+curl: (22) The requested URL returned error: 404
+seven@sevenzx:~/ios-s9$ wc -c research/gpu-fw/qcom-source/*.h
+
+grep -RInE \
+  'QCOM_SCM_SVC_PIL|QCOM_SCM_PAS|PAS_INIT|PAS_MEM|PAS_AUTH|SCM_CMD' \
+  research/gpu-fw/qcom-source
+1617 research/gpu-fw/qcom-source/qcom_scm.h
+6029 research/gpu-fw/qcom-source/scm.h
+   0 research/gpu-fw/qcom-source/soc-qcom_scm.h
+7646 total
+research/gpu-fw/qcom-source/PAS-symbols.txt:2:research/gpu-fw/qcom-source/qcom_scm.c:129:						QCOM_SCM_CMD_HDCP);
+research/gpu-fw/qcom-source/PAS-symbols.txt:3:research/gpu-fw/qcom-source/qcom_scm.c:169:	ret = __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+research/gpu-fw/qcom-source/scm.h:35:#define SCM_CMD_HDCP			0x01
+research/gpu-fw/qcom-source/qcom_scm.c:129:						QCOM_SCM_CMD_HDCP);
+research/gpu-fw/qcom-source/qcom_scm.c:169:	ret = __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+research/gpu-fw/qcom-source/qcom_scm.c:170:					   QCOM_SCM_PAS_IS_SUPPORTED_CMD);
+seven@sevenzx:~/ios-s9$ 
