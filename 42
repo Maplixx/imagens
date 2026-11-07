@@ -1,0 +1,82 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+cp shim/m11.c shim/m11-before-fwver-correlation.c
+
+sed -n '625,700p' shim/m11.c
+/* Send `words` to the CMD queue and wait for the GMU's verdict. */
+static int hfi_send(const char *what, uint32_t id, uint32_t *msg, uint32_t words, uint32_t *verdict)
+{
+	volatile uint32_t *h = hfi_qhdr(0);
+	volatile uint32_t *q = (volatile uint32_t *)(gmu_hfi_mem + HFI_QUEUE_OFFSET(0));
+	uint32_t at = h[QH_WRITE] % HFI_QUEUE_WORDS, number = ++hfi_number & 0xfff;
+	int answered = 0;
+
+	msg[0] = id |
+		(words << 8) |
+		(HFI_V1_MSG_POST << 16) |
+		(number << 20);
+	for (uint32_t i = 0; i < (words + 3) / 4 * 4; i++) {
+		q[at] = i < words ? msg[i] : 0xfafafafau;
+		at = (at + 1) % HFI_QUEUE_WORDS;
+	}
+	h[QH_WRITE] = at;
+	dsb();
+	wr32(GMU(GMU_HOST2GMU_INTR_SET), 1);
+	for (int i = 0; i < 5000 && !answered; i++) {
+		if (rd32(GMU(GMU_GMU2HOST_INTR_INFO)) & HFI_IRQ_MSGQ) {
+			wr32(GMU(GMU_GMU2HOST_INTR_CLR), HFI_IRQ_MSGQ);
+			answered = hfi_receive(1, number, msg[0], verdict);
+		}
+		if (smmu_faulted())
+			break;
+		wdog_pet();
+		delay_ms(1);
+	}
+	con_str(what, answered ? (*verdict ? "GMU respondeu NAO" : "GMU aceitou") : "GMU nao respondeu");
+	return answered && *verdict == 0;
+}
+
+/* ---- the RSC/PDC micro-code (M10) ------------------------------------------------------------------- */
+
+#ifdef HAVE_GMU_FW
+static void load_rpmh_ucode(void)
+{
+	static const uint32_t rsc_seq[5] = { 0xA7A506A0u, 0xA1E6A6E7u, 0xA2E081E1u, 0xE9A982E2u, 0x0020E8A8u };
+	static const uint32_t pdc_seq[5] = { 0xFEBEA1E1u, 0xA5A4A3A2u, 0x8382A6E0u, 0xBCE3E284u, 0x002081FCu };
+
+	wr32(GMU(GPU_RSCC_RSC_STATUS0), 1u << 24);
+	wr32(GMU(RSCC_PDC_SLAVE_ID_DRV0), 1);
+	wr32(GMU(RSCC_HIDDEN_TCS_CMD0_DATA), 0);
+	wr32(GMU(RSCC_HIDDEN_TCS_CMD0_ADDR), 0);
+	wr32(GMU(RSCC_HIDDEN_TCS_CMD0_DATA + RSC_CMD_OFFSET), 0);
+	wr32(GMU(RSCC_HIDDEN_TCS_CMD0_ADDR + RSC_CMD_OFFSET), 0);
+	wr32(GMU(RSCC_HIDDEN_TCS_CMD0_DATA + RSC_CMD_OFFSET * 2), 0x80000000u);
+	wr32(GMU(RSCC_HIDDEN_TCS_CMD0_ADDR + RSC_CMD_OFFSET * 2), 0);
+	wr32(GMU(RSCC_OVERRIDE_START_ADDR), 0);
+	wr32(GMU(RSCC_PDC_SEQ_START_ADDR), 0x4520);
+	wr32(GMU(RSCC_PDC_MATCH_VALUE_LO), 0x4510);
+	wr32(GMU(RSCC_PDC_MATCH_VALUE_HI), 0x4514);
+	for (unsigned i = 0; i < 5; i++)
+		wr32(GMU(RSCC_SEQ_MEM_0_DRV0) + 4 * i, rsc_seq[i]);
+	for (unsigned i = 0; i < 5; i++)
+		wr32(PDC(PDC_GPU_SEQ_MEM_0) + 4 * i, pdc_seq[i]);
+	wr32(PDC(PDC_GPU_TCS1_CMD_ENABLE_BANK), 7);
+	wr32(PDC(PDC_GPU_TCS1_CMD_WAIT_FOR_CMPL_BANK), 0);
+	wr32(PDC(PDC_GPU_TCS1_CONTROL), 0);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_MSGID), 0x10108);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_ADDR), 0x30010);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_DATA), 1);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_MSGID + PDC_CMD_OFFSET), 0x10108);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_ADDR + PDC_CMD_OFFSET), 0x30000);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_DATA + PDC_CMD_OFFSET), 0x0);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_MSGID + PDC_CMD_OFFSET * 2), 0x10108);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_ADDR + PDC_CMD_OFFSET * 2), 0x30080);
+	wr32(PDC(PDC_GPU_TCS1_CMD0_DATA + PDC_CMD_OFFSET * 2), 0x0);
+	wr32(PDC(PDC_GPU_TCS3_CMD_ENABLE_BANK), 7);
+	wr32(PDC(PDC_GPU_TCS3_CMD_WAIT_FOR_CMPL_BANK), 0);
+	wr32(PDC(PDC_GPU_TCS3_CONTROL), 0);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_MSGID), 0x10108);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_ADDR), 0x30010);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_DATA), 2);
+	wr32(PDC(PDC_GPU_TCS3_CMD0_MSGID + PDC_CMD_OFFSET), 0x10108);
+seven@sevenzx:~/ios-s9/s9$
