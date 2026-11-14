@@ -1,0 +1,197 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+cp shim/plat.h shim/plat-before-smc8.h
+cp shim/plat.c shim/plat-before-smc8.c
+cp shim/m11.c shim/m11-before-smc8.c
+seven@sevenzx:~/ios-s9/s9$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/plat.h")
+s = p.read_text()
+
+old = """struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);"""
+
+new = """struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+
+/* SMC com x0..x7, usado pelo ABI Qualcomm PAS. */
+struct smc_result smc_pas(uint64_t fn, uint64_t arginfo,
+                          uint64_t arg2, uint64_t arg3,
+                          uint64_t arg4, uint64_t arg5); 
+
+uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);"""
+
+if old not in s:
+    raise SystemExit("Declarações esperadas não encontradas.")
+p.write_text(s.replace(old, new, 1))
+print("declaração smc_pas adicionada")
+PY
+declaração smc_pas adicionada
+seven@sevenzx:~/ios-s9/s9$ 
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/plat.c")
+s = p.read_text()
+
+marker = """uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+{"""
+
+if marker not in s:
+    raise SystemExit("Ponto de inserção smc() não encontrado.")
+
+fn = r'''/*
+ * Qualcomm SCM/PAS:
+ *   x0 = função
+ *   x1 = arginfo
+ *   x2..x5 = argumentos
+ *   x6 = sessão para chamadas interrompidas
+ *   x7 = reservado
+ *
+ * A chamada é repetida quando TrustZone retorna SCM_INTERRUPTED (1).
+ */
+struct smc_result smc_pas(uint64_t fn, uint64_t arginfo,
+                          uint64_t arg2, uint64_t arg3,
+                          uint64_t arg4, uint64_t arg5)
+{
+    struct smc_result r;
+    uint64_t session = 0;
+
+    for (unsigned attempt = 0; attempt < 100; attempt++) {
+        register uint64_t x0 __asm__("x0") =
+            attempt == 0 ? fn : 1u;
+        register uint64_t x1 __asm__("x1") = arginfo;
+        register uint64_t x2 __asm__("x2") = arg2;
+        register uint64_t x3 __asm__("x3") = arg3;
+        register uint64_t x4 __asm__("x4") = arg4;
+        register uint64_t x5 __asm__("x5") = arg5;
+        register uint64_t x6 __asm__("x6") = session;
+        register uint64_t x7 __asm__("x7") = 0;
+
+        __asm__ volatile(
+            "smc #0"
+            : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3),
+              "+r"(x4), "+r"(x5), "+r"(x6), "+r"(x7)
+            :
+            : "x8", "x9", "x10", "x11", "x12", "x13",
+              "x14", "x15", "x16", "x17", "memory");
+
+        session = x6;
+
+        if (x0 != 1u) {
+            r.x0 = x0;
+            r.x1 = x1;
+            r.x2 = x2;
+            r.x3 = x3;
+            return r;
+        }
+    }
+
+    r.x0 = 0xffffffffffffffffULL;
+    r.x1 = r.x2 = r.x3 = 0;
+    return r;
+}
+
+'''
+
+p.write_text(s.replace(marker, fn + marker, 1))
+print("smc_pas adicionada")
+PY
+smc_pas adicionada
+seven@sevenzx:~/ios-s9/s9$ grep -nE \
+  'SCM_PAS_(INIT|MEM|AUTH|SHUTDOWN|IS_SUPPORTED)|PAS_ID' \
+  shim/m11.c
+198:#define SCM_PAS_IS_SUPPORTED_CMD    0x07u
+199:#define SCM_PAS_IS_SUPPORTED        0x82000207u
+200:#define PAS_ID_GPU_ZAP              13u
+266:    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+seven@sevenzx:~/ios-s9/s9$ 
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+anchor = "#define PAS_ID_GPU_ZAP              13u"
+
+if anchor not in s:
+    raise SystemExit("Âncora PAS_ID_GPU_ZAP não encontrada.")
+
+block = """#define SCM_PAS_INIT_IMAGE         0x42000201u
+#define SCM_PAS_MEM_SETUP          0x42000202u
+#define SCM_PAS_AUTH_AND_RESET     0x42000205u
+#define SCM_PAS_SHUTDOWN           0x42000206u
+
+#define SCM_ONE_VALUE              1u
+#define SCM_VALUE_AND_BUFFER       (2u | (2u << 6))
+#define SCM_THREE_VALUES           3u
+#define PAS_ZAP_MEMORY              0x8c415000ULL
+#define PAS_ZAP_WINDOW             0x2000u
+#define PAS_ZAP_SEGMENT_SIZE       0x1000u
+"""
+
+if "SCM_PAS_INIT_IMAGE" in s:
+    print("constantes já existem; nada foi alterado")
+else:
+    s = s.replace(anchor, anchor + "\n" + block, 1)
+    p.write_text(s)
+    print("constantes PAS adicionadas")
+PY
+constantes PAS adicionadas
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+rm -rf out/obj
+./build.sh m11
+shim/m11.c: In function ‘pas_metadata_stage’:
+shim/m11.c:301:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  301 |         showhex("PAS metadata PA", pa(pas_metadata));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:266:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  266 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c:302:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  302 |         showhex("PAS firmware PA", pa(pas_firmware));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:266:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  266 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c: In function ‘hfi_receive’:
+shim/m11.c:616:66: warning: unused parameter ‘sent_hdr’ [-Wunused-parameter]
+  616 | static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+      |                                                         ~~~~~~~~~^~~~~~~~
+-rwxrwxr-x  1 seven seven   229376 Nov 14 04:34 out/Image
+-rw-rwxr--+ 1 seven seven 11206656 Nov 14 04:34 out/boot.img
+-rw-rw-r--  1 seven seven 11212843 Nov 14 04:34 out/boot.tar.md5
+0b4da42be65247edd39ba6fc0738dc8c514090391acbf00a161869d88225778e  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ nm -n out/shim.elf | grep -E 'smc_pas|pas_metadata|pas_firmware'
+sha256sum out/boot.img
+0000000000003500 T smc_pas
+0000000000011000 b pas_firmware
+0000000000015000 b pas_metadata
+0b4da42be65247edd39ba6fc0738dc8c514090391acbf00a161869d88225778e  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ 
