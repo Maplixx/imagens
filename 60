@@ -1,0 +1,152 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+cp out/boot.img out/boot-m11-smc8-abi-only.img
+cp out/shim.elf out/shim-smc8-abi-only.elf
+
+sha256sum \
+  out/boot-m11-smc8-abi-only.img \
+  out/shim-smc8-abi-only.elf \
+  | tee out/SHA256-smc8-abi-only.txt
+0b4da42be65247edd39ba6fc0738dc8c514090391acbf00a161869d88225778e  out/boot-m11-smc8-abi-only.img
+01a9320d7fced77f27ab08568fe535dba85de98dc7f88e23113809726001438a  out/shim-smc8-abi-only.elf
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+cp shim/m11.c shim/m11-before-pas-shutdown-test.c
+seven@sevenzx:~/ios-s9/s9$ 
+
+
+
+
+
+
+
+
+
+
+seven@sevenzx:~/ios-s9/s9$ python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+if "pas_shutdown_probe" in s:
+    raise SystemExit("pas_shutdown_probe já existe.")
+
+anchor = """static int pas_supported_probe(void)
+{"""
+
+fn = r'''static int pas_shutdown_probe(void)
+{
+    struct smc_result ret;
+
+    stage = "PAS shutdown";
+    step("PAS: testa SHUTDOWN somente");
+    ret = smc_pas(SCM_PAS_SHUTDOWN, SCM_ONE_VALUE,
+                  PAS_ID_GPU_ZAP, 0, 0, 0);
+
+    showhex("PAS shutdown x0", ret.x0);
+    showhex("PAS shutdown x1", ret.x1);
+    showhex("PAS shutdown x2", ret.x2);
+    showhex("PAS shutdown x3", ret.x3);
+
+    if (ret.x0 != 0) {
+        con_str("PAS", "SHUTDOWN retornou erro");
+        return 0;
+    }
+
+    con_str("PAS", "SHUTDOWN respondeu OK");
+    return 1;
+}
+
+'''
+
+if anchor not in s:
+    raise SystemExit("Ponto de inserção não encontrado.")
+
+p.write_text(s.replace(anchor, fn + anchor, 1))
+print("pas_shutdown_probe inserido")
+PY
+pas_shutdown_probe inserido
+seven@sevenzx:~/ios-s9/s9$ grep -nA35 -B12 \
+  'pas_supported_probe\|pas_metadata_stage\|power_on' \
+  shim/m11.c | tail -80
+397:	if (!cx_power_on()) {
+398-		con_str("1", "CX GDSC nao liga: parando");
+399-		return 0;
+400-	}
+401-	showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+402-	/* GMU RCG 200 MHz */
+403-	wr32(GPUCC + GPUCC_GMU_RCG_CFG, GMU_RCG_CFG_200MHZ);
+404-	dsb();
+405-	wr32(GPUCC + GPUCC_GMU_RCG_CMD, rd32(GPUCC + GPUCC_GMU_RCG_CMD) | CMD_UPDATE);
+406-	dsb();
+407-	for (int i = 0; i < 2000 && (rd32(GPUCC + GPUCC_GMU_RCG_CMD) & CMD_UPDATE); i++)
+408-		delay_ms(1);
+409-	clk_branch_on(GPUCC + GPUCC_CBCR_CXO);
+410-	clk_branch_on(GPUCC + GPUCC_CBCR_AHB);
+411-	if (!clk_branch_on(GPUCC + GPUCC_CBCR_CX_GMU))
+412-		return 0;
+413-	clk_branch_on(GCC + GCC_MEMNOC_GFX);
+414-	clk_branch_on(GCC + GCC_DDRSS_GPU_AXI);
+415-	clk_branch_on(GCC + GCC_SNOC_DVM_GFX);
+416-	con_str("1", "GPU com energia e relogios");
+417-	return 1;
+418-}
+419-
+420-/* ---- stage 2: read the SMMU as the boot loader / hypervisor left it --------------------------------- */
+421-
+422-static void smmu_probe(void)
+423-{
+424-	uint32_t idr0, idr1;
+425-
+426-	stage = "2 smmu leitura";
+427-	step("2 le a SMMU da GPU (0x5040000)");
+428-	step("2a antes IDR0");
+429-	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+430-	showhex("smmu idr0", idr0);
+431-
+432-	step("2b antes IDR1");
+--
+939-
+940-void shim_main(uint64_t dtb)
+941-{
+942-	(void)dtb;
+943-	fb_default();
+944-	con_clear(GREY);
+945-	con_title("SHIM M11: SMMU + HFI DA ADRENO 630");
+946-	stage = "watchdog";
+947-	wdog_arm();
+948-	step_row = con_row();
+949-	con_skip();
+950-
+951:	if (!pas_supported_probe())
+952-		return;
+953-
+954:	if (!pas_metadata_stage())
+955-		return;
+956-
+957:	if (power_on()) {
+958-		con_skip();
+959-#ifdef HAVE_GMU_FW
+960-		if (gmu_boot_plain()) {
+961-			con_skip();
+962-			smmu_probe();
+963-			con_skip();
+964-			if (smmu_context_on() && gmu_boot_with_hfi()) {
+965-				con_skip();
+966-				hfi_talk();
+967-			}
+968-		}
+969-#else
+970-		stage = "firmware";
+971-		step("firmware do GMU");
+972-		con_str("", "sem fw/a630_gmu.bin: rode tools/gpu-fw-embed.py e recompile");
+973-#endif
+974-	}
+975-
+976-	stage = "fim";
+977-	step("fim");
+978-	con_skip();
+979-	con_str("", "Tire uma foto desta tela!");
+980-	countdown_reboot(con_row(), END_SECONDS);
+981-}
+seven@sevenzx:~/ios-s9/s9$ 
