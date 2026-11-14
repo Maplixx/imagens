@@ -1,0 +1,888 @@
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9
+
+sed -n '2610,2715p' \
+  research/adreno-port/hakios-adreno-reference.c \
+  > research/adreno-port/hakios-pas-zap-reference.txt
+
+sed -n '2700,2860p' \
+  research/adreno-port/hakios-adreno-reference.c \
+  >> research/adreno-port/hakios-pas-zap-reference.txt
+
+sed -n '2860,2990p' \
+  research/adreno-port/hakios-adreno-reference.c \
+  >> research/adreno-port/hakios-pas-zap-reference.txt
+
+cat research/adreno-port/hakios-pas-zap-reference.txt
+ * one segment (the file a660_zap.b02, relocatable: at the start of that memory) is put there,
+ * and TrustZone is asked to authenticate it and run it. The vendor's driver does this before it
+ * starts the 3D core's command processor (a6xx_rb_start: a6xx_microcode_load), Linux after;
+ * this phone's own order is kept. Once that is done the memory is TrustZone's, and nothing
+ * here can see whether it is so; to write there again would be the end of the run. Our kernels
+ * come and go without the phone restarting, so a kernel leaves no zap shader behind: when it
+ * gives the GPU back it has TrustZone take the shader away again (gpu_block_stop(); the
+ * vendor's driver does the same when it is unloaded: kgsl_zap_shader_unload), and the next one
+ * loads it as if the phone had just started. A kernel that did not end in order cannot have
+ * done that. So the same request is made here first: TrustZone answers it with success whether
+ * it had a shader or not, and hands the memory back cleared (it then reads as zeroes). Should
+ * it ever refuse, and then refuse the header or the place too, that is taken to mean that it
+ * has a zap shader from before and keeps it: it is used as it is, and nothing is written.
+ * (Step 21 is what tells whether the 3D core gets out of secure mode with it.) There was a
+ * boot-arg adreno_zap=0 for the second and later runs of a started phone; nothing reads it now.
+ */
+#define ZAP_MEMORY              0x8b71a000ull
+#define ZAP_MEMORY_SIZE         0x2000u
+#define SCM_PAS_MEM_SETUP       SCM_CALL(2, 2)
+#define SCM_THREE_VALUES        3
+
+/* TrustZone is to give the zap shader up, and its memory with it. */
+static bool
+zap_unload(void)
+{
+	uint64_t answer = ~0ull;
+
+	return scm("to give up the zap shader", SCM_64 | SCM_SIP | SCM_PAS_SHUTDOWN, SCM_ONE_VALUE, PAS_GPU, 0, 0, &answer) == 0 &&
+	       answer == 0;
+}
+
+static bool
+step_zap_load(void)
+{
+	const uint8_t *segment;
+	volatile uint8_t *memory;
+	uint64_t size = 0, header = 0, answer = ~0ull;
+
+	if (!cx_ready() || !core_is_on) {
+		return false;
+	}
+	announce("ask TrustZone to give up a zap shader that a kernel before this one may have left");
+	printf("adreno: %u: %s\n", step, zap_unload() ? "TrustZone has given up what it had (it says so with none, too)" :
+	    "TRUSTZONE DOES NOT GIVE IT UP: the next answers tell whether it keeps one");
+	segment = image_file("fw", "a660_zap.b02", &size);
+	if (segment == NULL || size == 0 || size > 0x1000) {
+		return false;
+	}
+	announce("hand the zap shader's header to TrustZone, tell it where the image goes, put the image there, and ask "
+	    "TrustZone to authenticate and run it");
+	if (!zap_header(&header)) {
+		return false;
+	}
+	if (scm("to take the zap shader's signature", SCM_64 | SCM_SIP | SCM_PAS_INIT_IMAGE, SCM_VALUE_AND_BUFFER, PAS_GPU,
+	    header, 0, &answer) != 0 || answer != 0) {
+		printf("adreno: %u: TrustZone does not take the signature (%#llx): TAKEN TO MEAN THAT IT KEEPS A ZAP SHADER FROM "
+		    "BEFORE, which is used as it is\n", step, answer);
+		zap_is_loaded = true;
+		return true;
+	}
+	if (scm("where the image will be", SCM_64 | SCM_SIP | SCM_PAS_MEM_SETUP, SCM_THREE_VALUES, PAS_GPU, ZAP_MEMORY, 0x1000,
+	    &answer) != 0 || answer != 0) {
+		printf("adreno: %u: TrustZone does not take the place (%#llx): TAKEN TO MEAN THAT IT KEEPS A ZAP SHADER FROM "
+		    "BEFORE, which is used as it is\n", step, answer);
+		zap_is_loaded = true;
+		return true;
+	}
+	/* (the memory is looked at only now: TrustZone has just said that it is not its own) */
+	memory = (volatile uint8_t *)ml_io_map_wcomb(ZAP_MEMORY, ZAP_MEMORY_SIZE);
+	printf("adreno: %u: the reserved memory begins %02x %02x %02x %02x, the zap shader %02x %02x %02x %02x\n", step,
+	    memory[0], memory[1], memory[2], memory[3], segment[0], segment[1], segment[2], segment[3]);
+	printf("adreno: %u: about to write %llu bytes at %#llx\n", step, size, ZAP_MEMORY);
+	snprintf(last_write, sizeof(last_write), "step %u wrote the zap shader into memory at %#llx", step, ZAP_MEMORY);
+	hold(true);
+	for (uint64_t i = 0; i < 0x1000; i++) {
+		memory[i] = i < size ? segment[i] : 0;
+	}
+	settle();
+	if (scm("to authenticate the zap shader and run it", SCM_64 | SCM_SIP | SCM_PAS_AUTH_AND_RESET, SCM_ONE_VALUE, PAS_GPU, 0,
+	    0, &answer) != 0 || answer != 0) {
+		printf("adreno: %u: TrustZone does not authenticate the zap shader (%#llx)\n", step, answer);
+		return false;
+	}
+	printf("adreno: %u: TRUSTZONE HAS AUTHENTICATED AND STARTED THE ZAP SHADER\n", step);
+	zap_is_loaded = true;
+	return true;
+}
+
+/* ---- step 20: the 3D core's registers, its command processor started, its first command ------------------- */
+
+static bool
+step_core_start(void)
+{
+	static const uint32_t address_modes[] = { 0x0842, 0x0c01, 0x8601, 0x8e05, 0x9e01, 0xbe05, 0xa601, 0x9601, 0x0e00, 0xae01,
+		                                  0xb601, 0xf810 };
+	uint32_t blind = 0;
+
+	if (!cx_ready() || !core_is_on || !core_space_is_on) {
+		return false;
+	}
+	announce("write the 3D core's registers as Linux does before it starts the command processor: the first writes "
+	    "to the core itself");
+	put(&gbif, "halt", GBIF_HALT, 0);
+	put(&gpu, "rbbm_gbif_halt", RBBM_GBIF_HALT, 0);
+	put(&gpu, "rbbm_secvid_tsb_cntl", RBBM_SECVID_TSB_CNTL, 0);
+	put64(&gpu, "rbbm_secvid_tsb_trusted_base", RBBM_SECVID_TSB_TRUSTED_BASE, 0);
+static bool
+step_core_start(void)
+{
+	static const uint32_t address_modes[] = { 0x0842, 0x0c01, 0x8601, 0x8e05, 0x9e01, 0xbe05, 0xa601, 0x9601, 0x0e00, 0xae01,
+		                                  0xb601, 0xf810 };
+	uint32_t blind = 0;
+
+	if (!cx_ready() || !core_is_on || !core_space_is_on) {
+		return false;
+	}
+	announce("write the 3D core's registers as Linux does before it starts the command processor: the first writes "
+	    "to the core itself");
+	put(&gbif, "halt", GBIF_HALT, 0);
+	put(&gpu, "rbbm_gbif_halt", RBBM_GBIF_HALT, 0);
+	put(&gpu, "rbbm_secvid_tsb_cntl", RBBM_SECVID_TSB_CNTL, 0);
+	put64(&gpu, "rbbm_secvid_tsb_trusted_base", RBBM_SECVID_TSB_TRUSTED_BASE, 0);
+	put(&gpu, "rbbm_secvid_tsb_trusted_size", RBBM_SECVID_TSB_TRUSTED_SIZE, 0);
+	for (unsigned i = 0; i < sizeof(address_modes) / sizeof(address_modes[0]); i++) {
+		put(&gpu, "address mode: 64 bits", GPU_WORD(address_modes[i]), 1);
+	}
+	for (unsigned i = 0; i < 4; i++) {
+		put(&gbif, "qsb_side", GBIF_QSB_SIDE0 + 4 * i, 0x00071620);
+	}
+	put(&gpu, "rbbm_gbif_client_qos_cntl", RBBM_GBIF_CLIENT_QOS_CNTL, 3);
+	put(&gpu, "rbbm_perfctr_gpu_busy_masked", RBBM_PERFCTR_GPU_BUSY_MASKED, 0xffffffff);
+	put64(&gpu, "uche_write_range_max", UCHE_WRITE_RANGE_MAX, 0x0001ffffffffffc0ull);
+	put64(&gpu, "uche_trap_base", UCHE_TRAP_BASE, 0x0001fffffffff000ull);
+	put64(&gpu, "uche_write_thru_base", UCHE_WRITE_THRU_BASE, 0x0001fffffffff000ull);
+	put(&gpu, "uche_filter_cntl", UCHE_FILTER_CNTL, 0x804);
+	put(&gpu, "uche_cache_ways", UCHE_CACHE_WAYS, 0x4);
+	put(&gpu, "cp_roq_thresholds_2", CP_ROQ_THRESHOLDS_2, 0x02000140);
+	put(&gpu, "cp_roq_thresholds_1", CP_ROQ_THRESHOLDS_1, 0x8040362c);
+	put(&gpu, "cp_lpac_prog_fifo_size", CP_LPAC_PROG_FIFO_SIZE, 0x20);
+	put(&gpu, "cp_mem_pool_size", CP_MEM_POOL_SIZE, 128);
+	put(&gpu, "pc_dbg_eco_cntl", PC_DBG_ECO_CNTL, 0x00200200);
+	put(&gpu, "cp_ahb_cntl", CP_AHB_CNTL, 1);
+	/*
+	 * How textures in the GPU's own tiled and compressed layouts are laid out in memory (Linux's
+	 * a6xx_calc_ubwc_config, a6xx_set_ubwc_config for this GPU: highest bank bit 14, and the
+	 * rest as below); Mesa is told the same (hakios_gpu_parameter()).
+	 */
+	put(&gpu, "rb_nc_mode_cntl", GPU_WORD(0x8e08), 1u << 11 | 1u << 4 | 1u << 1);
+	put(&gpu, "tpl1_nc_mode_cntl", GPU_WORD(0xb604), 1u << 1);
+	put(&gpu, "sp_nc_mode_cntl", GPU_WORD(0xae02), 2u << 4 | 1u << 1);
+	put(&gpu, "uche_mode_cntl", GPU_WORD(0x0e01), 1u << 21);
+	put(&gpu, "rbbm_nc_mode_cntl", GPU_WORD(0x0534), 1);
+	put(&gpu, "rbbm_perfctr_cntl", RBBM_PERFCTR_CNTL, 1);
+	put(&gpu, "rbbm_interface_hang_int_cntl", RBBM_INTERFACE_HANG_INT_CNTL, 1u << 30 | 0x1fffff);
+	put(&gpu, "uche_client_pf", UCHE_CLIENT_PF, 1u << 7 | 1);
+	put(&gpu, "cp_chicken_dbg", CP_CHICKEN_DBG, 1);
+	put(&gpu, "rbbm_gbif_client_qos_cntl", RBBM_GBIF_CLIENT_QOS_CNTL, 0);
+	put(&gpu, "cp_apriv_cntl", CP_APRIV_CNTL, 1u << 6 | 1u << 5 | 1u << 3 | 1u << 2 | 1u << 1);
+	put(&gpu, "rb_dbg_eco_cntl", RB_DBG_ECO_CNTL, 0x04100000);     /* Mesa's value for this GPU */
+	/*
+	 * adreno_blind=1: the command processor is started with its microcode at an address where
+	 * nothing is. All it can do then is ask the SMMU for it, and the SMMU's record of the refusal
+	 * shows that its requests come through context 0 as meant, and what they look like.
+	 */
+	PE_parse_boot_argn("adreno_blind", &blind, sizeof(blind));
+	put64(&gpu, "cp_sqe_instr_base", CP_SQE_INSTR_BASE, blind ? CORE_NOWHERE : CORE_SQE_ADDRESS);
+	put64(&gpu, "cp_rb_base", CP_RB_BASE, CORE_RING_ADDRESS);
+	put(&gpu, "cp_rb_cntl", CP_RB_CNTL, CP_RB_CNTL_VALUE);
+	get(&gpu, "cp_sqe_instr_base", CP_SQE_INSTR_BASE);
+	get(&gpu, "cp_rb_base", CP_RB_BASE);
+	get(&gpu, "cp_rb_cntl", CP_RB_CNTL);
+	get(&gpu, "cp_apriv_cntl", CP_APRIV_CNTL);
+	get(&gpu, "rbbm_status", RBBM_STATUS);
+
+	announce(blind ? "start the 3D core's command processor with its microcode nowhere" :
+	    "start the 3D core's command processor");
+	core_runs = true;
+	put(&gpu, "cp_sqe_cntl", CP_SQE_CNTL, 1);
+	sleep_ms(20);
+	printf("adreno: %u: alive after it; status %#x, interrupts %#x, command processor: fault %#x, interrupts %#x, "
+	    "protection %#x, ring read up to %u\n", step, rd(gpu.base + RBBM_STATUS), rd(gpu.base + RBBM_INT_0_STATUS),
+	    rd(gpu.base + CP_HW_FAULT), rd(gpu.base + CP_INTERRUPT_STATUS), rd(gpu.base + CP_PROTECT_STATUS),
+	    rd(gpu.base + CP_RB_RPTR));
+	get(&smmu, "sgfsr", SMMU_SGFSR);
+	get(&smmu, "sgfsynr0", SMMU_SGFSR + 8);
+	get(&smmu, "sgfsynr1", SMMU_SGFSR + 12);
+	if (blind) {
+		return space_faulted(&core_space);
+	}
+	if (second_space_is_on) {
+		sleep_ms(200);
+		return space_faulted(&second_space) | !space_faulted(&core_space);
+	}
+	if (space_faulted(&core_space)) {
+		return false;
+	}
+
+	announce("give the 3D core its first command, \"initialize\"");
+	ring_command(CP_ME_INIT, 8);            /* a6xx_cp_init */
+	ring(0x0000002f);
+	ring(0x00000003);                       /* several hardware contexts */
+	ring(0x20000000);                       /* error detection */
+	ring(0);
+	ring(0);
+	ring(0);
+	ring(0);
+	ring(0);
+	if (!ring_run("initialize its command processor")) {
+		return false;
+	}
+	printf("adreno: %u: THE 3D CORE TAKES COMMANDS\n", step);
+	return true;
+}
+
+/* ---- step 21: out of secure mode; a word written on command ------------------------------------------------ */
+
+static bool
+step_core_commands(void)
+{
+	volatile uint32_t *scratch = (volatile uint32_t *)core_scratch.memory;
+
+	if (!cx_ready() || !core_runs) {
+		return false;
+	}
+	announce("command the 3D core out of secure mode (it asks the zap shader), then to write a word into a page of ours");
+	ring_command(CP_SET_SECURE_MODE, 1);
+	ring(0);
+	if (!ring_run("leave secure mode")) {
+		return false;
+	}
+	ring_command(CP_MEM_WRITE, 3);
+	ring(CORE_SCRATCH_ADDRESS);
+	ring(0);
+	ring(0x600dc0de);
+	if (!ring_run("write a word to memory")) {
+		return false;
+	}
+	to_memory(core_scratch.memory, 64);
+	printf("adreno: %u: the page reads %#x: %s\n", step, scratch[0], scratch[0] == 0x600dc0de ?
+	    "THE 3D CORE WRITES OUR MEMORY ON COMMAND" : "not what it was told to write");
+	return scratch[0] == 0x600dc0de;
+}
+
+/* ---- step 22: a frame filled by the GPU, on the panel ------------------------------------------------------ */
+
+/*
+ * The simplest thing the 3D core draws: its 2D engine filling a rectangle with one colour (Mesa's
+ * fd6_blitter.cc: fd6_clear_surface; the registers under their older names, as in Linux's
+ * a6xx.xml), three times for three bands. The picture is 32-bit pixels in rows of a multiple of
+ * 64 bytes, in memory of ours; the framebuffer driver copies it to the panel.
+ */
+#define RB_CCU_CNTL             0x8e07          /* register numbers: these are written by command */
+#define GRAS_2D_BLIT_CNTL       0x8400
+#define GRAS_2D_DST_TL          0x8405
+#define GRAS_2D_DST_BR          0x8406
+#define RB_2D_BLIT_CNTL         0x8c00
+#define RB_2D_PIXEL_CNTL        0x8c01
+#define RB_2D_DST_INFO          0x8c17
+#define RB_2D_DST               0x8c18
+#define RB_2D_DST_PITCH         0x8c1a
+#define RB_2D_SRC_SOLID_C0      0x8c2c
+#define SP_2D_DST_FORMAT        0xacc0
+#define FORMAT_8888             0x30
+#define BLIT_SOLID_8888         (1u << 7 | FORMAT_8888 << 8 | 0xfu << 20 | 0x10u << 24) /* one colour; all channels; 8-bit */
+#define DST_BGRA_LINEAR         (FORMAT_8888 | 1u << 10)        /* rows of pixels, blue first in memory */
+#define EVENT_FLUSH_COLOR       0x1d
+#define EVENT_CACHE_FLUSH       0x04
+#define EVENT_CACHE_FLUSH       0x04
+#define TARGET_WIDTH            1080
+#define TARGET_HEIGHT           2400
+#define TARGET_ROW              4352            /* 1088 pixels: the next multiple of 64 bytes */
+
+extern void MiniIOMobileFramebufferShow(const uint8_t *pixels, uint32_t width, uint32_t height, uint32_t row_bytes);
+
+static void
+ring_fill(uint32_t top, uint32_t bottom, uint32_t red, uint32_t green, uint32_t blue)
+{
+	ring_register(GRAS_2D_DST_TL, top << 16);
+	ring_register(GRAS_2D_DST_BR, (TARGET_WIDTH - 1) | (bottom - 1) << 16);
+	ring_register(RB_2D_SRC_SOLID_C0, red);         /* a register for each part of the colour, 0 to 255 */
+	ring_register(RB_2D_SRC_SOLID_C0 + 1, green);
+	ring_register(RB_2D_SRC_SOLID_C0 + 2, blue);
+	ring_register(RB_2D_SRC_SOLID_C0 + 3, 255);
+	ring_register(RB_2D_BLIT_CNTL, BLIT_SOLID_8888);
+	ring_register(GRAS_2D_BLIT_CNTL, BLIT_SOLID_8888);
+	ring_register(SP_2D_DST_FORMAT, 1 | FORMAT_8888 << 3 | 0xfu << 12);
+	ring_register(RB_2D_PIXEL_CNTL, 0);
+	ring_register(RB_2D_DST_INFO, DST_BGRA_LINEAR);
+	ring_register(RB_2D_DST, CORE_TARGET_ADDRESS);
+	ring_register(RB_2D_DST + 1, 0);
+	ring_register(RB_2D_DST_PITCH, TARGET_ROW >> 6);
+	ring_command(CP_WAIT_FOR_IDLE, 0);
+	ring_command(CP_BLIT, 1);
+	ring(3);                                /* "scale": the 2D engine's one operation */
+}
+
+static bool
+step_frame(void)
+{
+	const volatile uint8_t *pixel;
+
+	if (!cx_ready() || !core_runs) {
+		return false;
+	}
+	announce("make a picture's worth of memory for the 3D core (10 MB) and have it fill three bands of colour");
+	if (!block_new(&core_space, &core_target, CORE_TARGET_ADDRESS, TARGET_ROW * TARGET_HEIGHT, PTE_CORE)) {
+		return false;
+	}
+	/* tables that the SMMU has in use have grown: it has not seen these addresses, so nothing stale to forget */
+	for (uint32_t i = 0; i < core_space.table_count; i++) {
+		to_memory((vm_offset_t)core_space.tables[i].table, 4096);
+	}
+	ring_command(CP_SET_MARKER, 1);
+	ring(12);                               /* "2D blits follow" */
+	ring_register(RB_CCU_CNTL, 0x10000004); /* Mesa's for this GPU when it draws straight into memory */
+	ring_fill(0, 800, 255, 128, 0);         /* orange */
+	ring_fill(800, 1600, 255, 255, 255);
+	ring_fill(1600, TARGET_HEIGHT, 0, 128, 255);
+	/*
+	 * What it has drawn out of its caches into memory. Each of the two events is followed by an
+	 * address and a word that the core writes there when it is done (Linux's a6xx_submit; Mesa's
+	 * tu6_emit_event_write: the events named ..._TS): the core takes those three words whether
+	 * they are there or not.
+	 */
+	ring_command(CP_EVENT_WRITE, 4);
+	ring(EVENT_FLUSH_COLOR);
+	ring(CORE_SCRATCH_ADDRESS + 32);
+	ring(0);
+	ring(0x0c0c0c0c);
+	ring_command(CP_EVENT_WRITE, 4);
+	ring(EVENT_CACHE_FLUSH);
+	ring(CORE_SCRATCH_ADDRESS + 16);
+	ring(0);
+	ring(0x0d0e0d0e);
+	ring_command(CP_WAIT_FOR_IDLE, 0);
+	if (!ring_run("fill a picture")) {
+		return false;
+	}
+	to_memory(core_scratch.memory, 64);
+	printf("adreno: %u: the words it writes when its caches are in memory: %#x, %#x (told: 0xc0c0c0c, 0xd0e0d0e)\n", step,
+	    ((volatile uint32_t *)core_scratch.memory)[8], ((volatile uint32_t *)core_scratch.memory)[4]);
+	to_memory(core_target.memory, core_target.size);
+	pixel = (const volatile uint8_t *)core_target.memory;
+	printf("adreno: %u: the picture's first pixel is %02x %02x %02x %02x (blue green red alpha; told: 00 80 ff ff), one in "
+	    "the middle %02x %02x %02x %02x, one in the last row %02x %02x %02x %02x\n", step, pixel[0], pixel[1], pixel[2],
+	    pixel[3], pixel[1200 * TARGET_ROW + 2160], pixel[1200 * TARGET_ROW + 2161], pixel[1200 * TARGET_ROW + 2162],
+	    pixel[1200 * TARGET_ROW + 2163], pixel[2399 * TARGET_ROW + 4316], pixel[2399 * TARGET_ROW + 4317],
+	    pixel[2399 * TARGET_ROW + 4318], pixel[2399 * TARGET_ROW + 4319]);
+	if ((pixel[0] | pixel[1] | pixel[2]) == 0 || pixel[1200 * TARGET_ROW + 2160] == 0 || (pixel[2399 * TARGET_ROW + 4316] |
+	    pixel[2399 * TARGET_ROW + 4317] | pixel[2399 * TARGET_ROW + 4318]) == 0) {
+		printf("adreno: %u: the picture is not what the 3D core was told to draw\n", step);
+		return false;
+	}
+	MiniIOMobileFramebufferShow((const uint8_t *)core_target.memory, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROW);
+	printf("adreno: %u: A PICTURE DRAWN BY THE GPU IS ON THE PANEL: orange, white, blue from the top\n", step);
+	return true;
+}
+
+/* ---- the way back ------------------------------------------------------------------------------------- */
+
+/*
+ * Nothing of the GPU block may outlive the kernel that started it: the memory its SMMU context
+ * points into is the next kernel's to use. In the order of Linux's a6xx_gmu_shutdown: the 3D
+ * core given back, the GMU told to drop its votes ("slumber") and stopped, its RPMh channel put
+ * to sleep; then the processor into reset and its stream sent nowhere.
+ */
+/*
+ * The 3D core's own power switch is the GMU's to operate. Where the GMU is gone and has left it
+ * on (it is in reset; it did not answer when told to slumber), the switch is turned off from
+ * here (vendor's a6xx_gmu_suspend): a core that keeps its power while the rest of the block
+ * loses it is found by the next start as the last one left it, in the middle of things.
+ */
+static void
+gx_off(void)
+{
+	uint32_t gx = get(&gpucc, "gx_gdscr", GPUCC_GX_GDSCR);
+
+	if (gx & GDSC_POWER_ON) {
+		put(&gpucc, "gx_gdscr", GPUCC_GX_GDSCR, gx | GDSC_SW_COLLAPSE);
+		wait_for(&gpucc, GPUCC_GX_GDSCR, GDSC_POWER_ON, 0, 100);
+		get(&gpucc, "gx_gdscr", GPUCC_GX_GDSCR);
+	}
+}
+
+/* What step 4 does when it finds the GPU block running: see there. Nothing here has been set up by this kernel. */
+static void
+stale_stop(void)
+{
+	need(&gmu);
+	need(&rscc);
+	put(&gmu, "cm3_sysreset", GMU_CM3_SYSRESET, 1);
+	gx_off();
+	if (rd(rscc.base + RSCC_SEQ_MEM_0_DRV0) == 0xeaaae5a0 && !(rd(rscc.base + RSCC_RSC_STATUS0_DRV0) & RSCC_ASLEEP)) {
+		put(&gmu, "rscc_control_req", GMU_RSCC_CONTROL_REQ, 1);
+		wait_for(&rscc, RSCC_RSC_STATUS0_DRV0, RSCC_ASLEEP, RSCC_ASLEEP, 100);
+		get(&rscc, "rsc_status0_drv0", RSCC_RSC_STATUS0_DRV0);
+		put(&gmu, "rscc_control_req", GMU_RSCC_CONTROL_REQ, 0);
+	}
+seven@sevenzx:~/ios-s9$ cd ~/ios-s9/s9
+
+sed -n '245,335p' shim/m11.c
+sed -n '335,510p' shim/m11.c
+sed -n '900,950p' shim/m11.c
+	wdog_pet();
+}
+
+static void zero(void *p, uint32_t n)
+{
+	for (uint32_t i = 0; i < n; i++)
+		((volatile uint8_t *)p)[i] = 0;
+}
+
+__attribute__((noinline)) static uint64_t pa(const void *p)
+{
+	return (uint64_t)(uintptr_t)p;
+}
+
+
+static int pas_supported_probe(void)
+{
+    struct smc_result ret;
+
+    stage = "PAS supported";
+    step("PAS: consulta IS_SUPPORTED");
+    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+    showhex("PAS ret x0", ret.x0);
+    showhex("PAS ret x1", ret.x1);
+    showhex("PAS ret x2", ret.x2);
+    showhex("PAS ret x3", ret.x3);
+
+    if (ret.x0 != 0) {
+        con_str("PAS", "TrustZone nao confirmou PAS 13");
+        return 0;
+    }
+
+    con_str("PAS", "TrustZone confirmou PAS 13");
+    return 1;
+}
+
+static int pas_metadata_stage(void)
+{
+	uint32_t i;
+	uint32_t mismatches = 0;
+
+	stage = "PAS metadata";
+	step("PAS: prepara metadata sem SMC");
+	showhex("PAS MDT bytes", PAS_MDT_SIZE);
+	showhex("PAS metadata PA", pa(pas_metadata));
+	showhex("PAS firmware PA", pa(pas_firmware));
+	showhex("PAS destino reservado", 0x8c415000);
+	showhex("PAS destino tamanho", 0x2000);
+
+	if (PAS_MDT_SIZE > sizeof(pas_metadata)) {
+		con_str("PAS", "MDT maior que buffer");
+		return 0;
+	}
+
+	zero((void *)pas_metadata, sizeof(pas_metadata));
+
+	for (i = 0; i < PAS_MDT_SIZE; i++)
+		pas_metadata[i] = pas_mdt_blob[i];
+
+	for (i = 0; i < PAS_MDT_SIZE; i++) {
+		if (pas_metadata[i] != pas_mdt_blob[i]) {
+			mismatches = 1;
+			break;
+		}
+	}
+
+	showhex("PAS mismatch", mismatches);
+	showhex("PAS MDT magic",
+		pas_metadata[0] |
+		((uint32_t)pas_metadata[1] << 8) |
+		((uint32_t)pas_metadata[2] << 16) |
+		((uint32_t)pas_metadata[3] << 24));
+
+	if (mismatches) {
+		con_str("PAS", "falha na copia do MDT");
+		return 0;
+	}
+
+	con_str("PAS", "MDT copiado/verificado; SMC nao executado");
+	return 1;
+}
+
+/* ---- power (M10 stages 1-2, condensed) ------------------------------------------------------------- */
+
+static int clk_branch_on(uintptr_t cbcr)
+{
+	wr32(cbcr, rd32(cbcr) | CBCR_ENABLE);
+	dsb();
+	for (int i = 0; i < 2000 && (rd32(cbcr) & CBCR_OFF); i++)
+		delay_ms(1);
+	return !(rd32(cbcr) & CBCR_OFF);
+	return !(rd32(cbcr) & CBCR_OFF);
+}
+
+static int cx_power_on(void)
+{
+	uint32_t v = rd32(GPUCC + GPUCC_CX_GDSCR);
+
+	if (v & SW_COLLAPSE) {
+		wr32(GPUCC + GPUCC_CX_GDSCR, v & ~SW_COLLAPSE);
+		dsb();
+	}
+	for (int i = 0; i < 2000; i++) {
+		if ((rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON))
+			break;
+		delay_ms(1);
+	}
+	return (rd32(GPUCC + GPUCC_CX_GDSCR) & PWR_ON) || (rd32(GPUCC + GPUCC_CX_HWCTRL) & PWR_ON);
+}
+
+static int power_on(void)
+{
+	stage = "1 energia";
+	step("1 GPLL0 + CX GDSC + relogios");
+	wr32(GCC + GCC_GPLL0_VOTE, rd32(GCC + GCC_GPLL0_VOTE) | (1u << 15) | (1u << 16));
+	dsb();
+	if (!clk_branch_on(GCC + GCC_CFG_AHB))
+		return 0;
+	if (!cx_power_on()) {
+		con_str("1", "CX GDSC nao liga: parando");
+		return 0;
+	}
+	showhex("gpucc cx gdscr", rd32(GPUCC + GPUCC_CX_GDSCR));
+	/* GMU RCG 200 MHz */
+	wr32(GPUCC + GPUCC_GMU_RCG_CFG, GMU_RCG_CFG_200MHZ);
+	dsb();
+	wr32(GPUCC + GPUCC_GMU_RCG_CMD, rd32(GPUCC + GPUCC_GMU_RCG_CMD) | CMD_UPDATE);
+	dsb();
+	for (int i = 0; i < 2000 && (rd32(GPUCC + GPUCC_GMU_RCG_CMD) & CMD_UPDATE); i++)
+		delay_ms(1);
+	clk_branch_on(GPUCC + GPUCC_CBCR_CXO);
+	clk_branch_on(GPUCC + GPUCC_CBCR_AHB);
+	if (!clk_branch_on(GPUCC + GPUCC_CBCR_CX_GMU))
+		return 0;
+	clk_branch_on(GCC + GCC_MEMNOC_GFX);
+	clk_branch_on(GCC + GCC_DDRSS_GPU_AXI);
+	clk_branch_on(GCC + GCC_SNOC_DVM_GFX);
+	con_str("1", "GPU com energia e relogios");
+	return 1;
+}
+
+/* ---- stage 2: read the SMMU as the boot loader / hypervisor left it --------------------------------- */
+
+static void smmu_probe(void)
+{
+	uint32_t idr0, idr1;
+
+	stage = "2 smmu leitura";
+	step("2 le a SMMU da GPU (0x5040000)");
+	step("2a antes IDR0");
+	idr0 = rd32(SMMU_BASE + SMMU_IDR0);
+	showhex("smmu idr0", idr0);
+
+	step("2b antes IDR1");
+	idr1 = rd32(SMMU_BASE + SMMU_IDR1);
+	showhex("smmu idr1", idr1);
+	smmu_smrs = idr0 & 0xff;
+	smmu_page = (idr1 >> 31) ? 0x10000 : 0x1000;
+	smmu_pages = 2u << ((idr1 >> 28) & 7);
+	smmu_contexts = idr1 & 0xff;
+	showhex("smmu idr0", idr0);
+	showhex("smmu idr1", idr1);
+	step("2c antes SCR0"); showhex("smmu scr0", rd32(SMMU_BASE + SMMU_SCR0));
+	step("2d antes SGFSR"); showhex("smmu sgfsr", rd32(SMMU_BASE + SMMU_SGFSR));
+	{
+		char b[80], *p = put(put_dec(put(b, "smr="), smmu_smrs), " cb=");
+		p = put_dec(p, smmu_contexts);
+		p = put(put_dec(put(p, " pages="), smmu_pages), " pg=");
+		put_hex(p, smmu_page, 4);
+		con_str("smmu", b);
+	}
+	if (2 * smmu_pages * smmu_page != SMMU_SIZE) {
+		con_str("2", "layout nao bate com 0x10000: uso 4K/8 mesmo assim");
+		smmu_page = 0x1000;
+		smmu_pages = 8;
+	}
+	/* The stream table and context 0, as left (bypass/fault expected on the GPU's own, off, SMMU). */
+	step("2e antes SMR0"); showhex("smr0", rd32(SMMU_BASE + SMMU_SMR(0)));
+	step("2f antes S2CR0"); showhex("s2cr0", rd32(SMMU_BASE + SMMU_S2CR(0)));
+	step("2g antes CB0 SCTLR"); showhex("cb0 sctlr", rd32(SMMU_BASE + smmu_pages * smmu_page + SMMU_CB_SCTLR));
+}
+
+/* ---- stage 3: page tables + the GMU's SMMU context -------------------------------------------------- */
+
+static uint64_t *smmu_new_table(void)
+{
+	if (smmu_pool_used >= sizeof(smmu_pool) / sizeof(smmu_pool[0]))
+		return 0;
+	uint64_t *t = (uint64_t *)smmu_pool[smmu_pool_used++];
+	zero(t, 4096);
+	return t;
+}
+
+static uint64_t *smmu_root;
+
+/* Map one 4K page of GMU address `va` to physical `phys`. */
+static int smmu_map(uint64_t va, uint64_t phys)
+{
+	uint64_t *l1 = smmu_root, *l2, *l3;
+	uint64_t e;
+
+	e = l1[(va >> 30) & 0x1ff];
+	if (e & 1)
+		l2 = (uint64_t *)(uintptr_t)(e & PTE_ADDR);
+	else {
+		l2 = smmu_new_table();
+		if (!l2)
+			return 0;
+		l1[(va >> 30) & 0x1ff] = pa(l2) | PTE_TABLE;
+	}
+	e = l2[(va >> 21) & 0x1ff];
+	if (e & 1)
+		l3 = (uint64_t *)(uintptr_t)(e & PTE_ADDR);
+	else {
+		l3 = smmu_new_table();
+		if (!l3)
+			return 0;
+		l2[(va >> 21) & 0x1ff] = pa(l3) | PTE_TABLE;
+	}
+	l3[(va >> 12) & 0x1ff] = phys | PTE_GMU | PTE_PAGE;
+	return 1;
+}
+
+static int smmu_context_on(void)
+{
+	uint32_t cb = GMU_CB, ctx;
+	uint64_t ttbr;
+
+	stage = "3 smmu contexto";
+	step("3a tabelas p/ HFI 0x60000000 + dump");
+	smmu_root = smmu_new_table();
+	if (!smmu_root)
+		return 0;
+	for (uint32_t off = 0; off < GMU_MEM_SIZE; off += 4096)
+		if (!smmu_map(GMU_HFI_ADDR + off, pa(gmu_hfi_mem) + off) ||
+		    !smmu_map(GMU_DUMP_ADDR + off, pa(gmu_dump_mem) + off)) {
+			con_str("3", "sem tabelas");
+			return 0;
+		}
+	dsb();	/* the SMMU reads the tables from memory (Device: no cache to flush) */
+
+	step("3b programa o contexto da SMMU (SID 4/5 -> CB0)");
+	ctx = smmu_pages * smmu_page + cb * smmu_page;		/* CB0 register page */
+	ttbr = pa(smmu_root) | ((uint64_t)cb << 48);		/* tagged with the ASID */
+	/* global enable: translation on (not client-pd bypass), fault handling */
+	wr32(SMMU_BASE + SMMU_SCR0, rd32(SMMU_BASE + SMMU_SCR0) & ~(1u << 0));	/* CLIENTPD=0 */
+	dsb();
+	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, 0);
+	wr32(SMMU_BASE + smmu_page + SMMU_CBA2R(cb), SMMU_CBA2R_64BIT);
+	wr32(SMMU_BASE + smmu_page + SMMU_CBAR(cb), SMMU_CBAR_STAGE_1);
+	wr32(SMMU_BASE + SMMU_CB_TCR2 + ctx, SMMU_TCR2_VAL);
+	wr32(SMMU_BASE + SMMU_CB_TCR + ctx, SMMU_TCR_39BITS);
+	wr32(SMMU_BASE + SMMU_CB_TTBR0 + ctx, (uint32_t)ttbr);
+	wr32(SMMU_BASE + SMMU_CB_TTBR0 + 4 + ctx, (uint32_t)(ttbr >> 32));
+	wr32(SMMU_BASE + SMMU_CB_TTBR1 + ctx, 0);
+	wr32(SMMU_BASE + SMMU_CB_TTBR1 + 4 + ctx, 0);
+	wr32(SMMU_BASE + SMMU_CB_MAIR0 + ctx, SMMU_MAIR0_VAL);
+	wr32(SMMU_BASE + SMMU_CB_MAIR1 + ctx, 0);
+	wr32(SMMU_BASE + SMMU_CB_FSR + ctx, SMMU_FSR_ALL);
+	wr32(SMMU_BASE + SMMU_CB_TLBIALL + ctx, 0);
+	wr32(SMMU_BASE + SMMU_CB_TLBSYNC + ctx, 0);
+	for (int i = 0; i < 100 && (rd32(SMMU_BASE + SMMU_CB_TLBSTATUS + ctx) & 1); i++)
+		delay_ms(1);
+	wr32(SMMU_BASE + SMMU_CB_SCTLR + ctx, SMMU_CB_SCTLR_ON);
+	/* route the GMU's two streams to this context */
+	wr32(SMMU_BASE + SMMU_S2CR(0), cb);
+	wr32(SMMU_BASE + SMMU_SMR(0), SMMU_SMR_VALID | GMU_STREAM_KERNEL);
+		showhex("GMU fw version", hfi_payload0);
+	con_str("5", "O GMU CONVERSA POR HFI: canal de mensagens de pe");
+}
+#endif /* HAVE_GMU_FW */
+
+void shim_main(uint64_t dtb)
+{
+	(void)dtb;
+	fb_default();
+	con_clear(GREY);
+	con_title("SHIM M11: SMMU + HFI DA ADRENO 630");
+	stage = "watchdog";
+	wdog_arm();
+	step_row = con_row();
+	con_skip();
+
+	if (!pas_supported_probe())
+		return;
+
+	if (!pas_metadata_stage())
+		return;
+
+	if (power_on()) {
+		con_skip();
+#ifdef HAVE_GMU_FW
+		if (gmu_boot_plain()) {
+			con_skip();
+			smmu_probe();
+			con_skip();
+			if (smmu_context_on() && gmu_boot_with_hfi()) {
+				con_skip();
+				hfi_talk();
+			}
+		}
+#else
+		stage = "firmware";
+		step("firmware do GMU");
+		con_str("", "sem fw/a630_gmu.bin: rode tools/gpu-fw-embed.py e recompile");
+#endif
+	}
+
+	stage = "fim";
+	step("fim");
+	con_skip();
+	con_str("", "Tire uma foto desta tela!");
+	countdown_reboot(con_row(), END_SECONDS);
+}
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9
+
+grep -nA125 -B10 \
+  'qcom,gmu' \
+  work/dt/live-twrp.dts | head -150
+23259-			};
+23260-
+23261-			gfx3d_secure {
+23262-				compatible = "qcom,smmu-kgsl-cb";
+23263-				iommus = <0x1f6 0x02 0x1f6 0x01>;
+23264-				linux,phandle = <0x51d>;
+23265-				phandle = <0x51d>;
+23266-			};
+23267-		};
+23268-
+23269:		qcom,gmu {
+23270-			label = "kgsl-gmu";
+23271-			compatible = "qcom,gpu-gmu";
+23272-			reg = <0x506a000 0x30000 0xb200000 0x300000>;
+23273-			reg-names = "kgsl_gmu_reg", "kgsl_gmu_pdc_reg";
+23274-			interrupts = <0x00 0x130 0x00 0x00 0x131 0x00>;
+23275-			interrupt-names = "kgsl_hfi_irq", "kgsl_gmu_irq";
+23276-			qcom,msm-bus,name = "cnoc";
+23277-			qcom,msm-bus,num-cases = <0x02>;
+23278-			qcom,msm-bus,num-paths = <0x01>;
+23279-			qcom,msm-bus,vectors-KBps = <0x1a 0x2734 0x00 0x00 0x1a 0x2734 0x00 0x64>;
+23280-			regulator-names = "vddcx", "vdd";
+23281-			vddcx-supply = <0x1ee>;
+23282-			vdd-supply = <0x320>;
+23283-			clocks = <0xe0 0x04 0xe0 0x0a 0x21 0x14 0x21 0x23>;
+23284-			clock-names = "gmu_clk", "cxo_clk", "axi_clk", "memnoc_clk";
+23285-			linux,phandle = <0xd7>;
+23286-			phandle = <0xd7>;
+23287-
+23288:			qcom,gmu-pwrlevels {
+23289-				#address-cells = <0x01>;
+23290-				#size-cells = <0x00>;
+23291:				compatible = "qcom,gmu-pwrlevels";
+23292-
+23293:				qcom,gmu-pwrlevel@0 {
+23294-					reg = <0x00>;
+23295:					qcom,gmu-freq = <0x00>;
+23296-				};
+23297-
+23298:				qcom,gmu-pwrlevel@1 {
+23299-					reg = <0x01>;
+23300:					qcom,gmu-freq = <0xbebc200>;
+23301-				};
+23302-
+23303:				qcom,gmu-pwrlevel@2 {
+23304-					reg = <0x02>;
+23305:					qcom,gmu-freq = <0x1dcd6500>;
+23306-				};
+23307-			};
+23308-
+23309-			gmu_user {
+23310-				compatible = "qcom,smmu-gmu-user-cb";
+23311-				iommus = <0x1f6 0x04>;
+23312-				linux,phandle = <0x51e>;
+23313-				phandle = <0x51e>;
+23314-			};
+23315-
+23316-			gmu_kernel {
+23317-				compatible = "qcom,smmu-gmu-kernel-cb";
+23318-				iommus = <0x1f6 0x05>;
+23319-				linux,phandle = <0x51f>;
+23320-				phandle = <0x51f>;
+23321-			};
+23322-		};
+23323-
+23324-		ssusb@a600000 {
+23325-			compatible = "qcom,dwc-usb3-msm";
+23326-			reg = <0xa600000 0xf8c00 0x88ee000 0x400>;
+23327-			reg-names = "core_base", "ahb2phy_base";
+23328-			iommus = <0x28 0x740 0x00>;
+23329-			qcom,smmu-s1-bypass;
+23330-			#address-cells = <0x01>;
+23331-			#size-cells = <0x01>;
+23332-			ranges;
+23333-			interrupts = <0x00 0x1e9 0x00 0x00 0x82 0x00 0x00 0x1e6 0x00 0x00 0x1e8 0x00>;
+23334-			interrupt-names = "dp_hs_phy_irq", "pwr_event_irq", "ss_phy_irq", "dm_hs_phy_irq";
+23335-			USB3_GDSC-supply = <0x323>;
+23336-			qcom,usb-dbm = <0x324>;
+23337-			qcom,dwc-usb3-msm-tx-fifo-size = <0x5328>;
+23338-			qcom,num-gsi-evt-buffs = <0x03>;
+23339-			qcom,use-pdc-interrupts;
+23340-			extcon = <0x00 0x00 0x325>;
+23341-			clocks = <0x21 0x8f 0x21 0x0c 0x21 0x03 0x21 0x91 0x21 0x93 0x21 0xa3 0x21 0x99>;
+23342-			clock-names = "core_clk", "iface_clk", "bus_aggr_clk", "utmi_clk", "sleep_clk", "cfg_ahb_clk", "xo";
+23343-			qcom,core-clk-rate = <0x7f28155>;
+23344-			qcom,core-clk-rate-hs = <0x3f940ab>;
+23345-			resets = <0x21 0x0f>;
+23346-			reset-names = "core_reset";
+23347-			qcom,msm-bus,name = "usb0";
+23348-			qcom,msm-bus,num-cases = <0x02>;
+23349-			qcom,msm-bus,num-paths = <0x03>;
+23350-			qcom,msm-bus,vectors-KBps = <0x3d 0x200 0x00 0x00 0x3d 0x2a4 0x00 0x00 0x01 0x247 0x00 0x00 0x3d 0x200 0x3a980 0xaae60 0x3d 0x2a4 0x00 0x960 0x01 0x247 0x00 0x9c40>;
+23351-			linux,phandle = <0x520>;
+23352-			phandle = <0x520>;
+23353-
+23354-			dwc3@a600000 {
+23355-				compatible = "snps,dwc3";
+23356-				reg = <0xa600000 0xcd00>;
+23357-				interrupts = <0x00 0x85 0x00>;
+23358-				usb-phy = <0x326 0x327>;
+23359-				tx-fifo-resize;
+23360-				linux,sysdev_is_parent;
+23361-				snps,disable-clk-gating;
+23362-				snps,has-lpm-erratum;
+23363-				snps,hird-threshold = [10];
+23364-				snps,usb3_lpm_capable;
+23365-				usb-core-id = <0x00>;
+23366-			};
+23367-
+23368-			qcom,usbbam@a704000 {
+23369-				compatible = "qcom,usb-bam-msm";
+23370-				reg = <0xa704000 0x17000>;
+23371-				interrupts = <0x00 0x84 0x00>;
+23372-				qcom,bam-type = <0x00>;
+23373-				qcom,usb-bam-fifo-baseaddr = <0x146bb000>;
+23374-				qcom,usb-bam-num-pipes = <0x08>;
+23375-				qcom,ignore-core-reset-ack;
+23376-				qcom,disable-clk-gating;
+23377-				qcom,usb-bam-override-threshold = <0x4001>;
+23378-				qcom,usb-bam-max-mbps-highspeed = <0x190>;
+23379-				qcom,usb-bam-max-mbps-superspeed = <0xe10>;
+23380-				qcom,reset-bam-on-connect;
+23381-
+23382-				qcom,pipe0 {
+23383-					label = "ssusb-qdss-in-0";
+23384-					qcom,usb-bam-mem-type = <0x02>;
+23385-					qcom,dir = <0x01>;
+23386-					qcom,pipe-num = <0x00>;
+23387-					qcom,peer-bam = <0x00>;
+23388-					qcom,peer-bam-physical-address = <0x6064000>;
+23389-					qcom,src-bam-pipe-index = <0x00>;
+23390-					qcom,dst-bam-pipe-index = <0x00>;
+23391-					qcom,data-fifo-offset = <0x00>;
+23392-					qcom,data-fifo-size = <0x1800>;
+23393-					qcom,descriptor-fifo-offset = <0x1800>;
+23394-					qcom,descriptor-fifo-size = <0x800>;
+23395-				};
+23396-			};
+23397-		};
+23398-
+23399-		qusb@88e2000 {
+23400-			compatible = "qcom,qusb2phy-v2";
+23401-			reg = <0x88e2000 0x400 0x7801e8 0x04 0x88e7014 0x04>;
+23402-			reg-names = "qusb_phy_base", "efuse_addr", "refgen_north_bg_reg_addr";
+23403-			qcom,efuse-bit-pos = <0x19>;
+23404-			qcom,efuse-num-bits = <0x03>;
+23405-			vdd-supply = <0x40>;
+23406-			vdda18-supply = <0x16f>;
+23407-			vdda33-supply = <0x41>;
+23408-			qcom,vdd-voltage-level = <0x00 0xc3500 0xc3500>;
+seven@sevenzx:~/ios-s9$ 
