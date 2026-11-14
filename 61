@@ -1,0 +1,131 @@
+seven@sevenzx:~/ios-s9/s9$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+python3 - <<'PY'
+from pathlib import Path
+
+p = Path("shim/m11.c")
+s = p.read_text()
+
+old = """\tif (!pas_supported_probe())
+\t\treturn;
+
+\tif (!pas_metadata_stage())
+\t\treturn;"""
+
+new = """\tif (!pas_supported_probe())
+\t\treturn;
+
+\tif (!pas_shutdown_probe())
+\t\treturn;
+
+\tif (!pas_metadata_stage())
+\t\treturn;"""
+
+if old not in s:
+    raise SystemExit("Sequência esperada não encontrada; nada foi alterado.")
+
+p.write_text(s.replace(old, new, 1))
+print("chamada PAS_SHUTDOWN inserida após PAS_IS_SUPPORTED")
+PY
+chamada PAS_SHUTDOWN inserida após PAS_IS_SUPPORTED
+seven@sevenzx:~/ios-s9/s9$ grep -nA18 -B4 \
+  'pas_supported_probe' \
+  shim/m11.c | tail -35
+303-    showhex("PAS ret x1", ret.x1);
+304-    showhex("PAS ret x2", ret.x2);
+305-    showhex("PAS ret x3", ret.x3);
+306-
+307-    if (ret.x0 != 0) {
+308-        con_str("PAS", "TrustZone nao confirmou PAS 13");
+309-        return 0;
+310-    }
+311-
+312-    con_str("PAS", "TrustZone confirmou PAS 13");
+313-    return 1;
+--
+947-	wdog_arm();
+948-	step_row = con_row();
+949-	con_skip();
+950-
+951:	if (!pas_supported_probe())
+952-		return;
+953-
+954-	if (!pas_shutdown_probe())
+955-		return;
+956-
+957-	if (!pas_metadata_stage())
+958-		return;
+959-
+960-	if (power_on()) {
+961-		con_skip();
+962-#ifdef HAVE_GMU_FW
+963-		if (gmu_boot_plain()) {
+964-			con_skip();
+965-			smmu_probe();
+966-			con_skip();
+967-			if (smmu_context_on() && gmu_boot_with_hfi()) {
+968-				con_skip();
+969-				hfi_talk();
+seven@sevenzx:~/ios-s9/s9$ rm -rf out/obj
+./build.sh m11
+shim/m11.c: In function ‘pas_metadata_stage’:
+shim/m11.c:324:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  324 |         showhex("PAS metadata PA", pa(pas_metadata));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:266:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  266 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c:325:39: warning: passing argument 1 of ‘pa’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  325 |         showhex("PAS firmware PA", pa(pas_firmware));
+      |                                       ^~~~~~~~~~~~
+shim/m11.c:266:58: note: expected ‘const void *’ but argument is of type ‘volatile uint8_t *’ {aka ‘volatile unsigned char *’}
+  266 | __attribute__((noinline)) static uint64_t pa(const void *p)
+      |                                              ~~~~~~~~~~~~^
+shim/m11.c: In function ‘hfi_receive’:
+shim/m11.c:639:66: warning: unused parameter ‘sent_hdr’ [-Wunused-parameter]
+  639 | static int hfi_receive(unsigned which, uint32_t number, uint32_t sent_hdr,
+      |                                                         ~~~~~~~~~^~~~~~~~
+-rwxrwxr-x  1 seven seven   229376 Nov 14 04:37 out/Image
+-rw-rwxr--+ 1 seven seven 11206656 Nov 14 04:37 out/boot.img
+-rw-rw-r--  1 seven seven 11212843 Nov 14 04:37 out/boot.tar.md5
+a2636cb666c13cdb608c19588b65dc9d2fbbd0f4d7da5f4d49f408d82fda8f34  out/boot.img
+seven@sevenzx:~/ios-s9/s9$ cp out/boot.img out/boot-m12-pas-shutdown.img
+
+sha256sum \
+  out/boot-m12-pas-shutdown.img \
+  out/shim.elf \
+  | tee out/SHA256-m12-pas-shutdown.txt
+
+file out/boot-m12-pas-shutdown.img
+nm -n out/shim.elf | grep -E \
+  'smc_pas|pas_shutdown_probe|pas_metadata'
+a2636cb666c13cdb608c19588b65dc9d2fbbd0f4d7da5f4d49f408d82fda8f34  out/boot-m12-pas-shutdown.img
+653c9fb24e6cafa87fb1fbe359c9fa96ba6df81b7fac907e1f5402144257bc6e  out/shim.elf
+out/boot-m12-pas-shutdown.img: Android bootimg, kernel (0x8000), ramdisk (0x2000000), page size: 4096, cmdline (console=null)
+0000000000003600 T smc_pas
+0000000000015000 b pas_metadata
+seven@sevenzx:~/ios-s9/s9$ 
