@@ -1,0 +1,86 @@
+private async void lczxy7AnimatedButton11_Click(object sender, EventArgs e)
+{
+    string[] alvos = new string[] { "HD-Player" };
+
+    if (!cosmicMem.SetProcess(alvos))
+    {
+        Console.Beep(240, 120);
+        status.Text = "Status: Emulador não encontrado!";
+        status.ForeColor = Color.Red;
+        return;
+    }
+
+    status.Text = "Status: Injetando...";
+    status.ForeColor = Color.Orange;
+
+    bool sucesso = false;
+    DateTime inicio = DateTime.Now;
+
+    if (enderecosSalvosBotao.Count > 0)
+    {
+        foreach (var item in originaisBotao)
+        {
+            long addr = Convert.ToInt64(item.Key, 16);
+            cosmicMem.AobReplace(addr, item.Value);
+        }
+        originaisBotao.Clear();
+    }
+
+    string searchAoB = "FF FF FF FF ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? A5 43 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
+
+    var scanResult = await cosmicMem.AoBScan(searchAoB);
+
+    if (scanResult != null && scanResult.Any())
+    {
+        try
+        {
+            enderecosSalvosBotao.Clear();
+            originaisBotao.Clear();
+
+            foreach (var CurrentAddress in scanResult)
+            {
+                long enderecoleitura = CurrentAddress + 176;
+                long enderecoescrita = CurrentAddress + 184;
+
+                int valorNovo = cosmicMem.ReadInt(enderecoleitura);
+                int valorOriginal = cosmicMem.ReadInt(enderecoescrita);
+
+                string addrEscritaHex = enderecoescrita.ToString("X");
+                if (!originaisBotao.ContainsKey(addrEscritaHex))
+                {
+                    originaisBotao.Add(addrEscritaHex, valorOriginal);
+                }
+
+                cosmicMem.AobReplace(enderecoescrita, valorNovo);
+            }
+
+            enderecosSalvosBotao.AddRange(scanResult);
+            sucesso = true;
+        }
+        catch
+        {
+            sucesso = false;
+        }
+    }
+
+    int tempoDecorrido = (int)(DateTime.Now - inicio).TotalMilliseconds;
+    if (tempoDecorrido < 5000)
+    {
+        await Task.Delay(5000 - tempoDecorrido);
+    }
+
+    if (sucesso)
+    {
+        status.Text = "Status: Head ATIVADO";
+        status.ForeColor = Color.DarkViolet;
+        Console.Beep(720, 360);
+    }
+    else
+    {
+        enderecosSalvosBotao.Clear();
+        originaisBotao.Clear();
+        status.Text = "Status: Erro no Scan Head!";
+        status.ForeColor = Color.Red;
+        Console.Beep(150, 500);
+    }
+}
