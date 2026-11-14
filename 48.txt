@@ -1,0 +1,1401 @@
+  26423 total
+seven@sevenzx:~/ios-s9$ echo '=== GPU ==='
+sed -n '1,220p' research/refs/inventory/gpu-refs.txt
+
+echo '=== WIFI/BLUETOOTH ==='
+sed -n '1,180p' research/refs/inventory/wifi-bt-refs.txt
+
+echo '=== AUDIO ==='
+sed -n '1,180p' research/refs/inventory/audio-refs.txt
+=== GPU ===
+research/refs/hakios-xnu-kernel/sysimage/select-system.py:54:SKIP_EXT = ('.weights', '.weights_nonane', '.metallib', '.mov', '.pcm', '.scnz', '.espresso.net',
+research/refs/hakios-xnu-kernel/sysimage/select-system.py:62:SKIP_APP_EXT = ('.mov', '.mp4', '.m4a', '.caf', '.wav', '.heic', '.aiff', '.metallib', '.scnz', '.usdz')
+research/refs/hakios-xnu-kernel/ci/github-check.yml:73:      - name: The Metal plug-in's reading of a .metallib refuses every file cut short or bent (sanitizers)
+research/refs/hakios-xnu-kernel/ci/github-check.yml:74:        run: sh tools/metallib-test.sh
+research/refs/hakios-xnu-kernel/NOTICE:24:- patches to UniXNU's AdrenoMetal, tools/m2v/adrenometal-ios16.patch: MIT, Copyright (c) 2026 NativeMetal contributors.
+research/refs/hakios-xnu-kernel/NOTICE:25:- a patch to steelbrain's metal2vulkan, tools/m2v/metal2vulkan-hakios.patch: GPL-2.0-or-later OR LGPL-3.0-or-later, as the code it
+research/refs/hakios-xnu-kernel/NOTICE:40:- hakios-metal (oosexgang, MIT), in hakios-metal/ of this tree with its own LICENSE and NOTICE, built by `make ios` there and
+research/refs/hakios-xnu-kernel/NOTICE:43:  steelbrain's metal2vulkan 624bab3 (GPL-2.0-or-later OR LGPL-3.0-or-later) with AdrenoMetal's 30 patches; the Rust crates of its
+research/refs/hakios-xnu-kernel/NOTICE:46:- QuartzCore's default.metallib for the window server's Metal (tools/ca-metallib.py): Apple's; what you supply from your own Mac or IPSW,
+research/refs/hakios-xnu-kernel/userland/rc.jobs.u2f:3:# OpenGL ES and none of our AIR work: with gpu=1 adreno_keep=1 it is the phone's Adreno that
+research/refs/hakios-xnu-kernel/userland/rc.u2f:2:# The GPU's answer and nothing else (src/u2f_test.c, with gpu=1 adreno_keep=1): this runs
+research/refs/hakios-xnu-kernel/userland/rc.jobs.metal:2:# What Darwin here believes about Metal (RC_JOBS=rc.jobs.metal, a run of half a minute): the services Metal
+research/refs/hakios-xnu-kernel/userland/rc.jobs.metal:5:# and whether CoreImage can run a filter kernel without Metal. See src/metal_test.m and docs/metal.md.
+research/refs/hakios-xnu-kernel/userland/rc.jobs.metal:12:# one ends before metal_test is reached at all.
+research/refs/hakios-xnu-kernel/userland/rc.jobs.metal:15:/redwood/bin/metal_test
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:4: * queue, a buffer in host-visible memory filled by the GPU (vkCmdFillBuffer), the submission waited for by a fence
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:24:#define DRIVER "/redwood/lib/libvulkan_freedreno.dylib"
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:201:	VkFence fence;
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:202:	CHECK("vkCreateFence", vkCreateFence(device, &fci, NULL, &fence));
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:205:	CHECK("vkQueueSubmit", vkQueueSubmit(queue, 1, &si, fence));
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:206:	CHECK("vkWaitForFences", vkWaitForFences(device, 1, &fence, VK_TRUE, 2000000000ull));
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:220:		CHECK("vkResetFences", vkResetFences(device, 1, &fence));
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:222:		CHECK("vkQueueSubmit", vkQueueSubmit(queue, 1, &si, fence));
+research/refs/hakios-xnu-kernel/userland/src/vk_test.c:223:		CHECK("vkWaitForFences", vkWaitForFences(device, 1, &fence, VK_TRUE, 2000000000ull));
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:2: * Metal over Vulkan on the phone, the smallest whole round: UniXNU's AdrenoMetal frontend and its metal2vulkan runtime
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:4: * (native_bridge_metal_open), with no window server in between. A buffer filled by a blit, a texture cleared by a render
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:20:id native_bridge_metal_open(const char *loader, const char *cache, uint64_t registryID, void (*missing)(const char *, const char *));
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:21:size_t native_bridge_metal_status(char *out, size_t size);
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:22:uint64_t native_bridge_metal_first_problem(char *out, size_t size);
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:24:#define TURNIP "/redwood/lib/libvulkan_freedreno.dylib"
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:75:	native_bridge_metal_status(line, sizeof line);
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:77:	if (native_bridge_metal_first_problem(problem, sizeof problem))
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:100:		id<MTLDevice> device = native_bridge_metal_open(TURNIP, CACHE, 0, missing);
+research/refs/hakios-xnu-kernel/userland/src/m2v_test.m:205:		id<MTLTexture> onSurface = [device newTextureWithDescriptor:small iosurface:surface plane:0];
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:2: * metal_test: what Darwin here believes about Metal, and what it does with the answer.
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:34: *   usage: metal_test
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:87:	printf("metal_test:     signal %d at address %p\n", sig, info != NULL ? info->si_addr : NULL);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:88:	printf("metal_test:     pc  %#lx unslid (cache slide %#lx)\n", pc - slide, slide);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:89:	printf("metal_test:     lr  %#lx unslid\n", lr - slide);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:96:		printf("metal_test:     #%d  %#lx unslid\n", i, ret - slide);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:107: * a fresh process: metal_test re-executes itself with the question as its argument (see main()).
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:110: * all when the parent had more than one thread, and metal_test does -- linking CoreImage and
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:125:	char *const argv[] = { (char *)"/redwood/bin/metal_test", (char *)argument, NULL };
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:129:	printf("metal_test: %s (asked by a process of its own)\n", what);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:131:		printf("metal_test:   cannot start %s %s\n", argv[0], argument);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:141:			printf("metal_test:   %s: still going after %d s, killed (it wedges here)\n", what, secs);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:146:		printf("metal_test:   %s: died of signal %d\n", what, WTERMSIG(status));
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:148:		printf("metal_test:   %s: it faulted, and said above where\n", what);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:150:		printf("metal_test:   %s: ended with status %d\n", what, WEXITSTATUS(status));
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:187:		printf("metal_test: IOServiceMatching(\"IOAcceleratorES\") failed\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:193:		printf("metal_test: IOServiceGetMatchingServices failed, %#x\n", kr);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:202:		printf("metal_test:   IOAcceleratorES \"%s\": MetalPluginName %s, MetalPluginClassName %s\n",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:211:		printf("metal_test:   none: Metal will find no device at all\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:236:			printf("metal_test:   %s \"%s\": IOUserClientClass %s\n", classes[i], name,
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:245:		printf("metal_test:   none\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:258:	printf("metal_test:   Metal's own base class _MTLDevice: %s\n", device_class ? "there" : "not there");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:260:		printf("metal_test:   %s is not in this image: no plug-in could be loaded\n", EXTENSIONS);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:286:		printf("metal_test:   %s: executable %s, principal class %s -- %s\n", [entry UTF8String],
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:291:		printf("metal_test:   no .bundle in %s\n", EXTENSIONS);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:302:		printf("metal_test:   MTLCreateSystemDefaultDevice() = nil (and says nothing about why)\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:305:	printf("metal_test:   MTLCreateSystemDefaultDevice() = \"%s\", class %s\n",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:307:	printf("metal_test:   registry id %llu, unified memory %d, max threads per group %lu, "
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:314: * What the device can make (HakiosMetal's step two, docs/metal-plan.md): a buffer written and read back through -contents, a
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:318:#define GL_RENDERER_LIBRARY "/System/Library/Extensions/AppleMetalGLRenderer.bundle/default.metallib"
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:327:		printf("metal_test:   no device: nothing to ask\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:332:		printf("metal_test:   newBufferWithLength:65536 = nil\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:342:		printf("metal_test:   a buffer of %lu bytes (class %s, storage mode %lu): written and read back, %u words wrong\n",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:347:	printf("metal_test:   newBufferWithBytes: %s\n", copy == nil ? "nil" :
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:352:		printf("metal_test:   newLibraryWithURL:%s = nil (%s)\n", GL_RENDERER_LIBRARY, [[error localizedDescription] UTF8String]);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:363:	printf("metal_test:   the GL renderer's library (class %s): %lu functions, %u vertex, %u fragment, %u kernel, %u other%s%s\n",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:387:		printf("metal_test:   %s = %s\n", keys[i], line);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:430:		printf("metal_test:   %s is not in this image: build it with GL=1\n", HAKIOS_GL);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:435:	 * separately, because the window server already holds the GPU while this runs: if freedreno
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:441:		printf("metal_test:   OSMESA_SOFTWARE=1: Mesa's software driver, not the GPU\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:444:		printf("metal_test:   %s: %s\n", HAKIOS_GL, dlerror());
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:447:	printf("metal_test:   %s loaded; EAGLContext is ours now\n", HAKIOS_GL);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:451:		printf("metal_test:   no OpenGL ES 3 context; trying 2\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:455:		printf("metal_test:   no EAGLContext at all: this image has no OpenGL ES\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:458:	printf("metal_test:   EAGLContext: %s, API %d\n", class_getName([gl class]), (int)[gl API]);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:460:		printf("metal_test:   the EAGLContext would not become current\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:479:		printf("metal_test:   asking for a CIContext (%s)...\n", coreimage_over_eagl ? "over an EAGLContext"
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:492:			printf("metal_test:   no CIContext: CoreImage cannot work here\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:502:		printf("metal_test:   CIContext: %s\n", class_getName([context class]));
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:510:			printf("metal_test:   backend: %s\n", ask(context, gl_sel)
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:513:			printf("metal_test:   backend: -isOpenGLBased is not there to ask\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:519:			printf("metal_test:   the context's Metal device: %s\n",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:527:			printf("metal_test:   no CIColorInvert filter\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:533:			printf("metal_test:   the filter gave no image\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:536:		printf("metal_test:   running the filter kernel...\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:539:			printf("metal_test:   CoreImage did not render: a filter kernel cannot run here\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:548:			printf("metal_test:   CoreImage rendered: first pixel %u %u %u %u (inverted orange is about 0 128 255 255)\n",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:552:			printf("metal_test:   CoreImage rendered, but the pixels could not be read back\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:561: * fill, commit, and the bytes checked when it is done. With hakios-metal and gpu=1 the GPU's command processor does the
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:562: * work (HakiosMetal.m, hakios-metal's CP_MEMCPY and CP_MEM_WRITE); without, the queue makes no command buffers and this says so.
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:571:		printf("metal_test:   no device\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:579:	printf("metal_test:   queue %s, buffers at GPU addresses 0x%llx and 0x%llx, command buffer %s\n", queue ? "made" : "nil",
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:582:		printf("metal_test:   no blits: the device has no GPU queue (gpu=1, and the plug-in built with hakios-metal)\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:605:	printf("metal_test:   blits: status %lu%s, handler %s, copy %s, fill %s, edges %s, %llu us\n", (unsigned long)cb.status,
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:609:	printf("metal_test:   blits %s\n", cb.status == MTLCommandBufferStatusCompleted && handled == 1 && same && filled && edges ? "WORK" : "FAILED");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:648:			printf("metal_test: no such question: %s\n", argv[1]);
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:654:	printf("metal_test: the services Metal looks for (IOAcceleratorES)\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:656:	printf("metal_test: what the registry has that is a GPU\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:658:	printf("metal_test: the device a program gets\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:662:	printf("metal_test: what Darwin publishes about graphics (artwork, not rendering)\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:664:	printf("metal_test: CoreImage, which has a path without Metal\n");
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m:668:	 * CI::GLContext::init() with no GL context to work with (see docs/metal.md), so the question
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:4: * shaders chosen by pipeline (hm_bitcode_for()), QuartzCore's pipeline library given a default.metallib, stand-ins for
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:5: * functions the library lacks (hm_stand_ins), and the device shown to the window server alone (metal_all=1: all).
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:6: * Built instead of hakios-metal's plug-in with METAL_PLUGIN=ca (userland/build.sh); the library it needs comes from
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:7: * tools/ca-metallib.py.
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:10: * HakiosMetal: the Metal plug-in of hakios, over the C interface of hakios-metal.
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:13: * (docs: the kernel's IOAcceleratorES::setProperties, behind boot-arg metal=1), opens
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:17: * the compiler, command buffers, the ring -- is hakios-metal's (include/hakios-metal/hakios_metal.h), linked in as a
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:46: *     them alone gets nil and no reason. Metal parses .metallib containers itself (newLibraryWithData: asks the driver
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:48: *     function's module in LLVM's 0x0B17C0DE wrapper, the same bytes hakios-metal's own reader finds (checked by
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:50: *     own AGX driver overrides them, and the bitcode goes to hakios_metal_kernel_compile_bitcode.
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:77: * method, and only reading the cache can (the private tree's tools/metal/absmeth.py did) -- which is why the ones
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:108:#include "hakios-metal/hakios_metal.h"
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:113:static int hm_print_fd = -1;    /* where hm_print writes: stderr, the console, or (metal_m2v=1) a copy of stderr kept aside */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:421: * uniqueIdentifier are nil-stubs (tools/metal/absmeth.py over the class: 65 selectors, 5 nil-stubs, 21 ivars). The
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:457: * air.max_samplers 16 in every .metallib of the image) and what profile 0 gives samplers (16). hakios-metal serves the
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:480:	hakios_metal_device *_gpu;               /* hakios-metal's device: the kernel's HakiosGPU client */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:485:- (hakios_metal_device *)hakiosDevice;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:490:	hakios_metal_buffer *_buffer;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:499:- (hakios_metal_buffer *)hakiosBuffer;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:504: * A texture: hakios-metal's, one 2D level in GPU memory of its own, laid out as the GPU reads it (linear rows of
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:515:	hakios_metal_texture *_texture;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:516:	MTLTextureUsage _usage;             /* what hakios-metal was given: ShaderRead, ShaderWrite, or both */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:520:	IOSurfaceRef _iosurface;            /* the surface whose pixels the texture's rows are (retained), NULL for one of its own */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:521:	NSUInteger _iosurfacePlane;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:522:	BOOL _shadow;                       /* the rows are a copy of _iosurface's, refreshed when its seed moves (see below) */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:525:	hakios_metal_texture *_turnedSurface; /* a framebuffer with a rotation: the surface itself, upright, that _texture is turned into */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:526:	unsigned _turn;                     /* ... by this a6xx_rotation (the 2D engine's, probe "2D rotation") */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:540:- (instancetype)initWithHakiosDevice:(HakiosMetalDevice *)device texture:(hakios_metal_texture *)texture
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:542:- (hakios_metal_texture *)hakiosTexture;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:547:- (void)hakiosTurnInto:(hakios_metal_cb *)cb;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:548:- (void)hakiosSetTurned:(hakios_metal_texture *)surface rotation:(unsigned)rotation;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:550:static void hm_fps_shadow(BOOL in, double seconds);   /* metal_fps's count of the copies below */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:551:static void hm_fps_encoded(double seconds, BOOL held);   /* metal_fps: a buffer's making to its commit */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:552:static BOOL hm_timeline_on(void);   /* metal_fps=timeline */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:553:static void hm_fps_waited(double seconds);   /* metal_fps: time in -waitUntilCompleted */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:554:static void hm_fps_drew(double seconds, unsigned cpu);   /* metal_fps: our time in a draw call */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:555:static void hm_fps_core(double seconds);   /* metal_fps: the core's time in a draw call */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:556:static BOOL hm_fps_on(void);                          /* metal_fps: command buffers timed pass by pass */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:557:#define HM_CACHE_DIR  "/private/var/db/hakios-metal-cache"     /* compiled stages, kept across boots by var_store */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:558:#define HM_CACHE_SEED "/redwood/share/hakios-metal-cache"     /* the same, baked into the image (read-only) */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:559:static BOOL hm_gmem_on(void);                         /* metal_gmem=1: tiled rendering where a pass allows it */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:563:- (unsigned)hakiosStorageKind;   /* metal_fps=timeline: 0 a surface's, else 1 + its storage mode */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:566:/* A sampler state: hakios-metal's four TEX_SAMP words, computed once from the descriptor, under Metal's own base class
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:569:/* A depth/stencil state: the descriptor's depth half as hakios-metal takes it (the compare function and the write), read
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:573:/* A fence: a name for an ordering this device already keeps. Every encoder of a command buffer runs in the order it
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:755:	unsigned _blockW, _blockH, _bytes;   /* hakios_metal_format_block's */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:888: * recorded (hakios-metal's bindArgumentBuffers) and binds what they name. What this layout cannot hold -- inlined
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:935:/* a function's set as its metadata lays it out (hakios_metal_argument_buffer_layout): each member at its own offset,
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1169:	struct hakios_metal_stencil_face _front, _back;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1175:- (const struct hakios_metal_stencil_face *)hakiosStencilFront;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1176:- (const struct hakios_metal_stencil_face *)hakiosStencilBack;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1180:	hakios_metal_sampler *_hakiosSampler;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1183:- (instancetype)initWithHakiosDevice:(HakiosMetalDevice *)device sampler:(hakios_metal_sampler *)sampler
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1185:- (hakios_metal_sampler *)hakiosSampler;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1190:	hakios_metal_kernel *_kernel;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1193:- (instancetype)initWithHakiosDevice:(HakiosMetalDevice *)device kernel:(hakios_metal_kernel *)kernel descriptor:(id)descriptor;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1194:- (hakios_metal_kernel *)hakiosKernel;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1197:/* A render pipeline state: a vertex and a fragment function compiled and linked by hakios-metal for one colour
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1198: * attachment (hakios_metal_program), under Metal's own base class. The ivar names are prefixed so that none shadows the
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1202:	hakios_metal_program *_program;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1207:	hakios_metal_constant _fsConstants[64];
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1213:- (instancetype)initWithHakiosDevice:(HakiosMetalDevice *)device program:(hakios_metal_program *)program
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1215:- (hakios_metal_program *)hakiosProgram;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1216:- (void)hakiosKeepFragment:(NSData *)air constants:(const hakios_metal_constant *)constants count:(unsigned)count;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1217:- (hakios_metal_program *)hakiosProgramFor:(hakios_metal_buffer *const *)buffers offsets:(const uint64_t *)offsets count:(unsigned)count;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1222:	hakios_metal_queue *_queue;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1229:- (hakios_metal_queue *)hakiosQueue;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1237:	hakios_metal_cb *_cb;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1243:	double _createdAt;                       /* ...and when it was made: metal_fps's encoding time */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1251:- (hakios_metal_cb *)hakiosCommandBuffer;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1257: * this command buffer in that order (hakios_metal_cb_append). The first takes the pass's load actions and the rest load
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1261:	struct hakios_metal_render_pass _pass;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1264:	NSMutableArray *_subs;                      /* NSValue (pointer) of each sub-encoder's hakios_metal_cb, in creation order */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1267:- (instancetype)initWithHakiosCommandBuffer:(HakiosMetalCommandBuffer *)commandBuffer pass:(const struct hakios_metal_render_pass *)pass
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1297: * bindings, and each -drawPrimitives: one whole pass of hakios-metal's (begin, state, draw, end: hakios_metal_cb_draw).
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1302:	hakios_metal_cb *_sub;                      /* a parallel encoder's sub-encoder: its own core command buffer, which
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1308:	struct hakios_metal_render_pass _pass;      /* its hakios texture, load and store actions, clear colour */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1310:	struct hakios_metal_viewport _viewport;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1311:	struct hakios_metal_scissor _scissor;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1312:	BOOL _hasViewport, _hasScissor;             /* unset: hakios-metal takes the whole attachment (NULL) */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1330:- (instancetype)initWithHakiosCommandBuffer:(HakiosMetalCommandBuffer *)commandBuffer pass:(const struct hakios_metal_render_pass *)pass
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1332:- (instancetype)initWithHakiosCommandBuffer:(HakiosMetalCommandBuffer *)commandBuffer pass:(const struct hakios_metal_render_pass *)pass
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1333:			       colorTexture:(HakiosMetalTexture *)texture sub:(hakios_metal_cb *)sub;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1341:/* boot-arg metal_dump=refused (a diagnostic, beside metal_dump=FNV): the bitcode of each function in a pipeline the
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1343: * system's code: it stays in the log. metal_dump=refused:NAME[,NAME...] dumps those functions alone -- a process
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1345: * metal_dump=fn:NAME[,NAME...] dumps those functions when a pipeline is made of them though nothing was refused, with
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1351: * the buffer for it showed nothing at all. Boot-arg metal_strict ends the buffer in error instead, as the plug-in
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1367:		strict = sysctlbyname("kern.bootargs", args, &size, NULL, 0) == 0 && strstr(args, "metal_strict") != NULL;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1373: * CoreAnimation's shaders, chosen (hakios): this image is the iPhone X's, whose QuartzCore carries no default.metallib
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1375: * file holds every pipeline's functions all the same, as AIR: 451 single-function metallibs, the four uber shaders
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1379: * two functions. The window server is handed a default.metallib of one variant of each uber shader (ca_metallib=,
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1465:		/* the functions file: the metallibs one after the other, in that order */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1625:			id lib = [device newLibraryWithURL:[NSURL fileURLWithPath:@"/redwood/share/ca-share/QuartzCore-default.metallib"]
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1688:/* The same choice for UniXNU's Metal on Vulkan (metal_m2v=1), whose functions are its own objects: by the function's name,
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1689: * its label and the pipeline's (native_bridge_metal_variant_hook, NativeBridgeMetalFrontend.mm: variantFunction()). */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1722:		hm_print("metal2vulkan: CoreAnimation's %s (label %s, pipeline %s): %s%s\n", name, label ? label : "none",
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1733:hm_dump_function(const char *label, id function, const char *key, const hakios_metal_constant *constants, unsigned count)
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1776:	hm_dump_function(label, function, "metal_dump=refused", NULL, 0);
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1806:	n = air != nil ? hakios_metal_argument_buffer_layout([air bytes], [air length], (unsigned)index, NULL, NULL, 0) : -1;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1809:			 name != nil ? [name UTF8String] : "a function", air != nil ? hakios_metal_error() : "no bitcodeData");
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1815:		const int filled = hakios_metal_argument_buffer_layout([air bytes], [air length], (unsigned)index, ids, offsets, (unsigned)n);
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1819:				 (unsigned long)index, name != nil ? [name UTF8String] : "a function", n, filled, filled < 0 ? hakios_metal_error() : "");
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:1879: * Functions CoreAnimation of iOS 16.5 asks its library for that the library given it (QuartzCore-default.metallib:
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2096:extern id native_bridge_metal_open(const char *loader, const char *cache, uint64_t registryID,
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2098:extern uint64_t native_bridge_metal_first_problem(char *out, size_t size) __attribute__((weak_import));
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2099:extern size_t native_bridge_metal_status(char *out, size_t size) __attribute__((weak_import));
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2100:extern size_t native_bridge_metal_formats(char *out, size_t size) __attribute__((weak_import));
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2101:extern const void *(*native_bridge_metal_variant_hook)(const char *, const char *, const char *, int, size_t *) __attribute__((weak_import));
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2109:	hm_print("metal2vulkan: no -[%s %s]\n", class, selector);
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2124:	 * through SiriUICore, mediaserverd, ...) finds pipeline libraries made for Apple's GPUs with no default.metallib
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2125:	 * beside them and aborts, while without a device it takes the road it takes today. Boot-arg metal_all=1: all. */
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2133:			all = sysctlbyname("kern.bootargs", args, &size, NULL, 0) == 0 && strstr(args, "metal_all=1") != NULL;
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2136:			HM_ONCE("%s is not shown the device: the window server alone is (metal_all=1: every process)\n", name ? name : "?");
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2140:	/* (hakios) metal_m2v=1: the device is UniXNU's Metal on Vulkan instead (AdrenoMetal's frontend over metal2vulkan
+=== WIFI/BLUETOOTH ===
+research/refs/hakios-xnu-kernel/xnuloader/mkidentity.py:16:have, but copies these properties from the device tree in the Darwin firmware so that the
+research/refs/hakios-xnu-kernel/xnuloader/mkidentity.py:93:    print('/* Generated by mkidentity.py from the device tree of the Darwin firmware. Do not edit. */')
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:305:/* aligned for any firmware's block I/O: U-Boot's wants a buffer aligned to the block size (media->io_align) */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:459:/* Seconds since 1970 by the firmware's real-time clock, or 0 when it has none or it is not set. */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:461:firmware_epoch(void)
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:558:	int psci_hvc;                    /* the firmware's power interface is called with HVC, not SMC */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:775:/* The firmware runs on core 0, one of the four small ones (Cortex-A55); the */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:778:/* the loader does not jump into the kernel itself: it has the firmware      */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:810:        /* what the firmware had set up on the core the kernel used to start on, the kernel may take
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:905: * Battery state shared with XNU.  Qualcomm's charger firmware remains a UEFI
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:936: * voltage (mV), [5] temperature (C). `rest` is oversized on purpose so a firmware that writes
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:970:#define OTHER_CPU_NOT_STARTED   1000    /* run_on_other_cpu(): the firmware said yes but the core never arrived */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1128:			 * GetChargingAction returns the firmware's state of charge in word [2] of its
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1172: * are reference images of -- firmware-update/ in the ROM's fw.zip -- an FNV-1a hash of exactly
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1184:	{ "bluetooth", 503808 }, { "abl", 208896 }, { "aop", 208896 }, { "xbl", 3706880 },
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1211:/* "bluetooth_a" and "bluetooth_b" are both "bluetooth": the image is the same for either slot */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1282: * partitions. Whatever firmware is on the phone, the bytes read are the bytes on the flash only if
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1855: * The firmware's configuration tables, by GUID (an ACPI or device tree table among them would say
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1864:		print("ufs: firmware table %d: %x-%x-%x-%x%x-%x%x%x%x%x%x at %x\n", i, (uint64_t)g->a, (uint64_t)g->b,
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:1892:		/* the first unit UEFI lists: this firmware's device paths say no logical unit number
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2285:/* A call of the firmware's power interface, the way this platform makes them. */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2311: * firmware refused to start the core, OTHER_CPU_NOT_STARTED, or OTHER_CPU_HUNG: then the kernel
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2344:	print("core %x: the firmware answers %d to the request to start it\n", mpidr, (uint64_t)status);
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2663:nvram_chrp_header(uint8_t *h, uint8_t sig, uint32_t bytes, const char *name)
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2684:build_nvram_image(uint8_t *image)
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2689:	nvram_chrp_header(image, 0x5a, 0x20, "nvram");                           /* Apple header: 32 bytes */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2690:	nvram_chrp_header(image + 0x20, 0x70, NVRAM_BANK_SIZE - 0x20, "common"); /* the rest: common partition */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2705:/* The display handed to the kernel: the firmware's, or one we set up ourselves (QEMU). base 0 = none. */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:2729:/* Every range of the firmware's memory map of 1 MB or more, and the total of each type. */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3091:	/* any display the firmware has set up: the phone's panel, or QEMU's ramfb */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3245:	/* how the kernel is to ask the firmware for more cores (PSCI) */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3247:	/* the time now, by the firmware's clock (the kernel has no real-time clock driver) */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3248:	uint64_t epoch = firmware_epoch();
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3258:	static const uint8_t bluetooth_address[6] = { 0x02, 0x52, 0x44, 0x57, 0x00, 0x02 };
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3265:	dt_prop(&w, "mac-address-bluetooth0", bluetooth_address, sizeof(bluetooth_address));
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3268:	dt_prop_str(&w, "firmware-version", "iBoot-8422.100.650");
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3278:	static uint8_t nvram_image[NVRAM_BANK_SIZE];
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3279:	build_nvram_image(nvram_image);
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3280:	dt_prop_u32(&w, "nvram-bank-size", NVRAM_BANK_SIZE);
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3281:	dt_prop_u32(&w, "nvram-bank-count", 1);
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3282:	dt_prop_u32(&w, "nvram-current-bank", 0);
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3283:	dt_prop(&w, "nvram-proxy-data", nvram_image, sizeof(nvram_image));
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3361:	 * this loader stays on while it watches is not the kernel's, nor any the firmware runs.
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3380:					print("core %x is not off (the firmware says %d): not the kernel's to take\n", mpidr, (uint64_t)state);
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3547:			print("THE KERNEL LEFT CORE %x RUNNING (the firmware says %d): restart before running another\n", cpu_mpidr[i],
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3988:			/* the firmware's memory map into the log (then "oem log" and fetch it) */
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:4074: * QEMU's "ramfb" display shows whatever guest memory it is told to, in any size; the firmware
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:4076: * shape of the iPhone's screen, through the fw_cfg file "etc/ramfb" (the firmware's own mode
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:4111:	 * says the request failed, leaves ramfb at the firmware's 800x600 and Darwin draws its 1125x2436 into a corner: a black window
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:4176: * which holds the panic log), and the region has to be free: where a firmware keeps it reserved, the allocation is
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:4223:	 * memory the firmware has not given to us must not be written.
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:4227:		volume_payload_note = "the payload region is not free (the firmware keeps it reserved)";
+research/refs/hakios-xnu-kernel/xnuloader/efi.h:150: * not change current/voltage limits or bypass the firmware's JEITA checks.
+research/refs/hakios-xnu-kernel/xnuloader/mkidentity.sh:4:# the builder's machine, from their own copy of the firmware. The header is not in the repository.
+research/refs/hakios-xnu-kernel/sysimage/ipsw-member.py:9:user's, got by the user from wherever they get their firmware.
+research/refs/hakios-xnu-kernel/sysimage/select-system.py:85:SKIP_PREFIX = ('usr/share/tokenizer/', 'usr/share/firmware/', 'usr/share/mecabra/',
+research/refs/hakios-xnu-kernel/xl:23:#   xl memmap           the phone's memory map as its firmware reports it
+research/refs/hakios-xnu-kernel/xl:41:#               the small one the firmware starts on (the loader then watches from the first core, and a
+research/refs/hakios-xnu-kernel/xl:127:firmware() {
+research/refs/hakios-xnu-kernel/xl:149:	case "$(firmware)" in
+research/refs/hakios-xnu-kernel/xl:152:	esac || { echo "xl: image build failed ($(firmware))"; return 1; }
+research/refs/hakios-xnu-kernel/ci/github-check.yml:37:          # The rule of the repository: nothing of Darwin, no pictures of it, no vendor firmware, and a
+research/refs/hakios-xnu-kernel/NOTICE:12:- UEFI driver binaries of the phone's own firmware, devices/redwood/uefi/files/Binaries/redwood/: the
+research/refs/hakios-xnu-kernel/NOTICE:15:  extracted by each user from their own phone's firmware with UEFIReader.
+research/refs/hakios-xnu-kernel/NOTICE:17:- the FocalTech touch firmware, drivers/input/hakios.focaltech_fw.h: the touch vendor's;
+research/refs/hakios-xnu-kernel/NOTICE:36:- the phone's firmware (GPU, Wi-Fi, audio DSP, modem, haptics, cameras): the vendor's, pulled from the
+research/refs/hakios-xnu-kernel/NOTICE:37:  user's own phone (devices/redwood/pull-firmware.sh).
+research/refs/hakios-xnu-kernel/userland/rc.jobs.flashsound:3:# ufs=2 [ufs_native=1] adsp=1 sound=4): what is mounted, the firmware on /fw, reading files through
+research/refs/hakios-xnu-kernel/userland/rc.jobs.flashcheck:5:# from where, the firmware on /fw, the battery as Darwin has it, something to hear (a tone of three seconds,
+research/refs/hakios-xnu-kernel/userland/src/mg_test.c:17:	"telephony", "cellular-data", "wifi", "bluetooth", "DeviceSupportsTelephonyOverUSB", "main-screen-scale",
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m:2328:	 * started the Adreno (boot-arg gpu=1, firmware in fw/). Returning nil here makes Metal skip the service -- its
+research/refs/hakios-xnu-kernel/userland/src/init.c:120: * its first container: stage0, firmware, mount points; the OS cryptex with the dyld shared cache
+research/refs/hakios-xnu-kernel/userland/src/init.c:203:		/* the audio DSP's firmware and the speakers' configuration, from the RAM image as in a RAM boot */
+research/refs/hakios-xnu-kernel/userland/src/init.c:204:		check(synthetic_dir("/flash/fw") && bind_dir("/fw", "/flash/fw"), "the firmware on /fw (adsp=1, sound=N)");
+research/refs/hakios-xnu-kernel/userland/src/inject.c:1031: * boot-arg, a phone without the GPU's firmware in the image, a GPU that did not start --
+research/refs/hakios-xnu-kernel/userland/src/net_test.m:36: * drivers/wifi/hakios.wlan.cpp, and configd makes a "Wi-Fi" service of it by itself.) But the
+research/refs/hakios-xnu-kernel/userland/src/net_test.m:375: * it ("Wi-Fi", made of the radio's IOKit objects, drivers/wifi/hakios.wlan.cpp). That service runs
+research/refs/hakios-xnu-kernel/userland/src/inject_sb.c:2289:	 * failed, or the panel is a FocalTech and the firmware upload is still chewing through
+research/refs/hakios-xnu-kernel/userland/mkjobs.py:216:DENY = ('watchdog', 'CommCenter', 'wifi', 'WiFi', 'bluetooth', 'BTServer', 'locationd', 'softwareupdate',
+research/refs/hakios-xnu-kernel/userland/mkjobs.py:271:    # a job that is named is wanted, whatever hardware it says it is for: wifid's asks for a node "wlan" in the
+research/refs/hakios-xnu-kernel/userland/build.sh:46:#                                   no boot-arg, no firmware in ../fw-gpu -- the library is not even loaded
+research/refs/hakios-xnu-kernel/userland/build.sh:56:#                      ADSP=1       with the audio DSP's firmware from ../fw-audio in fw/ (20 MB; for the
+research/refs/hakios-xnu-kernel/userland/build.sh:59:#                                   the kernel. adsp=1 needs none of it: the system image has the firmware in /fw.
+research/refs/hakios-xnu-kernel/userland/build.sh:60:#                      MODEM=1      stage checked local MPSS firmware from ../fw-modem in system.apfs /fw.
+research/refs/hakios-xnu-kernel/userland/build.sh:470:# firmware of the phone's own hardware, where somebody has pulled it from the phone's Android into ../fw-gpu
+research/refs/hakios-xnu-kernel/userland/build.sh:476:# ... and the image of the Wi-Fi DSP, from /vendor/firmware_mnt/image of the same Android into ../fw-wifi
+research/refs/hakios-xnu-kernel/userland/build.sh:477:# (drivers/wifi/hakios.wifi.c; 7.6 MB), with what the radio's firmware is sent once it runs: this phone's
+research/refs/hakios-xnu-kernel/userland/build.sh:486:	# so not in the repository; it goes where the firmware goes and the kernel reads it there (wifi_join=1)
+research/refs/hakios-xnu-kernel/userland/build.sh:491:# ... and the vibration motor's waveforms, the phone's /vendor/firmware/aw8697_haptic.bin, from ../fw-haptic
+research/refs/hakios-xnu-kernel/userland/build.sh:603:	# the audio DSP's firmware and the speaker amplifiers' configuration, as in the system image's /fw: the kernel
+research/refs/hakios-xnu-kernel/userland/build.sh:604:	# reads the firmware as soon as there is a root (this image, adsp=1), the configuration maybe later -- by then
+research/refs/hakios-xnu-kernel/userland/build.sh:678:	# the audio DSP's firmware, the phone's own from ../fw-audio (never in the repository), where the kernel reads
+research/refs/hakios-xnu-kernel/userland/build.sh:684:	# MPSS firmware is much too large for the small boot image. Keep it in the system APFS,
+research/refs/hakios-xnu-kernel/userland/build.sh:689:		../devices/redwood/tools/modem_firmware.py --dtb ../devices/redwood/prebuilt/device-tree.dtb --firmware-dir ../fw-modem \
+research/refs/hakios-xnu-kernel/userland/build.sh:693:		# ... and the firmware partition's image/ (its mcfg configurations and the registry's *.jsn, pulled from
+research/refs/hakios-xnu-kernel/userland/build.sh:694:		# the phone's /vendor/firmware_mnt/image into ../fw-modem/image), which the modem reads over TFTP (hakios.mpss.c)
+research/refs/hakios-xnu-kernel/COMPLIANCE.md:26:What is NOT covered and must not be assumed covered by the APSL: Darwin user space, Apple firmware,
+research/refs/hakios-xnu-kernel/COMPLIANCE.md:51:- **The FocalTech touch-controller firmware header** (`drivers/input/hakios.focaltech_fw.h`)
+research/refs/hakios-xnu-kernel/COMPLIANCE.md:52:  is generated from a firmware blob on the device. Its redistribution terms are the touch
+research/refs/hakios-xnu-kernel/COMPLIANCE.md:54:  model the rest of the firmware already uses.
+research/refs/hakios-xnu-kernel/COMPLIANCE.md:69:device firmware: remove the file from the tree and have each user obtain it from their own
+research/refs/hakios-xnu-kernel/mkxnuimg.py:50:                    "  redistributed here. Build it from your own phone's firmware: uefi/README.md")
+research/refs/hakios-xnu-kernel/docs/air.md:1241:  fallback, both flash-root mount lines present, nothing said about missing firmware.
+research/refs/hakios-xnu-kernel/docs/air.md:1340:        (the phone's /vendor/firmware/a660_gmu.bin goes into fw-gpu/)
+research/refs/hakios-xnu-kernel/docs/air.md:1344:own firmware, which is not in the repository. **Not the driver refusing work: no driver.** This is
+research/refs/hakios-xnu-kernel/docs/air.md:1348:**Second run, with the firmware in place: the GPU driver came up and `air_run` died reaching it.**
+research/refs/hakios-xnu-kernel/docs/air.md:1531:A working copy also needs the phone's own firmware for the GPU to start at all: `fw-gpu/`
+research/refs/hakios-xnu-kernel/docs/concepts/architecture.md:3:HakiOS is three programs of its own between a phone's firmware and a user space: a UEFI application that loads the kernel, the
+research/refs/hakios-xnu-kernel/docs/concepts/architecture.md:4:kernel (Apple's XNU with this port), and the drivers inside it. Everything else is either the phone's (its UEFI, its firmware) or
+research/refs/hakios-xnu-kernel/docs/concepts/architecture.md:50:| device | its defconfig, its status, its UEFI platform, its firmware script, drivers of its own | `devices/redwood` |
+research/refs/hakios-xnu-kernel/docs/concepts/architecture.md:74:| `tools/` | configuration, devices, checks, APFS, firmware, QMI, the run scripts |
+research/refs/hakios-xnu-kernel/docs/porting/index.md:8:> (`fastboot` and the stock images), and pull the phone's firmware before anything else.
+research/refs/hakios-xnu-kernel/docs/porting/index.md:13:- the phone's own device tree (`adb shell` with root, or from its boot image) and its Android running, for the firmware;
+research/refs/hakios-xnu-kernel/docs/porting/index.md:19:adb pull /sys/firmware/fdt device-tree.dtb          # the tree of the phone's own Android (or --adb below, which pulls it)
+research/refs/hakios-xnu-kernel/docs/porting/index.md:113:| `make config` reports a problem | it names the symbol and why: a driver left out that an argument needs, firmware the open profile does not load |
+research/refs/hakios-xnu-kernel/docs/porting/repositories.md:27:| `pull-firmware.sh` | the device's firmware, from your own device, into `fw-*/` | for a phone |
+research/refs/hakios-xnu-kernel/docs/porting/repositories.md:39:	firmware    pull-firmware.sh
+research/refs/hakios-xnu-kernel/docs/porting/repositories.md:43:	status      bluetooth   missing   step one only
+research/refs/hakios-xnu-kernel/docs/porting/repositories.md:51:| `firmware` | the script that pulls its firmware |
+research/refs/hakios-xnu-kernel/docs/porting/repositories.md:53:| `status <area> works\|partial\|missing <note>` | how far a part works, **as seen on this device**; the note says how it is turned on and what is not done. Areas: display, touch, buttons, cpu, gpu, storage, audio, battery, haptic, camera, torch, wifi, bluetooth, cellular, network, thermal, usb, sensors |
+research/refs/hakios-xnu-kernel/docs/porting/drivers.md:15:Subsystems: input, storage, gpu, camera, haptic, audio, power, wifi, bluetooth, modem, net, core.
+research/refs/hakios-xnu-kernel/docs/u-boot.md:160:  loader`), no firmware of the phone yet (no GPU: drawn in software): `./xl ramdisk userland/system.apfs` takes 2361 MB in 71 s
+research/refs/hakios-xnu-kernel/docs/uefi-boot.md:3:HakiOS can start the way a UEFI operating system starts: the firmware runs `\EFI\BOOT\BOOTAA64.EFI` from a volume,
+research/refs/hakios-xnu-kernel/docs/uefi-boot.md:51:  pages the file fills: a payload sent over USB later, and the panic log, are written into the rest). A firmware that
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:190:`hakios.adsp.c:2488` `payload = (header.size < length ? header.size : length) - header_length;`. `header_length <= length` is checked (2484) but `header.size` (set by the DSP) is not compared with `header_length`. With `header.size < header_length`, `payload` underflows to about 4 GB. Then `memcpy(words, data + header_length, min(payload, 256))` (2495) and `memcpy(apr_answer.words, ..., 2515)` copy 256 bytes from beyond the received packet (over-read of the glink receive buffer), `apr_answer.length = payload` is huge, and handlers receive length 256 with nonsense words (the handlers in sound.c/mic.c test `length` against 16/24 and index only within it, so they are safe in themselves). The DSP is firmware we start ourselves, so the trigger is a firmware bug or a corrupted glink packet. Fix: `if (header.size < header_length) return;` and clamp the copy to `length - header_length`.
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:249:- hakios.adsp.c apart from `root_file()`, `hakios_adsp_apr()`, `apr_input()` (glink, firmware loading, the answer buffer's lack of synchronisation between the link thread and the waiter).
+research/refs/hakios-xnu-kernel/docs/driver-review/adsp-battery-cpufreq.md:16:Method: read-only, line-by-line. For every value that the DSP, the always-on processor (AOP) or the firmware files supply (SMEM entry headers, SMP2P words, GLINK queue messages, QRTR and APR payloads, battmgr answers, MDT/ELF segment headers, the AOP mailbox descriptor, the command database) I traced how it becomes a size, an offset, a loop bound or an index. For every wait loop I noted the bound and the timeout action. Nothing was built or run, and no hardware facts were assumed. Where severity depends on silicon behaviour the finding says NEEDS-HARDWARE.
+research/refs/hakios-xnu-kernel/docs/driver-review/adsp-battery-cpufreq.md:216:- `step_image` returns false on a misaligned segment (1464-1467) without `image_forget()`; it is freed on the next `step_firmware` only.
+research/refs/hakios-xnu-kernel/docs/driver-review/adsp-battery-cpufreq.md:232:`cpufreq.c:358` and `452`: `slave->header_offset >= CMD_DB_SIZE - 0x1000` is never true, because `header_offset` is a uint16 (max 0xFFFF < 0x1F000). The entry array is still inside the window (max 0xFFFF + 0x90 + 512 x 24 < 0x20000), so that one is only a dead check. At `cpufreq.c:366` the check is `slave->data_offset + entry[i].offset + sizeof(aux) < CMD_DB_SIZE - 0x40`, but the read is `db->data + that`, and `data` starts at +0x90. The read can end at 0x20050, which is 0x50 bytes past the mapped 0x20000. Compare the correct check in `adsp.c:852` (`> CMD_DB_SIZE - 0x1000`, ending before 0x1F090). The command database is written by the boot firmware, so the practical risk is low, and the code only runs with `ddr=1`. Fix: use the check of `adsp.c:852`.
+research/refs/hakios-xnu-kernel/docs/driver-review/adsp-battery-cpufreq.md:304:- F7: (a) FIXED: on a file size mismatch the real allocation size is stored before the cleanup (`step_firmware()`); (c) FIXED: `size < 5` is tested before the `memcmp` and the log line prints from a bounded copy; (b) SKIPPED: PLAUSIBLE only, needs a per-file "came from the root" flag and knowledge of what `hakios_image_file()` returns.
+research/refs/hakios-xnu-kernel/docs/driver-review/adsp-battery-cpufreq.md:308:- F11: PARTLY FIXED. The intent buffers are given back in `link_stop()` and a buffer of another size is freed before it is replaced in `glink_offer()`. SKIPPED: the `step_header` page (when TrustZone is done with it is unknown). `step_image` is not a leak: the image is freed at the next `step_firmware()`.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-bringup.md:9:- Method: manual tracing of every value that comes from a remote processor or the firmware (SMEM partition and item headers, SMP2P, the QMP descriptor, GLINK queue words, QRTR headers, MDT/ELF header, QMI-reported register window) to its first use as a size, offset or index. Wait loops, error paths, locks, the shutdown path, the log functions and boot-arg parsing were traced the same way.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-bringup.md:10:- Nothing was built or run. Findings carry CONFIRMED (traced end to end in the source), PLAUSIBLE, or NEEDS-HARDWARE. "Remote" below means the DSP, the AOP or the radio firmware, and the shared memory is writable by them by design.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-bringup.md:22:| W7 | LOW | CONFIRMED | 3437-3466 | step 16 maps `size` bytes at a firmware-given address with no upper bound, and does not check the map result |
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-bringup.md:143:### W7 Step 16 trusts the firmware's register window (LOW, CONFIRMED)
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-bringup.md:145:Lines 3437-3454: `address` (from `hakios_wlfw_registers`, i.e. what the Wi-Fi firmware told over QMI) is bounded only by `<= 0xffffffff`, and `size` only by `>= 3 * RADIO_WINDOW`. The step maps `ml_io_map_unmappable(radio.phys, radio.size, VM_WIMG_IO)` (line 3454), checks nothing about the result, and reads seven words at fixed offsets below `3 * RADIO_WINDOW`. A firmware that reports another physical address makes the kernel read there (a protected region ends the kernel, as the comment at 3384-3395 says). It only runs with `wifi_radio_read=1`. Fix: require `size == 0x200000` (or `<= 0x200000`), `address + size <= 0x100000000`, and a non-zero map result.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:22:Method: full read of every file above, tracing every length that comes from the air, firmware or userland to its use, checking `lx_wpa.c` line by line against IEEE 802.11-2020 clause 12.7 (key hierarchy, EAPOL-Key layout, supplicant rules), RFC 8018 (PBKDF2), RFC 2104 and RFC 3394. The ath11k driver sources are not in this tree (`xnu-deps/build/ath11k` is absent), so driver and firmware behaviour is inferred from comments only. The test program in `tools/wpa-test` was read but not run (no C compiler on this host).
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:61:1. Window during join. After message 3 is accepted, `station_join()` waits (handshake loop) and then `lx_pause_ms(30)` (line 1809) before `key_set(radio, radio->wpa.pairwise, ...)` (1810). A forged message 1 arriving in that window replaces `wpa.pairwise` with a key derived from the attacker's ANonce. The firmware gets a wrong TK; the AP's frames cannot be deciphered and ours are rejected; the join reports success ("THE NETWORK IS JOINED"), the link is dead.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:116:Under Linux, mac80211 supplies the rule (drop unencrypted data frames once a key is installed, except EAPOL). This layer replaces mac80211, so the rule has to be here. Failure scenario if the firmware passes a frame up in 802.11 form without having deciphered it: an attacker in range sends a From-DS data frame (TA = BSSID, RA = our MAC, Protected = 0, LLC/SNAP + ARP or IP) after the join; it is accepted and enters the IP stack (ARP poisoning, forged DNS or TCP). The RX_FLAG_8023 path (firmware decapsulates and deciphers) is not affected. Whether the ath11k firmware drops such frames itself I cannot tell from this tree; hence NEEDS-HARDWARE. A test: with a second radio, inject the frame after the join and watch `received` in the `lx_station_say()` line.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:139:The module header (lx_80211.c:16-18) says "the check of the packet numbers of the group's frames that the driver leaves to this layer" is not done. `lx_wpa.c:429` stores the RSC from message 3 / group messages into `wpa->group_counter`; nothing reads it (grep: only lx_wpa.c:429 and lx_wpa.h:31). Unicast PN checking is in the firmware; for broadcast and multicast, ath11k's own comment says mac80211 does it.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:141:Failure: an attacker records a genuine broadcast or multicast frame (ARP request, DHCP, mDNS, IPv6 router advertisement) and replays it later; it is accepted. A replayed RA with a short lifetime or an old prefix, or a replayed ARP, is enough to disturb the host. Standard: IEEE 802.11-2020 12.5.3.4.4 (CCMP decapsulation: discard an MPDU whose PN is not greater than the replay counter of the key/TID); the initial counter comes from the RSC in the key message (12.7.6.4). The clause number is from memory, hence the rule is PLAUSIBLE; the absence of any check is CONFIRMED. Whether the firmware performs a group PN check on its own is NEEDS-HARDWARE.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:143:Fix: in the RX_FLAG_8023 path the PN is not visible, so either enable the firmware's group replay detection (driver option) or have the driver pass `status->extiv` for group frames and compare it with a per-key counter seeded from `wpa.group_counter` (reset on every group-key install):
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:203:`group_rekey()` (1417-1428): `radio->group_key = key_set(..., &error)`, then `key_drop(radio, &old, false)` whatever `error` is. `key_set()` returns the config even when `set_key` failed, or NULL on ENOMEM. After a failure the old key is removed from the firmware and the new one is not installed: group traffic is lost, `rekeys` is still incremented, only a `lx_tell` line says so. Also the replay counter was already advanced for this message, so the AP's retransmission is rejected.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:259:- The ath11k driver itself and the firmware (not in the tree): whether it drops unprotected data frames (W3), checks multicast PN (W4), and how much of its DMA goes through `dma_alloc_coherent`/`dma_alloc_noncoherent` (W5, its rate).
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:261:- `hakios.wifi.c` (bring-up, firmware loading, DSP), `hakios.net.c` (what `hakios_net_input` does with a frame), the QRTR transport under `hakios.qmi.c`, and the generated `hakios.wlfw_ath11k.h` tables.
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-stack.md:272:- W4: SKIPPED. Protocol/design change (per-key PN state, and whether `status->extiv` carries the PN depends on the firmware/driver).
+research/refs/hakios-xnu-kernel/docs/driver-review/loader.md:19:hardware or firmware behaviour that this repository does not state, the confidence is NEEDS-HARDWARE.
+research/refs/hakios-xnu-kernel/docs/driver-review/loader.md:119:  0xF3F00000. Whether the firmware's allocator hands out those pages is firmware behaviour: not stated in this repository.
+research/refs/hakios-xnu-kernel/docs/driver-review/loader.md:288:  ends inside the payload region is dropped rather than trimmed (loses memory, never overlaps). `claim` goes through AllocateAddress, so the firmware refuses overlap; `best_size >> 12 == 0` fails cleanly.
+research/refs/hakios-xnu-kernel/docs/driver-review/policy-glue.md:363:- IOKit user clients of MiniIOSurface.cpp, MiniIOMobileFramebuffer.cpp, hakios.gpu.cpp, hakios.wlan.cpp,
+research/refs/hakios-xnu-kernel/docs/driver-review/input.md:15:Method: traced the producer path (goodix/focaltech/buttons/virtio thread -> `hakios_touch_post` -> `touch_queue` -> `touch_read` -> `uiomove`), every length that comes from a chip, the SPI engine, the command database or the firmware blob, every polling loop, every boot-arg. Cross-checked the shared hardware (RPMh TCS 0, GCC vote register, SPMI arbiter) against the other drivers in `dev/` by grep. The XNU kernel source itself is not in this tree, so behaviour of kernel primitives (`ml_io_map`, `delay_for_interval`, `uiomove`, `PE_parse_boot_argn`) is assumed to be standard. Nothing was built or run. No hardware facts are asserted beyond what the repository's own comments say.
+research/refs/hakios-xnu-kernel/docs/driver-review/input.md:28:| F6 | Medium | CONFIRMED (absence); effect NEEDS-HARDWARE | goodix.c:1155-1161 | FocalTech firmware download is bounded but never verified before the application is started |
+research/refs/hakios-xnu-kernel/docs/driver-review/input.md:105:### F6. Touch-controller firmware download is bounded but not verified (goodix.c:1101-1124, 1155-1161)
+research/refs/hakios-xnu-kernel/docs/driver-review/input.md:167:- FocalTech: `focaltech_read` length bounded by `transfer_length > sizeof(focaltech_tx)` (callers pass 1, 2 or 62; the check could wrap for `length` near 2^32, but no caller can pass that); `focaltech_report` reads at most `report[2+6*9+4] = report[60]` of the 62-byte buffer; the read is CRC-checked before use; `focaltech_write_pram` frames never exceed 7+32. The boot-ROM entry is gated on reading back the boot ID, so the firmware blob is not sent to a chip that does not answer as the FT3680 boot ROM (this is also what protects a Goodix phone if the strap detection is wrong).
+research/refs/hakios-xnu-kernel/docs/driver-review/input.md:202:- F6 SKIPPED. A checksum of the FocalTech firmware needs a value generated at build time for hakios.focaltech_fw.h (not a file I may edit) and, for an on-chip check, knowledge of the boot ROM protocol that cannot be established from the repository.
+research/refs/hakios-xnu-kernel/docs/driver-review/README.md:14:| [input.md](input.md) | touch, input queue, buttons | 10 | most fixed; firmware verification and the 0666 node left (below) |
+research/refs/hakios-xnu-kernel/docs/driver-review/README.md:44:5. **Touch controller firmware is downloaded without a checksum or read-back** (input F6), and its header is the
+research/refs/hakios-xnu-kernel/docs/driver-review/gpu-display.md:17:Method: read all of `hakios.gpu.cpp`, `MiniIOSurface.cpp/.h` and `MiniIOMobileFramebuffer.cpp` end to end; in `hakios.adreno.c` read the register helpers, SMMU/page-table code, ring and submit code, the "GPU kept on" API (lines 3157-3520), firmware parsing, boot-arg parsing and the init path. The bring-up steps (clocks, RPMh, TrustZone) were skimmed only. Each finding below was traced from an entry point (IOKit external method) to the faulty line. Hardware effects are labelled NEEDS-HARDWARE.
+research/refs/hakios-xnu-kernel/docs/driver-review/gpu-display.md:34:| G12 | Low | CONFIRMED | adreno.c:1836-1837,1810 | GMU firmware block address+size is 32-bit and can wrap in range checks (image is trusted, so hardening only) |
+research/refs/hakios-xnu-kernel/docs/driver-review/gpu-display.md:149:### G12 GMU firmware block arithmetic (Low, CONFIRMED)
+research/refs/hakios-xnu-kernel/docs/driver-review/gpu-display.md:217:- G12 FIXED. adreno.c `step_gmu_firmware()`: block address + size is computed in 64 bits in both checks (TCM write is refused if the block wraps past 4 GB; memory copy only if the block lies inside a block that was made).
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:18:- the phone's own firmware, pulled from it (below). It is the vendor's and is never in the repositories.
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:19:- the firmware that starts the loader: HakiOS's U-Boot (`make u-boot`, open source only: [U-Boot](../u-boot.md)), or
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:27:devices/redwood/pull-firmware.sh    # Android running, on adb: GPU, Wi-Fi, audio, haptics, modem, cameras -> fw-*/
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:29:make config                         # what it is: the drivers built in, the kernel's arguments, the firmware it wants
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:54:| `gpu=1` | rendering on the Adreno (an image built with `GL=1`, firmware in `fw-gpu/`) |
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:59:| `modem=1` | the modem: its firmware, file systems, data path, SIM ([cellular](../cellular.md)) |
+research/refs/hakios-xnu-kernel/docs/getting-started/phone.md:71:| a problem in `make config` | it names the symbol and why: a driver left out that an argument needs, firmware the open profile does not load |
+research/refs/hakios-xnu-kernel/docs/getting-started/qemu.md:24:make doctor                   # QEMU's display device, UEFI firmware, memory: what is missing, and what to do
+research/refs/hakios-xnu-kernel/docs/getting-started/building.md:55:`MODEM=1 SYSTEM=1` put the modem's firmware into the system image.
+research/refs/hakios-xnu-kernel/docs/install.md:55:| Read-only preflight | exists (`make doctor`): slots, `darwin`, firmware, root, bootloader as reported |
+research/refs/hakios-xnu-kernel/docs/drivers-config.md:62:| bluetooth | `BT` | |
+research/refs/hakios-xnu-kernel/docs/drivers-config.md:137:without the Wi-Fi driver, and every driver's sysctls without the battery's. The camera's and the motor's firmware is read with
+research/refs/hakios-xnu-kernel/docs/devices/index.md:8:| Device | SoC | display | touch | buttons | cpu | gpu | storage | audio | battery | haptic | camera | torch | wifi | bluetooth | cellular | network | thermal |
+research/refs/hakios-xnu-kernel/docs/devices/redwood.md:13:| Firmware | `devices/redwood/pull-firmware.sh` pulls it from your own phone |
+research/refs/hakios-xnu-kernel/docs/devices/redwood.md:31:| bluetooth | no | step one only: a read-only look at its pins (bt=1) |
+research/refs/hakios-xnu-kernel/docs/index.md:51:| [Architecture](concepts/architecture.md) | the three programs between a phone's firmware and a user space; what is written to the phone |
+research/refs/hakios-xnu-kernel/docs/index.md:54:| [UEFI boot](uefi-boot.md), [U-Boot](u-boot.md) | the two firmwares that can start the loader |
+research/refs/hakios-xnu-kernel/docs/index.md:117:nothing is downloaded for you, decrypted or circumvented); the phone's firmware (pulled from your own phone into `fw-*/`, which git
+research/refs/hakios-xnu-kernel/docs/index.md:121:placeholder loader and a tiny raw-syscall user space, in QEMU, with no IPSW, no Darwin user space and no firmware. Booting the stock
+=== AUDIO ===
+research/refs/hakios-xnu-kernel/xnuloader/loader.c:3322:	 * its vibrations and feedbacks as waveforms on the "Actuator" audio device (the audio plug-in
+research/refs/hakios-xnu-kernel/sysimage/select-system.py:90:# sound, outside the directories above: the virtual audio device, a plug-in that all of mediaserverd's
+research/refs/hakios-xnu-kernel/sysimage/select-system.py:91:# audio goes through, with its tunings (signal processing chains) for this model and for any, and the
+research/refs/hakios-xnu-kernel/sysimage/select-system.py:190:            # virtual audio device's port names came out NULL -- mediaserverd died naming the microphone)
+research/refs/hakios-xnu-kernel/NOTICE:36:- the phone's firmware (GPU, Wi-Fi, audio DSP, modem, haptics, cameras): the vendor's, pulled from the
+research/refs/hakios-xnu-kernel/userland/rc.jobs.volume:2:# The speakers' volume (boot-arg sound=4 with adsp=1): once SpringBoard is up, a tone of two seconds at
+research/refs/hakios-xnu-kernel/userland/rc.jobs.volume:5:# plug-in's volume control is in the log ("hakios: audio: the volume is ..."), and the kernel's "sound:" and
+research/refs/hakios-xnu-kernel/userland/rc.jobs.flashsound:3:# ufs=2 [ufs_native=1] adsp=1 sound=4): what is mounted, the firmware on /fw, reading files through
+research/refs/hakios-xnu-kernel/userland/var/mobile/Library/Preferences/com.apple.VideoProcessing.plist:5:	<!-- VCPHEVC.videocodec, the software HEVC codec (the photographs' HEIC, src/inject_media.c), takes every key
+research/refs/hakios-xnu-kernel/userland/rc.jobs.sound:4:# them. What comes out of /dev/hakios-audio shows whether it worked: the kernel's "hakios-audio:" lines,
+research/refs/hakios-xnu-kernel/userland/rc.jobs.loud:2:# The speakers at their loudest (RC_JOBS=rc.jobs.loud, with adsp=1 sound=4 and the sound_below being tried). First a
+research/refs/hakios-xnu-kernel/userland/rc.jobs.loud:3:# tone at full scale (1 kHz left, 440 Hz right) for 60 seconds written straight to /dev/hakios-audio, past Darwin's
+research/refs/hakios-xnu-kernel/userland/rc.jobs.flashcheck:3:# root.apfs with the kernel, built with GL=1; root_apfs=ufs_darwin ufs=2 ufs_native=1 gpu=1 adsp=1 sound=4
+research/refs/hakios-xnu-kernel/userland/rc.jobs.flashcheck:4:# rec_sound=12 wifi=1, and no battery=1, which keeps the battery from the audio DSP off): what is mounted
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:10: *                                      full scale, through an audio queue: what a music player does
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:13: *   raw SECONDS                        the same tone written straight to /dev/hakios-audio, past Darwin's own
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:19: *   route                              where Darwin says its sound goes: the audio session's outputs and volume,
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:25: *   restart                            kill the audio server (launchd starts it again when it is next asked for):
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:28: * The samples come out of /dev/hakios-audio (see sys/hakios.audio.h); a tone is something one
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:80:	int device = open("/dev/hakios-audio", O_WRONLY);
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:86:		printf("sound_test: /dev/hakios-audio: %s\n", strerror(errno));
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:90:	printf("sound_test: a tone of %.0f and %.0f Hz at %.2f of full scale for %.1f s, straight to /dev/hakios-audio\n",
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:107:			printf("sound_test: /dev/hakios-audio: a write failed: %s\n", strerror(errno));
+research/refs/hakios-xnu-kernel/userland/src/sound_test.c:220: * What the audio session of this program says of the route (AVAudioSession, as an application would
+research/refs/hakios-xnu-kernel/userland/src/record_test.c:2: * record_test: record from the microphone the way an application does, and say what came.
+research/refs/hakios-xnu-kernel/userland/src/record_test.c:6: * An audio session for recording (AVAudioSession: play and record, haptics allowed while recording),
+research/refs/hakios-xnu-kernel/userland/src/record_test.c:10: * something the microphone hears that nobody needs to say, at a frequency one can look for, the
+research/refs/hakios-xnu-kernel/userland/src/record_test.c:15: * HakiosAudio.driver's device "Codec" (audio_plugin.c), of which the virtual audio device makes
+research/refs/hakios-xnu-kernel/userland/src/record_test.c:16: * the built-in microphone.
+research/refs/hakios-xnu-kernel/userland/src/record_test.c:86:/* The audio session, set up for recording; false if it will not be. */
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.plist:6:	<string>com.hakios.audio</string>
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.plist:21:	<!-- an AudioServerPlugIn: the type the HAL asks for, and the function that makes our driver (audio_plugin.c) -->
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:4: * Audio devices reach the audio server's hardware layer (the "HAL" of CoreAudio, inside
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:6: * speaker, codec and microphones arrive, and none of it exists here -- and plug-ins in
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:7: * /System/Library/Audio/Plug-Ins/HAL, which is how Bluetooth, AirPlay, CarPlay and USB audio
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:9: * audio drivers (AudioServerPlugIn: a CFPlugIn with one COM-style table of functions; the HAL
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:13: * Above the HAL sits the virtual audio device (/Library/Audio/Plug-Ins/HAL/VirtualAudio.plugin),
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:19: *   "Speaker"   a stereo output whose samples are written to /dev/hakios-audio, where the
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:20: *               kernel takes them to whatever can play them (see sys/hakios.audio.h), and a
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:22: *   "Hawking"   one silent input and nothing else. The virtual audio device will not build the
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:29: *   "Codec"     one input of one channel: on an iPhone, the audio codec that the built-in
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:30: *               microphones are on, of which the virtual audio device makes the built-in microphone
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:32: *               microphone, boot-arg mic=4), which listens only while this input runs (see codec_read())
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:35: * into nowhere) stays as it is: it is the only device the virtual audio device takes while it
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:49: * 15 October): the virtual audio device sets it once, to its top (0 dB), when it takes the
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:68:#include "hakios.audio.h"
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:199:	OBJECT_CODEC_SOURCE,            /* the codec input's data source control: its microphones */
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:207:	CFStringRef uid;                /* the name the virtual audio device knows it by */
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:227: * The codec's input has data sources, one for each microphone, and the virtual audio device will not
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:228: * take a codec without them (VirtualAudio asks for kAudioDevicePropertyDataSources on its input, and
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:231: * is one microphone here, at the bottom: 'imic', the iPhone's internal (bottom) one.
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:240:static int sink = -1;                   /* /dev/hakios-audio */
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:282:	struct hakios_audio_volume v = { (uint32_t)lround(-scalar_to_db(volume) * 8), volume <= 0 };
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:285:		say("hakios: audio: the volume %.3f could not be given to the kernel (%s)\n", volume, strerror(errno));
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:288:	say("hakios: audio: the volume is %.3f: %s%.1f dB under the loudest\n", volume, v.muted ? "silence, " : "",
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:354:	say("hakios: audio: the speaker is with the HAL (%s: %s)\n", HAKIOS_AUDIO_DEVICE, sink < 0 ? strerror(errno) : "open");
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:642: * What the HAL (or the virtual audio device through it) asks of an object that it does not have,
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:666:	say("hakios: audio: asked of object %u (%s) what it does not have: '%c%c%c%c' (%#x), scope '%c%c%c%c', element %u\n",
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:801:		/* the one microphone there is */
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:830: * The microphone (the device "Codec"): /dev/hakios-mic is open while the input runs, and the kernel
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:839:codec_open(void)
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:844:	say("hakios: audio: the microphone is listened to (/dev/hakios-mic: %s)\n", mic < 0 ? strerror(errno) : "open");
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:848:codec_close(void)
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:850:	say("hakios: audio: the microphone stops: %llu.%02llu s asked for, %llu.%02llu s of it from the kernel (peak %d of 32768), "
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:860:codec_read(int16_t *samples, UInt32 frames)
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:866:		say("hakios: audio: the microphone's first samples, %llu.%02llu s after the input started\n",
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:896:			say("hakios: audio: playing\n");
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:899:			codec_open();
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:917:			codec_close();
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:919:			say("hakios: audio: stopped after %llu.%02llu s (%llu frames not taken by %s)\n", written / HAKIOS_AUDIO_RATE,
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:996:		say("hakios: audio: the actuator plays: %u frames, peak %d of 32768%s\n", (unsigned)frames, peak,
+research/refs/hakios-xnu-kernel/userland/src/audio_plugin.c:1012:		codec_read(buffer, frames);
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:4: * mediaserverd is the audio server, and also the camera's: the capture stack of CMCapture lives
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:14: * There is no hardware decoder here; VideoToolbox takes its software one (VCPHEVC.videocodec).
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:250: * The microphone, which the capture stack has none of here. A capture session's sound comes through
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:251: * CoreMedia's own capture audio session -- BWAudioSourceNode's start sets its properties and reads
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:252: * its pull format, all of it through a brokered plug-in of the audio HAL -- and that plug-in is not
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:255: * Camera.app's session has an audio input in it, because it is a session for photographs and for
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:262: * capture audio has to offer -- and the rest of the graph, the preview and the photograph, runs.
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:263: * Only that one error is swallowed: a microphone that is there and fails for another reason still
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:264: * takes the session down, as it should. (The kernel's own microphone, adsp=1 mic=4, is a different
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:269:static IMP original_audio_source_start;
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:272:audio_source_start(id self, SEL selector, id *error)
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:274:	BOOL started = ((BOOL (*)(id, SEL, id *))original_audio_source_start)(self, selector, error);
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:284:		say("hakios: mediaserverd: there is no capture audio on this phone: the session's audio source gives nothing, "
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:380: * A node's output given no sample buffer at all, which no node takes: the session's audio source
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:381: * (-[BWAudioSourceNode _generateSamples]), whose audio unit never started here (see audio_source_start
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:397:			say("hakios: mediaserverd: a node's output was given no sample buffer (the silent audio source's): not passed on\n");
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:409: * failed with kVTCouldNotFindVideoEncoderErr (-12908). Apple's software HEVC codec is in the system
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:410: * all the same, VCPHEVC.videocodec, whose decoder VideoToolbox takes here for every HEIC picture (see
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:412: * the codec's VCPHEVCRegisterEncoder is an empty function. It is registered here, as the codec
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:418:	void *codec = dlopen("/System/Library/VideoCodecs/VCPHEVC.videocodec", RTLD_NOW | RTLD_LOCAL);
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:420:	void *create = codec != NULL ? dlsym(codec, "HEVCVideoEncoder_CreateInstance") : NULL;
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:428:		say("hakios: mediaserverd: no software HEVC encoder to register (%s)\n", codec == NULL ? "no VCPHEVC.videocodec" :
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:440:	say("hakios: mediaserverd: the software HEVC encoder of VCPHEVC.videocodec registered for 'hvc1' (%d)\n", status);
+research/refs/hakios-xnu-kernel/userland/src/inject_media.c:497:	{ "BWAudioSourceNode", "start:", 0x1a1eefa18UL, (IMP)audio_source_start, &original_audio_source_start, true, false },
+research/refs/hakios-xnu-kernel/userland/src/init.c:126: *   - only our audio device among the audio server's plug-ins;
+research/refs/hakios-xnu-kernel/userland/src/init.c:201:	    "our audio device, not Apple's plug-ins");
+research/refs/hakios-xnu-kernel/userland/src/init.c:203:		/* the audio DSP's firmware and the speakers' configuration, from the RAM image as in a RAM boot */
+research/refs/hakios-xnu-kernel/userland/src/init.c:204:		check(synthetic_dir("/flash/fw") && bind_dir("/fw", "/flash/fw"), "the firmware on /fw (adsp=1, sound=N)");
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:2: * /dev/hakios-audio: the sound Darwin plays, on its way to whatever can make it heard.
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:4: * Darwin expects its output devices from Apple's audio drivers through IOAudio2; neither exists
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:5: * here. Instead the audio server (mediaserverd) is given a plug-in of ours that presents one
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:8: * and, if asked for, into a recording that outlives the kernel (see dev/hakios.audio.c).
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:10: *   write(): whole frames in the format below. Never blocks: the writer is the audio server's
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:19:#define HAKIOS_AUDIO_DEVICE    "/dev/hakios-audio"
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:34:struct hakios_audio_volume {
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:38:#define HAKIOS_AUDIO_SET_VOLUME _IOW('r', 1, struct hakios_audio_volume)
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:47:typedef uint32_t (*hakios_audio_sink_t)(const int16_t *frames, uint32_t count);
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:49:void hakios_audio_set_sink(const char *name, hakios_audio_sink_t sink);
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:51:bool hakios_audio_volume(uint32_t *below, bool *muted, uint32_t *generation);
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:52:void hakios_audio_init(void);
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:57: * The phone's speakers (drivers/audio/hakios.speaker.c): its two Awinic amplifiers, set up as
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:68: * The audio DSP's services, for the sound's path (drivers/audio/hakios.adsp.c, drivers/audio/hakios.sound.c).
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:69: * hakios_adsp_apr() sends one APR packet to a service of the DSP (AFE 4, ASM 7, ADM 8) with the
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:81:bool hakios_adsp_apr(uint8_t service, uint16_t port, uint32_t token, uint32_t opcode, const void *payload, uint32_t length,
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:83:void hakios_adsp_apr_events(hakios_apr_events_t handler);
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:84:const uint8_t *hakios_adsp_fw_file(const char *name, uint64_t *size);        /* /fw/name, read whole; give back with: */
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:85:void hakios_adsp_fw_free(const uint8_t *data, uint64_t size);
+research/refs/hakios-xnu-kernel/userland/src/hakios.audio.h:87:void hakios_sound_dsp_up(void);        /* the DSP's audio services are up (adsp=1): boot-arg sound=N begins */
+research/refs/hakios-xnu-kernel/userland/src/inject_sb.c:326: * With adsp=1 the battery is a power source (the service HakiosBattery, an IOPMPowerSource:
+research/refs/hakios-xnu-kernel/userland/rc.jobs.speakers:2:# The phone's speakers (boot-arg sound=4 with adsp=1, drivers/audio/hakios.sound.c): once SpringBoard is up, what Darwin
+research/refs/hakios-xnu-kernel/userland/mkjobs.py:219:        'osanalytics', 'lockdown', 'audio', 'jetsamproperties',
+research/refs/hakios-xnu-kernel/userland/rc.jobs.mic:2:# The microphone for Darwin (RC_JOBS=rc.jobs.mic, with adsp=1 mic=4, haptic=5 and sound=4): first the speakers' path
+research/refs/hakios-xnu-kernel/userland/rc.jobs.mic:5:# AVAudioRecorder through the built-in microphone, which the virtual audio device makes of HakiosAudio.driver's
+research/refs/hakios-xnu-kernel/userland/rc.jobs.mic:7:# from the third to the fourth (its 175.5 Hz is what the microphone should hear), then four seconds of the room. The
+research/refs/hakios-xnu-kernel/userland/rc.jobs.mic:8:# kernel's "mic:" lines say when the microphone listened, and the end of the run repeats them. (A pause between
+research/refs/hakios-xnu-kernel/userland/rc.jobs.mic:10:# mediaserverd's MediaSafetyNet stops itself after nine seconds of a microphone in use without the pill, as on
+research/refs/hakios-xnu-kernel/userland/rc.jobs.mic:11:# an iPhone; the pause lets it see the microphone off.)
+research/refs/hakios-xnu-kernel/userland/rc.jobs.voicememos:2:# The microphone in an application (with adsp=1 mic=4): Voice Memos opened (voicememos://), past its welcome sheet
+research/refs/hakios-xnu-kernel/userland/rc.jobs.voicememos:4:# waveform of what the microphone hears, the orange dot of a microphone in use.
+research/refs/hakios-xnu-kernel/userland/rc.jobs.fairplay:26:#               adsp=1 wifi=1" XL_SECS=260 ./xl run
+research/refs/hakios-xnu-kernel/userland/rc.jobs.battery2:2:# Settings > Battery and its usage pages (with adsp=1): opened, left 15 s for its data, scrolled down to the usage
+research/refs/hakios-xnu-kernel/userland/rc.jobs.battery:2:# The battery (RC_JOBS=rc.jobs.battery, with adsp=1): what the kernel's power source says and what
+research/refs/hakios-xnu-kernel/userland/build.sh:56:#                      ADSP=1       with the audio DSP's firmware from ../fw-audio in fw/ (20 MB; for the
+research/refs/hakios-xnu-kernel/userland/build.sh:57:#                                   kernel's adsp_step=N, drivers/audio/hakios.adsp.c, which runs before the root is
+research/refs/hakios-xnu-kernel/userland/build.sh:59:#                                   the kernel. adsp=1 needs none of it: the system image has the firmware in /fw.
+research/refs/hakios-xnu-kernel/userland/build.sh:206:		# (the microphone as an application records: allowed to, by an entitlement, if ldid is there)
+research/refs/hakios-xnu-kernel/userland/build.sh:255:		# the output device of the audio server: a plug-in for CoreAudio's HAL
+research/refs/hakios-xnu-kernel/userland/build.sh:256:		$DYN -bundle -framework CoreFoundation -o obj/HakiosAudio src/audio_plugin.c
+research/refs/hakios-xnu-kernel/userland/build.sh:380:		cp src/audio_plugin.plist root/lib/HakiosAudio.driver/Info.plist
+research/refs/hakios-xnu-kernel/userland/build.sh:515:# ... and with ADSP=1 the image of the audio DSP, from the same place into ../fw-audio (drivers/audio/hakios.adsp.c):
+research/refs/hakios-xnu-kernel/userland/build.sh:516:# adsp.mdt and adsp.b02 to adsp.b36, 20 MB. Only when asked for: beside GL=1 the payload would be more than the 64 MB
+research/refs/hakios-xnu-kernel/userland/build.sh:518:if [ -n "$ADSP" ] && [ -f ../fw-audio/adsp.mdt ]; then
+research/refs/hakios-xnu-kernel/userland/build.sh:520:	install -m 0644 ../fw-audio/adsp.mdt ../fw-audio/adsp.b0[2-9] ../fw-audio/adsp.b[1-9][0-9] root/fw/
+research/refs/hakios-xnu-kernel/userland/build.sh:528:for d in gpu wifi haptic camera audio; do
+research/refs/hakios-xnu-kernel/userland/build.sh:547:# LaunchDaemons) and the audio server's plug-in directory with only our device in it.
+research/refs/hakios-xnu-kernel/userland/build.sh:603:	# the audio DSP's firmware and the speaker amplifiers' configuration, as in the system image's /fw: the kernel
+research/refs/hakios-xnu-kernel/userland/build.sh:604:	# reads the firmware as soon as there is a root (this image, adsp=1), the configuration maybe later -- by then
+research/refs/hakios-xnu-kernel/userland/build.sh:606:	if [ -f ../fw-audio/adsp.mdt ]; then
+research/refs/hakios-xnu-kernel/userland/build.sh:608:		cp ../fw-audio/adsp.mdt ../fw-audio/adsp.b0[2-9] ../fw-audio/adsp.b[1-9][0-9] flashboot/fw/
+research/refs/hakios-xnu-kernel/userland/build.sh:610:	if [ -f ../fw-audio/aw882xx_acf.bin ]; then
+research/refs/hakios-xnu-kernel/userland/build.sh:612:		cp ../fw-audio/aw882xx_acf.bin flashboot/fw/
+research/refs/hakios-xnu-kernel/userland/build.sh:651:	# in the image either (so it was once with the audio plug-ins and the system's sounds: Darwin found no
+research/refs/hakios-xnu-kernel/userland/build.sh:678:	# the audio DSP's firmware, the phone's own from ../fw-audio (never in the repository), where the kernel reads
+research/refs/hakios-xnu-kernel/userland/build.sh:679:	# it once the root is mounted (drivers/audio/hakios.adsp.c, adsp=1): 20 MB that do not fit beside GL=1 in the small image
+research/refs/hakios-xnu-kernel/userland/build.sh:680:	if [ -f ../fw-audio/adsp.mdt ]; then
+research/refs/hakios-xnu-kernel/userland/build.sh:682:		cp ../fw-audio/adsp.mdt ../fw-audio/adsp.b0[2-9] ../fw-audio/adsp.b[1-9][0-9] sysroot/fw/
+research/refs/hakios-xnu-kernel/userland/build.sh:699:	# ... and the speaker amplifiers' configuration, the phone's /vendor/etc/aw882xx_acf.bin (drivers/audio/hakios.speaker.c,
+research/refs/hakios-xnu-kernel/userland/build.sh:701:	if [ -f ../fw-audio/aw882xx_acf.bin ]; then
+research/refs/hakios-xnu-kernel/userland/build.sh:703:		cp ../fw-audio/aw882xx_acf.bin sysroot/fw/
+research/refs/hakios-xnu-kernel/userland/build.sh:725:	# our audio device, where the audio server looks for such plug-ins (and for no others: Apple's are left out)
+research/refs/hakios-xnu-kernel/userland/rc.jobs.battery3:2:# An hour of use before Settings > Battery is opened (with adsp=1): applications opened in turn -- Settings, Notes,
+research/refs/hakios-xnu-kernel/docs/install-safe.md:51:battery reading of the audio DSP's driver, which only runs with `adsp=1`).
+research/refs/hakios-xnu-kernel/docs/porting/index.md:64:| 5 | `ADSP`, `BATTERY`, `SPEAKER`, `SOUND`, `MIC` | audio and the battery's level come through the audio DSP |
+research/refs/hakios-xnu-kernel/docs/porting/repositories.md:53:| `status <area> works\|partial\|missing <note>` | how far a part works, **as seen on this device**; the note says how it is turned on and what is not done. Areas: display, touch, buttons, cpu, gpu, storage, audio, battery, haptic, camera, torch, wifi, bluetooth, cellular, network, thermal, usb, sensors |
+research/refs/hakios-xnu-kernel/docs/porting/drivers.md:15:Subsystems: input, storage, gpu, camera, haptic, audio, power, wifi, bluetooth, modem, net, core.
+research/refs/hakios-xnu-kernel/docs/porting/drivers.md:74:- from a hub's list (`hakios_input_init()` in `hakios.input.c`, `hakios_audio_init()` in `hakios.audio.c`), when the order
+research/refs/hakios-xnu-kernel/docs/u-boot.md:230:`adsp`, `sound` and `haptic`, which stopped the phone under U-Boot: `gpu=1 wifi=1 modem=1 modem_again=1
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:1:# Driver review: sound path (speakers, microphone, /dev/hakios-audio)
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:11:| hakios.audio.c | 354 |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:16:| `userland/src/audio_plugin.c` (writer/reader side, volume control) | 1041 |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:19:`xnu/files/bsd/sys/hakios.audio.h`, `hakios.guard.c` (the guard that limits what the amplifiers get), and in `hakios.adsp.c`
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:20:only `root_file()`/`hakios_adsp_fw_file()` (loader of aw882xx_acf.bin) and `apr_input()`/`hakios_adsp_apr()`.
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:35:| S-01 | High | CONFIRMED (effect on hardware: NEEDS-HARDWARE) | audio.c:268, sound.c:1267/1272/1279, speaker.c:897-941, guard.c:160 | unclamped user `below` can make the volume fade loop spin forever at Android's loudest level while the guard is told "amplifiers off" |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:36:| S-02 | Medium | CONFIRMED | audio.c:268, sound.c:1267/1279 | `below + extra` wraps: any local user can lift the level to Android's maximum, past `sound_below` |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:40:| S-06 | Medium | CONFIRMED | mic.c:1737-1778 | mic=4: a bring-up that fails without setting `broken` is retried forever (no failure count), re-toggling the codec reset and the DSP votes |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:42:| S-08 | Medium | PLAUSIBLE (mode CONFIRMED; reach depends on Darwin sandbox) | audio.c:343, mic.c:1732, 1524-1534 | both device nodes are 0666; any process can start the microphone, steal/split its samples, set the volume or mute; open state is a flag, not a count |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:47:| S-13 | Low | CONFIRMED (file outside this group) | hakios.adsp.c:2488-2495 | `payload` underflows when the DSP's `header.size` < header length; 256 bytes are then copied from beyond the packet |
+research/refs/hakios-xnu-kernel/docs/driver-review/sound.md:48:| S-14 | Low | PLAUSIBLE | audio_plugin.c:282, 788-793 | a NaN volume passes the clamp, `lround(NaN)` gives `below` 0 and `muted` 0: loudest |
+seven@sevenzx:~/ios-s9$ echo '=== HAKIOS SNAPDRAGON ==='
+find research/refs/hakios-xnu-kernel \
+  -maxdepth 4 -type f \
+  | grep -Ei 'metal|adreno|a6xx|sm7325|gpu|freedreno|kgsl|ring|sqe|gmu' \
+  | sort
+
+echo '=== UBUNTU SDM845 ==='
+find research/refs/ubuntu-2404-starqltechn \
+  -type f \
+  | grep -Ei 'kernel|gpu|kgsl|freedreno|wifi|brcm|audio|adsp|bluetooth|patch' \
+  | sort
+
+echo '=== SCION EXYNOS ==='
+find research/refs/scion-kernel \
+  -maxdepth 4 -type f \
+  | grep -Ei 'wifi|bluetooth|audio|gpu|metal|iosurface|fence|cache|s6|mali' \
+  | sort
+=== HAKIOS SNAPDRAGON ===
+research/refs/hakios-xnu-kernel/docs/driver-review/gpu-display.md
+research/refs/hakios-xnu-kernel/docs/driver-review/wifi-bringup.md
+research/refs/hakios-xnu-kernel/docs/metal-plan.md
+research/refs/hakios-xnu-kernel/docs/reference/metal.md
+research/refs/hakios-xnu-kernel/docs/reference/metal-measurements.md
+research/refs/hakios-xnu-kernel/docs/ru/metal.md
+research/refs/hakios-xnu-kernel/drivers/gpu/conf
+research/refs/hakios-xnu-kernel/drivers/gpu/hakios.adreno.c
+research/refs/hakios-xnu-kernel/drivers/gpu/hakios.gpu.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/.gitignore
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/a6xx.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/command.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/compiler.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/compute.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/fake_gpu.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/gpu.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/hakios_metal.h
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/kernel.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/metallib.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/pm4.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/render.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/include/hakios-metal/texture.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/LICENSE
+research/refs/hakios-xnu-kernel/hakios-metal/Makefile
+research/refs/hakios-xnu-kernel/hakios-metal/NOTICE
+research/refs/hakios-xnu-kernel/hakios-metal/plugin/hakios_metallib.c
+research/refs/hakios-xnu-kernel/hakios-metal/plugin/hakios_metallib.h
+research/refs/hakios-xnu-kernel/hakios-metal/plugin/HakiosMetal.m
+research/refs/hakios-xnu-kernel/hakios-metal/plugin/tests/metal_plugin_test.m
+research/refs/hakios-xnu-kernel/hakios-metal/plugin/tests/metal-plugin-test.sh
+research/refs/hakios-xnu-kernel/hakios-metal/README.md
+research/refs/hakios-xnu-kernel/hakios-metal/src/c_api.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/command.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/compiler.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/compute.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/fake_gpu.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/gpu.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/iokit_transport.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/link.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/metallib.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/pm4.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/render.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/src/texture.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/a6xx_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/c_api_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/command_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/compiler_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/compute_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/argbuf_res_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/argbuf_res_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/ballot_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/bytes_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/chain160_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/chain220_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/chain_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/clz_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/depth_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/dual_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/end_only.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/fill_id_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/fill_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/fill_id.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/long_chain_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/null_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/null_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/pack_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/ptr_phi_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/pvt_fill_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_col16_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_copy_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_copy_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_fill_3d_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_fill_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_fill_arr_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_fill_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_fill_h_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_fill_h_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_sample_gid_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_sample_gid_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_sample_wide_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tex_size_h_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tg_arg_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_arr_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_attr_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_attr_vs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_base_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_cflat_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_cflat_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_color_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_color_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_color_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_color_vs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_ctex_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_ctex_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_cuba_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_cube_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_dbuf_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_dbuf_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_dpos_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_dpos_vs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_dwrite_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_fb_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_fc_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_fc_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_flat_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_flat_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_flat_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_flat_vs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_fw_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_half_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_hc_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_hcolor_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_hcolor_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_mrt1_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_mrt1_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_mrt_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_mrt_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_ms_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_nullfb_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_null_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_null_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_oldcb_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_olddb_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_pntc_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_pos_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_pos_vs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_pt_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_pvt_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_shadow_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_shadow_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex1da_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex1d_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex2da_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex31_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex39_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex3d_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex_fs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_tex_fs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_upos_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_upos_vs_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/tri_vtex_vs_air.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/undef_phi_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/uniform_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/fixtures/width_id_bc.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/kernel_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/link_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/main.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/metallib_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/pm4_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/render_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/test.hpp
+research/refs/hakios-xnu-kernel/hakios-metal/tests/texture_test.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tools/bc-header.py
+research/refs/hakios-xnu-kernel/hakios-metal/tools/check-a6xx.py
+research/refs/hakios-xnu-kernel/hakios-metal/tools/compiler.mk
+research/refs/hakios-xnu-kernel/hakios-metal/tools/compiler-smoke.cc
+research/refs/hakios-xnu-kernel/hakios-metal/tools/ir3-kernel.cc
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/argbuf_res.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/ballot_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/bytes_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/chain160.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/chain220.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/chain_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/clz_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/depth_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/dual_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/end_only.asm
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/fill_id.asm
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/fill_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/gen-long-chain.py
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/hole_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/long_chain.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/many_ubo_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels.mk
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/null_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/pack_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/ptr_phi.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/pvt_fill.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_col16.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_copy.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_fill_3d.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_fill_arr.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_fill_h.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_fill.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_sample_gid.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_sample_wide.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tex_size_h.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tg_arg.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_arr_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_attr_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_base_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_cflat_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_color_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_color_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_ctex_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_cuba_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_cube_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_dbuf_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_dpos_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_dwrite_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_fb_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_fc_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_flat_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_flat_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_fw_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_half_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_hc_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_hcolor_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_hcolor_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_mrt1_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_mrt_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_ms_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_nullfb_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_null_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_oldcb_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_olddb_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_pntc_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_pos_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_pt_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_pvt_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_shadow_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex1da_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex1d_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex2da_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex31_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex39_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex3d_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_tex_fs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_upos_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/tri_vtex_vs.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/undef_phi_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/uniform_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/kernels/width_id.ll
+research/refs/hakios-xnu-kernel/hakios-metal/tools/mesa/ir3-dump.patch
+research/refs/hakios-xnu-kernel/hakios-metal/tools/probe.cpp
+research/refs/hakios-xnu-kernel/hakios-metal/tools/sweep.cpp
+research/refs/hakios-xnu-kernel/tools/ca-metallib.py
+research/refs/hakios-xnu-kernel/tools/m2v/adrenometal-ios16.patch
+research/refs/hakios-xnu-kernel/tools/m2v/metal2vulkan-hakios.patch
+research/refs/hakios-xnu-kernel/tools/merge_metallib.py
+research/refs/hakios-xnu-kernel/tools/mesa/air/air_metallib.c
+research/refs/hakios-xnu-kernel/tools/mesa/freedreno-darwin.patch
+research/refs/hakios-xnu-kernel/tools/metal-cache-seed.sh
+research/refs/hakios-xnu-kernel/tools/metallib.py
+research/refs/hakios-xnu-kernel/tools/metallib_test.c
+research/refs/hakios-xnu-kernel/tools/metallib-test.sh
+research/refs/hakios-xnu-kernel/tools/metal_plugin_test.m
+research/refs/hakios-xnu-kernel/tools/metal-plugin-test.sh
+research/refs/hakios-xnu-kernel/tools/metal-run.sh
+research/refs/hakios-xnu-kernel/userland/rc.jobs.metal
+research/refs/hakios-xnu-kernel/userland/rc.jobs.metalprobe
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetalCA.m
+research/refs/hakios-xnu-kernel/userland/src/hakios_metallib.c
+research/refs/hakios-xnu-kernel/userland/src/hakios_metallib.h
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetal.m
+research/refs/hakios-xnu-kernel/userland/src/HakiosMetal.plist
+research/refs/hakios-xnu-kernel/userland/src/metal_test.m
+=== UBUNTU SDM845 ===
+research/refs/ubuntu-2404-starqltechn/docs/audio-and-boot-reliability.md
+research/refs/ubuntu-2404-starqltechn/docs/gpu-and-display-path.md
+research/refs/ubuntu-2404-starqltechn/.git/hooks/applypatch-msg.sample
+research/refs/ubuntu-2404-starqltechn/.git/hooks/pre-applypatch.sample
+research/refs/ubuntu-2404-starqltechn/kernel/deviceinfo
+research/refs/ubuntu-2404-starqltechn/kernel/halium.config
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/00-inventory-reference.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/01-generate-starqltechn.py
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/02-probe-smg9600-vendor.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/03b-inventory-lsc-halium.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/03-inventory-halium-runtime.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/04-build-graphics-manifest.py
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/05-stage-rootfs.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/06-enable-graphics.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/07-dp-validation.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/08-enable-desktop.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/99-rollback.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/adaptation-map.tsv
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/lib/common.sh
+research/refs/ubuntu-2404-starqltechn/kernel/halium-graft/tests/run-tests.sh
+research/refs/ubuntu-2404-starqltechn/kernel/patches/0001-msm-vidc-fix-hevc-profile-control.patch
+research/refs/ubuntu-2404-starqltechn/kernel/patches/0002-bluetooth-build-rfcomm-bnep-hidp.patch
+research/refs/ubuntu-2404-starqltechn/kernel/patches/0003-msm-dp-ultrawide-3840x1080-and-no-hdcp.patch
+research/refs/ubuntu-2404-starqltechn/kernel/patches/build-tools/0001-samsung-second-address.patch
+research/refs/ubuntu-2404-starqltechn/kernel/patches/README.md
+research/refs/ubuntu-2404-starqltechn/kernel/ramdisk/build-ramdisk.py
+research/refs/ubuntu-2404-starqltechn/kernel/ramdisk/init
+research/refs/ubuntu-2404-starqltechn/kernel/ramdisk/README.md
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/etc/s9-halium/mir.env
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/etc/systemd/system/s9-halium-preflight.service
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/etc/systemd/system/s9-mir.service
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/etc/systemd/user/s9-xfce-shell.service
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/usr/local/bin/s9-desktop-session
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/usr/local/sbin/s9-halium-preflight
+research/refs/ubuntu-2404-starqltechn/kernel/rootfs-overlay/halium-graft/usr/local/sbin/s9-start-mir
+research/refs/ubuntu-2404-starqltechn/kernel/scripts/build-rootfs-stage1.sh
+research/refs/ubuntu-2404-starqltechn/kernel/scripts/check-ubuntu2404-config.sh
+research/refs/ubuntu-2404-starqltechn/kernel/scripts/s9-flash-boot5.sh
+research/refs/ubuntu-2404-starqltechn/kernel/scripts/s9-kbuild5.sh
+research/refs/ubuntu-2404-starqltechn/kernel/scripts/s9-kbuild-clean.sh
+research/refs/ubuntu-2404-starqltechn/kernel/scripts/s9-kpatch5.sh
+research/refs/ubuntu-2404-starqltechn/mir/patches/0001-compat-protobuf-gcc15.patch
+research/refs/ubuntu-2404-starqltechn/mir/patches/0002-s9-mir-1.8.3-cumulative.patch
+research/refs/ubuntu-2404-starqltechn/platform/patches/0001-s9-android2-platform.patch
+research/refs/ubuntu-2404-starqltechn/system/etc/s9-ubports-audio.pa
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-dp-audio.service
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-gpu-permissions.service
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-ubports-audio-hidl.service
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-ubports-audio-hidl.service.d/10-binder-permissions.conf
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-ubports-audio-hidl.service.d/80-s9-adsp-ensure.conf
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-ubports-audio-hidl.service.d/90-s9-alsa-readiness.conf
+research/refs/ubuntu-2404-starqltechn/system/etc/systemd/system/s9-ubports-audio-hidl.service.d/95-s9-orderly-stop.conf
+research/refs/ubuntu-2404-starqltechn/system/etc/udev/rules.d/99-s9-gpu.rules
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-adsp-ensure
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-audio-shutdown
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-audio-wait-alsa
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-blueman-patch
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-cast-audio
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-dp-audio
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-ubports-audio-in-namespace
+research/refs/ubuntu-2404-starqltechn/system/usr/local/sbin/s9-ubports-audio-launch
+research/refs/ubuntu-2404-starqltechn/tools/image/clean-overlay/etc/systemd/system/s9-install-gpu-firmware.service
+research/refs/ubuntu-2404-starqltechn/tools/image/clean-overlay/usr/local/sbin/s9-install-gpu-firmware
+research/refs/ubuntu-2404-starqltechn/tools/image/tests/test-gpu-group.sh
+research/refs/ubuntu-2404-starqltechn/tools/twrp/patch-recovery-settings.sh
+research/refs/ubuntu-2404-starqltechn/userland/usr/local/bin/s9-chrome-gpu-hybris-env
+=== SCION EXYNOS ===
+research/refs/scion-kernel/avf/gpu3d/probe/bench.c
+research/refs/scion-kernel/avf/gpu3d/probe/build.sh
+research/refs/scion-kernel/avf/gpu3d/probe/cpublend.c
+research/refs/scion-kernel/avf/gpu3d/probe/.gitignore
+research/refs/scion-kernel/avf/gpu3d/probe/main.c
+research/refs/scion-kernel/docs/driver-review/gpu-display.md
+research/refs/scion-kernel/docs/driver-review/wifi-bringup.md
+research/refs/scion-kernel/docs/driver-review/wifi-stack.md
+research/refs/scion-kernel/docs/ios27/GPU-PATH.md
+research/refs/scion-kernel/docs/ios27/METAL.md
+research/refs/scion-kernel/docs/ios27/WIFI.md
+research/refs/scion-kernel/docs/metal.md
+research/refs/scion-kernel/docs/metal-plan.md
+research/refs/scion-kernel/docs/reference/metal.md
+research/refs/scion-kernel/docs/reference/metal-measurements.md
+research/refs/scion-kernel/docs/ru/metal.md
+research/refs/scion-kernel/drivers/audio/abox/hakios.exynos_abox.c
+research/refs/scion-kernel/drivers/audio/codec/hakios.cs47l93.c
+research/refs/scion-kernel/drivers/audio/codec/hakios.max98512.c
+research/refs/scion-kernel/drivers/audio/conf
+research/refs/scion-kernel/drivers/audio/hakios.adsp.c
+research/refs/scion-kernel/drivers/audio/hakios.audio.c
+research/refs/scion-kernel/drivers/audio/hakios.guard.c
+research/refs/scion-kernel/drivers/audio/hakios.mic.c
+research/refs/scion-kernel/drivers/audio/hakios.scsnd.c
+research/refs/scion-kernel/drivers/audio/hakios.sound.c
+research/refs/scion-kernel/drivers/audio/hakios.speaker.c
+research/refs/scion-kernel/drivers/bluetooth/bcm4361/hakios.bcm4361_bt.c
+research/refs/scion-kernel/drivers/bluetooth/bcm4361/hakios.bcm_hci.h
+research/refs/scion-kernel/drivers/bluetooth/bcm4361/hakios.bt_node.cpp
+research/refs/scion-kernel/drivers/bluetooth/conf
+research/refs/scion-kernel/drivers/bluetooth/hakios.bt.c
+research/refs/scion-kernel/drivers/display/panel/hakios.s6e3ha8.c
+research/refs/scion-kernel/drivers/display/panel/hakios.s6e3ha8_gamma.h
+research/refs/scion-kernel/drivers/display/panel/hakios.s6e3ha8_star2.h
+research/refs/scion-kernel/drivers/gpu/adreno/hakios.adreno.c
+research/refs/scion-kernel/drivers/gpu/conf
+research/refs/scion-kernel/drivers/gpu/hakios.gpu.cpp
+research/refs/scion-kernel/drivers/gpu/mali/hakios.mali.c
+research/refs/scion-kernel/drivers/gpu/mali/hakios.mali.cpp
+research/refs/scion-kernel/drivers/gpu/mali/hakios.mali_va.h
+research/refs/scion-kernel/drivers/gpu/vgpu/hakios.vgpu3d.c
+research/refs/scion-kernel/drivers/gpu/vgpu/hakios.vgpu3d_xnu.c
+research/refs/scion-kernel/drivers/gpu/vgpu/hakios.vgpu.c
+research/refs/scion-kernel/drivers/input/touch/hakios.s6sy761.c
+research/refs/scion-kernel/drivers/wifi/brcmfmac/hakios.brcmfmac.c
+research/refs/scion-kernel/drivers/wifi/brcmfmac/hakios.exynos_pcie.c
+research/refs/scion-kernel/drivers/wifi/conf
+research/refs/scion-kernel/drivers/wifi/hakios.apple80211.c
+research/refs/scion-kernel/drivers/wifi/hakios.sta.c
+research/refs/scion-kernel/drivers/wifi/hakios.wifi.c
+research/refs/scion-kernel/drivers/wifi/hakios.wlan.cpp
+research/refs/scion-kernel/drivers/wifi/hakios.wlfw.c
+research/refs/scion-kernel/drivers/wifi/lx/hakios.lx.c
+research/refs/scion-kernel/hakios-metal/.gitignore
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/a6xx.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/command.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/compiler.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/compute.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/fake_gpu.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/gpu.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/hakios_metal.h
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/kernel.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/metallib.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/pm4.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/render.hpp
+research/refs/scion-kernel/hakios-metal/include/hakios-metal/texture.hpp
+research/refs/scion-kernel/hakios-metal/LICENSE
+research/refs/scion-kernel/hakios-metal/Makefile
+research/refs/scion-kernel/hakios-metal/NOTICE
+research/refs/scion-kernel/hakios-metal/plugin/hakios_metallib.c
+research/refs/scion-kernel/hakios-metal/plugin/hakios_metallib.h
+research/refs/scion-kernel/hakios-metal/plugin/HakiosMetal.m
+research/refs/scion-kernel/hakios-metal/plugin/tests/metal_plugin_test.m
+research/refs/scion-kernel/hakios-metal/plugin/tests/metal-plugin-test.sh
+research/refs/scion-kernel/hakios-metal/README.md
+research/refs/scion-kernel/hakios-metal/src/c_api.cpp
+research/refs/scion-kernel/hakios-metal/src/command.cpp
+research/refs/scion-kernel/hakios-metal/src/compiler.cpp
+research/refs/scion-kernel/hakios-metal/src/compute.cpp
+research/refs/scion-kernel/hakios-metal/src/fake_gpu.cpp
+research/refs/scion-kernel/hakios-metal/src/gpu.cpp
+research/refs/scion-kernel/hakios-metal/src/iokit_transport.cpp
+research/refs/scion-kernel/hakios-metal/src/link.cpp
+research/refs/scion-kernel/hakios-metal/src/metallib.cpp
+research/refs/scion-kernel/hakios-metal/src/pm4.cpp
+research/refs/scion-kernel/hakios-metal/src/render.cpp
+research/refs/scion-kernel/hakios-metal/src/texture.cpp
+research/refs/scion-kernel/hakios-metal/tests/a6xx_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/c_api_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/command_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/compiler_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/compute_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/argbuf_res_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/argbuf_res_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/ballot_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/bytes_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/chain160_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/chain220_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/chain_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/clz_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/depth_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/dual_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/end_only.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/fill_id_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/fill_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/fill_id.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/long_chain_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/null_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/null_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/pack_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/ptr_phi_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/pvt_fill_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_col16_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_copy_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_copy_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_fill_3d_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_fill_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_fill_arr_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_fill_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_fill_h_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_fill_h_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_sample_gid_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_sample_gid_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_sample_wide_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tex_size_h_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tg_arg_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_arr_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_attr_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_attr_vs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_base_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_cflat_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_cflat_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_color_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_color_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_color_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_color_vs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_ctex_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_ctex_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_cuba_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_cube_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_dbuf_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_dbuf_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_dpos_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_dpos_vs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_dwrite_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_fb_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_fc_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_fc_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_flat_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_flat_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_flat_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_flat_vs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_fw_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_half_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_hc_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_hcolor_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_hcolor_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_mrt1_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_mrt1_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_mrt_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_mrt_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_ms_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_nullfb_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_null_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_null_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_oldcb_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_olddb_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_pntc_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_pos_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_pos_vs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_pt_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_pvt_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_shadow_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_shadow_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex1da_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex1d_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex2da_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex31_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex39_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex3d_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex_fs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_tex_fs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_upos_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_upos_vs_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/tri_vtex_vs_air.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/undef_phi_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/uniform_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/fixtures/width_id_bc.hpp
+research/refs/scion-kernel/hakios-metal/tests/kernel_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/link_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/main.cpp
+research/refs/scion-kernel/hakios-metal/tests/metallib_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/pm4_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/render_test.cpp
+research/refs/scion-kernel/hakios-metal/tests/test.hpp
+research/refs/scion-kernel/hakios-metal/tests/texture_test.cpp
+research/refs/scion-kernel/hakios-metal/tools/bc-header.py
+research/refs/scion-kernel/hakios-metal/tools/check-a6xx.py
+research/refs/scion-kernel/hakios-metal/tools/compiler.mk
+research/refs/scion-kernel/hakios-metal/tools/compiler-smoke.cc
+research/refs/scion-kernel/hakios-metal/tools/ir3-kernel.cc
+research/refs/scion-kernel/hakios-metal/tools/kernels/argbuf_res.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/ballot_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/bytes_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/chain160.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/chain220.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/chain_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/clz_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/depth_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/dual_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/end_only.asm
+research/refs/scion-kernel/hakios-metal/tools/kernels/fill_id.asm
+research/refs/scion-kernel/hakios-metal/tools/kernels/fill_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/gen-long-chain.py
+research/refs/scion-kernel/hakios-metal/tools/kernels/hole_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/long_chain.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/many_ubo_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels.mk
+research/refs/scion-kernel/hakios-metal/tools/kernels/null_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/pack_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/ptr_phi.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/pvt_fill.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_col16.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_copy.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_fill_3d.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_fill_arr.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_fill_h.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_fill.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_sample_gid.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_sample_wide.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tex_size_h.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tg_arg.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_arr_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_attr_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_base_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_cflat_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_color_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_color_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_ctex_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_cuba_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_cube_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_dbuf_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_dpos_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_dwrite_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_fb_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_fc_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_flat_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_flat_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_fw_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_half_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_hc_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_hcolor_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_hcolor_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_mrt1_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_mrt_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_ms_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_nullfb_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_null_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_oldcb_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_olddb_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_pntc_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_pos_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_pt_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_pvt_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_shadow_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex1da_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex1d_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex2da_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex31_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex39_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex3d_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_tex_fs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_upos_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/tri_vtex_vs.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/undef_phi_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/uniform_id.ll
+research/refs/scion-kernel/hakios-metal/tools/kernels/width_id.ll
+research/refs/scion-kernel/hakios-metal/tools/mesa/ir3-dump.patch
+research/refs/scion-kernel/hakios-metal/tools/probe.cpp
+research/refs/scion-kernel/hakios-metal/tools/sweep.cpp
+research/refs/scion-kernel/prebuilt/userland/HakiosAudio
+research/refs/scion-kernel/tools/air/metalcheck.py
+research/refs/scion-kernel/tools/ca-metallib.py
+research/refs/scion-kernel/tools/ios27/ca-gpu/build-sbca27.sh
+research/refs/scion-kernel/tools/ios27/ca-gpu/build-sbca.sh
+research/refs/scion-kernel/tools/ios27/ca-gpu/install-sbca-ios26.sh
+research/refs/scion-kernel/tools/ios27/ca-gpu/install-sbca.sh
+research/refs/scion-kernel/tools/ios27/fullroot/compare-cache.sh
+research/refs/scion-kernel/tools/ios27/gpu/build-g72-tri.sh
+research/refs/scion-kernel/tools/ios27/gpu/build-sbgl-test.sh
+research/refs/scion-kernel/tools/ios27/gpu/build-sbgpu-test.sh
+research/refs/scion-kernel/tools/ios27/gpu/panfrost_drm.h
+research/refs/scion-kernel/tools/ios27/gpu/sbgl-test.c
+research/refs/scion-kernel/tools/ios27/gpu/sbgpu-test.c
+research/refs/scion-kernel/tools/ios27/gpu/starlte-g72-tri.c
+research/refs/scion-kernel/tools/ios27/metal2/build-m2v-bridge.sh
+research/refs/scion-kernel/tools/ios27/metal2/build-starbite-metal.sh
+research/refs/scion-kernel/tools/ios27/metal2/HotMetal2.mm
+research/refs/scion-kernel/tools/ios27/metal2/HotPrimeShaders.h
+research/refs/scion-kernel/tools/ios27/metal2/Info.plist
+research/refs/scion-kernel/tools/ios27/metal2/LICENSE.IOS-26-Hot
+research/refs/scion-kernel/tools/ios27/metal2/m2vtest.c
+research/refs/scion-kernel/tools/ios27/metal2/NativeBridgeMetalFrontend.h
+research/refs/scion-kernel/tools/ios27/metal2/NativeBridgeMetalFrontend.mm
+research/refs/scion-kernel/tools/ios27/metal/bridge.sh
+research/refs/scion-kernel/tools/ios27/metal/build-host.sh
+research/refs/scion-kernel/tools/ios27/metal/install-metal27.py
+research/refs/scion-kernel/tools/ios27/metal/mk-bundle27.sh
+research/refs/scion-kernel/tools/ios27/metal/mk-panvk27.sh
+research/refs/scion-kernel/tools/ios27/metal/mtl27test.m
+research/refs/scion-kernel/tools/ios27/metal/mtl-cmdline.py
+research/refs/scion-kernel/tools/ios27/metal/rust.sh
+research/refs/scion-kernel/tools/ios27/metal/sbmtlc.c
+research/refs/scion-kernel/tools/ios27/metal/sbwall.m
+research/refs/scion-kernel/tools/ios27/speed/cachefind.py
+research/refs/scion-kernel/tools/ios27/speed/cachepatch.py
+research/refs/scion-kernel/tools/ios27/speed/edit-s6.sh
+research/refs/scion-kernel/tools/ios27/wifi/60-wifi-firmware.sh
+research/refs/scion-kernel/tools/ios27/wifi/62-wifid-loadable.sh
+research/refs/scion-kernel/tools/ios27/wifi/adt-wifi-network.py
+research/refs/scion-kernel/tools/ios27/wifi/adt-wlan-node.py
+research/refs/scion-kernel/tools/m2v/adrenometal-ios16.patch
+research/refs/scion-kernel/tools/m2v/metal2vulkan-hakios.patch
+research/refs/scion-kernel/tools/mali-drmshim-check.sh
+research/refs/scion-kernel/tools/mali-drmshim/gl_drmshim.c
+research/refs/scion-kernel/tools/mali-drmshim/gl_test-1080x2400-softpipe.png
+research/refs/scion-kernel/tools/mali-drmshim/gl_test-1080x2400-softpipe.sha256
+research/refs/scion-kernel/tools/mali-drmshim/hakios_mali_shim.c
+research/refs/scion-kernel/tools/mali-drmshim/image.py
+research/refs/scion-kernel/tools/mali-drmshim/pandecode-check.py
+research/refs/scion-kernel/tools/mali_va_test.c
+research/refs/scion-kernel/tools/mali-va-test.sh
+research/refs/scion-kernel/tools/merge_metallib.py
+research/refs/scion-kernel/tools/mesa/air/air_metal.c
+research/refs/scion-kernel/tools/mesa/air/air_metal.h
+research/refs/scion-kernel/tools/mesa/air/air_metallib.c
+research/refs/scion-kernel/tools/mesa/air/air_metal_test.c
+research/refs/scion-kernel/tools/mesa/air-metal.patch
+research/refs/scion-kernel/tools/mesa/panfrost-mapping-cache.patch
+research/refs/scion-kernel/tools/metal/absmeth.py
+research/refs/scion-kernel/tools/metal/annot.py
+research/refs/scion-kernel/tools/metal/appasks.py
+research/refs/scion-kernel/tools/metal/appsends.py
+research/refs/scion-kernel/tools/metal/bridge/build.rs
+research/refs/scion-kernel/tools/metal/bridge/Cargo.lock
+research/refs/scion-kernel/tools/metal/bridge/Cargo.toml
+research/refs/scion-kernel/tools/metal/bridge/coherence.rs
+research/refs/scion-kernel/tools/metal/bridge/icd.rs
+research/refs/scion-kernel/tools/metal/bridge/incoherent.rs
+research/refs/scion-kernel/tools/metal/bridge/LICENSE.AdrenoMetal
+research/refs/scion-kernel/tools/metal/bridge/NativeMetalBridge.h
+research/refs/scion-kernel/tools/metal/bridge/NativeMetalBridge.rs
+research/refs/scion-kernel/tools/metal/bridge/NativeMetalObjects.h
+research/refs/scion-kernel/tools/metal/bridge/NativeMetalObjects.rs
+research/refs/scion-kernel/tools/metal-cache-seed.sh
+research/refs/scion-kernel/tools/metallib.py
+research/refs/scion-kernel/tools/metallib_test.c
+research/refs/scion-kernel/tools/metallib-test.sh
+research/refs/scion-kernel/tools/metal/m2v/0001-host-memory-not-coherent.patch
+research/refs/scion-kernel/tools/metal/m2v/0002-copied-host-memory.patch
+research/refs/scion-kernel/tools/metal/m2v_constant.metal
+research/refs/scion-kernel/tools/metal/m2v_selftest.metal
+research/refs/scion-kernel/tools/metal/m2v_test.c
+research/refs/scion-kernel/tools/metal/m2v_test.metal
+research/refs/scion-kernel/tools/metal/metalvk_plugin_test.m
+research/refs/scion-kernel/tools/metal/metalvk-plugin-test.sh
+research/refs/scion-kernel/tools/metal/mk-metal2vulkan.sh
+research/refs/scion-kernel/tools/metal/owesclass.py
+research/refs/scion-kernel/tools/metal/owes.py
+research/refs/scion-kernel/tools/metal_plugin_test.m
+research/refs/scion-kernel/tools/metal-plugin-test.sh
+research/refs/scion-kernel/tools/metal/protometh.py
+research/refs/scion-kernel/tools/metal/refusals.py
+research/refs/scion-kernel/tools/metal-run.sh
+research/refs/scion-kernel/tools/metal/unslide.py
+research/refs/scion-kernel/tools/s6e3ha8_gamma_test.c
+research/refs/scion-kernel/tools/s6e3ha8-gamma-test.sh
+research/refs/scion-kernel/userland/com.hakios.wifi.plist
+research/refs/scion-kernel/userland/rc.ios.metal
+research/refs/scion-kernel/userland/rc.jobs.flashcache
+research/refs/scion-kernel/userland/rc.jobs.malimetal
+research/refs/scion-kernel/userland/rc.jobs.metal
+research/refs/scion-kernel/userland/rc.jobs.metal1
+research/refs/scion-kernel/userland/rc.jobs.metal2
+research/refs/scion-kernel/userland/rc.jobs.metal3
+research/refs/scion-kernel/userland/rc.jobs.metalall
+research/refs/scion-kernel/userland/rc.jobs.metalattrib
+research/refs/scion-kernel/userland/rc.jobs.metalcaps
+research/refs/scion-kernel/userland/rc.jobs.metalcompute
+research/refs/scion-kernel/userland/rc.jobs.metaldepth
+research/refs/scion-kernel/userland/rc.jobs.metaldev
+research/refs/scion-kernel/userland/rc.jobs.metaldraw
+research/refs/scion-kernel/userland/rc.jobs.metaldraw0
+research/refs/scion-kernel/userland/rc.jobs.metaldraw1
+research/refs/scion-kernel/userland/rc.jobs.metaldraw2
+research/refs/scion-kernel/userland/rc.jobs.metaldraw3
+research/refs/scion-kernel/userland/rc.jobs.metaldraw4
+research/refs/scion-kernel/userland/rc.jobs.metaldrawall
+research/refs/scion-kernel/userland/rc.jobs.metalflip
+research/refs/scion-kernel/userland/rc.jobs.metalindex
+research/refs/scion-kernel/userland/rc.jobs.metalms
+research/refs/scion-kernel/userland/rc.jobs.metalperf
+research/refs/scion-kernel/userland/rc.jobs.metalpicture
+research/refs/scion-kernel/userland/rc.jobs.metalprobe
+research/refs/scion-kernel/userland/rc.jobs.metalprops
+research/refs/scion-kernel/userland/rc.jobs.metalrecover
+research/refs/scion-kernel/userland/rc.jobs.metalrest
+research/refs/scion-kernel/userland/rc.jobs.metaltex
+research/refs/scion-kernel/userland/rc.jobs.metalvertex
+research/refs/scion-kernel/userland/rc.jobs.metalvertexdesc
+research/refs/scion-kernel/userland/rc.jobs.metalvk
+research/refs/scion-kernel/userland/rc.jobs.wifipw
+research/refs/scion-kernel/userland/src/audio_plugin.c
+research/refs/scion-kernel/userland/src/audio_plugin.plist
+research/refs/scion-kernel/userland/src/hakios.audio.h
+research/refs/scion-kernel/userland/src/hakiosmetal_air.m
+research/refs/scion-kernel/userland/src/HakiosMetalCA.m
+research/refs/scion-kernel/userland/src/hakios_metallib.c
+research/refs/scion-kernel/userland/src/hakios_metallib.h
+research/refs/scion-kernel/userland/src/HakiosMetal.m
+research/refs/scion-kernel/userland/src/HakiosMetal.plist
+research/refs/scion-kernel/userland/src/hakios_metal_shown.c
+research/refs/scion-kernel/userland/src/hakios_metal_shown.h
+research/refs/scion-kernel/userland/src/inject_bluetoothd.c
+research/refs/scion-kernel/userland/src/mali_test.c
+research/refs/scion-kernel/userland/src/metal_caps.m
+research/refs/scion-kernel/userland/src/metal_dev.m
+research/refs/scion-kernel/userland/src/metal_drv_test.m
+research/refs/scion-kernel/userland/src/metal_props.c
+research/refs/scion-kernel/userland/src/metal_stubdev.m
+research/refs/scion-kernel/userland/src/metal_test.m
+research/refs/scion-kernel/userland/src/metalvk/HakiosMetalVK.mm
+research/refs/scion-kernel/userland/src/metalvk/LICENSE.AdrenoMetal
+research/refs/scion-kernel/userland/src/metalvk/NativeBridgeMetalFrontend.h
+research/refs/scion-kernel/userland/src/metalvk/NativeBridgeMetalFrontend.mm
+research/refs/scion-kernel/userland/src/wifipw_test.c
+research/refs/scion-kernel/userland/src/wifipw_test.entitlements
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_board.c
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_brcmf.c
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_brcmf.h
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_cfg.c
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_kpi.c
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_pci.c
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_pci_word.h
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_prelude.h
+research/refs/scion-kernel/wifi/lx/brcmfmac/lx_rsn.h
+research/refs/scion-kernel/wifi/lx/include/lx_more.h
+research/refs/scion-kernel/wifi/lx/include/lx_os.h
+research/refs/scion-kernel/wifi/lx/include/lx_prelude.h
+research/refs/scion-kernel/wifi/lx/include/stdbool.h
+research/refs/scion-kernel/wifi/lx/include/stddef.h
+research/refs/scion-kernel/wifi/lx/include/stdint.h
+research/refs/scion-kernel/wifi/lx/patches/include-linux-device.h.patch
+research/refs/scion-kernel/wifi/lx/patches/include-linux-etherdevice.h.patch
+research/refs/scion-kernel/wifi/lx/patches/include-linux-io.h.patch
+research/refs/scion-kernel/wifi/lx/patches/include-linux-socket.h.patch
+research/refs/scion-kernel/wifi/lx/patches/include-net-cfg80211.h.patch
+research/refs/scion-kernel/wifi/lx/patches/include-net-mac80211.h.patch
+research/refs/scion-kernel/wifi/lx/src/lx_80211.c
+research/refs/scion-kernel/wifi/lx/src/lx_base.c
+research/refs/scion-kernel/wifi/lx/src/lx_bus.c
+research/refs/scion-kernel/wifi/lx/src/lx.h
+research/refs/scion-kernel/wifi/lx/src/lx_wpa.c
+research/refs/scion-kernel/wifi/lx/src/lx_wpa.h
+seven@sevenzx:~/ios-s9$
