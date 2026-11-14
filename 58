@@ -1,0 +1,141 @@
+seven@sevenzx:~/ios-s9/s9$ cd ~/ios-s9/s9
+
+grep -RInA20 -B10 \
+  'struct smc_result' \
+  shim
+
+grep -RInE \
+  'smc_full|smc\(' \
+  shim/plat.h shim/plat.c shim/m11.c
+shim/plat.h-1-#pragma once
+shim/plat.h-2-#include <stdint.h>
+shim/plat.h-3-
+shim/plat.h-4-/* Pieces every shim stage after M2 shares: SMC, time, watchdog, reboot, panic. */
+shim/plat.h:5:struct smc_result {
+shim/plat.h-6-    uint64_t x0;
+shim/plat.h-7-    uint64_t x1;
+shim/plat.h-8-    uint64_t x2;
+shim/plat.h-9-    uint64_t x3;
+shim/plat.h-10-};
+shim/plat.h-11-
+shim/plat.h:12:struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+shim/plat.h-13-uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+shim/plat.h-14-uint64_t now(void);
+shim/plat.h-15-uint64_t ticks_per_s(void);
+shim/plat.h-16-void delay_ms(unsigned ms);
+shim/plat.h-17-uint32_t ticks_to_us(uint64_t ticks);
+shim/plat.h-18-void wdog_arm(void);
+shim/plat.h-19-void wdog_pet(void);
+shim/plat.h-20-void __attribute__((noreturn)) reboot(void);
+shim/plat.h-21-/* Blue screen with the exception state; stays 60 s (watchdog fed), then reboots. */
+shim/plat.h-22-void __attribute__((noreturn)) panic_screen(const char *stage, uint64_t slot, uint64_t *regs);
+shim/plat.h-23-/* "TEMPO" line counting to secs at row, feeding the watchdog, then reboot. */
+shim/plat.h-24-void __attribute__((noreturn)) countdown_reboot(int row, unsigned secs);
+--
+shim/plat.c-14-#define WDT0_BARK_TIME		0x10
+shim/plat.c-15-#define WDT0_BITE_TIME		0x14
+shim/plat.c-16-#define WDT_HZ			32765
+shim/plat.c-17-#define WDT_BARK_S		15		/* bite 3 s later, as watchdog_v2 does */
+shim/plat.c-18-
+shim/plat.c-19-#define PSCI_SYSTEM_RESET	0x84000009UL
+shim/plat.c-20-#define PANIC_SECONDS		60
+shim/plat.c-21-
+shim/plat.c-22-static volatile int in_panic;
+shim/plat.c-23-
+shim/plat.c:24:struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat.c-25-{
+shim/plat.c:26:    struct smc_result r;
+shim/plat.c-27-    register uint64_t x0 __asm__("x0") = fn;
+shim/plat.c-28-    register uint64_t x1 __asm__("x1") = a1;
+shim/plat.c-29-    register uint64_t x2 __asm__("x2") = a2;
+shim/plat.c-30-    register uint64_t x3 __asm__("x3") = a3;
+shim/plat.c-31-
+shim/plat.c-32-    __asm__ volatile("smc #0"
+shim/plat.c-33-        : "+r"(x0), "+r"(x1), "+r"(x2), "+r"(x3)
+shim/plat.c-34-        :
+shim/plat.c-35-        : "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11",
+shim/plat.c-36-          "x12", "x13", "x14", "x15", "x16", "x17", "memory");
+shim/plat.c-37-
+shim/plat.c-38-    r.x0 = x0;
+shim/plat.c-39-    r.x1 = x1;
+shim/plat.c-40-    r.x2 = x2;
+shim/plat.c-41-    r.x3 = x3;
+shim/plat.c-42-    return r;
+shim/plat.c-43-}
+shim/plat.c-44-
+shim/plat.c-45-uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat.c-46-{
+--
+shim/m11-before-pas-smc-standard.c-252-}
+shim/m11-before-pas-smc-standard.c-253-
+shim/m11-before-pas-smc-standard.c-254-__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11-before-pas-smc-standard.c-255-{
+shim/m11-before-pas-smc-standard.c-256-	return (uint64_t)(uintptr_t)p;
+shim/m11-before-pas-smc-standard.c-257-}
+shim/m11-before-pas-smc-standard.c-258-
+shim/m11-before-pas-smc-standard.c-259-
+shim/m11-before-pas-smc-standard.c-260-static int pas_supported_probe(void)
+shim/m11-before-pas-smc-standard.c-261-{
+shim/m11-before-pas-smc-standard.c:262:    struct smc_result ret;
+shim/m11-before-pas-smc-standard.c-263-
+shim/m11-before-pas-smc-standard.c-264-    stage = "PAS supported";
+shim/m11-before-pas-smc-standard.c-265-    step("PAS: consulta IS_SUPPORTED");
+shim/m11-before-pas-smc-standard.c-266-    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+shim/m11-before-pas-smc-standard.c-267-    showhex("PAS ret x0", ret.x0);
+shim/m11-before-pas-smc-standard.c-268-    showhex("PAS ret x1", ret.x1);
+shim/m11-before-pas-smc-standard.c-269-    showhex("PAS ret x2", ret.x2);
+shim/m11-before-pas-smc-standard.c-270-    showhex("PAS ret x3", ret.x3);
+shim/m11-before-pas-smc-standard.c-271-
+shim/m11-before-pas-smc-standard.c-272-    if (ret.x0 != 0) {
+shim/m11-before-pas-smc-standard.c-273-        con_str("PAS", "TrustZone nao confirmou PAS 13");
+shim/m11-before-pas-smc-standard.c-274-        return 0;
+shim/m11-before-pas-smc-standard.c-275-    }
+shim/m11-before-pas-smc-standard.c-276-
+shim/m11-before-pas-smc-standard.c-277-    con_str("PAS", "TrustZone confirmou PAS 13");
+shim/m11-before-pas-smc-standard.c-278-    return 1;
+shim/m11-before-pas-smc-standard.c-279-}
+shim/m11-before-pas-smc-standard.c-280-
+shim/m11-before-pas-smc-standard.c-281-static int pas_metadata_stage(void)
+shim/m11-before-pas-smc-standard.c-282-{
+--
+shim/m11.c-252-}
+shim/m11.c-253-
+shim/m11.c-254-__attribute__((noinline)) static uint64_t pa(const void *p)
+shim/m11.c-255-{
+shim/m11.c-256-	return (uint64_t)(uintptr_t)p;
+shim/m11.c-257-}
+shim/m11.c-258-
+shim/m11.c-259-
+shim/m11.c-260-static int pas_supported_probe(void)
+shim/m11.c-261-{
+shim/m11.c:262:    struct smc_result ret;
+shim/m11.c-263-
+shim/m11.c-264-    stage = "PAS supported";
+shim/m11.c-265-    step("PAS: consulta IS_SUPPORTED");
+shim/m11.c-266-    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+shim/m11.c-267-    showhex("PAS ret x0", ret.x0);
+shim/m11.c-268-    showhex("PAS ret x1", ret.x1);
+shim/m11.c-269-    showhex("PAS ret x2", ret.x2);
+shim/m11.c-270-    showhex("PAS ret x3", ret.x3);
+shim/m11.c-271-
+shim/m11.c-272-    if (ret.x0 != 0) {
+shim/m11.c-273-        con_str("PAS", "TrustZone nao confirmou PAS 13");
+shim/m11.c-274-        return 0;
+shim/m11.c-275-    }
+shim/m11.c-276-
+shim/m11.c-277-    con_str("PAS", "TrustZone confirmou PAS 13");
+shim/m11.c-278-    return 1;
+shim/m11.c-279-}
+shim/m11.c-280-
+shim/m11.c-281-static int pas_metadata_stage(void)
+shim/m11.c-282-{
+shim/plat.h:12:struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+shim/plat.h:13:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3);
+shim/plat.c:24:struct smc_result smc_full(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat.c:45:uint64_t smc(uint64_t fn, uint64_t a1, uint64_t a2, uint64_t a3)
+shim/plat.c:99:	smc(PSCI_SYSTEM_RESET, 0, 0, 0);
+shim/m11.c:266:    ret = smc_full(SCM_PAS_IS_SUPPORTED, PAS_ID_GPU_ZAP, 0, 0);
+seven@sevenzx:~/ios-s9/s9$ grep -RInE \
+  'asm__.*x4|__asm__.*x6|register uint64_t x[4567]' \
+  shim
+seven@sevenzx:~/ios-s9/s9$ 
